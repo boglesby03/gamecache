@@ -20,15 +20,55 @@ function close_all(event){
 }
 
 function on_render() {
+  var hits = document.querySelectorAll(".ais-Hits-item");
+  hits.forEach(function(hit) {
+    Vibrant.from(hit.querySelector("img")).getPalette(function(err, palette) {
+      hit.setAttribute("style", "background: " + palette["LightMuted"].getHex());
+    });
+  })
+
+  if ("ontouchstart" in window) {
+    function close_all_panels(facets) {
+      facets.querySelectorAll(".facet .ais-Panel-body").forEach(function(panel_body) {
+        panel_body.style.display = "none";
+      });
+    }
+    function toggle_panel(facet) {
+      var panel_body = facet.querySelector(".ais-Panel-body");
+      var style = window.getComputedStyle(panel_body);
+      if (style.display == "none") {
+        close_all_panels(facet.parentElement);
+        panel_body.style.display = "inline-block";
+      }
+      else {
+        panel_body.style.display = "none";
+      }
+    }
+
+    var facets = document.querySelectorAll(".facet");
+    facets.forEach(function(facet) {
+      var is_loaded = facet.getAttribute("loaded");
+      if (!is_loaded) {
+        facet.addEventListener("click", function(event) {
+          toggle_panel(facet);
+          event.stopPropagation();
+        });
+        facet.setAttribute("loaded", true);
+      }
+    });
+  }
+
   var summaries = document.querySelectorAll("summary");
   summaries.forEach(function(elem){
-    elem.addEventListener("click", function(){
+    function conditional_close(){
       close_all();
       if (!elem.parentElement.hasAttribute("open")) {
         var game_details = elem.parentElement.querySelector(".game-details");
         game_details.focus();
       }
-    });
+    }
+    elem.addEventListener("click", conditional_close);
+    elem.addEventListener("keypress", conditional_close);
   });
   document.addEventListener("click", close_all);
 
@@ -36,11 +76,13 @@ function on_render() {
   game_details.forEach(function(elem){
     var close = document.createElement("div");
     close.setAttribute("class", "close");
-    close.setAttribute("tabindex", "-1");
+    close.setAttribute("tabindex", "0");
     close.innerHTML = "×";
-    close.addEventListener("click", function(){
+    function close_details(event) {
       elem.parentElement.removeAttribute("open");
-    });
+    }
+    close.addEventListener("click", close_details);
+    close.addEventListener("keypress", close_details);
     elem.appendChild(close);
 
     elem.addEventListener("click", function(event){
@@ -140,12 +182,12 @@ function get_widgets() {
             type = match[1].toLowerCase();
             num = match[2];
 
-            type_to_string = {
-              'best': ' <span class="soft">(best)</span>',
-              'recommended': '',
-              'expansion': ' <span class="soft">(with exp)</span>'
+            type_callback = {
+              'best': function(num) { return '<strong>' + num + '</strong><span title="Best with">★</span>'; },
+              'recommended': function(num) { return num; },
+              'expansion': function(num) { return num + '<span title="With expansion">⊕</span>'; },
             };
-            players.push(num + type_to_string[type]);
+            players.push(type_callback[type](num));
 
             if (num.indexOf("+") > -1) {
               return;
@@ -216,8 +258,7 @@ function init(SETTINGS) {
     }
 
     var title_tag = document.getElementsByTagName("title")[0];
-    var h1_tag = document.getElementsByTagName("h1")[0];
-    title_tag.innerHTML = h1_tag.innerHTML = title;
+    title_tag.innerHTML = title;
   }
   set_bgg_name();
 }
