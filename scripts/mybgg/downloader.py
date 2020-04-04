@@ -53,9 +53,6 @@ class Downloader():
 
         games_data = list(filter(lambda x: x["type"] == "boardgame", game_list_data))
         expansions_data = list(filter(lambda x: x["type"] == "boardgameexpansion", game_list_data))
-       # accessories_data = list(filter(lambda x: x["type"] == "boardgameaccessory", game_list_data))
-
-        print(accessories_data)
 
         game_id_to_expansion = {game["id"]: [] for game in games_data}
         for expansion_data in expansions_data:
