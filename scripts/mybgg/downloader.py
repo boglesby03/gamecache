@@ -36,6 +36,11 @@ class Downloader():
                 **extra_params,
             )
 
+        params = {"subtype": "boardgameaccessory", "own": 1}
+        accessory_data = self.client.collection(user_name=user_name, **params)
+
+        accessory_list_data = self.client.game_list([game_in_collection["id"] for game_in_collection in accessory_data])
+
         plays_data = self.client.plays(
             user_name=user_name,
         )
@@ -60,6 +65,13 @@ class Downloader():
                 if expansion["inbound"] and expansion["id"] in game_id_to_expansion:
                     game_id_to_expansion[expansion["id"]].append(expansion_data)
 
+
+        game_id_to_accessory = {game["id"]: [] for game in games_data}
+        for accessory_data in accessory_list_data:
+            for accessory in accessory_data["accessory"]:
+                if accessory["inbound"] and accessory["id"] in game_id_to_accessory:
+                    game_id_to_accessory[accessory["id"]].append(accessory_data)
+
         games = [
             BoardGame(
                 game_data,
@@ -70,6 +82,10 @@ class Downloader():
                 expansions=[
                     BoardGame(expansion_data)
                     for expansion_data in game_id_to_expansion[game_data["id"]]
+                ],
+                accessories=[
+                    BoardGame(accessory_data)
+                    for accessory_data in game_id_to_accessory[game_data["id"]]
                 ]
             )
             for game_data in games_data
@@ -78,7 +94,12 @@ class Downloader():
         for game in games:
             for exp in game.expansions:
                 exp.name = remove_prefix(exp.name, game.name)
-            game.expansions.sort(key=lambda x: x.name) # Resort the list after updating the names
+            for acc in game.accessories:
+                acc.name = remove_prefix(acc.name, game.name)
+
+            # Resort the list after updating the names
+            game.expansions.sort(key=lambda x: x.name)
+            game.accessories.sort(key=lambda x: x.name)
 
         return games
 

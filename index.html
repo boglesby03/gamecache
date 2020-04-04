@@ -91,6 +91,18 @@
             </ul></dd>
           </div>
           {{/ has_expansions }}
+          {{# has_accessories }}
+          <div class="accessories">
+            <dt>Accessories</dt>
+            <dd>
+              <ul>
+                {{# accessories }}
+                <li><a href="https://boardgamegeek.com/boardgame/{{{ id }}}">{{ name }}</a></li>
+                {{/ accessories }}
+              </ul>
+            </dd>
+          </div>
+          {{/ has_accessories }}
         </dl>
         <p class="description">
           {{# helpers.highlight }}{ "attribute": "description" }{{/ helpers.highlight }}

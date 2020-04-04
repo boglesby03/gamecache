@@ -5,7 +5,7 @@ import html
 articles = ['A', 'An', 'The']
 
 class BoardGame:
-    def __init__(self, game_data, image="", tags=[], numplays=0, previous_players=[], expansions=[]):
+    def __init__(self, game_data, image="", tags=[], numplays=0, previous_players=[], expansions=[], accessories=[]):
         self.id = game_data["id"]
 
         name = game_data["name"]
@@ -29,6 +29,7 @@ class BoardGame:
         self.tags = tags
         self.previous_players = previous_players
         self.expansions = expansions
+        self.accessories = accessories
 
     def calc_num_players(self, game_data, expansions):
         num_players = game_data["suggested_numplayers"].copy()
@@ -51,6 +52,8 @@ class BoardGame:
             240: '3-4h',
         }
         for playing_time_max, playing_time in playing_time_mapping.items():
+            if not game_data["playing_time"]:
+                return 'Unknowns'
             if playing_time_max > int(game_data["playing_time"]):
                 return playing_time
 

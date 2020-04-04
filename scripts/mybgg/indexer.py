@@ -178,6 +178,14 @@ class Indexer:
                 for expansion in game["expansions"]
             ]
 
+            game["accessories"] = [
+                {
+                    attribute: accessory[attribute]
+                    for attribute in ["id", "name"]
+                }
+                for accessory in game["accessories"]
+            ]
+
             # Make sure description is not too long
             game["description"] = self._prepare_description(game["description"])
 

@@ -159,6 +159,7 @@ class BGGClient:
         collection = collection["items"]
         return collection
 
+
     def _games_list_to_games(self, data):
         def numplayers_to_result(_, results):
             result = {result["value"].lower().replace(" ", "_"): int(result["numvotes"]) for result in results}
@@ -230,6 +231,46 @@ class BGGClient:
                             alias="expansions",
                         ),
                         xml.array(
+                            xml.dictionary(
+                                "link[@type='boardgamedesigner']", [
+                                    xml.integer(".", attribute="id"),
+                                    xml.boolean(".", attribute="inbound", required=False),
+                                ],
+                                required=False
+                            ),
+                            alias="designer",
+                        ),
+                        xml.array(
+                            xml.dictionary(
+                                "link[@type='boardgameartist']", [
+                                    xml.integer(".", attribute="id"),
+                                    xml.boolean(".", attribute="inbound", required=False),
+                                ],
+                                required=False
+                            ),
+                            alias="artist",
+                        ),
+                        xml.array(
+                            xml.dictionary(
+                                "link[@type='boardgamepublisher']", [
+                                    xml.integer(".", attribute="id"),
+                                    xml.boolean(".", attribute="inbound", required=False),
+                                ],
+                                required=False
+                            ),
+                            alias="publisher",
+                        ),
+                        xml.array(
+                            xml.dictionary(
+                                "link[@type='boardgameaccessory']", [
+                                    xml.integer(".", attribute="id"),
+                                    xml.boolean(".", attribute="inbound", required=False),
+                                ],
+                                required=False
+                            ),
+                            alias="accessory",
+                        ),
+                        xml.array(
                             xml.dictionary("poll[@name='suggested_numplayers']/results", [
                                 xml.string(".", attribute="numplayers"),
                                 xml.array(
@@ -239,7 +280,8 @@ class BGGClient:
                                     ], required=False),
                                     hooks=xml.Hooks(after_parse=numplayers_to_result)
                                 )
-                            ]),
+                            ],
+                            required=False),
                             alias="suggested_numplayers",
                             hooks=xml.Hooks(after_parse=suggested_numplayers),
                         ),
@@ -269,7 +311,7 @@ class BGGClient:
                             attribute="value",
                             alias="rating"
                         ),
-                        xml.string("playingtime", attribute="value", alias="playing_time"),
+                        xml.string("playingtime", attribute="value", alias="playing_time", required=False),
                     ],
                     required=False,
                     alias="items",
