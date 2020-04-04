@@ -1,3 +1,5 @@
+import re
+
 from mybgg.bgg_client import BGGClient
 from mybgg.bgg_client import CacheBackendSqlite
 from mybgg.models import BoardGame
@@ -51,6 +53,9 @@ class Downloader():
 
         games_data = list(filter(lambda x: x["type"] == "boardgame", game_list_data))
         expansions_data = list(filter(lambda x: x["type"] == "boardgameexpansion", game_list_data))
+       # accessories_data = list(filter(lambda x: x["type"] == "boardgameaccessory", game_list_data))
+
+        print(accessories_data)
 
         game_id_to_expansion = {game["id"]: [] for game in games_data}
         for expansion_data in expansions_data:
@@ -72,4 +77,77 @@ class Downloader():
             )
             for game_data in games_data
         ]
+
+        for game in games:
+            for exp in game.expansions:
+                exp.name = remove_prefix(exp.name, game.name)
+            game.expansions.sort(key=lambda x: x.name) # Resort the list after updating the names
+
         return games
+
+
+articles = ['A', 'An', 'The']
+def moveArticleToEnd(orig):
+
+    newTitle = orig
+    title = newTitle.split()
+    if title[0] in articles:
+        newTitle = ' '.join(title[1:]) + ", " + title[0]
+
+    return newTitle
+
+def moveArticleToStart(orig):
+
+    newTitle = orig
+    title = orig.split(", ")
+    if title[-1] in articles:
+        newTitle = title[-1] + " " + ", ".join(title[:-1])
+    return newTitle
+
+def remove_prefix(expansion, game):
+
+    game = moveArticleToStart(game)
+    newExp = moveArticleToStart(expansion)
+
+    gameMediumTitle = game.split("–")[0]
+    gameShortTitle = game.split(":")[0]
+
+    if game in ("King of Tokyo", "King of New York"):
+        # newExp = remove_prefix(newExp, "King of Tokyo/New York")
+        gameShortTitle = game
+        game = "King of Tokyo/New York"
+    elif game.startswith("Neuroshima Hex"):
+        # newExp = remove_prefix(newExp, "Neuroshima Hex!")
+        gameShortTitle = "Neuroshima Hex"
+    elif game.startswith("No Thanks"):
+        gameShortTitle = "Schöne Sch#!?e"
+    elif gameShortTitle == "Power Grid Deluxe":
+        gameMediumTitle = "Power Grid"
+    elif gameShortTitle == "Rivals for Catan":
+        newExp = remove_prefix(newExp, "The Rivals for Catan")
+        newExp = remove_prefix(newExp, "Die Fürsten von Catan")
+        newExp = remove_prefix(newExp, "Catan: Das Duell")
+    elif game == "Small World Underground":
+        # newExp = remove_prefix(newExp, "Small World")
+        gameShortTitle = "Small World"
+    elif game == "Viticulture Essential Edition":
+        # newExp = remove_prefix(newExp, "Viticulture")
+        gameShortTitle = "Viticulture"
+
+    if newExp.startswith(game):
+        newExp = newExp[len(game):]
+    elif newExp.startswith(gameMediumTitle):
+        newExp = newExp[len(gameMediumTitle):]
+    elif newExp.startswith(gameShortTitle):
+        newExp = newExp[len(gameShortTitle):]
+    # elif ":" in text:
+    #     newText = text.split(":")
+    #     newText = ":".join(newText[1:])
+
+    #newExp = re.sub(r"^(A)|(The) ", "", newExp)
+    newExp = re.sub(r"^\W+", "", newExp)
+    newExp = moveArticleToEnd(newExp)
+
+   # print("%s | %s" % (game, newExp))
+
+    return newExp

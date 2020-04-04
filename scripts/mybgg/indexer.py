@@ -119,7 +119,7 @@ class Indexer:
         # Try to find a long paragraph from the beginning of the description
         description = self._pick_long_paragraph(description)
 
-        # Remove unnessesary spacing
+        # Remove unnecessary spacing
         description = re.sub(r"\s+", " ", description)
 
         # Cut at 700 characters, but not in the middle of a sentence
@@ -169,7 +169,7 @@ class Indexer:
                 for num, type_ in game["players"]
             ]
 
-            # Algolia has a limit of 10kb per item, so remove unnessesary data from expansions
+            # Algolia has a limit of 10kb per item, so remove unnecessary data from expansions
             game["expansions"] = [
                 {
                     attribute: expansion[attribute]

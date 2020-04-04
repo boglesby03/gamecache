@@ -2,10 +2,18 @@ from decimal import Decimal
 import html
 
 
+articles = ['A', 'An', 'The']
+
 class BoardGame:
     def __init__(self, game_data, image="", tags=[], numplays=0, previous_players=[], expansions=[]):
         self.id = game_data["id"]
-        self.name = game_data["name"]
+
+        name = game_data["name"]
+        title = name.split()
+        if title[0] in articles:
+            name = ' '.join(title[1:]) + ", " + title[0]
+
+        self.name = name
         self.description = html.unescape(game_data["description"])
         self.categories = game_data["categories"]
         self.mechanics = game_data["mechanics"]
