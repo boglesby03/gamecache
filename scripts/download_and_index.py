@@ -18,7 +18,8 @@ def main(args):
     )
     num_games = len(collection)
     num_expansions = sum([len(game.expansions) for game in collection])
-    print(f"Imported {num_games} games and {num_expansions} expansions from boardgamegeek.")
+    num_accessories = sum([len(game.accessories) for game in collection ])
+    print(f"Imported {num_games} games, {num_expansions} expansions, and {num_accessories} accessories from boardgamegeek.")
 
     if not len(collection):
         assert False, "No games imported, is the boardgamegeek part of config.json correctly set?"

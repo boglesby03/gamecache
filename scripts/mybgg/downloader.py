@@ -130,12 +130,14 @@ def remove_prefix(expansion, game):
     gameMediumTitle = game.split("–")[0]
     gameShortTitle = game.split(":")[0]
 
-    if game in ("King of Tokyo", "King of New York"):
-        # newExp = remove_prefix(newExp, "King of Tokyo/New York")
+    if game == "Empires: Age of Discovery":
+        gameMediumTitle = game
+        game = "Glenn Drover's Empires: Age of Discovery"
+    elif game in ("King of Tokyo", "King of New York"):
         gameShortTitle = game
-        game = "King of Tokyo/New York"
+        gameMediumTitle = "King of Tokyo/New York"
+        game = "King of Tokyo/King of New York"
     elif game.startswith("Neuroshima Hex"):
-        # newExp = remove_prefix(newExp, "Neuroshima Hex!")
         gameShortTitle = "Neuroshima Hex"
     elif game.startswith("No Thanks"):
         gameShortTitle = "Schöne Sch#!?e"
@@ -145,27 +147,27 @@ def remove_prefix(expansion, game):
         newExp = remove_prefix(newExp, "The Rivals for Catan")
         newExp = remove_prefix(newExp, "Die Fürsten von Catan")
         newExp = remove_prefix(newExp, "Catan: Das Duell")
+    elif gameShortTitle == "Robinson Crusoe":
+        # for some reason the accessories have "Adventure" instead of "Adventures"
+        gameMediumTitle = "Robinson Crusoe: Adventure on the Cursed Island"
     elif game == "Small World Underground":
-        # newExp = remove_prefix(newExp, "Small World")
         gameShortTitle = "Small World"
     elif game == "Viticulture Essential Edition":
-        # newExp = remove_prefix(newExp, "Viticulture")
         gameShortTitle = "Viticulture"
 
-    if newExp.startswith(game):
+    game = game.lower()
+    gameMediumTitle = gameMediumTitle.lower()
+    gameShortTitle = gameShortTitle.lower()
+
+    if newExp.lower().startswith(game):
         newExp = newExp[len(game):]
-    elif newExp.startswith(gameMediumTitle):
+    elif newExp.lower().startswith(gameMediumTitle):
         newExp = newExp[len(gameMediumTitle):]
-    elif newExp.startswith(gameShortTitle):
+    elif newExp.lower().startswith(gameShortTitle):
         newExp = newExp[len(gameShortTitle):]
-    # elif ":" in text:
-    #     newText = text.split(":")
-    #     newText = ":".join(newText[1:])
 
-    #newExp = re.sub(r"^(A)|(The) ", "", newExp)
     newExp = re.sub(r"^\W+", "", newExp)
+    newExp = re.sub(r" \– ", ": ", newExp)
     newExp = moveArticleToEnd(newExp)
-
-   # print("%s | %s" % (game, newExp))
 
     return newExp
