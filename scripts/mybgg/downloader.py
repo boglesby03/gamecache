@@ -91,14 +91,14 @@ class Downloader():
                 tags=game_id_to_tags[game_data["id"]],
                 numplays=game_id_to_numplays[game_data["id"]],
                 previous_players=game_id_to_players[game_data["id"]],
-                expansions=[
+                expansions=set(
                     BoardGame(expansion_data)
                     for expansion_data in game_id_to_expansion[game_data["id"]]
-                ],
-                accessories=[
+                ),
+                accessories=set(
                     BoardGame(accessory_data)
                     for accessory_data in game_id_to_accessory[game_data["id"]]
-                ]
+                )
             )
             for game_data in games_data
         ]
@@ -110,8 +110,8 @@ class Downloader():
                 acc.name = remove_prefix(acc.name, game.name)
 
             # Resort the list after updating the names
-            game.expansions.sort(key=lambda x: x.name)
-            game.accessories.sort(key=lambda x: x.name)
+            game.expansions = sorted(game.expansions, key=lambda x: x.name)
+            game.accessories = sorted(game.accessories, key=lambda x: x.name)
 
         return games
 

@@ -31,6 +31,12 @@ class BoardGame:
         self.expansions = expansions
         self.accessories = accessories
 
+    def __hash__(self):
+        return hash(self.id)
+
+    def __eq__(self, other):
+        return (self.__class__ == other.__class__ and self.id == other.id)
+
     def calc_num_players(self, game_data, expansions):
         num_players = game_data["suggested_numplayers"].copy()
 
