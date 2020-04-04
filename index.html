@@ -91,6 +91,18 @@
             </ul></dd>
           </div>
           {{/ has_expansions }}
+          {{# has_contained }}
+          <div class="expansions">
+            <dt>Contains</dt>
+            <dd>
+              <ul>
+                {{# contained }}
+                <li><a href="https://boardgamegeek.com/boardgame/{{{ id }}}">{{ name }}</a></li>
+                {{/ contained }}
+              </ul>
+            </dd>
+          </div>
+          {{/ has_contained }}
           {{# has_accessories }}
           <div class="expansions">
             <dt>Accessories</dt>

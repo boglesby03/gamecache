@@ -17,6 +17,7 @@ class BoardGame:
         self.description = html.unescape(game_data["description"])
         self.categories = game_data["categories"]
         self.mechanics = game_data["mechanics"]
+        self.contained = game_data["contained"]
         self.players = self.calc_num_players(game_data, expansions)
         self.weight = self.calc_weight(game_data)
         self.playing_time = self.calc_playing_time(game_data)

@@ -68,7 +68,8 @@ class Downloader():
                     if accessory["id"] in game_id_to_accessory:
                         game_id_to_accessory[accessory["id"]].append(accessory_data)
                     elif accessory["id"] in game_id_to_expansion_accessory:
-                        game_id_to_expansion_accessory[accessory["id"]].append(accessory_data)
+                        if not accessory["id"] in (204573, ):
+                            game_id_to_expansion_accessory[accessory["id"]].append(accessory_data)
 
         game_id_to_expansion_expansions = {game["id"]: [] for game in expansions_data}
         for expansion_data in expansions_data:
@@ -80,9 +81,11 @@ class Downloader():
         for expansion_data in expansions_data:
             for expansion in expansion_data["expansions"]:
                 if expansion["inbound"] and expansion["id"] in game_id_to_expansion:
-                    game_id_to_expansion[expansion["id"]].append(expansion_data)
-                    game_id_to_expansion[expansion["id"]].extend(game_id_to_expansion_expansions[expansion_data["id"]])
-                    game_id_to_accessory[expansion["id"]].extend(game_id_to_expansion_accessory[expansion_data["id"]])
+                    # Ignore the Deutscher Spielepreile Goodie Boxes and Brettspiel Adventskalender
+                    if not expansion_data["id"] in (178656, 191779, 204573, 231506, 256951, 205611, 232298, 257590, 286086):
+                        game_id_to_expansion[expansion["id"]].append(expansion_data)
+                        game_id_to_expansion[expansion["id"]].extend(game_id_to_expansion_expansions[expansion_data["id"]])
+                        game_id_to_accessory[expansion["id"]].extend(game_id_to_expansion_accessory[expansion_data["id"]])
 
         games = [
             BoardGame(
@@ -108,16 +111,26 @@ class Downloader():
                 exp.name = remove_prefix(exp.name, game.name)
             for acc in game.accessories:
                 acc.name = remove_prefix(acc.name, game.name)
+            contained_list = []
+            for con in game.contained:
+                if con["inbound"]:
+                    con["name"] = remove_prefix(con["name"], game.name)
+                    contained_list.append(con)
+            game.contained = contained_list
 
             # Resort the list after updating the names
             game.expansions = sorted(game.expansions, key=lambda x: x.name)
             game.accessories = sorted(game.accessories, key=lambda x: x.name)
+            game.contained = sorted(game.contained, key=lambda x: x["name"])
 
         return games
 
 
 articles = ['A', 'An', 'The']
 def moveArticleToEnd(orig):
+
+    if orig == None or orig == "":
+        return orig
 
     newTitle = orig
     title = newTitle.split()
@@ -127,6 +140,9 @@ def moveArticleToEnd(orig):
     return newTitle
 
 def moveArticleToStart(orig):
+
+    if orig == None or orig == "":
+        return orig
 
     newTitle = orig
     title = orig.split(", ")
@@ -142,7 +158,9 @@ def remove_prefix(expansion, game):
     gameMediumTitle = game.split("–")[0]
     gameShortTitle = game.split(":")[0]
 
-    if game == "Empires: Age of Discovery":
+    if game.startswith("Alien Frontiers"):
+        gameShortTitle = "Alien Frontiers"
+    elif game == "Empires: Age of Discovery":
         gameMediumTitle = game
         game = "Glenn Drover's Empires: Age of Discovery"
     elif game in ("King of Tokyo", "King of New York"):
@@ -178,8 +196,13 @@ def remove_prefix(expansion, game):
     elif newExp.lower().startswith(gameShortTitle):
         newExp = newExp[len(gameShortTitle):]
 
+    newExp = re.sub(r"\s*\(?Fan expans.*", "[Fan]", newExp)
+    newExp = re.sub(r"\s*Map Collection: Volume ", "Map Pack ", newExp)
     newExp = re.sub(r"^\W+", "", newExp)
     newExp = re.sub(r" \– ", ": ", newExp)
     newExp = moveArticleToEnd(newExp)
+
+    if len(newExp) == 0:
+        return expansion
 
     return newExp

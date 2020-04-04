@@ -8,4 +8,5 @@
 
 # Handle "Contains" - for big boxes
 
-# Expansions/accessories of expansions
+X Expansions/accessories of expansions
+# Still need to handle exceptions to expansions of expansions - such as calendars - again should be fixed in bgg

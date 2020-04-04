@@ -235,6 +235,7 @@ function get_widgets(SETTINGS) {
           game.description = game.description.trim();
           game.has_expansions = (game.expansions.length > 0);
           game.has_accessories = (game.accessories.length > 0);
+          game.has_contained = (game.contained.length > 0);
 
           return game;
         });
