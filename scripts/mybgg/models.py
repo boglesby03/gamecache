@@ -53,7 +53,7 @@ class BoardGame:
         }
         for playing_time_max, playing_time in playing_time_mapping.items():
             if not game_data["playing_time"]:
-                return 'Unknowns'
+                return 'Unknown'
             if playing_time_max > int(game_data["playing_time"]):
                 return playing_time
 

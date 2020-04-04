@@ -59,18 +59,30 @@ class Downloader():
         games_data = list(filter(lambda x: x["type"] == "boardgame", game_list_data))
         expansions_data = list(filter(lambda x: x["type"] == "boardgameexpansion", game_list_data))
 
+        game_id_to_accessory = {game["id"]: [] for game in games_data}
+        game_id_to_expansion_accessory = {game["id"]: [] for game in expansions_data}
+
+        for accessory_data in accessory_list_data:
+            for accessory in accessory_data["accessory"]:
+                if accessory["inbound"]:
+                    if accessory["id"] in game_id_to_accessory:
+                        game_id_to_accessory[accessory["id"]].append(accessory_data)
+                    elif accessory["id"] in game_id_to_expansion_accessory:
+                        game_id_to_expansion_accessory[accessory["id"]].append(accessory_data)
+
+        game_id_to_expansion_expansions = {game["id"]: [] for game in expansions_data}
+        for expansion_data in expansions_data:
+            for expansion in expansion_data["expansions"]:
+                if expansion["inbound"] and expansion["id"] in game_id_to_expansion_expansions:
+                    game_id_to_expansion_expansions[expansion["id"]].append(expansion_data)
+
         game_id_to_expansion = {game["id"]: [] for game in games_data}
         for expansion_data in expansions_data:
             for expansion in expansion_data["expansions"]:
                 if expansion["inbound"] and expansion["id"] in game_id_to_expansion:
                     game_id_to_expansion[expansion["id"]].append(expansion_data)
-
-
-        game_id_to_accessory = {game["id"]: [] for game in games_data}
-        for accessory_data in accessory_list_data:
-            for accessory in accessory_data["accessory"]:
-                if accessory["inbound"] and accessory["id"] in game_id_to_accessory:
-                    game_id_to_accessory[accessory["id"]].append(accessory_data)
+                    game_id_to_expansion[expansion["id"]].extend(game_id_to_expansion_expansions[expansion_data["id"]])
+                    game_id_to_accessory[expansion["id"]].extend(game_id_to_expansion_accessory[expansion_data["id"]])
 
         games = [
             BoardGame(
