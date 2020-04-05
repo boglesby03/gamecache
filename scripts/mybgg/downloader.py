@@ -68,8 +68,7 @@ class Downloader():
                     if accessory["id"] in game_id_to_accessory:
                         game_id_to_accessory[accessory["id"]].append(accessory_data)
                     elif accessory["id"] in game_id_to_expansion_accessory:
-                        if not accessory["id"] in (204573, ):
-                            game_id_to_expansion_accessory[accessory["id"]].append(accessory_data)
+                        game_id_to_expansion_accessory[accessory["id"]].append(accessory_data)
 
         game_id_to_expansion_expansions = {game["id"]: [] for game in expansions_data}
         for expansion_data in expansions_data:
@@ -81,6 +80,7 @@ class Downloader():
         for expansion_data in expansions_data:
             for expansion in expansion_data["expansions"]:
                 if expansion["inbound"] and expansion["id"] in game_id_to_expansion:
+                    # TODO make this configurable
                     # Ignore the Deutscher Spielepreile Goodie Boxes and Brettspiel Adventskalender
                     if not expansion_data["id"] in (178656, 191779, 204573, 231506, 256951, 205611, 232298, 257590, 286086):
                         game_id_to_expansion[expansion["id"]].append(expansion_data)
@@ -158,8 +158,11 @@ def remove_prefix(expansion, game):
     gameMediumTitle = game.split("–")[0]
     gameShortTitle = game.split(":")[0]
 
-    if game.startswith("Alien Frontiers"):
-        gameShortTitle = "Alien Frontiers"
+    #Carcassonne Big Box 5, Alien Frontiers Big Box, El Grande Big Box
+    if game.contains("Big Box"):
+        gameMediumTitle = re.sub(r"\s*\(?Big Box.*", "", game, flags=re.IGNORECASE)
+    elif game == "Bruge":
+        gameMediumTitle = "Brügge"
     elif game == "Empires: Age of Discovery":
         gameMediumTitle = game
         game = "Glenn Drover's Empires: Age of Discovery"
@@ -196,8 +199,8 @@ def remove_prefix(expansion, game):
     elif newExp.lower().startswith(gameShortTitle):
         newExp = newExp[len(gameShortTitle):]
 
-    newExp = re.sub(r"\s*\(?Fan expans.*", "[Fan]", newExp)
-    newExp = re.sub(r"\s*Map Collection: Volume ", "Map Pack ", newExp)
+    newExp = re.sub(r"\s*\(?Fan expans.*", "[Fan]", newExp, flags=re.IGNORECASE)
+    newExp = re.sub(r"\s*Map Collection: Volume ", "Map Pack ", newExp, flags=re.IGNORECASE)
     newExp = re.sub(r"^\W+", "", newExp)
     newExp = re.sub(r" \– ", ": ", newExp)
     newExp = moveArticleToEnd(newExp)
