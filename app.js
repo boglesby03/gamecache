@@ -231,6 +231,7 @@ function get_widgets(SETTINGS) {
           game.players_str = players.join(", ");
           game.categories_str = game.categories.join(", ");
           game.mechanics_str = game.mechanics.join(", ");
+          game.families_str = game.families.map(e => e.name).join(", ");
           game.tags_str = game.tags.join(", ");
           game.description = game.description.trim();
           game.has_expansions = (game.expansions.length > 0);

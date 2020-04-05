@@ -259,7 +259,7 @@ class BGGClient:
                                 ],
                                 required=False
                             ),
-                            alias="designer",
+                            alias="designers",
                         ),
                         xml.array(
                             xml.dictionary(
@@ -269,7 +269,7 @@ class BGGClient:
                                 ],
                                 required=False
                             ),
-                            alias="artist",
+                            alias="artists",
                         ),
                         xml.array(
                             xml.dictionary(
@@ -279,7 +279,7 @@ class BGGClient:
                                 ],
                                 required=False
                             ),
-                            alias="publisher",
+                            alias="publishers",
                         ),
                         xml.array(
                             xml.dictionary(
@@ -289,7 +289,7 @@ class BGGClient:
                                 ],
                                 required=False
                             ),
-                            alias="accessory",
+                            alias="accessories",
                         ),
                         xml.array(
                             xml.dictionary("poll[@name='suggested_numplayers']/results", [

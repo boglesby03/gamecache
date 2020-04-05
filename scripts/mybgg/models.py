@@ -18,6 +18,10 @@ class BoardGame:
         self.categories = game_data["categories"]
         self.mechanics = game_data["mechanics"]
         self.contained = game_data["contained"]
+        self.families = game_data["families"]
+        self.artists = game_data["artists"]
+        self.designers = game_data["designers"]
+        self.publishers = game_data["publishers"]
         self.players = self.calc_num_players(game_data, expansions)
         self.weight = self.calc_weight(game_data)
         self.playing_time = self.calc_playing_time(game_data)

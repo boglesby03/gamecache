@@ -66,12 +66,12 @@ class Downloader():
             for expansion in expansion_data["expansions"]:
                 if expansion["inbound"] and expansion["id"] in game_id_to_expansion_expansions:
                     game_id_to_expansion_expansions[expansion["id"]].append(expansion_data)
-                if isPromoBox(expansion_data):
+                if is_promo_box(expansion_data):
                     games_data.append(expansion_data)
                     game_id_to_accessory[expansion_data["id"]] = []
 
         for accessory_data in accessory_list_data:
-            for accessory in accessory_data["accessory"]:
+            for accessory in accessory_data["accessories"]:
                 if accessory["inbound"]:
                     if accessory["id"] in game_id_to_accessory:
                         game_id_to_accessory[accessory["id"]].append(accessory_data)
@@ -82,7 +82,7 @@ class Downloader():
         for expansion_data in expansions_data:
             for expansion in expansion_data["expansions"]:
                 if expansion["inbound"] and expansion["id"] in game_id_to_expansion:
-                    if not isPromoBox(expansion_data):
+                    if not is_promo_box(expansion_data):
                         game_id_to_expansion[expansion["id"]].append(expansion_data)
                         game_id_to_expansion[expansion["id"]].extend(game_id_to_expansion_expansions[expansion_data["id"]])
                         game_id_to_accessory[expansion["id"]].extend(game_id_to_expansion_accessory[expansion_data["id"]])
@@ -106,6 +106,7 @@ class Downloader():
             for game_data in games_data
         ]
 
+        # Cleanup the game
         for game in games:
             for exp in game.expansions:
                 exp.name = remove_prefix(exp.name, game.name)
@@ -118,22 +119,43 @@ class Downloader():
                     contained_list.append(con)
             game.contained = contained_list
 
+            family_list = []
+            for fam in game.families:
+                newFam = family_filter(fam)
+                if newFam:
+                    family_list.append(newFam)
+            game.families = family_list
+
             # Resort the list after updating the names
             game.expansions = sorted(game.expansions, key=lambda x: x.name)
             game.accessories = sorted(game.accessories, key=lambda x: x.name)
             game.contained = sorted(game.contained, key=lambda x: x["name"])
+            game.families = sorted(game.families, key=lambda x: x["name"])
 
         return games
 
-# Ignore the Deutscher Spielepreile Goodie Boxes and Brettspiel Adventskalender as expansions and treat them like base games
-def isPromoBox(game):
+
+# May want to make other changes to the family similar to the prefix logic
+def family_filter(family):
+    """Filter out Admin messages"""
+
+    group = family["name"].split(":")[0]
+    if group == "Admin":
+        return None
+
+    return family
+
+def is_promo_box(game):
+    """Ignore the Deutscher Spielepreile Goodie Boxes and Brettspiel Adventskalender as expansions and treat them like base games"""
+
     # return game["id"] in (178656, 191779, 204573, 231506, 256951, 205611, 232298, 257590, 286086)
     # Change this to look for board game family 39378 (Box of Promos)
     return any(39378 == family["id"] for family in game["families"])
 
 
 articles = ['A', 'An', 'The']
-def moveArticleToEnd(orig):
+def move_article_to_end(orig):
+    """Move articles to the end of the title for proper title sorting"""
 
     if orig == None or orig == "":
         return orig
@@ -145,7 +167,8 @@ def moveArticleToEnd(orig):
 
     return newTitle
 
-def moveArticleToStart(orig):
+def move_article_to_start(orig):
+    """Move the article back to the front for string comparison"""
 
     if orig == None or orig == "":
         return orig
@@ -157,9 +180,10 @@ def moveArticleToStart(orig):
     return newTitle
 
 def remove_prefix(expansion, game):
+    """rules for cleaning up linked items to remove duplicate data, such as the title being repeated on every expansion"""
 
-    game = moveArticleToStart(game)
-    newExp = moveArticleToStart(expansion)
+    game = move_article_to_start(game)
+    newExp = move_article_to_start(expansion)
 
     gameMediumTitle = game.split("–")[0]
     gameShortTitle = game.split(":")[0]
@@ -205,11 +229,11 @@ def remove_prefix(expansion, game):
     elif newExp.lower().startswith(gameShortTitle):
         newExp = newExp[len(gameShortTitle):]
 
-    newExp = re.sub(r"\s*\(?Fan expans.*", "[Fan]", newExp, flags=re.IGNORECASE)
+    newExp = re.sub(r"\s*\(?Fan expans.*", " [Fan]", newExp, flags=re.IGNORECASE)
     newExp = re.sub(r"\s*Map Collection: Volume ", "Map Pack ", newExp, flags=re.IGNORECASE)
     newExp = re.sub(r"^\W+", "", newExp)
     newExp = re.sub(r" \– ", ": ", newExp)
-    newExp = moveArticleToEnd(newExp)
+    newExp = move_article_to_end(newExp)
 
     if len(newExp) == 0:
         return expansion
