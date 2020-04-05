@@ -66,7 +66,7 @@ class Downloader():
             for expansion in expansion_data["expansions"]:
                 if expansion["inbound"] and expansion["id"] in game_id_to_expansion_expansions:
                     game_id_to_expansion_expansions[expansion["id"]].append(expansion_data)
-                if isPromoBox(expansion_data["id"]):
+                if isPromoBox(expansion_data):
                     games_data.append(expansion_data)
                     game_id_to_accessory[expansion_data["id"]] = []
 
@@ -82,7 +82,7 @@ class Downloader():
         for expansion_data in expansions_data:
             for expansion in expansion_data["expansions"]:
                 if expansion["inbound"] and expansion["id"] in game_id_to_expansion:
-                    if not isPromoBox(expansion_data["id"]):
+                    if not isPromoBox(expansion_data):
                         game_id_to_expansion[expansion["id"]].append(expansion_data)
                         game_id_to_expansion[expansion["id"]].extend(game_id_to_expansion_expansions[expansion_data["id"]])
                         game_id_to_accessory[expansion["id"]].extend(game_id_to_expansion_accessory[expansion_data["id"]])
@@ -125,11 +125,12 @@ class Downloader():
 
         return games
 
-# TODO make this configurable - maybe fake out that these are games
-# Ignore the Deutscher Spielepreile Goodie Boxes and Brettspiel Adventskalender
-def isPromoBox(id):
+# Ignore the Deutscher Spielepreile Goodie Boxes and Brettspiel Adventskalender as expansions and treat them like base games
+def isPromoBox(game):
+    # return game["id"] in (178656, 191779, 204573, 231506, 256951, 205611, 232298, 257590, 286086)
     # Change this to look for board game family 39378 (Box of Promos)
-    return id in (178656, 191779, 204573, 231506, 256951, 205611, 232298, 257590, 286086)
+    return any(39378 == family["id"] for family in game["families"])
+
 
 articles = ['A', 'An', 'The']
 def moveArticleToEnd(orig):

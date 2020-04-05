@@ -213,6 +213,16 @@ class BGGClient:
                             alias="categories",
                         ),
                         xml.array(
+                            xml.dictionary(
+                                "link[@type='boardgamefamily']", [
+                                    xml.integer(".", attribute="id"),
+                                    xml.string(".", attribute="value", alias="name")
+                                ],
+                                required=False
+                            ),
+                            alias="families",
+                        ),
+                        xml.array(
                             xml.string(
                                 "link[@type='boardgamemechanic']",
                                 attribute="value",
