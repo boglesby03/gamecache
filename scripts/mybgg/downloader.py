@@ -38,7 +38,6 @@ class Downloader():
 
         params = {"subtype": "boardgameaccessory", "own": 1}
         accessory_data = self.client.collection(user_name=user_name, **params)
-
         accessory_list_data = self.client.game_list([game_in_collection["id"] for game_in_collection in accessory_data])
 
         plays_data = self.client.plays(
@@ -62,6 +61,15 @@ class Downloader():
         game_id_to_accessory = {game["id"]: [] for game in games_data}
         game_id_to_expansion_accessory = {game["id"]: [] for game in expansions_data}
 
+        game_id_to_expansion_expansions = {game["id"]: [] for game in expansions_data}
+        for expansion_data in expansions_data:
+            for expansion in expansion_data["expansions"]:
+                if expansion["inbound"] and expansion["id"] in game_id_to_expansion_expansions:
+                    game_id_to_expansion_expansions[expansion["id"]].append(expansion_data)
+                if isPromoBox(expansion_data["id"]):
+                    games_data.append(expansion_data)
+                    game_id_to_accessory[expansion_data["id"]] = []
+
         for accessory_data in accessory_list_data:
             for accessory in accessory_data["accessory"]:
                 if accessory["inbound"]:
@@ -70,19 +78,11 @@ class Downloader():
                     elif accessory["id"] in game_id_to_expansion_accessory:
                         game_id_to_expansion_accessory[accessory["id"]].append(accessory_data)
 
-        game_id_to_expansion_expansions = {game["id"]: [] for game in expansions_data}
-        for expansion_data in expansions_data:
-            for expansion in expansion_data["expansions"]:
-                if expansion["inbound"] and expansion["id"] in game_id_to_expansion_expansions:
-                    game_id_to_expansion_expansions[expansion["id"]].append(expansion_data)
-
         game_id_to_expansion = {game["id"]: [] for game in games_data}
         for expansion_data in expansions_data:
             for expansion in expansion_data["expansions"]:
                 if expansion["inbound"] and expansion["id"] in game_id_to_expansion:
-                    # TODO make this configurable
-                    # Ignore the Deutscher Spielepreile Goodie Boxes and Brettspiel Adventskalender
-                    if not expansion_data["id"] in (178656, 191779, 204573, 231506, 256951, 205611, 232298, 257590, 286086):
+                    if not isPromoBox(expansion_data["id"]):
                         game_id_to_expansion[expansion["id"]].append(expansion_data)
                         game_id_to_expansion[expansion["id"]].extend(game_id_to_expansion_expansions[expansion_data["id"]])
                         game_id_to_accessory[expansion["id"]].extend(game_id_to_expansion_accessory[expansion_data["id"]])
@@ -125,6 +125,11 @@ class Downloader():
 
         return games
 
+# TODO make this configurable - maybe fake out that these are games
+# Ignore the Deutscher Spielepreile Goodie Boxes and Brettspiel Adventskalender
+def isPromoBox(id):
+    # Change this to look for board game family 39378 (Box of Promos)
+    return id in (178656, 191779, 204573, 231506, 256951, 205611, 232298, 257590, 286086)
 
 articles = ['A', 'An', 'The']
 def moveArticleToEnd(orig):
@@ -159,7 +164,7 @@ def remove_prefix(expansion, game):
     gameShortTitle = game.split(":")[0]
 
     #Carcassonne Big Box 5, Alien Frontiers Big Box, El Grande Big Box
-    if game.contains("Big Box"):
+    if "Big Box" in game:
         gameMediumTitle = re.sub(r"\s*\(?Big Box.*", "", game, flags=re.IGNORECASE)
     elif game == "Bruge":
         gameMediumTitle = "Brügge"
