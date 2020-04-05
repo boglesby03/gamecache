@@ -88,6 +88,13 @@
               {{^ families_str }}<em>No families</em>{{/ families_str }}
             </dd>
           </div>
+          <div>
+            <dt>Designers</dt>
+            <dd>
+              {{# designers }}<a href="https://boardgamegeek.com/boardgamedesigner/{{{ id }}}">{{ name }}</a><br/>{{/ designers }}
+              {{^ designers }}<em>Unknown Designer</em>{{/ designers }}
+            </dd>
+          </div>
           {{# has_expansions }}
           <div class="expansions">
             <dt>Expansions</dt>

@@ -126,6 +126,10 @@ class Downloader():
                     family_list.append(newFam)
             game.families = family_list
 
+            # I really don't care that every publisher has published chess
+            if game.id == 171:
+                game.publishers = []
+
             # Resort the list after updating the names
             game.expansions = sorted(game.expansions, key=lambda x: x.name)
             game.accessories = sorted(game.accessories, key=lambda x: x.name)

@@ -255,6 +255,7 @@ class BGGClient:
                             xml.dictionary(
                                 "link[@type='boardgamedesigner']", [
                                     xml.integer(".", attribute="id"),
+                                    xml.string(".", attribute="value", alias="name"),
                                     xml.boolean(".", attribute="inbound", required=False),
                                 ],
                                 required=False
@@ -265,6 +266,7 @@ class BGGClient:
                             xml.dictionary(
                                 "link[@type='boardgameartist']", [
                                     xml.integer(".", attribute="id"),
+                                    xml.string(".", attribute="value", alias="name"),
                                     xml.boolean(".", attribute="inbound", required=False),
                                 ],
                                 required=False
@@ -275,6 +277,7 @@ class BGGClient:
                             xml.dictionary(
                                 "link[@type='boardgamepublisher']", [
                                     xml.integer(".", attribute="id"),
+                                    xml.string(".", attribute="value", alias="name"),
                                     xml.boolean(".", attribute="inbound", required=False),
                                 ],
                                 required=False
