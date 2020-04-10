@@ -164,12 +164,12 @@ def move_article_to_end(orig):
     if orig == None or orig == "":
         return orig
 
-    newTitle = orig
-    title = newTitle.split()
+    new_title = orig
+    title = new_title.split()
     if title[0] in articles:
-        newTitle = ' '.join(title[1:]) + ", " + title[0]
+        new_title = ' '.join(title[1:]) + ", " + title[0]
 
-    return newTitle
+    return new_title
 
 def move_article_to_start(orig):
     """Move the article back to the front for string comparison"""
@@ -177,69 +177,76 @@ def move_article_to_start(orig):
     if orig == None or orig == "":
         return orig
 
-    newTitle = orig
+    new_title = orig
     title = orig.split(", ")
     if title[-1] in articles:
-        newTitle = title[-1] + " " + ", ".join(title[:-1])
-    return newTitle
+        new_title = title[-1] + " " + ", ".join(title[:-1])
+    return new_title
 
 def remove_prefix(expansion, game):
     """rules for cleaning up linked items to remove duplicate data, such as the title being repeated on every expansion"""
 
     game = move_article_to_start(game)
-    newExp = move_article_to_start(expansion)
+    new_exp = move_article_to_start(expansion)
 
-    gameMediumTitle = game.split("–")[0]
-    gameShortTitle = game.split(":")[0]
+    game_medium_title = game.split("–")[0].strip()
+    game_short_title = game.split(":")[0].strip()
+    game_no_edition = game.split("(")[0].strip()
+
 
     #Carcassonne Big Box 5, Alien Frontiers Big Box, El Grande Big Box
     if "Big Box" in game:
-        gameMediumTitle = re.sub(r"\s*\(?Big Box.*", "", game, flags=re.IGNORECASE)
-    elif game == "Bruge":
-        gameMediumTitle = "Brügge"
+        game_medium_title = re.sub(r"\s*\(?Big Box.*", "", game, flags=re.IGNORECASE)
+
+    if game == "Bruge":
+        game_medium_title = "Brügge"
     elif game == "Empires: Age of Discovery":
-        gameMediumTitle = game
+        game_medium_title = game
         game = "Glenn Drover's Empires: Age of Discovery"
     elif game in ("King of Tokyo", "King of New York"):
-        gameShortTitle = game
-        gameMediumTitle = "King of Tokyo/New York"
+        game_short_title = game
+        game_medium_title = "King of Tokyo/New York"
         game = "King of Tokyo/King of New York"
     elif game.startswith("Neuroshima Hex"):
-        gameShortTitle = "Neuroshima Hex"
+        game_short_title = "Neuroshima Hex"
     elif game.startswith("No Thanks"):
-        gameShortTitle = "Schöne Sch#!?e"
-    elif gameShortTitle == "Power Grid Deluxe":
-        gameMediumTitle = "Power Grid"
-    elif gameShortTitle == "Rivals for Catan":
-        newExp = remove_prefix(newExp, "The Rivals for Catan")
-        newExp = remove_prefix(newExp, "Die Fürsten von Catan")
-        newExp = remove_prefix(newExp, "Catan: Das Duell")
-    elif gameShortTitle == "Robinson Crusoe":
+        game_short_title = "Schöne Sch#!?e"
+    elif game_short_title == "Power Grid Deluxe":
+        game_medium_title = "Power Grid"
+    elif game_short_title == "Rivals for Catan":
+        new_exp = remove_prefix(new_exp, "The Rivals for Catan")
+        new_exp = remove_prefix(new_exp, "Die Fürsten von Catan")
+        new_exp = remove_prefix(new_exp, "Catan: Das Duell")
+    elif game_short_title == "Robinson Crusoe":
         # for some reason the accessories have "Adventure" instead of "Adventures"
-        gameMediumTitle = "Robinson Crusoe: Adventure on the Cursed Island"
+        game_medium_title = "Robinson Crusoe: Adventure on the Cursed Island"
+    elif game_short_title == "Rococo":
+        game_medium_title = "Rokoko"
     elif game == "Small World Underground":
-        gameShortTitle = "Small World"
+        game_short_title = "Small World"
     elif game == "Viticulture Essential Edition":
-        gameShortTitle = "Viticulture"
+        game_short_title = "Viticulture"
 
     game = game.lower()
-    gameMediumTitle = gameMediumTitle.lower()
-    gameShortTitle = gameShortTitle.lower()
+    game_medium_title = game_medium_title.lower()
+    game_short_title = game_short_title.lower()
 
-    if newExp.lower().startswith(game):
-        newExp = newExp[len(game):]
-    elif newExp.lower().startswith(gameMediumTitle):
-        newExp = newExp[len(gameMediumTitle):]
-    elif newExp.lower().startswith(gameShortTitle):
-        newExp = newExp[len(gameShortTitle):]
+    if new_exp.lower().startswith(game):
+        new_exp = new_exp[len(game):]
+    elif new_exp.lower().startswith(game_medium_title):
+        new_exp = new_exp[len(game_medium_title):]
+    elif new_exp.lower().startswith(game_short_title):
+        new_exp = new_exp[len(game_short_title):]
+    elif new_exp.lower().startswith(game_no_edition):
+        new_exp = new_exp[len(game_no_edition):]
 
-    newExp = re.sub(r"\s*\(?Fan expans.*", " [Fan]", newExp, flags=re.IGNORECASE)
-    newExp = re.sub(r"\s*Map Collection: Volume ", "Map Pack ", newExp, flags=re.IGNORECASE)
-    newExp = re.sub(r"^\W+", "", newExp)
-    newExp = re.sub(r" \– ", ": ", newExp)
-    newExp = move_article_to_end(newExp)
+    new_exp = re.sub(r"\s*\(?Fan expans.*", " [Fan]", new_exp, flags=re.IGNORECASE)
+    new_exp = re.sub(r"\s*Map Collection: Volume ", "Map Pack ", new_exp, flags=re.IGNORECASE)
+    new_exp = re.sub(r"^\W+", "", new_exp)
+    new_exp = re.sub(r" \– ", ": ", new_exp)
+    new_exp = move_article_to_end(new_exp)
 
-    if len(newExp) == 0:
+    if len(new_exp) == 0:
         return expansion
 
-    return newExp
+    return new_exp
