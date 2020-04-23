@@ -189,63 +189,63 @@ def remove_prefix(expansion, game):
     game = move_article_to_start(game)
     new_exp = move_article_to_start(expansion)
 
-    game_medium_title = game.split("–")[0].strip()
-    game_short_title = game.split(":")[0].strip()
-    game_no_edition = game.split("(")[0].strip()
-
+    game_titles = []
+    game_titles.append(game)
+    game_titles.append(game.split("–")[0].strip()) # Medium Title
+    game_titles.append(game.split(":")[0].strip()) # Short Title
+    game_titles.append(game.split("(")[0].strip()) # No Edition
 
     #Carcassonne Big Box 5, Alien Frontiers Big Box, El Grande Big Box
-    if "Big Box" in game:
-        game_medium_title = re.sub(r"\s*\(?Big Box.*", "", game, flags=re.IGNORECASE)
+    if any("Big Box" in title for title in game_titles):
+        game_tmp = re.sub(r"\s*\(?Big Box.*", "", game, flags=re.IGNORECASE)
+        game_titles.append(game_tmp)
 
-    if game == "Bruge":
-        game_medium_title = "Brügge"
-    elif game == "Empires: Age of Discovery":
-        game_medium_title = game
-        game = "Glenn Drover's Empires: Age of Discovery"
-    elif game in ("King of Tokyo", "King of New York"):
-        game_short_title = game
-        game_medium_title = "King of Tokyo/New York"
-        game = "King of Tokyo/King of New York"
-    elif game.startswith("Neuroshima Hex"):
-        game_short_title = "Neuroshima Hex"
-    elif game.startswith("No Thanks"):
-        game_short_title = "Schöne Sch#!?e"
-    elif game_short_title == "Power Grid Deluxe":
-        game_medium_title = "Power Grid"
-    elif game_short_title == "Rivals for Catan":
-        new_exp = remove_prefix(new_exp, "The Rivals for Catan")
-        new_exp = remove_prefix(new_exp, "Die Fürsten von Catan")
-        new_exp = remove_prefix(new_exp, "Catan: Das Duell")
-    elif game_short_title == "Robinson Crusoe":
+    if "Bruge" in game_titles:
+        game_titles.append("Brügge")
+    elif "Empires: Age of Discovery" in game_titles:
+        game_titles.insert(0, "Glenn Drover's Empires: Age of Discovery")
+    elif any(title in ("King of Tokyo", "King of New York") for title in game_titles):
+        game_titles.insert(0, "King of Tokyo/New York")
+        game_titles.insert(0, "King of Tokyo/King of New York")
+    elif any(title.startswith("Neuroshima Hex") for title in game_titles):
+        game_titles.append("Neuroshima Hex")
+    elif "No Thanks!" in game_titles:
+        game_titles.append("Schöne Sch#!?e")
+    elif "Power Grid Deluxe" in game_titles:
+        game_titles.append("Power Grid")
+    elif "Rivals for Catan" in game_titles:
+        game_titles.append("The Rivals for Catan")
+        game_titles.append("Die Fürsten von Catan")
+        game_titles.append("Catan: Das Duell")
+    elif "Robinson Crusoe" in game_titles:
         # for some reason the accessories have "Adventure" instead of "Adventures"
-        game_medium_title = "Robinson Crusoe: Adventure on the Cursed Island"
-    elif game_short_title == "Rococo":
-        game_medium_title = "Rokoko"
-    elif game == "Small World Underground":
-        game_short_title = "Small World"
-    elif game == "Viticulture Essential Edition":
-        game_short_title = "Viticulture"
+        game_titles.insert(0, "Robinson Crusoe: Adventure on the Cursed Island")
+    elif "Rococo" in game_titles:
+        game_titles.append("Rokoko")
+    elif "Small World Underground" in game_titles:
+        game_titles.append("Small World")
+    elif "Viticulture Essential Edition" in game_titles:
+        game_titles.append("Viticulture")
 
-    game = game.lower()
-    game_medium_title = game_medium_title.lower()
-    game_short_title = game_short_title.lower()
+    titles = [x.lower() for x in game_titles]
 
-    if new_exp.lower().startswith(game):
-        new_exp = new_exp[len(game):]
-    elif new_exp.lower().startswith(game_medium_title):
-        new_exp = new_exp[len(game_medium_title):]
-    elif new_exp.lower().startswith(game_short_title):
-        new_exp = new_exp[len(game_short_title):]
-    elif new_exp.lower().startswith(game_no_edition):
-        new_exp = new_exp[len(game_no_edition):]
+    new_exp_lower = new_exp.lower()
+    for title in titles:
+        if new_exp_lower.startswith(title):
+            new_exp = new_exp[len(title):]
+            break
 
+    # Shorten Fan Expansions to just [Fan]
     new_exp = re.sub(r"\s*\(?Fan expans.*", " [Fan]", new_exp, flags=re.IGNORECASE)
+    # Ticket to Ride Map Collection Titles are too long
     new_exp = re.sub(r"\s*Map Collection: Volume ", "Map Pack ", new_exp, flags=re.IGNORECASE)
+    # Remove leading whitespace
     new_exp = re.sub(r"^\W+", "", new_exp)
+    # If there is still a dash (secondary delimiter), swap it to a colon
     new_exp = re.sub(r" \– ", ": ", new_exp)
     new_exp = move_article_to_end(new_exp)
 
+    # If we ended up removing everything - then just reset to what it started with
     if len(new_exp) == 0:
         return expansion
 
