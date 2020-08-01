@@ -3,7 +3,7 @@
 
 - [X] Expansions/accessories of expansions
 - [X] Still need to handle exceptions to expansions of expansions - such as calendars - again should be fixed in bgg
-- [ ]add publishers, designers, artists to search?
+- [ ] add publishers, designers, artists to search?
 - [ ] Make lists - articles, ignored expansions configurable
 - [ ] Move hard-coded expansion name rules
 - [ ] I need a place to list expansions that have no associated games

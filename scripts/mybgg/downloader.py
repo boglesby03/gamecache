@@ -207,12 +207,16 @@ def remove_prefix(expansion, game):
     elif any(title in ("King of Tokyo", "King of New York") for title in game_titles):
         game_titles.insert(0, "King of Tokyo/New York")
         game_titles.insert(0, "King of Tokyo/King of New York")
+    elif "Legends of Andor" in game_titles:
+        game_titles.append("Die Legenden von Andor")
     elif any(title.startswith("Neuroshima Hex") for title in game_titles):
         game_titles.append("Neuroshima Hex")
     elif "No Thanks!" in game_titles:
         game_titles.append("Schöne Sch#!?e")
     elif "Power Grid Deluxe" in game_titles:
         game_titles.append("Power Grid")
+    elif "Queendomino" in game_titles:
+        game_titles.append("Kingdomino")
     elif "Rivals for Catan" in game_titles:
         game_titles.append("The Rivals for Catan")
         game_titles.append("Die Fürsten von Catan")

@@ -28,6 +28,7 @@ class BoardGame:
         self.rank = self.calc_rank(game_data)
         self.usersrated = self.calc_usersrated(game_data)
         self.numowned = self.calc_numowned(game_data)
+        self.average = self.calc_average(game_data)
         self.rating = self.calc_rating(game_data)
         self.numplays = numplays
         self.image = image
@@ -94,8 +95,15 @@ class BoardGame:
 
         return Decimal(game_data["rating"])
 
+    def calc_average(self, game_data):
+        if not game_data["average"]:
+            return None
+
+        return Decimal(game_data["average"])
+
     def calc_weight(self, game_data):
         weight_mapping = {
+            -1: "Unknown",
             0: "Light",
             1: "Light",
             2: "Light Medium",
@@ -103,4 +111,5 @@ class BoardGame:
             4: "Medium Heavy",
             5: "Heavy",
         }
-        return weight_mapping[round(Decimal(game_data["weight"] or 0))]
+
+        return weight_mapping[round(Decimal(game_data["weight"] or -1))]

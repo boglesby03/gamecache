@@ -326,6 +326,11 @@ class BGGClient:
                             alias="usersrated"
                         ),
                         xml.string(
+                            "statistics/ratings/average",
+                            attribute="value",
+                            alias="average"
+                        ),
+                        xml.string(
                             "statistics/ratings/owned",
                             attribute="value",
                             alias="numowned"
