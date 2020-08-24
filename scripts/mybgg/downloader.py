@@ -211,6 +211,8 @@ def remove_prefix(expansion, game):
         game_titles.append("Die Legenden von Andor")
     elif any(title.startswith("Neuroshima Hex") for title in game_titles):
         game_titles.append("Neuroshima Hex")
+    elif "Lord of the Rings: Journeys in Middle-earth" in game_titles:
+        game_titles.append("The Lord of the Rings: Journeys in Middle Earth")
     elif "No Thanks!" in game_titles:
         game_titles.append("Schöne Sch#!?e")
     elif "Power Grid Deluxe" in game_titles:
