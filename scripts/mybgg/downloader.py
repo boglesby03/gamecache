@@ -202,6 +202,9 @@ def remove_prefix(expansion, game):
 
     if "Bruge" in game_titles:
         game_titles.append("Brügge")
+    elif "Chronicles of Crime" in game_titles:
+        game_titles.insert(0, "The Millennium Series")
+        game_titles.insert(0, "Chronicles of Crime: The Millennium Series")
     elif "Empires: Age of Discovery" in game_titles:
         game_titles.insert(0, "Glenn Drover's Empires: Age of Discovery")
     elif any(title in ("King of Tokyo", "King of New York") for title in game_titles):
@@ -209,9 +212,10 @@ def remove_prefix(expansion, game):
         game_titles.insert(0, "King of Tokyo/King of New York")
     elif "Legends of Andor" in game_titles:
         game_titles.append("Die Legenden von Andor")
-    elif "Lord of the Rings: Journeys in Middle-Earth":
+    elif "Lord of the Rings: Journeys in Middle-Earth" in game_titles:
         game_titles.append("Lord of the Rings: Journeys in Middle Earth")
     elif any(title.startswith("Neuroshima Hex") for title in game_titles):
+        game_titles.append("Neuroshima Hex!")
         game_titles.append("Neuroshima Hex")
     elif "Lord of the Rings: Journeys in Middle-earth" in game_titles:
         game_titles.append("The Lord of the Rings: Journeys in Middle Earth")
