@@ -126,9 +126,14 @@ class Downloader():
                     family_list.append(newFam)
             game.families = family_list
 
-            # I really don't care that every publisher has published chess
-            if game.id == 171:
-                game.publishers = []
+            # Ignore publishers for Public Domain games
+            publisher_list = []
+            for pub in game.publishers:
+                if pub.id == 171:  # (Public Domain)
+                    publisher_list.clear()
+                    publisher_list.append(pub)
+                    break
+                publisher_list.append(pub)
 
             # Resort the list after updating the names
             game.expansions = sorted(game.expansions, key=lambda x: x.name)
