@@ -126,14 +126,7 @@ class Downloader():
                     family_list.append(newFam)
             game.families = family_list
 
-            # Ignore publishers for Public Domain games
-            publisher_list = []
-            for pub in game.publishers:
-                if pub.id == 171:  # (Public Domain)
-                    publisher_list.clear()
-                    publisher_list.append(pub)
-                    break
-                publisher_list.append(pub)
+            game.publishers = publisher_filter(game.publishers)
 
             # Resort the list after updating the names
             game.expansions = sorted(game.expansions, key=lambda x: x.name)
@@ -142,6 +135,18 @@ class Downloader():
             game.families = sorted(game.families, key=lambda x: x["name"])
 
         return games
+
+# Ignore publishers for Public Domain games
+def publisher_filter(publishers):
+    publisher_list = []
+    for pub in publishers:
+        if pub["id"] == 171:  # (Public Domain)
+            publisher_list.clear()
+            publisher_list.append(pub)
+            break
+        publisher_list.append(pub)
+
+    return publisher_list
 
 
 # May want to make other changes to the family similar to the prefix logic
