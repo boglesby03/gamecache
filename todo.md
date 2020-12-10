@@ -11,3 +11,5 @@
   - [ ] Filter by wishlist level - 1-5
 - [ ] Unpublished games - better way to create entries for games that don't have a bgg entry yet
 - [ ] Move Accessories next to Expansions
+- [ ] Add expansion/accessory images on hover
+- [ ] Include custom notes
