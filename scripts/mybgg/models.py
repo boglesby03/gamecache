@@ -10,6 +10,9 @@ class BoardGame:
         self.id = game_data["id"]
 
         name = collection_data["name"]
+        if len(name) == 0:
+            name = game_data["name"]
+
         title = name.split()
         if title[0] in articles:
             name = ' '.join(title[1:]) + ", " + title[0]
@@ -17,7 +20,7 @@ class BoardGame:
         self.name = name
         
         self.alternate_names = self.gen_name_list(game_data)
-    #    self.alternate_names.append(name)
+        self.alternate_names.append(name)
 
         self.description = html.unescape(game_data["description"])
         self.categories = game_data["categories"]
