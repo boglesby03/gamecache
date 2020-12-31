@@ -45,15 +45,16 @@ class Downloader():
         )
 
         game_list_data = self.client.game_list([game_in_collection["id"] for game_in_collection in collection_data])
-        game_id_to_tags = {game["id"]: game["tags"] for game in collection_data}
-        game_id_to_image = {game["id"]: game["image_version"] or game["image"] for game in collection_data}
-        game_id_to_numplays = {game["id"]: game["numplays"] for game in collection_data}
 
-        game_id_to_players = {game["id"]: [] for game in collection_data}
+        collection_by_id = {game["id"]: game for game in collection_data}
+        for id in collection_by_id:
+            collection_by_id[id]["players"] = []
+
         for play in plays_data:
-            if play["game"]["gameid"] in game_id_to_players:
-                game_id_to_players[play["game"]["gameid"]].extend(play["players"])
-                game_id_to_players[play["game"]["gameid"]] = list(set(game_id_to_players[play["game"]["gameid"]]))
+            play_id = play["game"]["gameid"]
+            if play_id in collection_by_id:
+                collection_by_id[play_id]["players"].extend(play["players"])
+                collection_by_id[play_id]["players"] = list(set(collection_by_id[play_id]["players"]))
 
         games_data = list(filter(lambda x: x["type"] == "boardgame", game_list_data))
         expansions_data = list(filter(lambda x: x["type"] == "boardgameexpansion", game_list_data))
@@ -90,16 +91,13 @@ class Downloader():
         games = [
             BoardGame(
                 game_data,
-                image=game_id_to_image[game_data["id"]],
-                tags=game_id_to_tags[game_data["id"]],
-                numplays=game_id_to_numplays[game_data["id"]],
-                previous_players=game_id_to_players[game_data["id"]],
+                collection_by_id[game_data["id"]],
                 expansions=set(
-                    BoardGame(expansion_data)
+                    BoardGame(expansion_data, collection_by_id[expansion_data["id"]])
                     for expansion_data in game_id_to_expansion[game_data["id"]]
                 ),
                 accessories=set(
-                    BoardGame(accessory_data)
+                    BoardGame(accessory_data, collection_by_id[accessory_data["id"]])
                     for accessory_data in game_id_to_accessory[game_data["id"]]
                 )
             )
@@ -196,46 +194,9 @@ def move_article_to_start(orig):
 def remove_prefix(expansion, game_details):
     """rules for cleaning up linked items to remove duplicate data, such as the title being repeated on every expansion"""
 
-    game = move_article_to_start(game_details.name)
     new_exp = move_article_to_start(expansion)
 
-    game_titles = []
-    game_titles.append(game)
-    game_titles.append(game.split("–")[0].strip()) # Medium Title
-    game_titles.append(game.split(":")[0].strip()) # Short Title
-    game_titles.append(game.split("(")[0].strip()) # No Edition
-
-    #Carcassonne Big Box 5, Alien Frontiers Big Box, El Grande Big Box
-    if any("Big Box" in title for title in game_titles):
-        game_tmp = re.sub(r"\s*\(?Big Box.*", "", game, flags=re.IGNORECASE)
-        game_titles.append(game_tmp)
-
-    if "Chronicles of Crime" in game_titles:
-        game_titles.insert(0, "The Millennium Series")
-        game_titles.insert(0, "Chronicles of Crime: The Millennium Series")
-    elif any(title in ("King of Tokyo", "King of New York") for title in game_titles):
-        game_titles.insert(0, "King of Tokyo/New York")
-        game_titles.insert(0, "King of Tokyo/King of New York")
-    elif "Legends of Andor" in game_titles:
-        game_titles.append("Die Legenden von Andor")
-    # elif "No Thanks!" in game_titles:
-    #     game_titles.append("Schöne Sch#!?e")
-    elif "Power Grid Deluxe" in game_titles:
-        game_titles.append("Power Grid")
-    elif "Queendomino" in game_titles:
-        game_titles.append("Kingdomino")
-    # elif "Rivals for Catan" in game_titles:
-    #     game_titles.append("The Rivals for Catan")
-    #     game_titles.append("Die Fürsten von Catan")
-    #     game_titles.append("Catan: Das Duell")
-    # elif "Rococo" in game_titles:
-    #     game_titles.append("Rokoko")
-    elif "Small World Underground" in game_titles:
-        game_titles.append("Small World")
-    elif "Viticulture Essential Edition" in game_titles:
-        game_titles.append("Viticulture")
-
-    game_titles.extend(game_details.alternate_names)
+    game_titles = game_details.alternate_names
     titles = [x.lower() for x in game_titles]
 
     new_exp_lower = new_exp.lower()
@@ -252,6 +213,7 @@ def remove_prefix(expansion, game_details):
     new_exp = re.sub(r"^\W+", "", new_exp)
     # If there is still a dash (secondary delimiter), swap it to a colon
     new_exp = re.sub(r" \– ", ": ", new_exp)
+    
     new_exp = move_article_to_end(new_exp)
 
     # If we ended up removing everything - then just reset to what it started with

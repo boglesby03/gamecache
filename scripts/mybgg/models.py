@@ -1,20 +1,24 @@
 from decimal import Decimal
 import html
+import re
 
 
 articles = ['A', 'An', 'The']
 
 class BoardGame:
-    def __init__(self, game_data, image="", tags=[], numplays=0, previous_players=[], expansions=[], accessories=[]):
+    def __init__(self, game_data, collection_data, expansions=[], accessories=[]):
         self.id = game_data["id"]
 
-        name = game_data["name"]
+        name = collection_data["name"]
         title = name.split()
         if title[0] in articles:
             name = ' '.join(title[1:]) + ", " + title[0]
 
         self.name = name
-        self.alternate_names = game_data["alternate_names"]
+        
+        self.alternate_names = self.gen_name_list(game_data)
+    #    self.alternate_names.append(name)
+
         self.description = html.unescape(game_data["description"])
         self.categories = game_data["categories"]
         self.mechanics = game_data["mechanics"]
@@ -23,6 +27,8 @@ class BoardGame:
         self.artists = game_data["artists"]
         self.designers = game_data["designers"]
         self.publishers = game_data["publishers"]
+        self.reimplements = game_data["reimplements"]
+        self.integrates = game_data["integrates"]
         self.players = self.calc_num_players(game_data, expansions)
         self.weight = self.calc_weight(game_data)
         self.playing_time = self.calc_playing_time(game_data)
@@ -31,10 +37,10 @@ class BoardGame:
         self.numowned = self.calc_numowned(game_data)
         self.average = self.calc_average(game_data)
         self.rating = self.calc_rating(game_data)
-        self.numplays = numplays
-        self.image = image
-        self.tags = tags
-        self.previous_players = previous_players
+        self.numplays = collection_data["numplays"]
+        self.image = collection_data["image_version"]
+        self.tags = collection_data["tags"]
+        self.previous_players = collection_data["players"]
         self.expansions = expansions
         self.accessories = accessories
 
@@ -114,3 +120,52 @@ class BoardGame:
         }
 
         return weight_mapping[round(Decimal(game_data["weight"] or -1))]
+
+    def gen_name_list(self, game_data):
+        """rules for cleaning up linked items to remove duplicate data, such as the title being repeated on every expansion"""
+
+        game = game_data["name"]
+
+        game_titles = []
+        game_titles.append(game)
+        game_titles.append(game.split("–")[0].strip()) # Medium Title
+        game_titles.append(game.split(":")[0].strip()) # Short Title
+        game_titles.append(game.split("(")[0].strip()) # No Edition
+
+        #Carcassonne Big Box 5, Alien Frontiers Big Box, El Grande Big Box
+        if any("Big Box" in title for title in game_titles):
+            game_tmp = re.sub(r"\s*\(?Big Box.*", "", game, flags=re.IGNORECASE)
+            game_titles.append(game_tmp)
+
+        if "Chronicles of Crime" in game_titles:
+            game_titles.insert(0, "The Millennium Series")
+            game_titles.insert(0, "Chronicles of Crime: The Millennium Series")
+        elif any(title in ("King of Tokyo", "King of New York") for title in game_titles):
+            game_titles.insert(0, "King of Tokyo/New York")
+            game_titles.insert(0, "King of Tokyo/King of New York")
+        elif "Legends of Andor" in game_titles:
+            game_titles.append("Die Legenden von Andor")
+        elif "No Thanks!" in game_titles:
+            game_titles.append("Schöne Sch#!?e")
+        elif "Power Grid Deluxe" in game_titles:
+            game_titles.append("Power Grid")
+        elif "Queendomino" in game_titles:
+            game_titles.append("Kingdomino")
+        elif "Rivals for Catan" in game_titles:
+            game_titles.append("The Rivals for Catan")
+            game_titles.append("Die Fürsten von Catan")
+            game_titles.append("Catan: Das Duell")
+        elif "Rococo" in game_titles:
+            game_titles.append("Rokoko")
+        elif "Small World Underground" in game_titles:
+            game_titles.append("Small World")
+        elif "Viticulture Essential Edition" in game_titles:
+            game_titles.append("Viticulture")
+
+        game_titles.extend(game_data["alternate_names"])
+        game_titles.extend([ game["name"] for game in game_data["reimplements"]])
+        game_titles.extend([ game["name"] for game in game_data["integrates"]])
+
+        # titles = [x.lower() for x in game_titles]
+
+        return game_titles
