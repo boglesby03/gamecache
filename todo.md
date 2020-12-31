@@ -13,3 +13,4 @@
 - [ ] Move Accessories next to Expansions
 - [ ] Add expansion/accessory images on hover
 - [ ] Include custom notes
+- [ ] Handle multiple versions/copies - i.e. Similo, Get Bit Expansions
