@@ -237,6 +237,9 @@ function get_widgets(SETTINGS) {
           game.has_expansions = (game.expansions.length > 0);
           game.has_accessories = (game.accessories.length > 0);
           game.has_contained = (game.contained.length > 0);
+          game.has_integrates = (game.integrates.length > 0);
+          game.has_comment = (game.comment.trim().length > 0)
+          game.has_wishlist_comment = (game.wishlist_comment.trim().length > 0)
           game.average_str = game.average.toFixed(2);
 
           return game;

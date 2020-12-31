@@ -137,13 +137,29 @@
             </dd>
           </div>
           {{/ has_accessories }}
+          {{# has_integrates }}
+          <div class="expansions">
+            <dt>Integrates With</dt>
+            <dd>
+              <ul>
+                {{# integrates }}
+                <li><a href="https://boardgamegeek.com/boardgame/{{{ id }}}">{{ name }}</a></li>
+                {{/ integrates }}
+              </ul>
+            </dd>
+          </div>
+          {{/ has_integrates }}
         </dl>
-        <p class="comment">
-          {{# helpers.highlight }}{ "attribute": "comment" }{{/ helpers.highlight }}
+        {{# has_comment }}
+        <p class="description">
+          Comment: {{ comment }}
         </p>
-        <p class="wishlist_comment">
-          {{# helpers.highlight }}{ "attribute": "wishlist_comment" }{{/ helpers.highlight }}
+        {{/ has_comment }}
+        {{# has_wishlist_comment }}
+        <p class="description">
+          Wishlist Comment: {{ wishlist_comment }}
         </p>
+        {{/ has_wishlist_comment }}
         <p class="description">
           {{# helpers.highlight }}{ "attribute": "description" }{{/ helpers.highlight }}
         </p>
