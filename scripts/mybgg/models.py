@@ -14,6 +14,7 @@ class BoardGame:
             name = ' '.join(title[1:]) + ", " + title[0]
 
         self.name = name
+        self.alternate_names = game_data["alternate_names"]
         self.description = html.unescape(game_data["description"])
         self.categories = game_data["categories"]
         self.mechanics = game_data["mechanics"]

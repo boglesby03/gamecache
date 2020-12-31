@@ -109,13 +109,13 @@ class Downloader():
         # Cleanup the game
         for game in games:
             for exp in game.expansions:
-                exp.name = remove_prefix(exp.name, game.name)
+                exp.name = remove_prefix(exp.name, game)
             for acc in game.accessories:
-                acc.name = remove_prefix(acc.name, game.name)
+                acc.name = remove_prefix(acc.name, game)
             contained_list = []
             for con in game.contained:
                 if con["inbound"]:
-                    con["name"] = remove_prefix(con["name"], game.name)
+                    con["name"] = remove_prefix(con["name"], game)
                     contained_list.append(con)
             game.contained = contained_list
 
@@ -193,10 +193,10 @@ def move_article_to_start(orig):
         new_title = title[-1] + " " + ", ".join(title[:-1])
     return new_title
 
-def remove_prefix(expansion, game):
+def remove_prefix(expansion, game_details):
     """rules for cleaning up linked items to remove duplicate data, such as the title being repeated on every expansion"""
 
-    game = move_article_to_start(game)
+    game = move_article_to_start(game_details.name)
     new_exp = move_article_to_start(expansion)
 
     game_titles = []
@@ -210,47 +210,32 @@ def remove_prefix(expansion, game):
         game_tmp = re.sub(r"\s*\(?Big Box.*", "", game, flags=re.IGNORECASE)
         game_titles.append(game_tmp)
 
-    if "Bruge" in game_titles:
-        game_titles.append("Brügge")
-    elif "Chronicles of Crime" in game_titles:
+    if "Chronicles of Crime" in game_titles:
         game_titles.insert(0, "The Millennium Series")
         game_titles.insert(0, "Chronicles of Crime: The Millennium Series")
-    elif "Empires: Age of Discovery" in game_titles:
-        game_titles.insert(0, "Glenn Drover's Empires: Age of Discovery")
     elif any(title in ("King of Tokyo", "King of New York") for title in game_titles):
         game_titles.insert(0, "King of Tokyo/New York")
         game_titles.insert(0, "King of Tokyo/King of New York")
     elif "Legends of Andor" in game_titles:
         game_titles.append("Die Legenden von Andor")
-    elif "Lord of the Rings: Journeys in Middle-Earth" in game_titles:
-        game_titles.append("Lord of the Rings: Journeys in Middle Earth")
-    elif any(title.startswith("Neuroshima Hex") for title in game_titles):
-        game_titles.append("Neuroshima Hex!")
-        game_titles.append("Neuroshima Hex")
-    elif "Lord of the Rings: Journeys in Middle-earth" in game_titles:
-        game_titles.append("The Lord of the Rings: Journeys in Middle Earth")
-    elif "No Thanks!" in game_titles:
-        game_titles.append("Schöne Sch#!?e")
+    # elif "No Thanks!" in game_titles:
+    #     game_titles.append("Schöne Sch#!?e")
     elif "Power Grid Deluxe" in game_titles:
         game_titles.append("Power Grid")
     elif "Queendomino" in game_titles:
         game_titles.append("Kingdomino")
-    elif "Rivals for Catan" in game_titles:
-        game_titles.append("The Rivals for Catan")
-        game_titles.append("Die Fürsten von Catan")
-        game_titles.append("Catan: Das Duell")
-    elif "Robinson Crusoe" in game_titles:
-        # for some reason the accessories have "Adventure" instead of "Adventures"
-        game_titles.insert(0, "Robinson Crusoe: Adventure on the Cursed Island")
-    elif "Rococo" in game_titles:
-        game_titles.append("Rokoko")
+    # elif "Rivals for Catan" in game_titles:
+    #     game_titles.append("The Rivals for Catan")
+    #     game_titles.append("Die Fürsten von Catan")
+    #     game_titles.append("Catan: Das Duell")
+    # elif "Rococo" in game_titles:
+    #     game_titles.append("Rokoko")
     elif "Small World Underground" in game_titles:
         game_titles.append("Small World")
-    elif "Spirits of the Forest" in game_titles:
-        game_titles.append("Spirit of the Forest")
     elif "Viticulture Essential Edition" in game_titles:
         game_titles.append("Viticulture")
 
+    game_titles.extend(game_details.alternate_names)
     titles = [x.lower() for x in game_titles]
 
     new_exp_lower = new_exp.lower()

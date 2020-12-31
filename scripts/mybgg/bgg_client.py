@@ -203,6 +203,14 @@ class BGGClient:
                         xml.integer(".", attribute="id"),
                         xml.string(".", attribute="type"),
                         xml.string("name[@type='primary']", attribute="value", alias="name"),
+                        xml.array(
+                            xml.string(
+                                "name",
+                                attribute="value",
+                                required=False
+                            ),
+                            alias="alternate_names"
+                        ),
                         xml.string("description"),
                         xml.array(
                             xml.string(
