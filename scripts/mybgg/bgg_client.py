@@ -261,6 +261,28 @@ class BGGClient:
                         ),
                         xml.array(
                             xml.dictionary(
+                                "link[@type='boardgameimplementation']", [
+                                    xml.integer(".", attribute="id"),
+                                    xml.string(".", attribute="value", alias="name"),
+                                    xml.boolean(".", attribute="inbound", required=False),
+                                ],
+                                required=False
+                            ),
+                            alias="reimplements",
+                        ),
+                        xml.array(
+                            xml.dictionary(
+                                "link[@type='boardgameintegration']", [
+                                    xml.integer(".", attribute="id"),
+                                    xml.string(".", attribute="value", alias="name"),
+                                    xml.boolean(".", attribute="inbound", required=False),
+                                ],
+                                required=False
+                            ),
+                            alias="integrates",
+                        ),
+                        xml.array(
+                            xml.dictionary(
                                 "link[@type='boardgamedesigner']", [
                                     xml.integer(".", attribute="id"),
                                     xml.string(".", attribute="value", alias="name"),
