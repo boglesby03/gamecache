@@ -141,6 +141,8 @@ class BGGClient:
                     xml.string("name"),
                     xml.string("thumbnail", required=False, alias="image"),
                     xml.string("version/item/thumbnail", required=False, alias="image_version"),
+                    xml.string("comment", required=False, alias="comment"),
+                    xml.string("wishlistcomment", required=False, alias="wishlist_comment"),
                     xml.dictionary("status", [
                         xml.string(".", attribute="fortrade"),
                         xml.string(".", attribute="own"),

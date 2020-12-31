@@ -43,6 +43,8 @@ class BoardGame:
         self.numplays = collection_data["numplays"]
         self.image = collection_data["image_version"] or collection_data["image"]
         self.tags = collection_data["tags"]
+        self.comment = collection_data["comment"]
+        self.wishlist_comment = collection_data["wishlist_comment"]
         if "players" in collection_data:
             self.previous_players = list(set(collection_data["players"]))
         self.expansions = expansions
