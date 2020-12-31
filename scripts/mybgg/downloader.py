@@ -37,8 +37,9 @@ class Downloader():
             )
 
         params = {"subtype": "boardgameaccessory", "own": 1}
-        accessory_data = self.client.collection(user_name=user_name, **params)
-        accessory_list_data = self.client.game_list([game_in_collection["id"] for game_in_collection in accessory_data])
+        accessory_collection = self.client.collection(user_name=user_name, **params)
+        accessory_list_data = self.client.game_list([game_in_collection["id"] for game_in_collection in accessory_collection])
+        accessory_collection_by_id = {acc["id"]: acc for acc in accessory_collection }
 
         plays_data = self.client.plays(
             user_name=user_name,
@@ -54,7 +55,6 @@ class Downloader():
             play_id = play["game"]["gameid"]
             if play_id in collection_by_id:
                 collection_by_id[play_id]["players"].extend(play["players"])
-                collection_by_id[play_id]["players"] = list(set(collection_by_id[play_id]["players"]))
 
         games_data = list(filter(lambda x: x["type"] == "boardgame", game_list_data))
         expansions_data = list(filter(lambda x: x["type"] == "boardgameexpansion", game_list_data))
@@ -97,7 +97,7 @@ class Downloader():
                     for expansion_data in game_id_to_expansion[game_data["id"]]
                 ),
                 accessories=set(
-                    BoardGame(accessory_data, collection_by_id[accessory_data["id"]])
+                    BoardGame(accessory_data, accessory_collection_by_id[accessory_data["id"]])
                     for accessory_data in game_id_to_accessory[game_data["id"]]
                 )
             )

@@ -41,9 +41,10 @@ class BoardGame:
         self.average = self.calc_average(game_data)
         self.rating = self.calc_rating(game_data)
         self.numplays = collection_data["numplays"]
-        self.image = collection_data["image_version"]
+        self.image = collection_data["image_version"] or collection_data["image"]
         self.tags = collection_data["tags"]
-        self.previous_players = collection_data["players"]
+        if "players" in collection_data:
+            self.previous_players = list(set(collection_data["players"]))
         self.expansions = expansions
         self.accessories = accessories
 
