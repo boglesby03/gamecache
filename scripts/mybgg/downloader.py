@@ -115,7 +115,18 @@ class Downloader():
                 if con["inbound"]:
                     con["name"] = remove_prefix(con["name"], game)
                     contained_list.append(con)
-            game.contained = contained_list
+            game.contained = sorted(contained_list, key=lambda x: x["name"])
+
+            integrates_list = []
+            for integrate in game.integrates:
+                # Filter integrates to owned games
+                if integrate["id"] in collection_by_id:
+                    integrate["name"] = move_article_to_end(integrate["name"])
+                    integrates_list.append(integrate)
+            game.integrates = sorted(integrates_list, key=lambda x: x["name"])
+
+            for reimps in game.reimplements:
+                reimps["name"] =  move_article_to_end(reimps["name"])
 
             family_list = []
             for fam in game.families:
@@ -124,7 +135,7 @@ class Downloader():
                     family_list.append(newFam)
             game.families = family_list
 
-            game.publishers = publisher_filter(game.publishers)
+            game.publishers = publisher_filter(game.publishers, collection_by_id[game.id])
 
             # Resort the list after updating the names
             game.expansions = sorted(game.expansions, key=lambda x: x.name)
@@ -135,13 +146,15 @@ class Downloader():
         return games
 
 # Ignore publishers for Public Domain games
-def publisher_filter(publishers):
+def publisher_filter(publishers, publisher_version):
     publisher_list = []
     for pub in publishers:
         if pub["id"] == 171:  # (Public Domain)
             publisher_list.clear()
             publisher_list.append(pub)
             break
+        if pub["id"] == publisher_version:
+            pub["flag"] = "own"
         publisher_list.append(pub)
 
     return publisher_list

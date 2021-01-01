@@ -50,6 +50,12 @@
             {{# helpers.highlight }}{ "attribute": "name" }{{/ helpers.highlight }}
           </a>
         </h2>
+        {{# version_name }}
+        <h3>
+          <br/>
+          ( {{ version_name }} )
+        </h3>
+        {{/ version_name }}
         <dl class="properties">
           <div>
             <dt>BGG Rank</dt>
@@ -149,17 +155,30 @@
             </dd>
           </div>
           {{/ has_integrates }}
+          <!--This needs more work before including in the display-->
+          <!-- {{# has_reimplements }}
+          <div class="expansions">
+            <dt>Reimplements/Reimplemented By</dt>
+            <dd>
+              <ul>
+                {{# reimplements }}
+                <li><a href="https://boardgamegeek.com/boardgame/{{{ id }}}">{{ name }}</a></li>
+                {{/ reimplements }}
+              </ul>
+            </dd>
+          </div>
+          {{/ has_reimplements }} -->
         </dl>
-        {{# has_comment }}
+        {{# comment }}
         <p class="description">
           Comment: {{ comment }}
         </p>
-        {{/ has_comment }}
-        {{# has_wishlist_comment }}
+        {{/ comment }}
+        {{# wishlist_comment }}
         <p class="description">
           Wishlist Comment: {{ wishlist_comment }}
         </p>
-        {{/ has_wishlist_comment }}
+        {{/ wishlist_comment }}
         <p class="description">
           {{# helpers.highlight }}{ "attribute": "description" }{{/ helpers.highlight }}
         </p>

@@ -228,6 +228,13 @@ function get_widgets(SETTINGS) {
               return;
             }
           });
+
+          // game.publishers.forEach(function(pub) {
+          //   tag_callback = {
+          //     'own': function()
+          //   }
+          // })
+
           game.players_str = players.join(", ");
           game.categories_str = game.categories.join(", ");
           game.mechanics_str = game.mechanics.join(", ");
@@ -238,8 +245,7 @@ function get_widgets(SETTINGS) {
           game.has_accessories = (game.accessories.length > 0);
           game.has_contained = (game.contained.length > 0);
           game.has_integrates = (game.integrates.length > 0);
-          game.has_comment = (game.comment.trim().length > 0)
-          game.has_wishlist_comment = (game.wishlist_comment.trim().length > 0)
+          game.has_reimplements = (game.reimplements.length > 0);
           game.average_str = game.average.toFixed(2);
 
           return game;
