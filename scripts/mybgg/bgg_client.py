@@ -141,6 +141,8 @@ class BGGClient:
                     xml.string("name"),
                     xml.string("thumbnail", required=False, alias="image"),
                     xml.string("version/item/thumbnail", required=False, alias="image_version"),
+                    xml.string("version/item/name",  required=False, alias="version_name"),
+                    xml.integer("version/item/link[@type='boardgamepublisher']", attribute="objectid", required=False, alias="publisher_id"),
                     xml.string("comment", required=False, alias="comment"),
                     xml.string("wishlistcomment", required=False, alias="wishlist_comment"),
                     xml.dictionary("status", [
