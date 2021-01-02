@@ -55,7 +55,7 @@ if __name__ == '__main__':
         action='store_true',
         help=(
             "Skip indexing in algolia. This is useful during development"
-            ", when you want to fetch data från BGG over and over again, "
+            ", when you want to fetch data from BGG over and over again, "
             "and don't want to use up your indexing quota with Algolia."
         )
     )
@@ -64,7 +64,7 @@ if __name__ == '__main__':
         action='store_true',
         help=(
             "Enable a cache for all BGG calls. This makes script run very "
-            "fast the second time it's run. Bug doesn't fetch new data från BGG."
+            "fast the second time it's run. Bug doesn't fetch new data from BGG."
         )
     )
     parser.add_argument(
