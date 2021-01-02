@@ -59,7 +59,7 @@ Using this project, you can set up your own site for searching and filtering you
       }
       ```
 
-      * Your're all set. If you cloned your project from github, you can commit your change my typing:
+      * Your're all set. If you cloned your project from GitHub, you can commit your change by typing:
 
       ```
       git commit -m "Update config.json"
@@ -88,8 +88,8 @@ Using this project, you can set up your own site for searching and filtering you
 
       * This step requires that you have (at least) Python 3.6 installed. You can download it from https://python.org if you need to.
       * Python could be installed as either "python", or "python3.6". Try the other version if the first doesn't work for you. You'll probably get "Invalid syntax"-errors if you run the script with the wrong version.
-      * The Algolia API key needed here can be found under the "API Keys" menu option, when logged in to Algolias dashboard. Pick the one called "Admin API Key", since this one will need permission to add games to your index. Never share this key publicly, since it can be used to delete your whole search index. Don't commit it to your project!
-      * Running this command might give strange errors from time to time. It seems the boardgamegeek API is somewhat shaking. Just trying to run the command again usually works. If you get other errors, please post an issue here: https://github.com/EmilStenstrom/mybgg/issues
+      * The Algolia API key needed here can be found under the "API Keys" menu option, when logged in to the Algolia dashboard. Pick the one called "Admin API Key", since this one will need permission to add games to your index. Never share this key publicly, since it can be used to delete your whole search index. Don't commit it to your project!
+      * Running this command might give strange errors from time to time. It seems the boardgamegeek API is somewhat shaky. Just trying to run the command again usually works. If you get other errors, please post an issue here: https://github.com/EmilStenstrom/mybgg/issues
    </details>
 
 5. **Enable GitHub Pages** on your forked repository by going into _Settings ->
