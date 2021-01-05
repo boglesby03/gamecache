@@ -35,7 +35,7 @@ def main(args):
         indexer.add_objects(collection)
         indexer.delete_objects_not_in(collection)
 
-        print(f"Indexed {num_games} games and {num_expansions} expansions in algolia, and removed everything else.")
+        print(f"Indexed {num_games} games, {num_expansions} expansions, and {num_accessories} accessories in algolia, and removed everything else.")
     else:
         print("Skipped indexing.")
 
