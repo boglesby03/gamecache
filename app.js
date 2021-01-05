@@ -155,6 +155,24 @@ function get_widgets(SETTINGS) {
         showMore: true,
       }
     ),
+    "refine_designers": panel('Designers')(instantsearch.widgets.refinementList)(
+      {
+        container: '#facet-designers',
+        collapsible: true,
+        attribute: 'designers.name',
+        operator: 'and',
+        showMore: true,
+      }
+    ),
+    "refine_publishers": panel('Publishers')(instantsearch.widgets.refinementList)(
+      {
+        container: '#facet-publishers',
+        collapsible: true,
+        attribute: 'publishers.name',
+        operator: 'and',
+        showMore: true,
+      }
+    ),    
     "refine_players": panel('Number of players')(instantsearch.widgets.hierarchicalMenu)(
       {
         container: '#facet-players',
@@ -330,6 +348,8 @@ function init(SETTINGS) {
     widgets["refine_players"],
     widgets["refine_weight"],
     widgets["refine_playingtime"],
+    widgets["refine_designers"],
+    widgets["refine_publishers"],
     widgets["hits"],
     widgets["stats"],
     widgets["pagination"],

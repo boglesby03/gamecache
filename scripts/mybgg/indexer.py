@@ -22,10 +22,16 @@ class Indexer:
             'searchableAttributes': [
                 'name',
                 'description',
+                'expansions.name',
+                'accessories.name',
+                'comment',
+                'wishlist_comment',
             ],
             'attributesForFaceting': [
                 'categories',
                 'mechanics',
+                'searchable(publishers.name)',
+                'searchable(designers.name)',
                 'players',
                 'weight',
                 'playing_time',
