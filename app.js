@@ -172,7 +172,16 @@ function get_widgets(SETTINGS) {
         operator: 'and',
         showMore: true,
       }
-    ),    
+    ),
+    "refine_artists": panel('Artists')(instantsearch.widgets.refinementList)(
+      {
+        container: '#facet-artists',
+        collapsible: true,
+        attribute: 'artists.name',
+        operator: 'and',
+        showMore: true,
+      }
+    ),
     "refine_players": panel('Number of players')(instantsearch.widgets.hierarchicalMenu)(
       {
         container: '#facet-players',
@@ -350,6 +359,7 @@ function init(SETTINGS) {
     widgets["refine_playingtime"],
     widgets["refine_designers"],
     widgets["refine_publishers"],
+    widgets["refine_artists"],
     widgets["hits"],
     widgets["stats"],
     widgets["pagination"],

@@ -226,7 +226,7 @@ def remove_prefix(expansion, game_details):
     new_exp = re.sub(r"^\W+", "", new_exp)
     # If there is still a dash (secondary delimiter), swap it to a colon
     new_exp = re.sub(r" \– ", ": ", new_exp)
-    
+
     new_exp = move_article_to_end(new_exp)
 
     # If we ended up removing everything - then just reset to what it started with
