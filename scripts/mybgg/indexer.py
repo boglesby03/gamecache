@@ -21,9 +21,10 @@ class Indexer:
         index.set_settings({
             'searchableAttributes': [
                 'name',
-                'description',
+                'alternate_names',
                 'expansions.name',
                 'accessories.name',
+                'description',
                 'comment',
                 'wishlist_comment',
                 'designers.name',

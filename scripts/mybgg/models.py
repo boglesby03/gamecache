@@ -12,15 +12,16 @@ class BoardGame:
         name = collection_data["name"]
         if len(name) == 0:
             name = game_data["name"]
+       
+        alt_names = self.gen_name_list(game_data)
+        alt_names.insert(0, name)
+        self.alternate_names = list(dict.fromkeys(alt_names)) # De-dupe the list, keeping order
 
         title = name.split()
         if title[0] in articles:
             name = ' '.join(title[1:]) + ", " + title[0]
 
         self.name = name
-        
-        self.alternate_names = self.gen_name_list(game_data)
-        self.alternate_names.append(name)
 
         self.description = html.unescape(game_data["description"])
         self.categories = game_data["categories"]
@@ -173,7 +174,5 @@ class BoardGame:
         game_titles.extend(game_data["alternate_names"])
         game_titles.extend([ game["name"] for game in game_data["reimplements"]])
         game_titles.extend([ game["name"] for game in game_data["integrates"]])
-
-        # titles = [x.lower() for x in game_titles]
 
         return game_titles
