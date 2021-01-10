@@ -13,8 +13,7 @@ class BoardGame:
         if len(name) == 0:
             name = game_data["name"]
        
-        alt_names = self.gen_name_list(game_data)
-        alt_names.insert(0, name)
+        alt_names = self.gen_name_list(game_data, collection_data)
         self.alternate_names = list(dict.fromkeys(alt_names)) # De-dupe the list, keeping order
 
         title = name.split()
@@ -132,12 +131,13 @@ class BoardGame:
 
         return weight_mapping[round(Decimal(game_data["weight"] or -1))]
 
-    def gen_name_list(self, game_data):
+    def gen_name_list(self, game_data, collection_data):
         """rules for cleaning up linked items to remove duplicate data, such as the title being repeated on every expansion"""
 
         game = game_data["name"]
 
         game_titles = []
+        game_titles.append(collection_data["name"])
         game_titles.append(game)
         game_titles.append(game.split("–")[0].strip()) # Medium Title
         game_titles.append(game.split(":")[0].strip()) # Short Title
@@ -174,7 +174,7 @@ class BoardGame:
             game_titles.append("Viticulture")
 
         game_titles.extend(game_data["alternate_names"])
-        game_titles.extend([ game["name"] for game in game_data["reimplements"]])
-        game_titles.extend([ game["name"] for game in game_data["integrates"]])
+        #game_titles.extend([ game["name"] for game in game_data["reimplements"]])
+        #game_titles.extend([ game["name"] for game in game_data["integrates"]])
 
         return game_titles

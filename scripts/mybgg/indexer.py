@@ -138,6 +138,16 @@ class Indexer:
 
         return description
 
+
+    def _minimize_field(self, game, field, columns=["id", "name"]):
+        return [
+                {
+                    attribute: accessory[attribute]
+                    for attribute in columns
+                }
+                for accessory in game[field]
+            ]
+
     def add_objects(self, collection):
         games = [Indexer.todict(game) for game in collection]
         for i, game in enumerate(games):
@@ -180,27 +190,20 @@ class Indexer:
                 for num, type_ in game["players"]
             ]
 
-            # Algolia has a limit of 10kb per item, so remove unnecessary data from expansions
-            game["expansions"] = [
-                {
-                    attribute: expansion[attribute]
-                    for attribute in ["id", "name", "players"]
-                }
-                for expansion in game["expansions"]
-            ]
-
-            game["accessories"] = [
-                {
-                    attribute: accessory[attribute]
-                    for attribute in ["id", "name"]
-                }
-                for accessory in game["accessories"]
-            ]
+            # Algolia has a limit of 10kb per item, so remove unnecessary data
+            game["expansions"] = self._minimize_field(game, "expansions", ["id", "name", "players"])
+            game["accessories"] = self._minimize_field(game, "accessories")
+            game["reimplements"] = self._minimize_field(game, "reimplements")
+            game["designers"] = self._minimize_field(game, "designers")
+            game["publishers"] = self._minimize_field(game, "publishers")
+            game["artists"] = self._minimize_field(game, "artists")
+            
 
             # Make sure description is not too long
             game["description"] = self._prepare_description(game["description"])
 
         self.index.save_objects(games)
+
 
     def delete_objects_not_in(self, collection):
         delete_filter = " AND ".join([f"id != {game.id}" for game in collection])

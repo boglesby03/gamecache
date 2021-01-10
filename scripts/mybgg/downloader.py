@@ -1,3 +1,4 @@
+import itertools
 import re
 
 from mybgg.bgg_client import BGGClient
@@ -40,7 +41,9 @@ class Downloader():
         params = {"subtype": "boardgameaccessory", "own": 1}
         accessory_collection = self.client.collection(user_name=user_name, **params)
         accessory_list_data = self.client.game_list([game_in_collection["id"] for game_in_collection in accessory_collection])
-        accessory_collection_by_id = {acc["id"]: acc for acc in accessory_collection }
+        accessory_collection_by_id = MultiDict()
+        for acc in accessory_collection:
+            accessory_collection_by_id.add(str(acc["id"]), acc)
 
         plays_data = self.client.plays(
             user_name=user_name,
@@ -109,14 +112,16 @@ class Downloader():
             BoardGame(
                 game_data_by_id[collection["id"]],
                 collection,
-                expansions=set(
-                    BoardGame(expansion_data, collection_by_id[str(expansion_data["id"])])
-                    for expansion_data in game_data_by_id[collection["id"]]["expansions_collection"]
-                ),
-                accessories=set(
-                    BoardGame(accessory_data, accessory_collection_by_id[accessory_data["id"]])
-                    for accessory_data in game_data_by_id[collection["id"]]["accessories_collection"]
-                )
+                expansions=[
+                    BoardGame(expansion_data, collection)
+                    for expansion_data in _uniq(game_data_by_id[collection["id"]]["expansions_collection"])
+                    for collection in collection_by_id.getall(str(expansion_data["id"]))
+                ],
+                accessories=[
+                    BoardGame(accessory_data, collection)
+                    for accessory_data in _uniq(game_data_by_id[collection["id"]]["accessories_collection"])
+                    for collection in accessory_collection_by_id.getall(str(accessory_data["id"]))
+                ]
             )
             for collection in games_collection
         ]
@@ -161,6 +166,11 @@ class Downloader():
             game.families = sorted(game.families, key=lambda x: x["name"])
 
         return games
+
+def _uniq(lst):
+    lst = sorted(lst, key=lambda x: x['id'])
+    for _, grp in itertools.groupby(lst, lambda d: (d['id'])):
+        yield list(grp)[0]
 
 # Ignore publishers for Public Domain games
 def publisher_filter(publishers, publisher_version):
