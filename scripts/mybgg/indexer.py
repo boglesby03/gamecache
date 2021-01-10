@@ -172,7 +172,7 @@ class Indexer:
 
                     game["color"] = f"{color_r}, {color_g}, {color_b}"
 
-            game["objectID"] = f"bgg{game['id']}"
+            game["objectID"] = f"bgg{game['collection_id']}"
 
             # Turn players tuple into a hierarchical facet
             game["players"] = [

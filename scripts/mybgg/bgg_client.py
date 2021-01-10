@@ -138,6 +138,7 @@ class BGGClient:
             xml.array(
                 xml.dictionary('item', [
                     xml.integer(".", attribute="objectid", alias="id"),
+                    xml.integer(".", attribute="collid", alias="collection_id"),
                     xml.string("name"),
                     xml.string("thumbnail", required=False, alias="image"),
                     xml.string("version/item/thumbnail", required=False, alias="image_version"),

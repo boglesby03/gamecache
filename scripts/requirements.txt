@@ -10,6 +10,7 @@ chardet==4.0.0            # via requests
 colorgram.py==1.2.0       # via -r scripts/requirements.in
 declxml==1.1.3            # via -r scripts/requirements.in
 idna==2.10                # via requests
+multidict==5.1.0          # via -r scripts/requirements.in
 pillow==8.0.1             # via colorgram.py
 requests-cache==0.5.2     # via -r scripts/requirements.in
 requests==2.25.1          # via algoliasearch, requests-cache

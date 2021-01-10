@@ -4,6 +4,7 @@ from mybgg.bgg_client import BGGClient
 from mybgg.bgg_client import CacheBackendSqlite
 from mybgg.models import BoardGame
 
+from multidict import MultiDict
 
 class Downloader():
     def __init__(self, project_name, cache_bgg, debug=False):
@@ -47,61 +48,77 @@ class Downloader():
 
         game_list_data = self.client.game_list([game_in_collection["id"] for game_in_collection in collection_data])
 
-        collection_by_id = {game["id"]: game for game in collection_data}
-        for id in collection_by_id:
-            collection_by_id[id]["players"] = []
+        collection_by_id = MultiDict();
+        for item in collection_data:
+            item["players"] = []
+            collection_by_id.add(str(item["id"]), item)
 
         for play in plays_data:
-            play_id = play["game"]["gameid"]
+            play_id = str(play["game"]["gameid"])
             if play_id in collection_by_id:
                 collection_by_id[play_id]["players"].extend(play["players"])
 
         games_data = list(filter(lambda x: x["type"] == "boardgame", game_list_data))
         expansions_data = list(filter(lambda x: x["type"] == "boardgameexpansion", game_list_data))
 
-        game_id_to_accessory = {game["id"]: [] for game in games_data}
-        game_id_to_expansion_accessory = {game["id"]: [] for game in expansions_data}
+        game_data_by_id = {}
+        expansion_data_by_id = {}
 
-        game_id_to_expansion_expansions = {game["id"]: [] for game in expansions_data}
-        for expansion_data in expansions_data:
+        for game in games_data:
+            game["accessories_collection"] = []
+            game["expansions_collection"] = []
+            game_data_by_id[game["id"]] = game
+
+        for expansion in expansions_data:
+            expansion["accessories_collection"] = []
+            expansion["expansions_collection"]  = []
+            expansion_data_by_id[expansion["id"]] = expansion
+
+        for expansion_data in expansion_data_by_id.values():
+           # expansion_data = expansion_data_by_id[exp_id]
+            if is_promo_box(expansion_data):
+                game_data_by_id[expansion_data["id"]] = expansion_data
             for expansion in expansion_data["expansions"]:
-                if expansion["inbound"] and expansion["id"] in game_id_to_expansion_expansions:
-                    game_id_to_expansion_expansions[expansion["id"]].append(expansion_data)
-                if is_promo_box(expansion_data):
-                    games_data.append(expansion_data)
-                    game_id_to_accessory[expansion_data["id"]] = []
+                id = expansion["id"]
+                if expansion["inbound"] and id in expansion_data_by_id:
+                    expansion_data_by_id[id]["expansions_collection"].append(expansion_data)                                     
 
         for accessory_data in accessory_list_data:
             for accessory in accessory_data["accessories"]:
+                id = accessory["id"]
                 if accessory["inbound"]:
-                    if accessory["id"] in game_id_to_accessory:
-                        game_id_to_accessory[accessory["id"]].append(accessory_data)
-                    elif accessory["id"] in game_id_to_expansion_accessory:
-                        game_id_to_expansion_accessory[accessory["id"]].append(accessory_data)
+                    if id in game_data_by_id:
+                        game_data_by_id[id]["accessories_collection"].append(accessory_data)
+                    elif id in expansion_data_by_id:
+                        expansion_data_by_id[id]["accessories_collection"].append(accessory_data)
 
-        game_id_to_expansion = {game["id"]: [] for game in games_data}
-        for expansion_data in expansions_data:
+        #game_id_to_expansion = {game["id"]: [] for game in games_data}
+        for expansion_data in expansion_data_by_id.values():
             for expansion in expansion_data["expansions"]:
-                if expansion["inbound"] and expansion["id"] in game_id_to_expansion:
+                id = expansion["id"]
+                if expansion["inbound"] and id in game_data_by_id:
                     if not is_promo_box(expansion_data):
-                        game_id_to_expansion[expansion["id"]].append(expansion_data)
-                        game_id_to_expansion[expansion["id"]].extend(game_id_to_expansion_expansions[expansion_data["id"]])
-                        game_id_to_accessory[expansion["id"]].extend(game_id_to_expansion_accessory[expansion_data["id"]])
+                        game_data_by_id[id]["expansions_collection"].append(expansion_data)
+                        game_data_by_id[id]["expansions_collection"].extend(expansion_data_by_id[expansion_data["id"]]["expansions_collection"])
+                        game_data_by_id[id]["accessories_collection"].extend(expansion_data_by_id[expansion_data["id"]]["accessories_collection"])
+
+
+        games_collection = list(filter(lambda x: x["id"] in game_data_by_id, collection_by_id.values()))
 
         games = [
             BoardGame(
-                game_data,
-                collection_by_id[game_data["id"]],
+                game_data_by_id[collection["id"]],
+                collection,
                 expansions=set(
-                    BoardGame(expansion_data, collection_by_id[expansion_data["id"]])
-                    for expansion_data in game_id_to_expansion[game_data["id"]]
+                    BoardGame(expansion_data, collection_by_id[str(expansion_data["id"])])
+                    for expansion_data in game_data_by_id[collection["id"]]["expansions_collection"]
                 ),
                 accessories=set(
                     BoardGame(accessory_data, accessory_collection_by_id[accessory_data["id"]])
-                    for accessory_data in game_id_to_accessory[game_data["id"]]
+                    for accessory_data in game_data_by_id[collection["id"]]["accessories_collection"]
                 )
             )
-            for game_data in games_data
+            for collection in games_collection
         ]
 
         # Cleanup the game
@@ -120,7 +137,7 @@ class Downloader():
             integrates_list = []
             for integrate in game.integrates:
                 # Filter integrates to owned games
-                if integrate["id"] in collection_by_id:
+                if str(integrate["id"]) in collection_by_id:
                     integrate["name"] = move_article_to_end(integrate["name"])
                     integrates_list.append(integrate)
             game.integrates = sorted(integrates_list, key=lambda x: x["name"])
@@ -135,7 +152,7 @@ class Downloader():
                     family_list.append(newFam)
             game.families = family_list
 
-            game.publishers = publisher_filter(game.publishers, collection_by_id[game.id])
+            game.publishers = publisher_filter(game.publishers, collection_by_id[str(game.id)])
 
             # Resort the list after updating the names
             game.expansions = sorted(game.expansions, key=lambda x: x.name)
@@ -153,7 +170,7 @@ def publisher_filter(publishers, publisher_version):
             publisher_list.clear()
             publisher_list.append(pub)
             break
-        if pub["id"] == publisher_version:
+        if pub["id"] == publisher_version["publisher_id"]:
             pub["flag"] = "own"
         publisher_list.append(pub)
 

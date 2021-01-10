@@ -52,6 +52,8 @@ class BoardGame:
         self.accessories = accessories
 
         self.version_name = collection_data["version_name"]
+        self.collection_id = collection_data["collection_id"]
+
 
     def __hash__(self):
         return hash(self.id)
