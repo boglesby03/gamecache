@@ -84,7 +84,7 @@ class Downloader():
             for expansion in expansion_data["expansions"]:
                 id = expansion["id"]
                 if expansion["inbound"] and id in expansion_data_by_id:
-                    expansion_data_by_id[id]["expansions_collection"].append(expansion_data)                                     
+                    expansion_data_by_id[id]["expansions_collection"].append(expansion_data)
 
         for accessory_data in accessory_list_data:
             for accessory in accessory_data["accessories"]:
@@ -149,6 +149,8 @@ class Downloader():
 
             for reimps in game.reimplements:
                 reimps["name"] =  move_article_to_end(reimps["name"])
+            for reimpby in game.reimplementedby:
+                reimpby["name"] = move_article_to_end(reimpby["name"])
 
             family_list = []
             for fam in game.families:
@@ -164,6 +166,9 @@ class Downloader():
             game.accessories = sorted(game.accessories, key=lambda x: x.name)
             game.contained = sorted(game.contained, key=lambda x: x["name"])
             game.families = sorted(game.families, key=lambda x: x["name"])
+            game.reimplements = sorted(game.reimplements, key=lambda x: x["name"])
+            game.reimplementedby = sorted(game.reimplementedby, key=lambda x: x["name"])
+
 
         return games
 

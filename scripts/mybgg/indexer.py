@@ -32,6 +32,9 @@ class Indexer:
                 'publishers.name',
                 'categories',
                 'families.name',
+                'reimplements.name',
+                'reimplementedby.name',
+                'integrates.name',
             ],
             'attributesForFaceting': [
                 'categories',
@@ -196,6 +199,7 @@ class Indexer:
             game["expansions"] = self._minimize_field(game, "expansions", ["id", "name", "players"])
             game["accessories"] = self._minimize_field(game, "accessories")
             game["reimplements"] = self._minimize_field(game, "reimplements")
+            game["reimplementedby"] = self._minimize_field(game, "reimplementedby")
             game["designers"] = self._minimize_field(game, "designers")
             game["publishers"] = self._minimize_field(game, "publishers")
             game["artists"] = self._minimize_field(game, "artists")

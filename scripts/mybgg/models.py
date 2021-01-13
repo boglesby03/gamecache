@@ -12,7 +12,7 @@ class BoardGame:
         name = collection_data["name"]
         if len(name) == 0:
             name = game_data["name"]
-       
+
         alt_names = self.gen_name_list(game_data, collection_data)
         self.alternate_names = list(dict.fromkeys(alt_names)) # De-dupe the list, keeping order
 
@@ -30,8 +30,9 @@ class BoardGame:
         self.artists = game_data["artists"]
         self.designers = game_data["designers"]
         self.publishers = game_data["publishers"]
-        self.reimplements = game_data["reimplements"]
-        self.integrates = game_data["integrates"]
+        self.reimplements = list(filter(lambda g: g["inbound"], game_data["reimplements"]))
+        self.reimplementedby = list(filter(lambda g: not g["inbound"], game_data["reimplements"]))
+        self.integrates=game_data["integrates"]
         self.players = self.calc_num_players(game_data, expansions)
         self.weight = self.calc_weight(game_data)
         self.playing_time = self.calc_playing_time(game_data)
@@ -175,6 +176,7 @@ class BoardGame:
 
         game_titles.extend(game_data["alternate_names"])
         #game_titles.extend([ game["name"] for game in game_data["reimplements"]])
+        #game_titles.extend([ game["name"] for game in game_data["reimplementedby"]])
         #game_titles.extend([ game["name"] for game in game_data["integrates"]])
 
         return game_titles
