@@ -273,6 +273,7 @@ function get_widgets(SETTINGS) {
           game.has_contained = (game.contained.length > 0);
           game.has_integrates = (game.integrates.length > 0);
           game.has_reimplements = (game.reimplements.length > 0);
+          game.has_reimplemented = (game.reimplementedby.length > 0);
           game.average_str = game.average.toFixed(2);
 
           return game;
