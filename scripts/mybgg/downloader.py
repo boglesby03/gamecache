@@ -7,6 +7,9 @@ from mybgg.models import BoardGame
 
 from multidict import MultiDict
 
+
+EXTRA_EXPANSIONS_GAME_ID=81913
+
 class Downloader():
     def __init__(self, project_name, cache_bgg, debug=False):
         if cache_bgg:
@@ -38,6 +41,10 @@ class Downloader():
                 **extra_params,
             )
 
+
+        collection_data.append(_create_blank_collection(EXTRA_EXPANSIONS_GAME_ID, "ZZZ Expansions without Base Game"))
+
+
         params = {"subtype": "boardgameaccessory", "own": 1}
         accessory_collection = self.client.collection(user_name=user_name, **params)
         accessory_list_data = self.client.game_list([game_in_collection["id"] for game_in_collection in accessory_collection])
@@ -52,6 +59,7 @@ class Downloader():
         game_list_data = self.client.game_list([game_in_collection["id"] for game_in_collection in collection_data])
 
         collection_by_id = MultiDict();
+#        collection_by_id.add(str(EXTRA_EXPANSIONS_GAME_ID),)
         for item in collection_data:
             item["players"] = []
             collection_by_id.add(str(item["id"]), item)
@@ -97,13 +105,26 @@ class Downloader():
 
         #game_id_to_expansion = {game["id"]: [] for game in games_data}
         for expansion_data in expansion_data_by_id.values():
+            own_base_game = False
             for expansion in expansion_data["expansions"]:
                 id = expansion["id"]
-                if expansion["inbound"] and id in game_data_by_id:
-                    if not is_promo_box(expansion_data):
-                        game_data_by_id[id]["expansions_collection"].append(expansion_data)
-                        game_data_by_id[id]["expansions_collection"].extend(expansion_data_by_id[expansion_data["id"]]["expansions_collection"])
-                        game_data_by_id[id]["accessories_collection"].extend(expansion_data_by_id[expansion_data["id"]]["accessories_collection"])
+                if expansion["inbound"]:
+                    if id in game_data_by_id:
+                        own_base_game = True
+                        if not is_promo_box(expansion_data):
+                            game_data_by_id[id]["expansions_collection"].append(expansion_data)
+                            game_data_by_id[id]["expansions_collection"].extend(expansion_data_by_id[expansion_data["id"]]["expansions_collection"])
+                            game_data_by_id[id]["accessories_collection"].extend(expansion_data_by_id[expansion_data["id"]]["accessories_collection"])
+                    elif id in expansion_data_by_id:
+                        own_base_game = True 
+            if not own_base_game:
+                # TODO should I filter out games that are contained in promo boxes already, but I don't own the game
+                # TODO make this a constant or configurable
+                id = EXTRA_EXPANSIONS_GAME_ID
+                expansion_data["suggested_numplayers"] = []
+                game_data_by_id[id]["expansions_collection"].append(expansion_data)
+                game_data_by_id[id]["expansions_collection"].extend(expansion_data_by_id[expansion_data["id"]]["expansions_collection"])
+                game_data_by_id[id]["accessories_collection"].extend(expansion_data_by_id[expansion_data["id"]]["accessories_collection"])
 
 
         games_collection = list(filter(lambda x: x["id"] in game_data_by_id, collection_by_id.values()))
@@ -166,6 +187,47 @@ class Downloader():
             game.families = sorted(game.families, key=lambda x: x["name"])
 
         return games
+
+# def _create_blank_game(id, name):
+#     data = {
+#         "id": id,
+#         "name": name,
+#         "description": "",
+#         "contained": [],
+#         "categories": [],
+#         "mechanics": [],
+#         "families": [],
+#         "artists": [],
+#         "designers": [],
+#         "publishers": [],
+#         "reimplements": [],
+#         "integrates": [],
+#         "suggested_numplayers": 0,
+#         "expansions_collection": [],
+#         "accessories_collection": [],
+#         "alternate_names": [],
+#     }
+
+#     return data
+
+def _create_blank_collection(id, name):
+
+    data = {
+        "id": id,
+        "name": name,
+        "numplays": 0,
+        "image": None,
+        "image_version": None,
+        "tags": [],
+        "comment": "",
+        "wishlist_comment": "",
+        "players": [],
+        "version_name": name,
+        "collection_id": id, 
+        "publisher_id": 0,
+    }
+
+    return data
 
 def _uniq(lst):
     lst = sorted(lst, key=lambda x: x['id'])
