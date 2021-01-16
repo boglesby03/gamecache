@@ -41,9 +41,8 @@ class Downloader():
                 **extra_params,
             )
 
-
-        collection_data.append(_create_blank_collection(EXTRA_EXPANSIONS_GAME_ID, "ZZZ Expansions without Base Game"))
-
+        # Dummy game for linking extra promos and accessories
+        collection_data.append(_create_blank_collection(EXTRA_EXPANSIONS_GAME_ID, "ZZZ: Expansions without Game"))
 
         params = {"subtype": "boardgameaccessory", "own": 1}
         accessory_collection = self.client.collection(user_name=user_name, **params)
@@ -59,7 +58,6 @@ class Downloader():
         game_list_data = self.client.game_list([game_in_collection["id"] for game_in_collection in collection_data])
 
         collection_by_id = MultiDict();
-#        collection_by_id.add(str(EXTRA_EXPANSIONS_GAME_ID),)
         for item in collection_data:
             item["players"] = []
             collection_by_id.add(str(item["id"]), item)
@@ -85,8 +83,9 @@ class Downloader():
             expansion["expansions_collection"]  = []
             expansion_data_by_id[expansion["id"]] = expansion
 
+        expansion_data_by_id = custom_expansion_mappings(expansion_data_by_id)
+
         for expansion_data in expansion_data_by_id.values():
-           # expansion_data = expansion_data_by_id[exp_id]
             if is_promo_box(expansion_data):
                 game_data_by_id[expansion_data["id"]] = expansion_data
             for expansion in expansion_data["expansions"]:
@@ -95,15 +94,19 @@ class Downloader():
                     expansion_data_by_id[id]["expansions_collection"].append(expansion_data)
 
         for accessory_data in accessory_list_data:
+            own_game = False
             for accessory in accessory_data["accessories"]:
                 id = accessory["id"]
                 if accessory["inbound"]:
                     if id in game_data_by_id:
                         game_data_by_id[id]["accessories_collection"].append(accessory_data)
+                        own_game = True
                     elif id in expansion_data_by_id:
                         expansion_data_by_id[id]["accessories_collection"].append(accessory_data)
+                        own_game = True
+            if not own_game:
+                game_data_by_id[EXTRA_EXPANSIONS_GAME_ID]["accessories_collection"].append(accessory_data)
 
-        #game_id_to_expansion = {game["id"]: [] for game in games_data}
         for expansion_data in expansion_data_by_id.values():
             own_base_game = False
             for expansion in expansion_data["expansions"]:
@@ -118,8 +121,6 @@ class Downloader():
                     elif id in expansion_data_by_id:
                         own_base_game = True 
             if not own_base_game:
-                # TODO should I filter out games that are contained in promo boxes already, but I don't own the game
-                # TODO make this a constant or configurable
                 id = EXTRA_EXPANSIONS_GAME_ID
                 expansion_data["suggested_numplayers"] = []
                 game_data_by_id[id]["expansions_collection"].append(expansion_data)
@@ -227,7 +228,7 @@ def _create_blank_collection(id, name):
         "comment": "",
         "wishlist_comment": "",
         "players": [],
-        "version_name": name,
+        "version_name": "",
         "collection_id": id, 
         "publisher_id": 0,
     }
@@ -253,6 +254,16 @@ def publisher_filter(publishers, publisher_version):
 
     return publisher_list
 
+# These mappings could be configurable
+def custom_expansion_mappings(expansions):
+    """add custom expansions mappings, because sometimes BGG is wrong"""
+
+    # Original Tuscany should be an expansion for Viticulture Essential Edition (even if there is overlap)
+    expansions[147101]["expansions"].append({ "id": 183394, "inbound": True})
+    
+    expansions[147827]["expansions"].append({ "id": 165469, "inbound": True})
+
+    return expansions
 
 # May want to make other changes to the family similar to the prefix logic
 def family_filter(family):
