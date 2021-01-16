@@ -5,9 +5,9 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=0.7">
   <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
-  <script src="https://cdn.jsdelivr.net/npm/algoliasearch@4.1.0/dist/algoliasearch-lite.umd.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/instantsearch.js@4.3.1/dist/instantsearch.production.min.js"></script>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/instantsearch.css@7.1.1/themes/reset-min.css">
+  <script src="https://cdn.jsdelivr.net/npm/algoliasearch@4.8.3/dist/algoliasearch-lite.umd.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/instantsearch.js@4.10.0/dist/instantsearch.production.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/instantsearch.css@7.4.5/themes/reset-min.css">
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,700&amp;display=swap">
 </head>
@@ -158,10 +158,9 @@
             </dd>
           </div>
           {{/ has_integrates }}
-          <!--This needs more work before including in the display-->
-          <!-- {{# has_reimplements }}
+          {{# has_reimplements }}
           <div class="expansions">
-            <dt>Reimplements/Reimplemented By</dt>
+            <dt>Reimplements</dt>
             <dd>
               <ul>
                 {{# reimplements }}
@@ -170,7 +169,19 @@
               </ul>
             </dd>
           </div>
-          {{/ has_reimplements }} -->
+          {{/ has_reimplements }}
+          {{# has_reimplemented }}
+          <div class="expansions">
+            <dt>Reimplemented By</dt>
+            <dd>
+              <ul>
+                {{# reimplementedby }}
+                <li><a href="https://boardgamegeek.com/boardgame/{{{ id }}}">{{ name }}</a></li>
+                {{/ reimplementedby }}
+              </ul>
+            </dd>
+          </div>
+          {{/ has_reimplemented }}
         </dl>
         {{# comment }}
         <p class="description">
