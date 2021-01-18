@@ -207,6 +207,7 @@ class BGGClient:
                     [
                         xml.integer(".", attribute="id"),
                         xml.string(".", attribute="type"),
+                        xml.string("image", required=False),
                         xml.string("name[@type='primary']", attribute="value", alias="name"),
                         xml.array(
                             xml.string(
