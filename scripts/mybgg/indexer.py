@@ -143,8 +143,8 @@ class Indexer:
 
         return description
 
-
-    def _minimize_field(self, game, field, columns=["id", "name"]):
+    @staticmethod
+    def _minimize_field(game, field, columns=["id", "name"]):
         return [
                 {
                     attribute: accessory[attribute]
@@ -152,6 +152,29 @@ class Indexer:
                 }
                 for accessory in game[field]
             ]
+
+    @staticmethod
+    def _remove_game_name_prefix(expansion_name, game_name):
+        def remove_prefix(text, prefix):
+            if text.startswith(prefix):
+                return text[len(prefix):]
+
+        # Expansion name: Catan: Cities & Knights
+        # Game name: Catan
+        # --> Cities & Knights
+        if game_name + ": " in expansion_name:
+            return remove_prefix(expansion_name, game_name + ": ")
+
+        # Expansion name: Shadows of Brimstone: Outlaw Promo Cards
+        # Game name: Shadows of Brimstone: City of the Ancients
+        # --> Outlaw Promo Cards
+        elif ":" in game_name:
+            game_name_prefix = game_name[0:game_name.index(":")]
+            if game_name_prefix + ": " in expansion_name:
+                return expansion_name.replace(game_name_prefix + ": ", "")
+
+        return expansion_name
+
 
     def add_objects(self, collection):
         games = [Indexer.todict(game) for game in collection]
@@ -195,7 +218,21 @@ class Indexer:
                 for num, type_ in game["players"]
             ]
 
-            # Algolia has a limit of 10kb per item, so remove unnecessary data
+            # Algolia has a limit of 10kb per item, so remove unnessesary data from expansions
+            # attribute_map = {
+            #     "id": lambda x: x,
+            #     "name": lambda x: self._remove_game_name_prefix(x, game["name"]),
+            #     "players": lambda x: x or None,
+            # }
+            # game["expansions"] = [
+            #     {
+            #         attribute: func(expansion[attribute])
+            #         for attribute, func in attribute_map.items()
+            #         if func(expansion[attribute])
+            #     }
+            #     for expansion in game["expansions"]
+            # ]
+
             game["expansions"] = self._minimize_field(game, "expansions", ["id", "name", "players"])
             game["accessories"] = self._minimize_field(game, "accessories")
             game["reimplements"] = self._minimize_field(game, "reimplements")
@@ -203,7 +240,6 @@ class Indexer:
             game["designers"] = self._minimize_field(game, "designers")
             game["publishers"] = self._minimize_field(game, "publishers")
             game["artists"] = self._minimize_field(game, "artists")
-
 
             # Make sure description is not too long
             game["description"] = self._prepare_description(game["description"])

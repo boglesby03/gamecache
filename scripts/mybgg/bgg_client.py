@@ -50,9 +50,9 @@ class BGGClient:
             return []
 
         # Split game_ids into smaller chunks to avoid "414 URI too long"
-        def chunks(l, n):
-            for i in range(0, len(l), n):
-                yield l[i:i + n]
+        def chunks(iterable, n):
+            for i in range(0, len(iterable), n):
+                yield iterable[i:i + n]
 
         games = []
         for game_ids_subset in chunks(game_ids, 100):
@@ -90,9 +90,15 @@ class BGGClient:
                     time.sleep(2)
                     return self._make_request(url, params=params, tries=tries + 1)
 
+            # Handle 429 Too Many Requests
+            if response.status_code == 429:
+                if tries < 3:
+                    logger.debug("BGG returned \"Too Many Requests\", waiting 30 seconds before trying again...")
+                    time.sleep(30)
+                    return self._make_request(url, params=params, tries=tries + 1)
+
             raise BGGException(
-                f"BGG returned status code {response.status_code} when "
-                f"requesting {response.url}"
+                f"BGG returned status code {response.status_code} when requesting {response.url}"
             )
 
         tree = fromstring(response.text)
