@@ -1,3 +1,4 @@
+import copy
 import itertools
 import re
 
@@ -42,7 +43,7 @@ class Downloader():
             )
 
         # Dummy game for linking extra promos and accessories
-        collection_data.append(_create_blank_collection(EXTRA_EXPANSIONS_GAME_ID, "ZZZ: Expansions without Game"))
+        collection_data.append(_create_blank_collection(EXTRA_EXPANSIONS_GAME_ID, "ZZZ: Expansions without Game (A-M)"))
 
         params = {"subtype": "boardgameaccessory", "own": 1}
         accessory_collection = self.client.collection(user_name=user_name, **params)
@@ -148,6 +149,8 @@ class Downloader():
             for collection in games_collection
         ]
 
+        newGames = []
+
         # Cleanup the game
         for game in games:
             for exp in game.expansions:
@@ -183,6 +186,19 @@ class Downloader():
 
             game.publishers = publisher_filter(game.publishers, collection_by_id[str(game.id)])
 
+            # TODO This is terrible, but split the extra expansions by letter
+            if game.id == EXTRA_EXPANSIONS_GAME_ID:
+                newGame = copy.deepcopy(game)
+                newGame.name = "ZZZ: Expansions without Game (N-Z)"
+                newGame.collection_id = str(game.collection_id) + "nz"
+                newGame.expansions = list(filter(lambda x: re.search(r"^[n-zN-Z]", x.name), game.expansions))
+                newGame.accessories = list(filter(lambda x: re.search(r"^[n-zN-Z]", x.name), game.accessories))
+                newGame.expansions = sorted(newGame.expansions, key=lambda x: x.name)
+                newGame.accessories = sorted(newGame.accessories, key=lambda x: x.name)
+                game.expansions = list(set(game.expansions) - set(newGame.expansions))
+                game.accessories = list(set(game.accessories) - set(newGame.accessories))
+                newGames.append(newGame)
+
             # Resort the list after updating the names
             game.expansions = sorted(game.expansions, key=lambda x: x.name)
             game.accessories = sorted(game.accessories, key=lambda x: x.name)
@@ -191,6 +207,7 @@ class Downloader():
             game.reimplements = sorted(game.reimplements, key=lambda x: x["name"])
             game.reimplementedby = sorted(game.reimplementedby, key=lambda x: x["name"])
 
+        games.extend(newGames)
 
         return games
 
