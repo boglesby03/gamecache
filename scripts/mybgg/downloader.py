@@ -119,7 +119,7 @@ class Downloader():
                             game_data_by_id[id]["expansions_collection"].extend(expansion_data_by_id[expansion_data["id"]]["expansions_collection"])
                             game_data_by_id[id]["accessories_collection"].extend(expansion_data_by_id[expansion_data["id"]]["accessories_collection"])
                     elif id in expansion_data_by_id:
-                        own_base_game = True 
+                        own_base_game = True
             if not own_base_game:
                 id = EXTRA_EXPANSIONS_GAME_ID
                 expansion_data["suggested_numplayers"] = []
@@ -229,7 +229,7 @@ def _create_blank_collection(id, name):
         "wishlist_comment": "",
         "players": [],
         "version_name": "",
-        "collection_id": id, 
+        "collection_id": id,
         "publisher_id": 0,
     }
 
@@ -260,7 +260,8 @@ def custom_expansion_mappings(expansions):
 
     # Original Tuscany should be an expansion for Viticulture Essential Edition (even if there is overlap)
     expansions[147101]["expansions"].append({ "id": 183394, "inbound": True})
-    
+
+    # Poison Expansion for Council of Verona
     expansions[147827]["expansions"].append({ "id": 165469, "inbound": True})
 
     return expansions

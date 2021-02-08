@@ -218,7 +218,7 @@ class Indexer:
                 for num, type_ in game["players"]
             ]
 
-            # Algolia has a limit of 10kb per item, so remove unnessesary data from expansions
+            # Algolia has a limit of 10kb per item, so remove unnecessary data from expansions
             # attribute_map = {
             #     "id": lambda x: x,
             #     "name": lambda x: self._remove_game_name_prefix(x, game["name"]),
