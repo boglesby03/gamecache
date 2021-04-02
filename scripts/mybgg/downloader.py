@@ -330,12 +330,12 @@ def move_article_to_start(orig):
 def name_scrubber(title):
 
     # Legendary
-    new_title = re.sub(r"(Legendary(?: Encounters)?:) (?:An?)?\s*(.*)Deck Building Game",
-                     r"\1\2", title, flags=re.IGNORECASE)
+    new_title = re.sub(r"(Legendary(?: Encounters)?:) (?:An?)?\s*(.*) Deck Building Game",
+                     r"\1 \2", title, flags=re.IGNORECASE)
 
     new_title = move_article_to_end(new_title)
 
-    if len(new_title) > 0:
+    if len(new_title) == 0:
         return title
 
     return new_title
@@ -356,11 +356,13 @@ def remove_prefix(expansion, game_details):
             break
 
     # Relabel Promos
-    new_exp = re.sub(r"(.*)s*Promo(?:tional)?(s?):?\s*(?:Card|Pack|Deck)?(s?)\s*(.*)", r"\1 \4 [Promo\2\3]", new_exp, flags=re.IGNORECASE)
+    new_exp = re.sub(r"(.*)s*Promo(?:tional)?(s?):?\s*(?:(?:Card|Pack|Deck)(s?))?\s*(.*)",
+                     r"\1 \4 [Promo\2\3]", new_exp, flags=re.IGNORECASE)
     # Expansions don't need to be labeled Expansion
-    new_exp = re.sub(r"\s*(?:Mini)?\s*Expansion\s*(?:Pack)?\s*", "", new_exp)
+    # TODO what about "Age of Expansion" or just "Expansion" (Legendary Encounters: Alien - Expansion)?
+    # new_exp = re.sub(r"\s*(?:Mini|Micro)?[\s-]*Expansion\s*(?:Pack)?\s*", "", new_exp)
     # Pack sorting
-    new_exp = re.sub(r"(.*)\s(Hero|Scenario|Ally|Villain) Pack\s*", r"\2: \1", new_exp)
+    new_exp = re.sub(r"(.*)\s(Hero|Scenario|Ally|Villain|Mythos|Figure|Army|) Pack\s*", r"\2: \1", new_exp)
     # Heroic Bystanders
     new_exp = re.sub(r"(.*)\s*Heroic Bystander\s*(.*)", r"Heroic Bystander: \1\2", new_exp)
     # Marvel Masterpiece
@@ -371,6 +373,8 @@ def remove_prefix(expansion, game_details):
     new_exp = re.sub(r"\s*Thematic Neighborhood", "", new_exp)
     # Thanos Risings
     new_exp = re.sub(r"Thanos Rising: Avengers Infinity War", "Thanos Rising", new_exp)
+    # Barkham Horror
+    new_exp = re.sub(r"Barkham Horror: The Card Game", "Barkham Horror", new_exp)
     # Isle of Skye
     new_exp = re.sub(r"Isle of Skye: From Chieftain to King", "Isle of Skye", new_exp)
     # Shorten Fan Expansions to just [Fan]
@@ -378,27 +382,27 @@ def remove_prefix(expansion, game_details):
     # Ticket to Ride Map Collection Titles are too long
     new_exp = re.sub(r"\s*Map Collection: Volume ", "Map Pack ", new_exp, flags=re.IGNORECASE)
     # Remove leading whitespace and special characters
-    new_exp = re.sub(r"^\W+", "", new_exp)
+    new_exp = re.sub(r"^[^\w\"'`]+", "", new_exp)
     # Remove trailing special characters
-    new_exp = re.sub(r"[\s,-]+$", "" , new_exp)
+    new_exp = re.sub(r"[\s,:-]+$", "" , new_exp)
     # If there is still a dash (secondary delimiter), swap it to a colon
     new_exp = re.sub(r" \– ", ": ", new_exp)
     # Edge case where multiple ":" are in a row
     new_exp = re.sub(r"\s*(: )+", ": ", new_exp)
     # extra space around (
-    new_exp = re.sub(" \( ", " (", new_exp)
+    new_exp = re.sub(" [(/] ", " (", new_exp)
 
 
     new_exp = move_article_to_end(new_exp)
 
     # Lazy fix to move tags back to the end of the name
-    new_exp = re.sub(r"(\[(?:Fan|Promo)\]), (.*)", r",\2\1", new_exp)
+    new_exp = re.sub(r"( \[(?:Fan|Promo)\]), (.*)", r",\2\1", new_exp)
 
     # If we ended up removing everything - then just reset to what it started with
     if len(new_exp) == 0:
         return expansion
     # Also look for the case where the name is nothing but Promo
-    elif new_exp == "Promo]":
+    elif new_exp.startswith("[Promo"):
         return expansion
 
     return new_exp
