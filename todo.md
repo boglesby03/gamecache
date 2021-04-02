@@ -18,3 +18,7 @@
 - [ ] Split family into top-level families and specifics: Theme:Art, Crowdfunding:Kickstarter, etc
 - [ ] Link to boardgamearena as well?
 - [X] Incorporate reimplements/reimplemented by
+- [ ] Read old index to compare difference in size
+- [ ] Read version name for Accessories (e.g., Rivals of Catan card holder)
+- [ ] Read version name for Contains (e.g. El Grande Big Box)
+- [ ] Better way to handle the Duplicates from how BGG handles Deluxe/KS versions of games
