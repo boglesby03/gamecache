@@ -281,6 +281,14 @@ def custom_expansion_mappings(expansions):
     # Poison Expansion for Council of Verona
     expansions[147827]["expansions"].append({ "id": 165469, "inbound": True})
 
+    # TODO Should be fixed. Map the Carcassonne Map Chips to Carcassonne
+    expansions[291518]["expansions"].append({"id": 822, "inbound": True})
+
+    # TODO Should be fixed. Africa mapped to TtR: Europe
+    expansions[131188]["expansions"].append({"id": 14996, "inbound": True})
+    expansions[131188]["expansions"].append({"id": 225244, "inbound": True}) # TtR: Germany
+
+
     return expansions
 
 # May want to make other changes to the family similar to the prefix logic
@@ -377,6 +385,8 @@ def remove_prefix(expansion, game_details):
     new_exp = re.sub(r"Barkham Horror: The Card Game", "Barkham Horror", new_exp)
     # Isle of Skye
     new_exp = re.sub(r"Isle of Skye: From Chieftain to King", "Isle of Skye", new_exp)
+    # Fleet: The Dice Game
+    new_exp = re.sub(r"Second Edition\) \– ", "Second Edition ", new_exp)
     # Shorten Fan Expansions to just [Fan]
     new_exp = re.sub(r"\s*\(?Fan expans.*", " [Fan]", new_exp, flags=re.IGNORECASE)
     # Ticket to Ride Map Collection Titles are too long
@@ -390,7 +400,7 @@ def remove_prefix(expansion, game_details):
     # Edge case where multiple ":" are in a row
     new_exp = re.sub(r"\s*(: )+", ": ", new_exp)
     # extra space around (
-    new_exp = re.sub(" [(/] ", " (", new_exp)
+    new_exp = re.sub(r"( [(/]) ", "\1", new_exp)
 
 
     new_exp = move_article_to_end(new_exp)
@@ -402,7 +412,7 @@ def remove_prefix(expansion, game_details):
     if len(new_exp) == 0:
         return expansion
     # Also look for the case where the name is nothing but Promo
-    elif new_exp.startswith("[Promo"):
+    elif new_exp.startswith("Promo"):
         return expansion
 
     return new_exp

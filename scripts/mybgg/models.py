@@ -171,6 +171,8 @@ class BoardGame:
             game_titles.append("Rokoko")
         elif "Small World Underground" in game_titles:
             game_titles.append("Small World")
+        elif "Unforgiven" in game_titles:
+            game_titles.append("Unforgiven: The Lincoln Assassination Trial")
         elif "Viticulture Essential Edition" in game_titles:
             game_titles.append("Viticulture")
 
