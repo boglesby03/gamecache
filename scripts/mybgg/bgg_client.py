@@ -149,9 +149,11 @@ class BGGClient:
                     xml.string("thumbnail", required=False, alias="image"),
                     xml.string("version/item/thumbnail", required=False, alias="image_version"),
                     xml.string("version/item/name",  required=False, alias="version_name"),
+                    xml.integer("version/yearpublished", attribute="value", alias="version_year", required=False),
                     xml.integer("version/item/link[@type='boardgamepublisher']", attribute="objectid", required=False, alias="publisher_id"),
                     xml.string("comment", required=False, alias="comment"),
                     xml.string("wishlistcomment", required=False, alias="wishlist_comment"),
+                    xml.string("status", attribute="lastmodified", alias="last_modified"),
                     xml.dictionary("status", [
                         xml.string(".", attribute="fortrade"),
                         xml.string(".", attribute="own"),
@@ -201,6 +203,15 @@ class BGGClient:
                 (players["numplayers"], players["result"])
                 for players in numplayers
             ]
+
+        def age_conversion(_, age_result):
+            return int(age_result[:2])
+
+        def suggested_playerage(_, playerages):
+
+            suggested_ages = [ages for ages in playerages if ages["numvotes"] > 0]
+
+            return suggested_ages
 
         def log_item(_, item):
             logger.debug("Successfully parsed: {} (id: {}).".format(item["name"], item["id"]))
@@ -383,6 +394,21 @@ class BGGClient:
                             alias="rating"
                         ),
                         xml.string("playingtime", attribute="value", alias="playing_time", required=False),
+                        xml.integer("yearpublished", attribute="value", alias="year"),
+                        xml.integer(
+                            "minage",
+                            attribute="value",
+                            alias="min_age",
+                            required=False,
+                        ),
+                        xml.array(
+                            xml.dictionary("poll[@name='suggested_playerage']/results/result", [
+                                        xml.string(".", attribute="value", alias="age", hooks=xml.Hooks(after_parse=age_conversion)),
+                                        xml.integer(".", attribute="numvotes"),
+                                    ], required=False),
+                            alias="suggested_playerages",
+                            hooks=xml.Hooks(after_parse=suggested_playerage),
+                        ),
                     ],
                     required=False,
                     alias="items",
@@ -400,7 +426,7 @@ class CacheBackendSqlite:
             cache_name=path,
             backend="sqlite",
             expire_after=ttl,
-            extension="",
+        # extension="",
             fast_save=True,
             allowable_codes=(200,)
         )

@@ -32,15 +32,19 @@ class BoardGame:
         self.publishers = game_data["publishers"]
         self.reimplements = list(filter(lambda g: g["inbound"], game_data["reimplements"]))
         self.reimplementedby = list(filter(lambda g: not g["inbound"], game_data["reimplements"]))
-        self.integrates=game_data["integrates"]
+        self.integrates = game_data["integrates"]
         self.players = self.calc_num_players(game_data, expansions)
         self.weight = self.calc_weight(game_data)
+        self.weightRating = game_data["weight"]
+        self.year = game_data["year"]
         self.playing_time = self.calc_playing_time(game_data)
         self.rank = self.calc_rank(game_data)
         self.usersrated = self.calc_usersrated(game_data)
         self.numowned = self.calc_numowned(game_data)
         self.average = self.calc_average(game_data)
         self.rating = self.calc_rating(game_data)
+        self.minage = game_data["min_age"]
+        self.suggested_age = self.calc_suggested_age(game_data)
         self.numplays = collection_data["numplays"]
         self.image = collection_data["image_version"] or collection_data["image"] or game_data["image"]
         self.tags = collection_data["tags"]
@@ -51,7 +55,9 @@ class BoardGame:
         self.expansions = expansions
         self.accessories = accessories
 
+        self.lastmodified = collection_data["last_modified"]
         self.version_name = collection_data["version_name"]
+        self.version_year = collection_data["version_year"]
         self.collection_id = collection_data["collection_id"]
 
 
@@ -132,6 +138,22 @@ class BoardGame:
 
         return weight_mapping[round(Decimal(game_data["weight"] or -1))]
 
+    def calc_suggested_age(self, game_data):
+
+        sum = 0
+        total_votes = 0
+        suggested_age = 0
+
+        for player_age in game_data["suggested_playerages"]:
+            count = player_age["numvotes"]
+            sum += int(player_age["age"]) * count
+            total_votes += count
+
+        if total_votes > 0:
+            suggested_age = round(sum / total_votes, 2)
+
+        return suggested_age
+
     def gen_name_list(self, game_data, collection_data):
         """rules for cleaning up linked items to remove duplicate data, such as the title being repeated on every expansion"""
 
@@ -144,7 +166,7 @@ class BoardGame:
         game_titles.append(game.split(":")[0].strip()) # Short Title
         game_titles.append(game.split("(")[0].strip()) # No Edition
 
-        #Carcassonne Big Box 5, Alien Frontiers Big Box, El Grande Big Box
+        # Carcassonne Big Box 5, Alien Frontiers Big Box, El Grande Big Box
         if any("Big Box" in title for title in game_titles):
             game_tmp = re.sub(r"\s*\(?Big Box.*", "", game, flags=re.IGNORECASE)
             game_titles.append(game_tmp)
@@ -172,7 +194,7 @@ class BoardGame:
         elif "Small World Underground" in game_titles:
             game_titles.append("Small World")
         elif "Unforgiven" in game_titles:
-            game_titles.append("Unforgiven: The Lincoln Assassination Trial")
+            game_titles.insert(0, "Unforgiven: The Lincoln Assassination Trial")
         elif "Viticulture Essential Edition" in game_titles:
             game_titles.append("Viticulture")
 
