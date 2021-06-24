@@ -373,6 +373,14 @@ class BGGClient:
                             required=False,
                             alias="rank"
                         ),
+                        xml.array(
+                            xml.dictionary("statistics/ratings/ranks/rank", [
+                                xml.string(".", attribute="friendlyname"),
+                                xml.string(".", attribute="value"),
+                            ],
+                                required=False),
+                            alias="ranks",
+                        ),
                         xml.string(
                             "statistics/ratings/usersrated",
                             attribute="value",

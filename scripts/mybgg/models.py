@@ -1,4 +1,5 @@
 from decimal import Decimal
+from datetime import datetime
 import html
 import re
 
@@ -35,7 +36,7 @@ class BoardGame:
         self.integrates = game_data["integrates"]
         self.players = self.calc_num_players(game_data, expansions)
         self.weight = self.calc_weight(game_data)
-        self.weightRating = game_data["weight"]
+        self.weightRating = float(game_data["weight"])
         self.year = game_data["year"]
         self.playing_time = self.calc_playing_time(game_data)
         self.rank = self.calc_rank(game_data)
@@ -55,7 +56,7 @@ class BoardGame:
         self.expansions = expansions
         self.accessories = accessories
 
-        self.lastmodified = collection_data["last_modified"]
+        self.lastmodified = datetime.strptime(collection_data["last_modified"], '%Y-%m-%d %H:%M:%S')
         self.version_name = collection_data["version_name"]
         self.version_year = collection_data["version_year"]
         self.collection_id = collection_data["collection_id"]
