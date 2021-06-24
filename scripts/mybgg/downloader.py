@@ -246,6 +246,8 @@ def _create_blank_collection(id, name):
         "wishlist_comment": "",
         "players": [],
         "version_name": "",
+        "version_year": "",
+        "last_modified": "2100-01-01 00:00:00",
         "collection_id": id,
         "publisher_id": 0,
     }
@@ -271,7 +273,7 @@ def publisher_filter(publishers, publisher_version):
 
     return publisher_list
 
-# These mappings could be configurable
+# TODO These mappings should be configurable
 def custom_expansion_mappings(expansions):
     """add custom expansions mappings, because sometimes BGG is wrong"""
 
@@ -288,6 +290,8 @@ def custom_expansion_mappings(expansions):
     expansions[131188]["expansions"].append({"id": 14996, "inbound": True})
     expansions[131188]["expansions"].append({"id": 225244, "inbound": True}) # TtR: Germany
 
+    # Vegas Wits & Wager -> Wits & Wagers It's Vegas Baby
+    expansions[229967]["expansions"].append({"id": 286428, "inbound": True})
 
     return expansions
 
