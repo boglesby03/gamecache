@@ -247,7 +247,7 @@ def _create_blank_collection(id, name):
         "players": [],
         "version_name": "",
         "version_year": "",
-        "last_modified": "2100-01-01 00:00:00",
+        "last_modified": "1970-01-01 00:00:00",
         "collection_id": id,
         "publisher_id": 0,
     }
