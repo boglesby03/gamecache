@@ -156,6 +156,8 @@ function get_widgets(SETTINGS) {
         attribute: 'mechanics',
         operator: 'and',
         showMore: true,
+        searchable: true,
+        searchableIsAlwaysActive: false
       }
     ),
     "refine_designers": panel('Designers')(instantsearch.widgets.refinementList)(
@@ -247,6 +249,8 @@ function get_widgets(SETTINGS) {
         attribute: 'year',
         operator: 'or',
         showMore: true,
+        searchable: true,
+        searchableIsAlwaysActive: false,
         sortBy: function(a, b){ return parseInt(b.name) - parseInt(a.name); },
       }
     ),
