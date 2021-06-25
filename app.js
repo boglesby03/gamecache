@@ -145,6 +145,8 @@ function get_widgets(SETTINGS) {
         attribute: 'categories',
         operator: 'and',
         showMore: true,
+        searchable: true,
+        searchableIsAlwaysActive: false
       }
     ),
     "refine_mechanics": panel('Mechanics')(instantsearch.widgets.refinementList)(
@@ -163,6 +165,8 @@ function get_widgets(SETTINGS) {
         attribute: 'designers.name',
         operator: 'and',
         showMore: true,
+        searchable: true,
+        searchableIsAlwaysActive: false
       }
     ),
     "refine_publishers": panel('Publishers')(instantsearch.widgets.refinementList)(
@@ -172,6 +176,8 @@ function get_widgets(SETTINGS) {
         attribute: 'publishers.name',
         operator: 'and',
         showMore: true,
+        searchable: true,
+        searchableIsAlwaysActive: false
       }
     ),
     "refine_artists": panel('Artists')(instantsearch.widgets.refinementList)(
@@ -181,6 +187,8 @@ function get_widgets(SETTINGS) {
         attribute: 'artists.name',
         operator: 'and',
         showMore: true,
+        searchable: true,
+        searchableIsAlwaysActive: false
       }
     ),
     "refine_players": panel('Number of players')(instantsearch.widgets.hierarchicalMenu)(
@@ -232,6 +240,16 @@ function get_widgets(SETTINGS) {
         ]
       }
     ),
+    "refine_year": panel('Year')(instantsearch.widgets.refinementList)(
+      {
+        container: '#facet-year',
+        collapsible: true,
+        attribute: 'year',
+        operator: 'or',
+        showMore: true,
+        sortBy: function(a, b){ return parseInt(b.name) - parseInt(a.name); },
+      }
+    ),
     // "refine_age": panel('Min age')(instantsearch.widgets.numericMenu)(
     //   {
     //     container: '#facet-age',
@@ -255,7 +273,7 @@ function get_widgets(SETTINGS) {
         container: '#facet-age',
         attribute: 'minage',
         max: 18,
-        min: 1,
+        min: 0,
         step: 1,
         pips: false
       }
@@ -401,7 +419,8 @@ function init(SETTINGS) {
     widgets["pagination"],
     widgets["refine_previousplayers"],
     widgets["refine_numplays"],
-    widgets["refine_age"]
+    widgets["refine_age"],
+    widgets["refine_year"]
   ]);
 
   search.start();
