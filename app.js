@@ -307,12 +307,6 @@ function get_widgets(SETTINGS) {
             }
           });
 
-          // game.publishers.forEach(function(pub) {
-          //   tag_callback = {
-          //     'own': function()
-          //   }
-          // })
-
           game.players_str = players.join(", ");
           game.categories_str = game.categories.join(", ");
           game.mechanics_str = game.mechanics.join(", ");

@@ -377,9 +377,10 @@ class BGGClient:
                             xml.dictionary("statistics/ratings/ranks/rank", [
                                 xml.string(".", attribute="friendlyname"),
                                 xml.string(".", attribute="value"),
+                                xml.string(".", attribute="id"),
                             ],
                                 required=False),
-                            alias="ranks",
+                            alias="other_ranks",
                         ),
                         xml.string(
                             "statistics/ratings/usersrated",

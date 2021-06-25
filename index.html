@@ -94,9 +94,17 @@
             <dd>{{ year }}</dd>
           </div>
           <div>
+            <dt>Other Rankings</dt>
+            <dd>
+              {{#other_ranks }}
+                <li>{{ friendlyname }} #{{ value }}</li>
+              {{/other_ranks }}
+            </dd>
+          </div>
+          <!-- <div>
             <dt>Tags</dt>
             <dd>{{ tags_str }}</dd>
-          </div>
+          </div> -->
           <div>
             <dt>Categories</dt>
             <dd>

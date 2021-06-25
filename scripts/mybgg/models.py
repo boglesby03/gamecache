@@ -40,6 +40,7 @@ class BoardGame:
         self.year = game_data["year"]
         self.playing_time = self.calc_playing_time(game_data)
         self.rank = self.calc_rank(game_data)
+        self.other_ranks = self.filter_other_ranks(game_data)
         self.usersrated = self.calc_usersrated(game_data)
         self.numowned = self.calc_numowned(game_data)
         self.average = self.calc_average(game_data)
@@ -154,6 +155,16 @@ class BoardGame:
             suggested_age = round(sum / total_votes, 2)
 
         return suggested_age
+
+    def filter_other_ranks(self, game_data):
+
+        # Remove the BGG Rank, since it's already handled elsewhere
+        other_ranks = list(filter(lambda g: g["id"] != "1" and g["value"] != "Not Ranked", game_data["other_ranks"]))
+
+        for i, rank in enumerate(other_ranks):
+            other_ranks[i]["friendlyname"] = re.sub(" Rank", "", rank["friendlyname"])
+
+        return other_ranks
 
     def gen_name_list(self, game_data, collection_data):
         """rules for cleaning up linked items to remove duplicate data, such as the title being repeated on every expansion"""
