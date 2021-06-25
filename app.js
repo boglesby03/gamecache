@@ -128,7 +128,8 @@ function get_widgets(SETTINGS) {
         {label: 'Name', value: SETTINGS.algolia.index_name},
         {label: 'BGG Rank', value: SETTINGS.algolia.index_name + '_rank_ascending'},
         {label: 'Number of ratings', value: SETTINGS.algolia.index_name + '_numrated_descending'},
-        {label: 'Number of owners', value: SETTINGS.algolia.index_name + '_numowned_descending'}
+        {label: 'Number of owners', value: SETTINGS.algolia.index_name + '_numowned_descending'},
+        {label: 'Last modified date', value: SETTINGS.algolia.index_name + '_lastmod_descending'}
       ]
     }),
     "clear": instantsearch.widgets.clearRefinements({
@@ -275,6 +276,9 @@ function get_widgets(SETTINGS) {
           game.has_reimplements = (game.reimplements.length > 0);
           game.has_reimplemented = (game.reimplementedby.length > 0);
           game.average_str = game.average.toFixed(2);
+          game.community_rec_age = game.suggested_age.toFixed();
+          game.has_rec_age = game.community_rec_age > 0;
+          game.weight_rating = game.weightRating.toFixed(2);
 
           return game;
         });
@@ -331,6 +335,9 @@ function init(SETTINGS) {
       break
     case 'desc(numowned)':
       configIndexName = SETTINGS.algolia.index_name + '_numowned_descending'
+      break
+    case 'desc(lastmod)':
+      configIndexName = SETTINGS.algolia.index_name + '_lastmod_descending'
       break
     default:
       console.error("The provided config value for algolia.sort_by was invalid: " + SETTINGS.algolia.sort_by)

@@ -78,7 +78,18 @@
           </div>
           <div>
             <dt>Complexity</dt>
-            <dd>{{ weight }}</dd>
+            <dd>{{ weight }} ({{weight_rating}})</dd>
+          </div>
+          <div>
+            <dt>Age (Community)</dt>
+            <dd>
+              {{# has_rec_age }} {{ minage }}+ ({{ community_rec_age }}+ ) {{/ has_rec_age }}
+              {{^ has_rec_age }} {{ minage }}+ (No Votes) {{/ has_rec_age }}
+            </dd>
+          </div>
+          <div>
+            <dt>Year</dt>
+            <dd>{{ year }}</dd>
           </div>
           <div>
             <dt>Tags</dt>
