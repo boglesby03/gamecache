@@ -277,21 +277,45 @@ def publisher_filter(publishers, publisher_version):
 def custom_expansion_mappings(expansions):
     """add custom expansions mappings, because sometimes BGG is wrong"""
 
+    exp_map = [
+        # Original Tuscany should be an expansion for Viticulture Essential Edition (even if there is overlap)
+        {"id": 147101, "baseId": 183394},
+        # Poison Expansion for Council of Verona
+        {"id": 147827, "baseId": 165469},
+        # Map the Carcassonne Map Chips to Carcassonne
+        {"id": 291518, "baseId": 822},
+        # Africa mapped to TtR: Europe
+        {"id": 131188, "baseId": 14996},
+        {"id": 131188, "baseId": 225244}, # TrR: Germany
+        # Vegas Wits & Wager -> Wits & Wagers It's Vegas Baby
+        {"id": 229967, "baseId": 286428},
+        # Hive pocket includes these
+        {"id": 30323, "baseId": 154597},
+        {"id": 70704, "baseId": 154597},
+    ]
+
     # Original Tuscany should be an expansion for Viticulture Essential Edition (even if there is overlap)
-    expansions[147101]["expansions"].append({ "id": 183394, "inbound": True})
+    # expansions[147101]["expansions"].append({ "id": 183394, "inbound": True})
 
     # Poison Expansion for Council of Verona
-    expansions[147827]["expansions"].append({ "id": 165469, "inbound": True})
+    # expansions[147827]["expansions"].append({ "id": 165469, "inbound": True})
 
     # TODO Should be fixed. Map the Carcassonne Map Chips to Carcassonne
-    expansions[291518]["expansions"].append({"id": 822, "inbound": True})
+    # expansions[291518]["expansions"].append({"id": 822, "inbound": True})
 
     # TODO Should be fixed. Africa mapped to TtR: Europe
-    expansions[131188]["expansions"].append({"id": 14996, "inbound": True})
-    expansions[131188]["expansions"].append({"id": 225244, "inbound": True}) # TtR: Germany
+    # expansions[131188]["expansions"].append({"id": 14996, "inbound": True})
+    # expansions[131188]["expansions"].append({"id": 225244, "inbound": True}) # TtR: Germany
 
     # Vegas Wits & Wager -> Wits & Wagers It's Vegas Baby
-    expansions[229967]["expansions"].append({"id": 286428, "inbound": True})
+    # expansions[229967]["expansions"].append({"id": 286428, "inbound": True})
+
+    # # Hive pocket includes these
+    # expansions[30323]["expansions"].append({"id": 154597, "inbound": True})
+    # expansions[70704]["expansions"].append({"id": 154597, "inbound": True})
+
+    for exp in exp_map:
+        expansions[exp["id"]]["expansions"].append({"id": exp["baseId"], "inbound": True})
 
     return expansions
 
@@ -374,11 +398,13 @@ def remove_prefix(expansion, game_details):
     # TODO what about "Age of Expansion" or just "Expansion" (Legendary Encounters: Alien - Expansion)?
     # new_exp = re.sub(r"\s*(?:Mini|Micro)?[\s-]*Expansion\s*(?:Pack)?\s*", "", new_exp)
     # Pack sorting
-    new_exp = re.sub(r"(.*)\s(Hero|Scenario|Ally|Villain|Mythos|Figure|Army|) Pack\s*", r"\2: \1", new_exp)
+    new_exp = re.sub(r"(.*)\s(Hero|Scenario|Ally|Villain|Mythos|Figure|Army|Faction|) Pack\s*", r"\2: \1", new_exp)
+    # Massive Darkness
+    new_exp = re.sub(r"Heroes & Monster Set", "Hero Set", new_exp)
     # Heroic Bystanders
     new_exp = re.sub(r"(.*)\s*Heroic Bystander\s*(.*)", r"Heroic Bystander: \1\2", new_exp)
     # Marvel Masterpiece
-    new_exp = re.sub(r"Marvel Masterpiece Trading Card:\s*(.*)", r"\1 [Alt Art]", new_exp )
+    new_exp = re.sub(r"Marvel Masterpiece Trading Card:\s*(.*)", r"\1 [Alt Art]", new_exp)
     # Brettspiel Adventskalender
     new_exp = re.sub(r"Brettspiel Adventskalender", "Brettspiel", new_exp, flags=re.IGNORECASE)
     # Welcome to...
@@ -402,7 +428,7 @@ def remove_prefix(expansion, game_details):
     # If there is still a dash (secondary delimiter), swap it to a colon
     new_exp = re.sub(r" \– ", ": ", new_exp)
     # Edge case where multiple ":" are in a row
-    new_exp = re.sub(r"\s*(: )+", ": ", new_exp)
+    new_exp = re.sub(r"\s*:\s[:\s]*", ": ", new_exp)
     # extra space around (
     new_exp = re.sub(r"( [(/]) ", "\1", new_exp)
 
