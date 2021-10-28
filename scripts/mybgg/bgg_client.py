@@ -410,6 +410,18 @@ class BGGClient:
                             alias="min_age",
                             required=False,
                         ),
+                        xml.integer(
+                            "minplayers",
+                            attribute="value",
+                            alias="min_players",
+                            required=False,
+                        ),
+                        xml.integer(
+                            "maxplayers",
+                            attribute="value",
+                            alias="max_players",
+                            required=False,
+                        ),
                         xml.array(
                             xml.dictionary("poll[@name='suggested_playerage']/results/result", [
                                         xml.string(".", attribute="value", alias="age", hooks=xml.Hooks(after_parse=age_conversion)),

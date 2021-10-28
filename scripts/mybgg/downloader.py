@@ -43,7 +43,7 @@ class Downloader():
             )
 
         # Dummy game for linking extra promos and accessories
-        collection_data.append(_create_blank_collection(EXTRA_EXPANSIONS_GAME_ID, "ZZZ: Expansions without Game (A-M)"))
+        collection_data.append(_create_blank_collection(EXTRA_EXPANSIONS_GAME_ID, "ZZZ: Expansions without Game (A-I)"))
 
         params = {"subtype": "boardgameaccessory", "own": 1}
         accessory_collection = self.client.collection(user_name=user_name, **params)
@@ -188,11 +188,28 @@ class Downloader():
 
             # TODO This is terrible, but split the extra expansions by letter
             if game.id == EXTRA_EXPANSIONS_GAME_ID:
+
+                game.description = ""
+                game.players = []
+                for exp in game.expansions:
+                    exp.players.clear()
+
                 newGame = copy.deepcopy(game)
-                newGame.name = "ZZZ: Expansions without Game (N-Z)"
-                newGame.collection_id = str(game.collection_id) + "nz"
-                newGame.expansions = list(filter(lambda x: re.search(r"^[n-zN-Z]", x.name), game.expansions))
-                newGame.accessories = list(filter(lambda x: re.search(r"^[n-zN-Z]", x.name), game.accessories))
+                newGame.name = "ZZZ: Expansions without Game (J-Q)"
+                newGame.collection_id = str(game.collection_id) + "jq"
+                newGame.expansions = list(filter(lambda x: re.search(r"^[j-qJ-Q]", x.name), game.expansions))
+                newGame.accessories = list(filter(lambda x: re.search(r"^[j-qJ-Q]", x.name), game.accessories))
+                newGame.expansions = sorted(newGame.expansions, key=lambda x: x.name)
+                newGame.accessories = sorted(newGame.accessories, key=lambda x: x.name)
+                game.expansions = list(set(game.expansions) - set(newGame.expansions))
+                game.accessories = list(set(game.accessories) - set(newGame.accessories))
+                newGames.append(newGame)
+
+                newGame = copy.deepcopy(game)
+                newGame.name = "ZZZ: Expansions without Game (R-Z)"
+                newGame.collection_id = str(game.collection_id) + "rz"
+                newGame.expansions = list(filter(lambda x: re.search(r"^[r-zR-Z]", x.name), game.expansions))
+                newGame.accessories = list(filter(lambda x: re.search(r"^[r-zR-Z]", x.name), game.accessories))
                 newGame.expansions = sorted(newGame.expansions, key=lambda x: x.name)
                 newGame.accessories = sorted(newGame.accessories, key=lambda x: x.name)
                 game.expansions = list(set(game.expansions) - set(newGame.expansions))
