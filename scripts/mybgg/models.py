@@ -73,7 +73,7 @@ class BoardGame:
         num_players = game_data["suggested_numplayers"].copy()
 
         for supported_num in range(game_data["min_players"], game_data["max_players"] + 1):
-            if str(supported_num) not in [num for num, _ in num_players]:
+            if supported_num > 0 and str(supported_num) not in [num for num, _ in num_players]:
                 num_players.append((str(supported_num), "supported"))
 
         # Add number of players from expansions
