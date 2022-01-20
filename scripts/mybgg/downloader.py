@@ -401,6 +401,7 @@ def remove_prefix(expansion, game_details):
 
     game_titles = game_details.alternate_names
     titles = [x.lower() for x in game_titles]
+    titles.sort(key=len, reverse=True)
 
     new_exp_lower = new_exp.lower()
     for title in titles:
@@ -449,11 +450,13 @@ def remove_prefix(expansion, game_details):
     # extra space around (
     new_exp = re.sub(r"( [(/]) ", "\1", new_exp)
 
-
     new_exp = move_article_to_end(new_exp)
 
     # Lazy fix to move tags back to the end of the name
     new_exp = re.sub(r"( \[(?:Fan|Promo)\]), (.*)", r",\2\1", new_exp)
+
+    # collapse any remaining multispaces
+    new_exp = re.sub(r"/s/s+", " ", new_exp)
 
     # If we ended up removing everything - then just reset to what it started with
     if len(new_exp) == 0:

@@ -78,17 +78,20 @@ class BoardGame:
 
         # Add number of players from expansions
         for expansion in expansions:
+            # First add all the recommended player counts from expansions, then look for additional counts that are just supported.
             for expansion_num, support in expansion.players:
                 if expansion_num not in [num for num, _ in num_players]:
-                    #TODO another expansion may upgrade this player count to remove the supported
+                    if support != "supported":
+                        num_players.append((expansion_num, "expansion"))
+            for expansion_num, support in expansion.players:
+                if expansion_num not in [num for num, _ in num_players]:
                     if support == "supported":
                         num_players.append((expansion_num, "exp_supported"))
-                    else:
-                        num_players.append((expansion_num, "expansion"))
 
         num_players = sorted(num_players, key=lambda x: int(x[0].replace("+", "")))
 
         # Remove "+ player counts if they are not the last in the list
+        # Also remove player counts >=14, except for the max player count (e.g. 1-100 suggested player counts will only list 1-13,100)
         num_players[:-1] = [ player for player in num_players[:-1] if player[0][-1] != "+" and int(player[0]) < 14 ]
 
         return num_players
@@ -195,9 +198,21 @@ class BoardGame:
             game_tmp = re.sub(r"\s*\(?Big Box.*", "", game, flags=re.IGNORECASE)
             game_titles.append(game_tmp)
 
-        if "Chronicles of Crime" in game_titles:
+        # TODO maybe add a rule to put title without number on the title list
+        if "Burgle Bros." in game_titles:
+            game_titles.append("Burgle Bros 2")
+        elif "Burgle Bros 2" in game_titles:
+            game_titles.append("Burgle Bros.")
+        # elif "Cartographers" in game_titles:
+        #     game_titles.insert(0, "Cartographers: A Roll Player Tale")  # This needs to be first in the list
+        elif "Cartographers Heroes" in game_titles:
+            game_titles.append("Cartographers: A Roll Player Tale")
+            game_titles.append("Cartographers")
+        elif "Chronicles of Crime" in game_titles:
             game_titles.insert(0, "The Millennium Series")
             game_titles.insert(0, "Chronicles of Crime: The Millennium Series")
+        elif "Hive Pocket" in game_titles:
+            game_titles.append("Hive")
         elif any(title in ("King of Tokyo", "King of New York") for title in game_titles):
             game_titles.insert(0, "King of Tokyo/New York")
             game_titles.insert(0, "King of Tokyo/King of New York")
@@ -217,8 +232,10 @@ class BoardGame:
             game_titles.append("Rokoko")
         elif "Small World Underground" in game_titles:
             game_titles.append("Small World")
-        elif "Unforgiven" in game_titles:
-            game_titles.insert(0, "Unforgiven: The Lincoln Assassination Trial")
+        elif any(title in ("Tournament at Avalon", "Tournament at Camelot") for title in game_titles):
+            game_titles.insert(0, "Tournament at Camelot/Avalon")
+        # elif "Unforgiven" in game_titles:
+        #     game_titles.insert(0, "Unforgiven: The Lincoln Assassination Trial")
         elif "Viticulture Essential Edition" in game_titles:
             game_titles.append("Viticulture")
 
