@@ -298,7 +298,7 @@ function get_widgets(SETTINGS) {
             type_callback = {
               'best': function(num) { return '<span title="Best with"><strong>' + num + '</strong>★</span>'; },
               'recommended': function(num) { return num; },
-              'expansion': function(num) { return num + '<span title="With expansion">⊕</span>'; },
+              'expansion': function(num) { return '<span title="With expansion">' + num + '⊕</span>'; },
               'supports': function(num) { return '<span title="Supported"><em>' + num + '~</em></span>'; },
               'expansionsupport': function(num) { return '<span title="Supported With expansion"><em>' + num + '⊕~</em></span>'; }
             };
