@@ -298,6 +298,7 @@ def publisher_filter(publishers, publisher_version):
 def custom_accessories_mapping(accessories):
 
     acc_map = [
+        # new Libertalia Coins can be used with the original version of the game
         {"id": 359371, "baseId": 125618},
     ]
 
@@ -315,6 +316,8 @@ def custom_expansion_mappings(expansions):
     exp_map = [
         # Original Tuscany should be an expansion for Viticulture Essential Edition (even if there is overlap)
         {"id": 147101, "baseId": 183394},
+        # Viticulture Promo Cards to Viticulture EE
+        {"id": 140045, "baseId": 183394},
         # Poison Expansion for Council of Verona
         {"id": 147827, "baseId": 165469},
         # Map the Carcassonne Map Chips to Carcassonne

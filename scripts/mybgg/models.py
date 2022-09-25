@@ -36,7 +36,7 @@ class BoardGame:
         self.integrates = game_data["integrates"]
         self.players = self.calc_num_players(game_data, expansions)
         self.weight = self.calc_weight(game_data)
-        self.weightRating = float(game_data["weight"])
+        self.weightRating = float(game_data["weight"]) if game_data["weight"].strip() else -1
         self.year = game_data["year"]
         self.playing_time = self.calc_playing_time(game_data)
         self.rank = self.calc_rank(game_data)
@@ -211,6 +211,12 @@ class BoardGame:
         elif "Chronicles of Crime" in game_titles:
             game_titles.insert(0, "The Millennium Series")
             game_titles.insert(0, "Chronicles of Crime: The Millennium Series")
+        elif "DC Comics Deck-Building Game" in game_titles:
+            game_titles.append("DC Deck-Building Game")
+            game_titles.append("DC Deck Building Game")
+        elif "DC Deck-Building Game" in game_titles:
+            game_titles.append("DC Comics Deck-Building Game")
+            game_titles.append("DC Deck Building Game")
         elif "Hive Pocket" in game_titles:
             game_titles.append("Hive")
         elif any(title in ("King of Tokyo", "King of New York") for title in game_titles):
