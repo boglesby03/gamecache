@@ -94,6 +94,8 @@ class Downloader():
                 if expansion["inbound"] and id in expansion_data_by_id:
                     expansion_data_by_id[id]["expansions_collection"].append(expansion_data)
 
+        accessory_list_data = custom_accessories_mapping(accessory_list_data)
+
         for accessory_data in accessory_list_data:
             own_game = False
             for accessory in accessory_data["accessories"]:
@@ -163,6 +165,8 @@ class Downloader():
                     con["name"] = remove_prefix(con["name"], game)
                     contained_list.append(con)
             game.contained = sorted(contained_list, key=lambda x: x["name"])
+
+            game.name = name_scrubber(game.name)
 
             integrates_list = []
             for integrate in game.integrates:
@@ -290,6 +294,20 @@ def publisher_filter(publishers, publisher_version):
 
     return publisher_list
 
+
+def custom_accessories_mapping(accessories):
+
+    acc_map = [
+        {"id": 359371, "baseId": 125618},
+    ]
+
+    for new_acc in acc_map:
+        for acc in accessories:
+            if new_acc["id"] == acc["id"]:
+                acc["accessories"].append({"id": new_acc["baseId"], "inbound": True})
+
+    return accessories
+
 # TODO These mappings should be configurable
 def custom_expansion_mappings(expansions):
     """add custom expansions mappings, because sometimes BGG is wrong"""
@@ -385,6 +403,8 @@ def name_scrubber(title):
     # Legendary
     new_title = re.sub(r"(Legendary(?: Encounters)?:) (?:An?)?\s*(.*) Deck Building Game",
                      r"\1 \2", title, flags=re.IGNORECASE)
+    # Funkoverse
+    new_title = re.sub(r"Funkoverse Strategy Game", "Funkoverse", new_title)
 
     new_title = move_article_to_end(new_title)
 
@@ -435,6 +455,8 @@ def remove_prefix(expansion, game_details):
     new_exp = re.sub(r"Isle of Skye: From Chieftain to King", "Isle of Skye", new_exp)
     # Fleet: The Dice Game
     new_exp = re.sub(r"Second Edition\) \– ", "Second Edition ", new_exp)
+    # Funkoverse
+    new_exp = re.sub(r"Funkoverse Strategy Game", "Funkoverse", new_exp)
     # Shorten Fan Expansions to just [Fan]
     new_exp = re.sub(r"\s*\(?Fan expans.*", " [Fan]", new_exp, flags=re.IGNORECASE)
     # Ticket to Ride Map Collection Titles are too long
