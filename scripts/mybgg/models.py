@@ -39,13 +39,13 @@ class BoardGame:
         self.weightRating = float(game_data["weight"]) if game_data["weight"].strip() else -1
         self.year = game_data["year"]
         self.playing_time = self.calc_playing_time(game_data)
+        self.min_age = self.calc_min_age(game_data)
         self.rank = self.calc_rank(game_data)
         self.other_ranks = self.filter_other_ranks(game_data)
         self.usersrated = self.calc_usersrated(game_data)
         self.numowned = self.calc_numowned(game_data)
         self.average = self.calc_average(game_data)
         self.rating = self.calc_rating(game_data)
-        self.minage = game_data["min_age"]
         self.suggested_age = self.calc_suggested_age(game_data)
         self.numplays = collection_data["numplays"]
         self.image = collection_data["image_version"] or collection_data["image"] or game_data["image"]
@@ -111,6 +111,16 @@ class BoardGame:
                 return playing_time
 
         return '> 4h'
+
+    def calc_min_age(self, game_data):
+        if "min_age" not in game_data or not game_data["min_age"]:
+            return None
+
+        min_age = int(game_data["min_age"])
+        if min_age == 0:
+            return None
+
+        return min_age
 
     def calc_rank(self, game_data):
         if not game_data["rank"] or game_data["rank"] == "Not Ranked":

@@ -5,9 +5,9 @@ import time
 import colorgram
 import requests
 from algoliasearch.search_client import SearchClient
-# Allow colorgram to read truncated files
 from PIL import Image, ImageFile
 
+# Allow colorgram to read truncated files
 ImageFile.LOAD_TRUNCATED_IMAGES = True
 
 class Indexer:
@@ -46,6 +46,7 @@ class Indexer:
                 'players',
                 'weight',
                 'playing_time',
+                'min_age',
                 'searchable(previous_players)',
                 'numplays',
                 'searchable(year)',
