@@ -135,7 +135,9 @@ function get_widgets(SETTINGS) {
     "clear": instantsearch.widgets.clearRefinements({
       container: '#clear-all',
       templates: {
-        resetLabel: 'Clear all'
+        resetLabel({ hasRefinements }, { html }) {
+          return html`<span>${hasRefinements ? 'Clear all' : ''}</span>`;
+        }
       }
     }),
     "refine_categories": panel('Categories')(instantsearch.widgets.refinementList)(
@@ -218,22 +220,22 @@ function get_widgets(SETTINGS) {
         sortBy: function(a, b){ return PLAYING_TIME_ORDER.indexOf(a.name) - PLAYING_TIME_ORDER.indexOf(b.name); },
       }
     ),
-    "refine_min_age": panel('Min age')(instantsearch.widgets.numericMenu)(
-      {
-        container: '#facet-min-age',
-        attribute: 'min_age',
-        items: [
-          { label: 'Any age' },
-          { label: '< 5 years', end: 4 },
-          { label: '< 7 years', end: 6 },
-          { label: '< 9 years', end: 8 },
-          { label: '< 11 years', end: 10 },
-          { label: '< 13 years', end: 12 },
-          { label: '< 15 years', end: 14 },
-          { label: '15+', start: 15 },
-        ]
-      }
-    ),
+    // "refine_min_age": panel('Min age')(instantsearch.widgets.numericMenu)(
+    //   {
+    //     container: '#facet-min-age',
+    //     attribute: 'min_age',
+    //     items: [
+    //       { label: 'Any age' },
+    //       { label: '< 5 years', end: 4 },
+    //       { label: '< 7 years', end: 6 },
+    //       { label: '< 9 years', end: 8 },
+    //       { label: '< 11 years', end: 10 },
+    //       { label: '< 13 years', end: 12 },
+    //       { label: '< 15 years', end: 14 },
+    //       { label: '15+', start: 15 },
+    //     ]
+    //   }
+    // ),
     "refine_previousplayers": panel('Previous players')(instantsearch.widgets.refinementList)(
       {
         container: '#facet-previous-players',
@@ -291,9 +293,9 @@ function get_widgets(SETTINGS) {
     "refine_age": panel('Min age')(instantsearch.widgets.rangeSlider)(
       {
         container: '#facet-age',
-        attribute: 'minage',
-        max: 18,
-        min: 0,
+        attribute: 'min_age',
+        // max: 18,
+        // min: 0,
         step: 1,
         pips: false
       }
@@ -431,7 +433,7 @@ function init(SETTINGS) {
     widgets["refine_publishers"],
     widgets["refine_artists"],
     // widgets["refine_min_age"],
-    widgets["refine_age"].
+    widgets["refine_age"],
     widgets["hits"],
     widgets["stats"],
     widgets["pagination"],

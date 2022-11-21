@@ -5,9 +5,9 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=0.7">
   <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
-  <script src="https://cdn.jsdelivr.net/npm/algoliasearch@4.8.3/dist/algoliasearch-lite.umd.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/instantsearch.js@4.10.0/dist/instantsearch.production.min.js"></script>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/instantsearch.css@7.4.5/themes/reset-min.css">
+  <script src="https://cdn.jsdelivr.net/npm/algoliasearch@4/dist/algoliasearch-lite.umd.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/instantsearch.js@4/dist/instantsearch.production.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/instantsearch.css@7/themes/reset-min.css">
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,700&amp;display=swap">
 </head>
@@ -27,7 +27,7 @@
       <div class="facet" id="facet-weight" tabindex="0"></div>
       <div class="facet" id="facet-categories" tabindex="0"></div>
       <div class="facet" id="facet-mechanics" tabindex="0"></div>
-      <div class="facet" id="facet-min-age" tabindex="0"></div>
+      <!-- <div class="facet" id="facet-min-age" tabindex="0"></div> -->
       <div class="facet" id="facet-previous-players" tabindex="0"></div>
       <div class="facet" id="facet-numplays" tabindex="0"></div>
       <div class="facet" id="facet-publishers" tabindex="0"></div>
@@ -86,8 +86,8 @@
           <div>
             <dt>Age (Community)</dt>
             <dd>
-              {{# has_rec_age }} {{ minage }}+ ({{ community_rec_age }}+ ) {{/ has_rec_age }}
-              {{^ has_rec_age }} {{ minage }}+ (No Votes) {{/ has_rec_age }}
+              {{# has_rec_age }} {{ min_age }}+ ({{ community_rec_age }}+ ) {{/ has_rec_age }}
+              {{^ has_rec_age }} {{ min_age }}+ (No Votes) {{/ has_rec_age }}
             </dd>
           </div>
           <div>
