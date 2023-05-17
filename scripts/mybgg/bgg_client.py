@@ -339,6 +339,17 @@ class BGGClient:
                         ),
                         xml.array(
                             xml.dictionary(
+                                "link[@type='boardgame']", [
+                                    xml.integer(".", attribute="id"),
+                                    xml.string(".", attribute="value", alias="name"),
+                                    xml.boolean(".", attribute="inbound", required=False),
+                                ],
+                                required=False
+                            ),
+                            alias="basegame",
+                        ),
+                        xml.array(
+                            xml.dictionary(
                                 "link[@type='boardgameaccessory']", [
                                     xml.integer(".", attribute="id"),
                                     xml.boolean(".", attribute="inbound", required=False),

@@ -98,7 +98,7 @@ class Downloader():
 
         for accessory_data in accessory_list_data:
             own_game = False
-            for accessory in accessory_data["accessories"]:
+            for accessory in accessory_data["basegame"]:
                 id = accessory["id"]
                 if accessory["inbound"]:
                     if id in game_data_by_id:
@@ -112,7 +112,7 @@ class Downloader():
 
         for expansion_data in expansion_data_by_id.values():
             own_base_game = False
-            for expansion in expansion_data["expansions"]:
+            for expansion in expansion_data["basegame"]:
                 id = expansion["id"]
                 if expansion["inbound"]:
                     if id in game_data_by_id:
@@ -428,7 +428,9 @@ def remove_prefix(expansion, game_details):
 
     new_exp_lower = new_exp.lower()
     for title in titles:
-        if new_exp_lower.startswith(title):
+        if new_exp_lower == title:
+            continue
+        elif new_exp_lower.startswith(title) and not new_exp[len(title)].isalpha():
             new_exp = new_exp[len(title):]
             break
 
