@@ -339,10 +339,26 @@ function get_widgets(SETTINGS) {
           game.has_integrates = (game.integrates.length > 0);
           game.has_reimplements = (game.reimplements.length > 0);
           game.has_reimplemented = (game.reimplementedby.length > 0);
-          game.average_str = game.average.toFixed(2);
-          game.community_rec_age = game.suggested_age.toFixed();
+
+          if (game.average === null) {
+            game.average_str = "";
+          } else {
+            game.average_str = game.average.toFixed(2);
+          }
+
+          if (game.suggested_age === null) {
+            game.community_rec_age = 0;
+          } else {
+            game.community_rec_age = game.suggested_age.toFixed();
+          }
+
           game.has_rec_age = game.community_rec_age > 0;
-          game.weight_rating = game.weightRating.toFixed(2);
+
+          if (game.weightRating === null) {
+            game.weight_rating = 0;
+          } else {
+            game.weight_rating = game.weightRating.toFixed(2);
+          }
 
           return game;
         });
