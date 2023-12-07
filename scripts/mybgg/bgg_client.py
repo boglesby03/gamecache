@@ -81,7 +81,7 @@ class BGGClient:
             # Handle 202 Accepted
             if response.status_code == 202:
                 if tries < 10:
-                    time.sleep(5)
+                    time.sleep(30)
                     return self._make_request(url, params=params, tries=tries + 1)
 
             # Handle 504 Gateway Timeout
@@ -94,7 +94,7 @@ class BGGClient:
             if response.status_code == 429:
                 if tries < 3:
                     logger.debug("BGG returned \"Too Many Requests\", waiting 30 seconds before trying again...")
-                    time.sleep(30)
+                    time.sleep(60)
                     return self._make_request(url, params=params, tries=tries + 1)
 
             raise BGGException(
