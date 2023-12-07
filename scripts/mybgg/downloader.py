@@ -98,7 +98,7 @@ class Downloader():
 
         for accessory_data in accessory_list_data:
             own_game = False
-            for accessory in accessory_data["basegame"]:
+            for accessory in accessory_data["accessories"]:
                 id = accessory["id"]
                 if accessory["inbound"]:
                     if id in game_data_by_id:
@@ -112,7 +112,7 @@ class Downloader():
 
         for expansion_data in expansion_data_by_id.values():
             own_base_game = False
-            for expansion in expansion_data["basegame"]:
+            for expansion in expansion_data["expansions"]:
                 id = expansion["id"]
                 if expansion["inbound"]:
                     if id in game_data_by_id:
@@ -200,7 +200,7 @@ class Downloader():
 
                 newGame = copy.deepcopy(game)
                 newGame.name = "ZZZ: Expansions without Game (J-Q)"
-                newGame.collection_id = str(game.collection_id) + "jq"
+                newGame.collection_id = str(game.collection_id) + "2"
                 newGame.expansions = list(filter(lambda x: re.search(r"^[j-qJ-Q]", x.name), game.expansions))
                 newGame.accessories = list(filter(lambda x: re.search(r"^[j-qJ-Q]", x.name), game.accessories))
                 newGame.expansions = sorted(newGame.expansions, key=lambda x: x.name)
@@ -211,7 +211,7 @@ class Downloader():
 
                 newGame = copy.deepcopy(game)
                 newGame.name = "ZZZ: Expansions without Game (R-Z)"
-                newGame.collection_id = str(game.collection_id) + "rz"
+                newGame.collection_id = str(game.collection_id) + "3"
                 newGame.expansions = list(filter(lambda x: re.search(r"^[r-zR-Z]", x.name), game.expansions))
                 newGame.accessories = list(filter(lambda x: re.search(r"^[r-zR-Z]", x.name), game.accessories))
                 newGame.expansions = sorted(newGame.expansions, key=lambda x: x.name)
@@ -300,6 +300,8 @@ def custom_accessories_mapping(accessories):
     acc_map = [
         # new Libertalia Coins can be used with the original version of the game
         {"id": 359371, "baseId": 125618},
+        # They don't match in art, but GeekUp Bits can be used with new Amun-Re
+        {"id": 283524, "baseId": 354568},
     ]
 
     for new_acc in acc_map:
@@ -370,6 +372,10 @@ def family_filter(family):
 def is_promo_box(game):
     """Ignore the Deutscher Spielepreile Goodie Boxes and Brettspiel Adventskalender as expansions and treat them like base games"""
 
+    # Treat Knightmare Chess like a base game
+    if game["id"] == 155192:
+        return True
+
     # return game["id"] in (178656, 191779, 204573, 231506, 256951, 205611, 232298, 257590, 286086)
     # Change this to look for board game family 39378 (Box of Promos)
     return any(39378 == family["id"] for family in game["families"])
@@ -435,13 +441,15 @@ def remove_prefix(expansion, game_details):
             break
 
     # Relabel Promos
-    new_exp = re.sub(r"(.*)s*Promo(?:tional)?(s?):?\s*(?:(?:Card|Pack|Deck)(s?))?\s*(.*)",
+    new_exp = re.sub(r"(.*)s*Promo(?:tional)?(s?):?[\s-]*(?:(?:Card|Deck|Pack|Set)(s?))?\s*(.*)",
                      r"\1 \4 [Promo\2\3]", new_exp, flags=re.IGNORECASE)
     # Expansions don't need to be labeled Expansion
     # TODO what about "Age of Expansion" or just "Expansion" (Legendary Encounters: Alien - Expansion)?
     # new_exp = re.sub(r"\s*(?:Mini|Micro)?[\s-]*Expansion\s*(?:Pack)?\s*", "", new_exp)
+    # Fix consistency with different '-' being used.
+    new_exp = re.sub(r"\–", "-", new_exp)
     # Pack sorting
-    new_exp = re.sub(r"(.*)\s(Hero|Scenario|Ally|Villain|Mythos|Figure|Army|Faction|) Pack\s*", r"\2: \1", new_exp)
+    new_exp = re.sub(r"(.*)\s(Hero|Scenario|Ally|Villain|Mythos|Figure|Army|Faction|Investigator) *(?:Starter|-)? +(?:Card|Deck|Pack|Set)\s*", r"\2: \1", new_exp)
     # Massive Darkness
     new_exp = re.sub(r"Heroes & Monster Set", "Hero Set", new_exp)
     # Heroic Bystanders
@@ -469,9 +477,9 @@ def remove_prefix(expansion, game_details):
     # Remove leading whitespace and special characters
     new_exp = re.sub(r"^[^\w\"'`]+", "", new_exp)
     # Remove trailing special characters
-    new_exp = re.sub(r"[\s,:-]+$", "" , new_exp)
+    new_exp = re.sub(r"[\s,:-]+$", "", new_exp)
     # If there is still a dash (secondary delimiter), swap it to a colon
-    new_exp = re.sub(r" \– ", ": ", new_exp)
+    new_exp = re.sub(r" \- ", ": ", new_exp)
     # Edge case where multiple ":" are in a row
     new_exp = re.sub(r"\s*:\s[:\s]*", ": ", new_exp)
     # extra space around (
