@@ -254,6 +254,10 @@ class BoardGame:
         #     game_titles.insert(0, "Unforgiven: The Lincoln Assassination Trial")
         elif "Viticulture Essential Edition" in game_titles:
             game_titles.append("Viticulture")
+        elif "Ultra Tiny Epic Galaxies" in game_titles:
+            game_titles.append("Tiny Epic Galaxies")
+        elif "Unmatched Adventures" in game_titles:
+            game_titles.append("Unmatched")
 
         game_titles.extend(game_data["alternate_names"])
         #game_titles.extend([ game["name"] for game in game_data["reimplements"]])

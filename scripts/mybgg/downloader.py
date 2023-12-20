@@ -441,7 +441,7 @@ def remove_prefix(expansion, game_details):
             break
 
     # Relabel Promos
-    new_exp = re.sub(r"(.*)s*Promo(?:tional)?(s?):?[\s-]*(?:(?:Card|Deck|Pack|Set)(s?))?\s*(.*)",
+    new_exp = re.sub(r"(.*)s*Promo(?:tional)?(s?):?[\s-]*(?:(?:Box|Card|Deck|Pack|Set)(s?))?\s*(.*)",
                      r"\1 \4 [Promo\2\3]", new_exp, flags=re.IGNORECASE)
     # Expansions don't need to be labeled Expansion
     # TODO what about "Age of Expansion" or just "Expansion" (Legendary Encounters: Alien - Expansion)?
@@ -456,6 +456,8 @@ def remove_prefix(expansion, game_details):
     new_exp = re.sub(r"(.*)\s*Heroic Bystander\s*(.*)", r"Heroic Bystander: \1\2", new_exp)
     # Marvel Masterpiece
     new_exp = re.sub(r"Marvel Masterpiece Trading Card:\s*(.*)", r"\1 [Alt Art]", new_exp)
+    # Marvel Zombies
+    new_exp = re.sub(r"(.*): A Zombicide Game", "\1", new_exp)
     # Brettspiel Adventskalender
     new_exp = re.sub(r"Brettspiel Adventskalender", "Brettspiel", new_exp, flags=re.IGNORECASE)
     # Welcome to...
