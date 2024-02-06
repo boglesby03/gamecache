@@ -1,2 +1,4 @@
 *.sqlite
 __pycache__
+update_mybgg.sh
+.vscode
