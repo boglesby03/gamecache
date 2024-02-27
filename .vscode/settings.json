@@ -9,5 +9,15 @@
     "objectid",
     "playid",
     "wanttobuy"
-  ]
+  ],
+  "sqltools.connections": [
+    {
+      "previewLimit": 50,
+      "driver": "SQLite",
+      "name": "mybgg",
+      "database": "${workspaceFolder:mybgg}/mybgg-cache.sqlite"
+    }
+  ],
+  "sqltools.useNodeRuntime": true,
+  "python.pythonPath": "${workspaceFolder:mybgg}/env/bin/python3"
 }
