@@ -244,6 +244,9 @@ class BoardGame:
             game_titles.append("The Rivals for Catan")
             game_titles.append("Die Fürsten von Catan")
             game_titles.append("Catan: Das Duell")
+        # Collector's Edition doesn't have the full title
+        elif "Robinson Crusoe" in game_titles:
+            game_titles.append("Robinson Crusoe: Adventures on the Cursed Island")
         elif "Rococo" in game_titles:
             game_titles.append("Rokoko")
         elif "Small World Underground" in game_titles:
