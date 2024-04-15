@@ -26,8 +26,10 @@ idna==3.6
     # via requests
 multidict==6.0.5
     # via -r requirements.in
-pillow==10.2.0
+pillow==10.3.0
     # via colorgram-py
+platformdirs==4.1.0
+    # via requests-cache
 requests==2.31.0
     # via
     #   algoliasearch
