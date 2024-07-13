@@ -269,13 +269,16 @@ class Indexer:
             game["artists"] = self._minimize_field(game, "artists")
 
             # Limit the number of expansions to 10 to keep the size down
-            game["has_more_expansions"] = False
-            # game["has_more_expansions"] = len(game["expansions"]) > 10
-            # game["expansions"] = game["expansions"][:10]
-
+            # game["has_more_expansions"] = False
+            HAS_MORE_EXPANSIONS = 30
+            game["has_more_expansions"] = len(game["expansions"]) > HAS_MORE_EXPANSIONS
 
             # Make sure description is not too long
-            game["description"] = self._prepare_description(game["description"])
+            if game["has_more_expansions"]:
+                game["expansions"] = game["expansions"][:HAS_MORE_EXPANSIONS]
+                game["description"] = ""
+            else:
+                game["description"] = self._prepare_description(game["description"])
 
         self.index.save_objects(games)
 
