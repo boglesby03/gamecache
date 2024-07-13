@@ -229,6 +229,8 @@ class BoardGame:
             game_titles.append("DC Deck Building Game")
         elif "Hive Pocket" in game_titles:
             game_titles.append("Hive")
+        elif "Horizons of Spirit Island" in game_titles:
+            game_titles.append("Spirit Island")
         elif any(title in ("King of Tokyo", "King of New York") for title in game_titles):
             game_titles.insert(0, "King of Tokyo/New York")
             game_titles.insert(0, "King of Tokyo/King of New York")
@@ -247,6 +249,7 @@ class BoardGame:
         # Collector's Edition doesn't have the full title
         elif "Robinson Crusoe" in game_titles:
             game_titles.append("Robinson Crusoe: Adventures on the Cursed Island")
+            game_titles.append("Adventures on the Cursed Island")
         elif "Rococo" in game_titles:
             game_titles.append("Rokoko")
         elif "Small World Underground" in game_titles:
