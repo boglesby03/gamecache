@@ -449,7 +449,9 @@ def remove_prefix(expansion, game_details):
     # Fix consistency with different '-' being used.
     new_exp = re.sub(r"\–", "-", new_exp)
     # Pack sorting
-    new_exp = re.sub(r"(.*)\s(Hero|Scenario|Ally|Villain|Mythos|Figure|Army|Faction|Investigator) *(?:Starter|-)? +(?:Card|Deck|Pack|Set)\s*", r"\2: \1", new_exp)
+    new_exp = re.sub(r"(.*)\s(Hero|Scenario|Ally|Villain|Mythos|Figure|Army|Faction|Investigator|Companion App) *(?:Starter|-)? +(?:Card|Deck|Pack|Set)\s*(#?\d*)", r"\2: \1", new_exp)
+    # Scenarios
+    new_exp = re.sub(r"(.*)\s(Scenario)s?\s*", r"\2: \1", new_exp)
     # Massive Darkness
     new_exp = re.sub(r"Heroes & Monster Set", "Hero Set", new_exp)
     # Heroic Bystanders
