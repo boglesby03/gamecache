@@ -250,6 +250,8 @@ class BoardGame:
         elif "Robinson Crusoe" in game_titles:
             game_titles.append("Robinson Crusoe: Adventures on the Cursed Island")
             game_titles.append("Adventures on the Cursed Island")
+        elif "Rolling Realms Redux" in game_titles:
+            game_titles.append("Rolling Realms")
         elif "Rococo" in game_titles:
             game_titles.append("Rokoko")
         elif "Small World Underground" in game_titles:
