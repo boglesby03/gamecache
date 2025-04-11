@@ -1,11 +1,12 @@
+import os
 import json
 
 from mybgg.downloader import Downloader
 from mybgg.indexer import Indexer
-
+from setup_logging import setup_logging
 
 def main(args):
-    SETTINGS = json.load(open("config.json", "rb"))
+    SETTINGS = json.load(open(args.config, "rb"))
 
     downloader = Downloader(
         project_name=SETTINGS["project"]["name"],
@@ -43,6 +44,8 @@ def main(args):
 if __name__ == '__main__':
     import argparse
 
+    setup_logging()
+
     parser = argparse.ArgumentParser(description='Download and index some boardgames')
     parser.add_argument(
         '--apikey',
@@ -71,6 +74,13 @@ if __name__ == '__main__':
         '--debug',
         action='store_true',
         help="Print debug information, such as requests made and responses received."
+    )
+    parser.add_argument(
+        '--config',
+        type=str,
+        required=False,
+        default="config.json",
+        help="Path to the config file (default: config.json from the working directory)."
     )
 
     args = parser.parse_args()
