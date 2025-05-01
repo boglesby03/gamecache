@@ -272,6 +272,18 @@ function get_widgets(SETTINGS) {
         sortBy: function(a, b){ return parseInt(b.name) - parseInt(a.name); },
       }
     ),
+    "refine_tags": panel('Status')(instantsearch.widgets.refinementList)(
+      {
+        container: '#facet-tags',
+        collapsible: true,
+        attribute: 'tags',
+        operator: 'or',
+        showMore: false,
+        searchable: false,
+        searchableIsAlwaysActive: false,
+        sortBy: function(a, b){ return parseInt(b.name) - parseInt(a.name); },
+      }
+    ),
     // "refine_age": panel('Min age')(instantsearch.widgets.numericMenu)(
     //   {
     //     container: '#facet-age',
@@ -476,7 +488,8 @@ function init(SETTINGS) {
     widgets["pagination"],
     widgets["refine_previousplayers"],
     widgets["refine_numplays"],
-    widgets["refine_year"]
+    widgets["refine_year"],
+    widgets["refine_tags"]
   ]);
 
   search.start();

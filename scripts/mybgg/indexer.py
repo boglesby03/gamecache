@@ -13,6 +13,7 @@ ImageFile.LOAD_TRUNCATED_IMAGES = True
 class Indexer:
 
     def __init__(self, app_id, apikey, index_name, hits_per_page):
+
         client = SearchClient.create(
             app_id=app_id,
             api_key=apikey,
@@ -36,6 +37,7 @@ class Indexer:
                 'reimplements.name',
                 'reimplementedby.name',
                 'integrates.name',
+                'tags',
             ],
             'attributesForFaceting': [
                 'searchable(categories)',
@@ -50,6 +52,7 @@ class Indexer:
                 'searchable(previous_players)',
                 'numplays',
                 'searchable(year)',
+                'tags',
             ],
             'customRanking': ['asc(name)'],
             'highlightPreTag': '<strong class="highlight">',

@@ -21,6 +21,14 @@ class BoardGame:
         if title[0] in articles:
             name = ' '.join(title[1:]) + ", " + title[0]
 
+        self.tags = collection_data["tags"]
+
+        # TODO put this in external datamap - tag -> label
+        if 'preordered' in self.tags:
+            name += " [Preorder]"
+        elif 'wishlist' in self.tags:
+            name += " [Wishlist]"
+
         self.name = name
 
         self.description = html.unescape(game_data["description"])

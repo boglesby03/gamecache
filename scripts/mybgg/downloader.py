@@ -42,11 +42,18 @@ class Downloader():
                 **extra_params,
             )
 
+        # Filter collection to the types we're interested in
+        # TODO Externalize this
+        filtered_tags = ['own', 'preordered', 'wishlist']
+        collection_data = list(filter(lambda item: any(tag in filtered_tags for tag in item.get("tags", [])), collection_data))
+
         # Dummy game for linking extra promos and accessories
         collection_data.append(_create_blank_collection(EXTRA_EXPANSIONS_GAME_ID, "ZZZ: Expansions without Game (A-I)"))
 
-        params = {"subtype": "boardgameaccessory", "own": 1}
+        params = {"subtype": "boardgameaccessory"}
         accessory_collection = self.client.collection(user_name=user_name, **params)
+        accessory_collection = list(filter(lambda item: any(tag in filtered_tags for tag in item.get("tags", [])), accessory_collection))
+
         accessory_list_data = self.client.game_list([game_in_collection["id"] for game_in_collection in accessory_collection])
         accessory_collection_by_id = MultiDict()
         for acc in accessory_collection:
@@ -87,6 +94,7 @@ class Downloader():
         expansion_data_by_id = custom_expansion_mappings(expansion_data_by_id)
 
         for expansion_data in expansion_data_by_id.values():
+
             if is_promo_box(expansion_data):
                 game_data_by_id[expansion_data["id"]] = expansion_data
             for expansion in expansion_data["expansions"]:
@@ -262,7 +270,7 @@ def _create_blank_collection(id, name):
         "numplays": 0,
         "image": None,
         "image_version": None,
-        "tags": [],
+        "tags": ["own"],
         "comment": "",
         "wishlist_comment": "",
         "players": [],

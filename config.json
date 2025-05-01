@@ -6,7 +6,7 @@
     "boardgamegeek": {
         "user_name": "boglesby",
         "extra_params": {
-            "own": 1
+
         }
     },
     "algolia": {
