@@ -4,7 +4,7 @@ import time
 
 import colorgram
 import requests
-from algoliasearch.search_client import SearchClient
+from algoliasearch.search.client import SearchClientSync
 from PIL import Image, ImageFile
 
 # Allow colorgram to read truncated files
@@ -14,78 +14,102 @@ class Indexer:
 
     def __init__(self, app_id, apikey, index_name, hits_per_page):
 
-        client = SearchClient.create(
+        self.client = SearchClientSync(
             app_id=app_id,
             api_key=apikey,
         )
-        index = client.init_index(index_name)
 
-        index.set_settings({
-            'searchableAttributes': [
-                'name',
-                'alternate_names',
-                'expansions.name',
-                'accessories.name',
-                'description',
-                'comment',
-                'wishlist_comment',
-                'designers.name',
-                'artists.name',
-                'publishers.name',
-                'categories',
-                'families.name',
-                'reimplements.name',
-                'reimplementedby.name',
-                'integrates.name'
-            ],
-            'attributesForFaceting': [
-                'searchable(categories)',
-                'searchable(mechanics)',
-                'searchable(publishers.name)',
-                'searchable(designers.name)',
-                'searchable(artists.name)',
-                'players',
-                'weight',
-                'playing_time',
-                'min_age',
-                'searchable(previous_players)',
-                'numplays',
-                'searchable(year)',
-                'tags',
-                "wishlist_priority"
-            ],
-            'customRanking': ['asc(name)'],
-            'highlightPreTag': '<strong class="highlight">',
-            'highlightPostTag': '</strong>',
-            'hitsPerPage': hits_per_page,
-        })
+        # index = client.init_index(index_name)
 
-        self._init_replicas(client, index)
+        self.client.set_settings(
+            index_name=index_name,
+            index_settings= {
+                'searchableAttributes': [
+                    'name',
+                    'alternate_names',
+                    'expansions.name',
+                    'accessories.name',
+                    'description',
+                    'comment',
+                    'wishlist_comment',
+                    'designers.name',
+                    'artists.name',
+                    'publishers.name',
+                    'categories',
+                    'families.name',
+                    'reimplements.name',
+                    'reimplementedby.name',
+                    'integrates.name'
+                ],
+                'attributesForFaceting': [
+                    'searchable(categories)',
+                    'searchable(mechanics)',
+                    'searchable(publishers.name)',
+                    'searchable(designers.name)',
+                    'searchable(artists.name)',
+                    'players',
+                    'weight',
+                    'playing_time',
+                    'min_age',
+                    'searchable(previous_players)',
+                    'numplays',
+                    'searchable(year)',
+                    'tags',
+                    "wishlist_priority"
+                ],
+                'customRanking': ['asc(name)'],
+                'highlightPreTag': '<strong class="highlight">',
+                'highlightPostTag': '</strong>',
+                'hitsPerPage': hits_per_page,
+            },
+            forward_to_replicas=True,
+            )
 
-        self.index = index
+        self._init_replicas(self.client, index_name)
+
+        self.index = index_name
 
     def _init_replicas(self, client, mainIndex):
 
-        mainIndex.set_settings({
-            'replicas': [
-                mainIndex.name + '_rank_ascending',
-                mainIndex.name + '_numrated_descending',
-                mainIndex.name + '_numowned_descending',
-                mainIndex.name + '_lastmod_descending',
-            ]
-        })
+        client.set_settings(
+            index_name = mainIndex,
+            index_settings = {
+                'replicas': [
+                    mainIndex + '_rank_ascending',
+                    mainIndex + '_numrated_descending',
+                    mainIndex + '_numowned_descending',
+                    mainIndex + '_lastmod_descending',
+                ]
+            },
+        )
 
-        replica_index = client.init_index(mainIndex.name + '_rank_ascending')
-        replica_index.set_settings({'ranking': ['asc(rank)']})
+        client.set_settings(
+            index_name = mainIndex + '_rank_ascending',
+            index_settings = {
+                'ranking': ['asc(rank)']
+            },
+        )
 
-        replica_index = client.init_index(mainIndex.name + '_numrated_descending')
-        replica_index.set_settings({'ranking': ['desc(usersrated)']})
+        client.set_settings(
+            index_name = mainIndex + '_numrated_descending',
+            index_settings = {
+                'ranking': ['desc(usersrated)']
+            },
+        )
 
-        replica_index = client.init_index(mainIndex.name + '_numowned_descending')
-        replica_index.set_settings({'ranking': ['desc(numowned)']})
+        client.set_settings(
+            index_name = mainIndex + '_numowned_descending',
+            index_settings = {
+                'ranking': ['desc(numowned)']
+            },
+        )
 
-        replica_index = client.init_index(mainIndex.name + '_lastmod_descending')
-        replica_index.set_settings({'ranking': ['desc(lastmodified)']})
+        client.set_settings(
+            index_name = mainIndex + '_lastmod_descending',
+            index_settings = {
+                'ranking': ['desc(lastmodified)']
+            },
+        )
 
     @staticmethod
     def todict(obj):
@@ -283,11 +307,22 @@ class Indexer:
             else:
                 game["description"] = self._prepare_description(game["description"])
 
-        self.index.save_objects(games)
+            try:
+                self.client.add_or_update_object(
+                    index_name = self.index,
+                    object_id = game["objectID"],
+                    body = game
+                )
+            except Exception as e:
+                print(f'Error occurred: {e}')
+                print(game)
 
 
     def delete_objects_not_in(self, collection):
         delete_filter = " AND ".join([f"id != {game.id}" for game in collection])
-        self.index.delete_by({
-            'filters': delete_filter,
-        })
+        self.client.delete_by(
+            index_name = self.index,
+            delete_by_params = {
+              'filters': delete_filter,
+            },
+        )
