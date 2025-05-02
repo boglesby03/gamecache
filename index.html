@@ -136,6 +136,14 @@
               {{^ designers }}<em>Unknown Designer</em>{{/ designers }}
             </dd>
           </div>
+          <div>
+            <dt>Status</dt>
+            <dd>
+              {{# tags }}{{ tags }}{{/ tags }}
+              {{# is_wishlist }}: {{ wishlist_priority }} {{/ is_wishlist }}
+              {{^ tags }}<em>Unknown Status</em>{{/ tags }}
+            </dd>
+          </div>
           {{# has_expansions }}
           <div class="expansions">
             <dt>Expansions</dt>

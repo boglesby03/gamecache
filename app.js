@@ -370,6 +370,7 @@ function get_widgets(SETTINGS) {
           game.has_integrates = (game.integrates.length > 0);
           game.has_reimplements = (game.reimplements.length > 0);
           game.has_reimplemented = (game.reimplementedby.length > 0);
+          game.is_wishlist = (game.wishlist_priority != "Own");
 
           if (game.average === null) {
             game.average_str = "";
