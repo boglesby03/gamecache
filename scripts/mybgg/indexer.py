@@ -263,8 +263,8 @@ class Indexer:
             #     for expansion in game["expansions"]
             # ]
 
-            game["expansions"] = self._minimize_field(game, "expansions", ["id", "name", "players"])
-            game["accessories"] = self._minimize_field(game, "accessories")
+            game["expansions"] = self._minimize_field(game, "expansions", ["id", "name", "players", "tags"])
+            game["accessories"] = self._minimize_field(game, "accessories", ["id", "name", "tags"])
             game["reimplements"] = self._minimize_field(game, "reimplements")
             game["reimplementedby"] = self._minimize_field(game, "reimplementedby")
             game["designers"] = self._minimize_field(game, "designers")
