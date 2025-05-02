@@ -60,6 +60,8 @@ class BoardGame:
         self.tags = collection_data["tags"]
         self.comment = collection_data["comment"]
         self.wishlist_comment = collection_data["wishlist_comment"]
+        self.wishlist_priority = self.calc_wishlist_priority(collection_data)
+
         if "players" in collection_data:
             self.previous_players = list(set(collection_data["players"]))
         self.expansions = expansions
@@ -70,6 +72,17 @@ class BoardGame:
         self.version_year = collection_data["version_year"]
         self.collection_id = collection_data["collection_id"]
 
+        # TODO Will add a custom div border here
+        self.style =  self.set_style() # "border: 2px solid red"
+
+    def set_style(self):
+
+        if 'wishlist' in self.tags:
+            return "border: 2px solid grey"
+        elif 'preordered' in self.tags:
+            return  "border: 2px solid rgb(56, 170, 196);"
+
+        return ''
 
     def __hash__(self):
         return hash(self.id)
@@ -119,6 +132,22 @@ class BoardGame:
                 return playing_time
 
         return '> 4h'
+
+    def calc_wishlist_priority(self, collection_data):
+        priority_mapping = {
+            '': 'Own',
+            '0': 'Own',
+            '1': 'Must Have',
+            '2': 'Love to Have',
+            '3': 'Like to Have',
+            '4': 'Thinking About It',
+            '5': 'Don\'t Buy'
+        }
+
+        if "wishlist_priority" in collection_data:
+            return priority_mapping[collection_data["wishlist_priority"]]
+
+        return "Own"
 
     def calc_min_age(self, game_data):
         if "min_age" not in game_data or not game_data["min_age"]:

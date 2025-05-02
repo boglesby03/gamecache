@@ -187,6 +187,7 @@ class BGGClient:
                         xml.string(".", attribute="wanttoplay"),
                         xml.string(".", attribute="wishlist"),
                     ], alias='tags', hooks=xml.Hooks(after_parse=after_status_hook)),
+                    xml.string("status", attribute="wishlistpriority", required=False, alias="wishlist_priority"),
                     xml.integer("numplays"),
                 ], required=False, alias="items"),
             )

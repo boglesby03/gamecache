@@ -36,6 +36,7 @@
       <div class="facet" id="facet-age" tabindex="0"></div>
       <div class="facet" id="facet-year" tabindex="0"></div>
       <div class="facet" id="facet-tags" tabindex="0"></div>
+      <div class="facet" id="facet-wishlist" tabindex="0"></div>
       <div class="clear-all" id="clear-all"></div>
     </aside>
     <main class="results">
@@ -45,10 +46,10 @@
   </article>
 
   <script type="text/html" id="hits-template">
-    <details class="game-wrapper">
-      <summary>
-        <div class="game">
-          <img src="{{{ image }}}" data-maincolor="{{{ color }}}" alt="{{{ name }}}">
+    <details class="game-wrapper" >
+      <summary >
+        <div class="game" title="{{{ name }}}"">
+          <img src="{{{ image }}}" data-maincolor="{{{ color }}}" alt="{{{ name }}}" data-style="{{{ style }}}">
         </div>
       </summary>
       <div class="game-details">
