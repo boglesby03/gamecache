@@ -341,7 +341,7 @@ def custom_expansion_mappings(expansions):
         {"id": 30323, "baseId": 154597},
         {"id": 70704, "baseId": 154597},
         # Survive the Island Monster pack
-        {"id:": 436998, "baseId": 2653},
+        {"id": 436998, "baseId": 2653},
     ]
 
     # Original Tuscany should be an expansion for Viticulture Essential Edition (even if there is overlap)
