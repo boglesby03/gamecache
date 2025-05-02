@@ -36,8 +36,7 @@ class Indexer:
                 'families.name',
                 'reimplements.name',
                 'reimplementedby.name',
-                'integrates.name',
-                'tags',
+                'integrates.name'
             ],
             'attributesForFaceting': [
                 'searchable(categories)',
@@ -53,6 +52,7 @@ class Indexer:
                 'numplays',
                 'searchable(year)',
                 'tags',
+                "wishlist_priority"
             ],
             'customRanking': ['asc(name)'],
             'highlightPreTag': '<strong class="highlight">',

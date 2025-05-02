@@ -23,7 +23,9 @@ function on_render() {
   var hits = document.querySelectorAll(".ais-Hits-item");
   hits.forEach(function(hit) {
     color = hit.querySelector("img").getAttribute("data-maincolor");
-    hit.setAttribute("style", "background: rgba(" + color + ", 0.5)");
+    style = hit.querySelector("img").getAttribute("data-style");
+
+    hit.setAttribute("style", "background: rgba(" + color + ", 0.5); " + style);
   })
 
   if ("ontouchstart" in window) {
@@ -105,6 +107,14 @@ function get_widgets(SETTINGS) {
     '2-3h',
     '3-4h',
     '> 4h'
+  ];
+  const WISHLIST_LABELS = [
+    'Own',
+    'Must Have',
+    'Love to Have',
+    'Like to Have',
+    'Thinking About It',
+    'Don\'t Buy'
   ];
 
   function panel(header) {
@@ -284,6 +294,14 @@ function get_widgets(SETTINGS) {
         sortBy: function(a, b){ return parseInt(b.name) - parseInt(a.name); },
       }
     ),
+    "refine_wishlist": panel('Wishlist')(instantsearch.widgets.refinementList)(
+      {
+        container: '#facet-wishlist',
+        attribute: 'wishlist_priority',
+        operator: 'or',
+        sortBy: function(a, b){ return WISHLIST_LABELS.indexOf(a.name) - WISHLIST_LABELS.indexOf(b.name); },
+      }
+    ),
     // "refine_age": panel('Min age')(instantsearch.widgets.numericMenu)(
     //   {
     //     container: '#facet-age',
@@ -317,6 +335,7 @@ function get_widgets(SETTINGS) {
       transformItems: function(items) {
         hide_facet_when_no_data('#facet-previous-players', items, 'previous_players');
         hide_facet_when_no_data('#facet-numplays', items, 'numplays');
+        // hide_facet_when_no_data('#facet_wishlist', items, 'wishlist_priority');
 
         return items.map(function(game){
           players = [];
@@ -388,7 +407,7 @@ function get_widgets(SETTINGS) {
               "?" +
               (Object.keys(expansions_url_data).map(function(key){
                 return key + "=" + expansions_url_data[key];
-              })).join("&")  // Don't encode game_prefix, because bgg redirects indefinately then...
+              })).join("&")  // Don't encode game_prefix, because bgg redirects indefinitely then...
             );
             game.has_more_expansions_url = has_more_expansions_url;
           }
@@ -489,7 +508,8 @@ function init(SETTINGS) {
     widgets["refine_previousplayers"],
     widgets["refine_numplays"],
     widgets["refine_year"],
-    widgets["refine_tags"]
+    widgets["refine_tags"],
+    widgets["refine_wishlist"]
   ]);
 
   search.start();
