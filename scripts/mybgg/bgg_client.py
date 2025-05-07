@@ -210,9 +210,9 @@ class BGGClient:
 
             is_best = result['best'] > 10 and result['best'] > result['recommended']
             if is_best:
-                return "best"
+                return "b"
 
-            return "recommended"
+            return "rec"
 
         def suggested_numplayers(_, numplayers):
             # Remove not_recommended player counts
@@ -220,7 +220,7 @@ class BGGClient:
 
             # If there's only one player count, that's the best one
             if len(numplayers) == 1:
-                numplayers[0]["result"] = "best"
+                numplayers[0]["result"] = "b"
 
             # Just return the numbers
             return [
