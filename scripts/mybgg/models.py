@@ -6,6 +6,10 @@ import re
 
 articles = ['A', 'An', 'The']
 
+# Regular expression pattern for Latin characters including accented characters to save space
+# Allow special characters - add any additional ones as they come available
+latin_pattern = re.compile(r'^[a-zA-Zà-ÿÀ-ßĀ-ž0-9\:\-\%\&—–\,\s]+$')
+
 class BoardGame:
     def __init__(self, game_data, collection_data, expansions=[], accessories=[]):
         self.id = game_data["id"]
@@ -95,19 +99,19 @@ class BoardGame:
 
         for supported_num in range(game_data["min_players"], game_data["max_players"] + 1):
             if supported_num > 0 and str(supported_num) not in [num for num, _ in num_players]:
-                num_players.append((str(supported_num), "supported"))
+                num_players.append((str(supported_num), "sup"))
 
         # Add number of players from expansions
         for expansion in expansions:
             # First add all the recommended player counts from expansions, then look for additional counts that are just supported.
             for expansion_num, support in expansion.players:
                 if expansion_num not in [num for num, _ in num_players]:
-                    if support != "supported":
-                        num_players.append((expansion_num, "expansion"))
+                    if support != "sup":
+                        num_players.append((expansion_num, "exp"))
             for expansion_num, support in expansion.players:
                 if expansion_num not in [num for num, _ in num_players]:
-                    if support == "supported":
-                        num_players.append((expansion_num, "exp_supported"))
+                    if support == "sup":
+                        num_players.append((expansion_num, "exp_s"))
 
         num_players = sorted(num_players, key=lambda x: int(x[0].replace("+", "")))
 
@@ -309,4 +313,7 @@ class BoardGame:
         #game_titles.extend([ game["name"] for game in game_data["reimplementedby"]])
         #game_titles.extend([ game["name"] for game in game_data["integrates"]])
 
-        return game_titles
+        # Scrub non-latin based titles
+        tmp_titles = [ title for title in game_titles if latin_pattern.match(title)]
+
+        return tmp_titles
