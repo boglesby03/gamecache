@@ -130,23 +130,23 @@ class Indexer:
     def _facet_for_num_player(self, num, type_):
         num_no_plus = num.replace("+", "")
         facet_types = {
-            "best": {
+            "b": {
                 "level1": num_no_plus,
                 "level2": f"{num_no_plus} > Best with {num}",
             },
-            "recommended": {
+            "rec": {
                 "level1": num_no_plus,
                 "level2": f"{num_no_plus} > Recommended with {num}",
             },
-            "supported": {
+            "sup": {
                 "level1": num_no_plus,
                 "level2": f"{num_no_plus} > Supports with {num}",
             },
-            "expansion": {
+            "exp": {
                 "level1": num_no_plus,
                 "level2": f"{num_no_plus} > Expansion allows {num}",
             },
-            "exp_supported": {
+            "exp_s": {
                 "level1": num_no_plus,
                 "level2": f"{num_no_plus} > ExpansionSupport allows {num}",
             },
@@ -287,8 +287,8 @@ class Indexer:
             #     for expansion in game["expansions"]
             # ]
 
-            game["expansions"] = self._minimize_field(game, "expansions", ["id", "name", "players", "tags"])
-            game["accessories"] = self._minimize_field(game, "accessories", ["id", "name", "tags"])
+            game["expansions"] = self._minimize_field(game, "expansions", ["id", "name", "players"]) #, "tags"])
+            game["accessories"] = self._minimize_field(game, "accessories") #["id", "name", "tags"])
             game["reimplements"] = self._minimize_field(game, "reimplements")
             game["reimplementedby"] = self._minimize_field(game, "reimplementedby")
             game["designers"] = self._minimize_field(game, "designers")
@@ -298,10 +298,10 @@ class Indexer:
             # Limit the number of expansions to 10 to keep the size down
             # game["has_more_expansions"] = False
             HAS_MORE_EXPANSIONS = 30
-            game["has_more_expansions"] = len(game["expansions"]) > HAS_MORE_EXPANSIONS
+            game["more_exp"] = len(game["expansions"]) > HAS_MORE_EXPANSIONS
 
             # Make sure description is not too long
-            if game["has_more_expansions"]:
+            if game["more_exp"]:
                 game["expansions"] = game["expansions"][:HAS_MORE_EXPANSIONS]
                 game["description"] = ""
             else:
