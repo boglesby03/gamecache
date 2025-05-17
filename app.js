@@ -345,11 +345,11 @@ function get_widgets(SETTINGS) {
             num = match[2];
 
             type_callback = {
-              'best': function(num) { return '<span title="Best with"><strong>' + num + '</strong>★</span>'; },
-              'recommended': function(num) { return num; },
-              'expansion': function(num) { return '<span title="With expansion">' + num + '⊕</span>'; },
-              'supports': function(num) { return '<span title="Supported"><em>' + num + '~</em></span>'; },
-              'expansionsupport': function(num) { return '<span title="Supported With expansion"><em>' + num + '⊕~</em></span>'; }
+              'b': function(num) { return '<span title="Best with"><strong>' + num + '</strong>★</span>'; },
+              'rec': function(num) { return num; },
+              'exp': function(num) { return '<span title="With expansion">' + num + '⊕</span>'; },
+              'sup': function(num) { return '<span title="Supported"><em>' + num + '~</em></span>'; },
+              'exp_s': function(num) { return '<span title="Supported With expansion"><em>' + num + '⊕~</em></span>'; }
             };
             players.push(type_callback[type](num));
 
@@ -392,9 +392,9 @@ function get_widgets(SETTINGS) {
             game.weight_rating = game.weightRating.toFixed(2);
           }
 
-          game.has_more_expansions = (game.has_more_expansions);
+          game.more_exp = (game.more_exp);
 
-          if (game.has_more_expansions) {
+          if (game.more_exp) {
             game_prefix = game.name.indexOf(":")? game.name.substring(0, game.name.indexOf(":")) : game.name;
             expansions_url_data = {
               searchstr: game_prefix,
