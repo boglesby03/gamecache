@@ -28,10 +28,16 @@ class BoardGame:
         self.tags = collection_data["tags"]
 
         # TODO put this in external datamap - tag -> label
-        if 'preordered' in self.tags:
-            name += " [Preorder]"
-        elif 'wishlist' in self.tags:
-            name += " [Wishlist]"
+        # if 'preordered' in self.tags:
+        #     name += " [Preorder]"
+        # elif 'wishlist' in self.tags:
+        #     name += " [Wishlist]"
+        self.wl_exp = list(filter(lambda e: 'wishlist' in e.tags, expansions))
+        self.wl_acc = list(filter(lambda e: 'wishlist' in e.tags, accessories))
+        self.po_exp = list(filter(lambda e: 'preordered' in e.tags, expansions))
+        self.po_acc = list(filter(lambda e: 'preordered' in e.tags, accessories))
+        self.expansions = list(filter(lambda e: 'own' in e.tags, expansions))
+        self.accessories = list(filter(lambda e: 'own' in e.tags, accessories))
 
         self.name = name
 
@@ -46,7 +52,7 @@ class BoardGame:
         self.reimplements = list(filter(lambda g: g["inbound"], game_data["reimplements"]))
         self.reimplementedby = list(filter(lambda g: not g["inbound"], game_data["reimplements"]))
         self.integrates = game_data["integrates"]
-        self.players = self.calc_num_players(game_data, expansions)
+        self.players = self.calc_num_players(game_data, self.expansions)
         self.weight = self.calc_weight(game_data)
         self.weightRating = float(game_data["weight"]) if game_data["weight"].strip() else -1
         self.year = game_data["year"]
@@ -68,23 +74,20 @@ class BoardGame:
 
         if "players" in collection_data:
             self.previous_players = list(set(collection_data["players"]))
-        self.expansions = expansions
-        self.accessories = accessories
 
         self.lastmodified = datetime.strptime(collection_data["last_modified"], '%Y-%m-%d %H:%M:%S').timestamp()
         self.version_name = collection_data["version_name"]
         self.version_year = collection_data["version_year"]
         self.collection_id = collection_data["collection_id"]
 
-        # TODO Will add a custom div border here
         self.style =  self.set_style() # "border: 2px solid red"
 
     def set_style(self):
 
         if 'wishlist' in self.tags:
-            return "border: 2px solid grey"
+            return "border: 3px solid grey"
         elif 'preordered' in self.tags:
-            return  "border: 2px solid rgb(56, 170, 196);"
+            return  "border: 3px solid rgb(56, 170, 196);"
 
         return ''
 
@@ -241,6 +244,7 @@ class BoardGame:
         game_titles.append(collection_data["name"])
         game_titles.append(game)
         game_titles.append(game.split("–")[0].strip()) # Medium Title
+        game_titles.append(game.split("-")[0].strip()) # Medium Title - different dash
         game_titles.append(game.split(":")[0].strip()) # Short Title
         game_titles.append(game.split("(")[0].strip()) # No Edition
 
@@ -250,7 +254,9 @@ class BoardGame:
             game_titles.append(game_tmp)
 
         # TODO maybe add a rule to put title without number on the title list
-        if "Burgle Bros." in game_titles:
+        if "Air, Land, and Sea" in game_titles:
+            game_titles.append("Air, Land and Sea")
+        elif "Burgle Bros." in game_titles:
             game_titles.append("Burgle Bros 2")
         elif "Burgle Bros 2" in game_titles:
             game_titles.append("Burgle Bros.")
