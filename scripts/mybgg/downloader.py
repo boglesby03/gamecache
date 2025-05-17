@@ -165,7 +165,15 @@ class Downloader():
         for game in games:
             for exp in game.expansions:
                 exp.name = remove_prefix(exp.name, game)
+            for exp in game.wl_exp:
+                exp.name = remove_prefix(exp.name, game)
+            for exp in game.po_exp:
+                exp.name = remove_prefix(exp.name, game)
             for acc in game.accessories:
+                acc.name = remove_prefix(acc.name, game)
+            for acc in game.wl_acc:
+                acc.name = remove_prefix(acc.name, game)
+            for acc in game.po_acc:
                 acc.name = remove_prefix(acc.name, game)
             contained_list = []
             for con in game.contained:
@@ -511,7 +519,11 @@ def remove_prefix(expansion, game_details):
     if len(new_exp) == 0:
         return expansion
     # Also look for the case where the name is nothing but Promo
-    elif new_exp.startswith("Promo"):
-        return expansion
+    # elif new_exp.startswith("Promo"):
+    #     return expansion
+    # elif new_exp.startswith("Wishlist"):
+    #     return expansion
+    # elif new_exp.startswith("Preorder"):
+    #     return expansion
 
     return new_exp

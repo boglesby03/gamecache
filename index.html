@@ -144,21 +144,39 @@
               {{^ tags }}<em>Unknown Status</em>{{/ tags }}
             </dd>
           </div>
-          {{# has_expansions }}
+          {{# has_any_exp }}
           <div class="expansions">
             <dt>Expansions</dt>
             <dd>
+              {{# has_expansions }}
               <ul>
                 {{# expansions }}
                   <li><a href="https://boardgamegeek.com/boardgame/{{{ id }}}">{{ name }}</a></li>
                 {{/ expansions }}
               </ul>
+              {{/ has_expansions}}
+              {{# has_po_exp }}
+              <ul>PreOrdered:</ul>
+              <ul>
+                {{# po_exp }}
+                  <li><a href="https://boardgamegeek.com/boardgame/{{{ id }}}">{{ name }}</a></li>
+                {{/ po_exp }}
+              </ul>
+              {{/ has_po_exp }}
+              {{# has_wl_exp }}
+              <ul>Wishlist:</ul>
+              <ul>
+                {{# wl_exp }}
+                  <li><a href="https://boardgamegeek.com/boardgame/{{{ id }}}">{{ name }}</a></li>
+                {{/ wl_exp }}
+              </ul>
+              {{/ has_wl_exp }}
               {{# has_more_expansions }}
                 <a href="{{ has_more_expansions_url }}">... see all expansions</a>
               {{/ has_more_expansions }}
             </dd>
           </div>
-          {{/ has_expansions }}
+          {{/ has_any_exp }}
           {{# has_contained }}
           <div class="expansions">
             <dt>Contains</dt>
@@ -171,18 +189,36 @@
             </dd>
           </div>
           {{/ has_contained }}
-          {{# has_accessories }}
+          {{# has_any_acc }}
           <div class="expansions">
             <dt>Accessories</dt>
             <dd>
+              {{# has_accessories }}
               <ul>
                 {{# accessories }}
                 <li><a href="https://boardgamegeek.com/boardgame/{{{ id }}}">{{ name }}</a></li>
                 {{/ accessories }}
               </ul>
+              {{/ has_accessories }}
+              {{# has_po_acc }}
+              <ul>PreOrdered:</ul>
+              <ul>
+                {{# po_acc }}
+                <li><a href="https://boardgamegeek.com/boardgame/{{{ id }}}">{{ name }}</a></li>
+                {{/ po_acc }}
+              </ul>
+              {{/ has_po_acc }}
+              {{# has_wl_acc }}
+              <ul>Wishlist:</ul>
+              <ul>
+                {{# wl_acc }}
+                  <li><a href="https://boardgamegeek.com/boardgame/{{{ id }}}">{{ name }}</a></li>
+                {{/ wl_acc }}
+              </ul>
+              {{/ has_wl_acc }}
             </dd>
           </div>
-          {{/ has_accessories }}
+          {{/ has_any_acc }}
           {{# has_integrates }}
           <div class="expansions">
             <dt>Integrates With</dt>

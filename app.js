@@ -345,11 +345,11 @@ function get_widgets(SETTINGS) {
             num = match[2];
 
             type_callback = {
-              'b': function(num) { return '<span title="Best with"><strong>' + num + '</strong>★</span>'; },
-              'rec': function(num) { return num; },
-              'exp': function(num) { return '<span title="With expansion">' + num + '⊕</span>'; },
-              'sup': function(num) { return '<span title="Supported"><em>' + num + '~</em></span>'; },
-              'exp_s': function(num) { return '<span title="Supported With expansion"><em>' + num + '⊕~</em></span>'; }
+              'best': function(num) { return '<span title="Best with"><strong>' + num + '</strong>★</span>'; },
+              'recommended': function(num) { return num; },
+              'expansion': function(num) { return '<span title="With expansion">' + num + '⊕</span>'; },
+              'supports': function(num) { return '<span title="Supported"><em>' + num + '~</em></span>'; },
+              'expansionsupport': function(num) { return '<span title="Supported With expansion"><em>' + num + '⊕~</em></span>'; }
             };
             players.push(type_callback[type](num));
 
@@ -371,6 +371,14 @@ function get_widgets(SETTINGS) {
           game.has_reimplements = (game.reimplements.length > 0);
           game.has_reimplemented = (game.reimplementedby.length > 0);
           game.is_wishlist = (game.wishlist_priority != "Own");
+
+          game.has_po_exp = (game.po_exp.length > 0);
+          game.has_po_acc = (game.po_acc.length > 0);
+          game.has_wl_exp = (game.wl_exp.length > 0);
+          game.has_wl_acc = (game.wl_acc.length > 0);
+
+          game.has_any_exp = [game.has_expansions, game.has_po_exp, game.has_wl_exp].some(v => v)
+          game.has_any_acc = [game.has_accessories, game.has_po_acc, game.has_wl_acc].some(v => v)
 
           if (game.average === null) {
             game.average_str = "";
