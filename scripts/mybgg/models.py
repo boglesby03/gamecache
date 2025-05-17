@@ -8,7 +8,7 @@ articles = ['A', 'An', 'The']
 
 # Regular expression pattern for Latin characters including accented characters to save space
 # Allow special characters - add any additional ones as they come available
-latin_pattern = re.compile(r'^[a-zA-Zà-ÿÀ-ßĀ-ž0-9\:\-\%\&—–\,\s]+$')
+latin_pattern = re.compile(r'^[a-zA-Zà-ÿÀ-ßĀ-ž0-9\:\-\%\&—–\,\'\`\"\s]+$')
 
 class BoardGame:
     def __init__(self, game_data, collection_data, expansions=[], accessories=[]):
