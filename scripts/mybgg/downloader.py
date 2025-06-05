@@ -12,17 +12,19 @@ from multidict import MultiDict
 EXTRA_EXPANSIONS_GAME_ID=81913
 
 class Downloader():
-    def __init__(self, project_name, cache_bgg, debug=False):
+    def __init__(self, project_name, cache_bgg, token, debug=False):
         if cache_bgg:
             self.client = BGGClient(
                 cache=CacheBackendSqlite(
                     path=f"{project_name}-cache.sqlite",
                     ttl=60 * 60 * 24,
                 ),
+                token=token,
                 debug=debug,
             )
         else:
             self.client = BGGClient(
+                token=token,
                 debug=debug,
             )
 
