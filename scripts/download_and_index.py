@@ -12,6 +12,7 @@ def main(args):
         project_name=SETTINGS["project"]["name"],
         cache_bgg=args.cache_bgg,
         debug=args.debug,
+        token=SETTINGS["boardgamegeek"]["token"],
     )
     collection = downloader.collection(
         user_name=SETTINGS["boardgamegeek"]["user_name"],

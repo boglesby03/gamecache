@@ -12,11 +12,15 @@ logger = logging.getLogger(__name__)
 class BGGClient:
     BASE_URL = "https://www.boardgamegeek.com/xmlapi2"
 
-    def __init__(self, cache=None, debug=False):
+    def __init__(self, cache=None, token="", debug=False):
         if not cache:
             self.requester = requests.Session()
         else:
             self.requester = cache.cache
+
+        self.headers = {
+            'Authorization': f'Bearer {token}'
+        }
 
         if debug:
             logging.basicConfig(level=logging.DEBUG)
@@ -93,7 +97,7 @@ class BGGClient:
             time.sleep(sleep_time)
 
         try:
-            response = self.requester.get(BGGClient.BASE_URL + url, params=params)
+            response = self.requester.get(BGGClient.BASE_URL + url, params=params, headers=self.headers)
             response.raise_for_status()  # This will raise an exception for 4xx and 5xx status codes
         except (
             requests.exceptions.HTTPError,
