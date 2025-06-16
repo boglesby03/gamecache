@@ -396,6 +396,10 @@ def is_promo_box(game):
     if game["id"] == 155192:
         return True
 
+    # Mislabeled Just One expansion - requested fix in data
+    if game["id"] == 292745:
+        return False
+
     # return game["id"] in (178656, 191779, 204573, 231506, 256951, 205611, 232298, 257590, 286086)
     # Change this to look for board game family 39378 (Box of Promos)
     return any(39378 == family["id"] for family in game["families"])
@@ -460,9 +464,16 @@ def remove_prefix(expansion, game_details):
             new_exp = new_exp[len(title):]
             break
 
-    # Relabel Promos
-    new_exp = re.sub(r"(.*)s*Promo(?:tional)?(s?):?[\s-]*(?:(?:Box|Card|Deck|Pack|Set)(s?))?\s*(.*)",
-                     r"\1 \4 [Promo\2\3]", new_exp, flags=re.IGNORECASE)
+    #no_base_title = new_exp
+    promoOnly = r"(\W*)Promo(?:tional)?(s?):?[\s-]*(?:(?:Box|Card|Deck|Pack|Set)(s?))?\s*(.*)"
+    promo = re.match(promoOnly, new_exp)
+    if promo:
+        new_exp = new_exp + " [Promo]"
+    else:
+        # Relabel Promos
+        new_exp = re.sub(r"(.*)s*Promo(?:tional)?(s?):?[\s-]*(?:(?:Box|Card|Deck|Pack|Set)(s?))?\s*(.*)",
+                        r"\1 \4 [Promo\2\3]", new_exp, flags=re.IGNORECASE)
+
     # Expansions don't need to be labeled Expansion
     # TODO what about "Age of Expansion" or just "Expansion" (Legendary Encounters: Alien - Expansion)?
     # new_exp = re.sub(r"\s*(?:Mini|Micro)?[\s-]*Expansion\s*(?:Pack)?\s*", "", new_exp)

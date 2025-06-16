@@ -8,7 +8,7 @@ articles = ['A', 'An', 'The']
 
 # Regular expression pattern for Latin characters including accented characters to save space
 # Allow special characters - add any additional ones as they come available
-latin_pattern = re.compile(r'^[a-zA-Zà-ÿÀ-ßĀ-ž0-9\:\-\%\&—–\,\'\`\"\$\(\)\s]+$')
+latin_pattern = re.compile(r'^[a-zA-Zà-ÿÀ-ßĀ-ž0-9\:\-\%\&—–\,\'\`\"\$\(\)\.\!\s]+$')
 
 class BoardGame:
     def __init__(self, game_data, collection_data, expansions=[], accessories=[]):
@@ -276,6 +276,8 @@ class BoardGame:
         elif "DC Deck-Building Game" in game_titles:
             game_titles.append("DC Comics Deck-Building Game")
             game_titles.append("DC Deck Building Game")
+        elif "Endeavor: Deep Sea Deluxe Edition" in game_titles:
+            game_titles.append("Endeavor: Deep Sea")
         elif "Hive Pocket" in game_titles:
             game_titles.append("Hive")
         elif "Horizons of Spirit Island" in game_titles:
@@ -285,6 +287,8 @@ class BoardGame:
             game_titles.insert(0, "King of Tokyo/King of New York")
         elif "Legends of Andor" in game_titles:
             game_titles.append("Die Legenden von Andor")
+        elif "Massive Darkness 2" in game_titles:
+            game_titles.append("Massive Darkness")
         elif "No Thanks!" in game_titles:
             game_titles.append("Schöne Sch#!?e")
         elif "Power Grid Deluxe" in game_titles:
