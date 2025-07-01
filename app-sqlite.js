@@ -189,7 +189,7 @@ function loadAllGames() {
     SELECT id, name, description, categories, mechanics, players, weight,
            playing_time, min_age, rank, usersrated, numowned, rating,
            numplays, image, tags, previous_players, expansions, color, unixepoch(last_modified) as last_modified,
-           publishers, designers
+           publishers, designers, artists
     FROM games
     ORDER BY name
   `);
@@ -209,6 +209,7 @@ function loadAllGames() {
       row.expansions = JSON.parse(row.expansions || '[]');
       row.publishers = JSON.parse(row.publishers || '[]');
       row.designers = JSON.parse(row.designers || '[]');
+      row.artists = JSON.parse(row.artists || '[]');
     } catch (e) {
       console.warn('Error parsing JSON for game:', row.id, e);
     }
@@ -313,6 +314,7 @@ function setupFilters() {
   setupNumPlaysFilter();
   setupPublisherFilter();
   setupDesignerFilter();
+  setupArtistFilter();
   setupClearAllButton();
 
   // Ensure player sub-options are hidden initially
@@ -703,6 +705,33 @@ function setupDesignerFilter() {
   }
 }
 
+function setupArtistFilter() {
+  const artistCounts = {};
+  allGames.forEach(game => {
+    game.artists.forEach(art => {
+      artistCounts[art.name] = (artistCounts[art.name] || 0) + 1;
+    });
+  });
+
+  const sortedArtists = Object.keys(artistCounts).sort();
+  const items = sortedArtists.map(art => ({
+    label: art,
+    value: art,
+    count: artistCounts[art]
+  }));
+
+  // Only create the filter if there are publishers
+  if (items.length > 0) {
+    createRefinementFilter('facet-artists', 'Artists', items, 'artists', false, true );
+  } else {
+    // Hide the filter container if no items
+    const container = document.getElementById('facet-artists');
+    if (container) {
+      container.style.display = 'none';
+    }
+  }
+}
+
 function createRefinementFilter(facetId, title, items, attributeName, isRadio = false, enableSearch = false) {
   const container = document.getElementById(facetId);
   if (!container) return;
@@ -887,7 +916,8 @@ function updateClearButtonVisibility(filters) {
     selectedMinAge,
     selectedNumPlays,
     selectedPublishers,
-    selectedDesigners
+    selectedDesigners,
+    selectedArtists
   } = filters;
 
   const isAnyFilterActive =
@@ -901,7 +931,8 @@ function updateClearButtonVisibility(filters) {
     selectedMinAge !== null ||
     selectedNumPlays !== null ||
     (selectedPublishers && selectedPublishers.length > 0) ||
-    (selectedDesigners && selectedDesigners.length > 0);
+    (selectedDesigners && selectedDesigners.length > 0) ||
+    (selectedArtists && selectedArtists.length > 0);
 
   clearContainer.style.display = isAnyFilterActive ? 'flex' : 'none';
 }
@@ -1006,6 +1037,16 @@ function updateFilterActiveStates(filters) {
         designersFilters.classList.remove('filter-active');
       }
     }
+
+    // Update designers filter
+    const artistsFilters = document.getElementById('facet-artists');
+    if (artistsFilters) {
+      if (filters.selectedArtists && filters.selectedArtists.length > 0) {
+        artistsFilters.classList.add('filter-active');
+      } else {
+        artistsFilters.classList.remove('filter-active');
+      }
+    }
 }
 
 function getFiltersFromURL() {
@@ -1025,6 +1066,7 @@ function getFiltersFromURL() {
     selectedNumPlays: numPlaysParam ? { min: Number(numPlaysParam.split('-')[0]), max: Number(numPlaysParam.split('-')[1]) } : null,
     selectedPublishers: params.get('publishers')?.split(',').filter(Boolean) || [],
     selectedDesigners: params.get('designers')?.split(',').filter(Boolean) || [],
+    selectedArtists: params.get('artists')?.split(',').filter(Boolean) || [],
     sortBy: params.get('sort') || 'name',
     page: Number(params.get('page')) || 1
   };
@@ -1042,6 +1084,7 @@ function getFiltersFromUI() {
   const selectedNumPlays = getSelectedRange('numplays');
   const selectedPublishers = getSelectedValues('publishers');
   const selectedDesigners = getSelectedValues('designers');
+  const selectedArtists = getSelectedValues('artists');
   const sortBy = document.getElementById('sort-select')?.value || 'name';
 
   return {
@@ -1056,6 +1099,7 @@ function getFiltersFromUI() {
     selectedNumPlays,
     selectedPublishers,
     selectedDesigners,
+    selectedArtists,
     sortBy,
     page: currentPage
   };
@@ -1075,6 +1119,7 @@ function updateURLWithFilters(filters) {
   if (filters.selectedNumPlays) params.set('numplays', `${filters.selectedNumPlays.min}-${filters.selectedNumPlays.max}`);
   if (filters.selectedPublishers?.length) params.set('publishers', filters.selectedPublishers.join(','));
   if (filters.selectedDesigners?.length) params.set('designers', filters.selectedDesigners.join(','));
+  if (filters.selectedArtists?.length) params.set('artists', filters.selectedArtists.join(','));
   if (filters.sortBy && filters.sortBy !== 'name') params.set('sort', filters.sortBy);
   if (filters.page && filters.page > 1) params.set('page', filters.page);
 
@@ -1189,7 +1234,8 @@ function filterGames(gamesToFilter, filters) {
     selectedMinAge,
     selectedNumPlays,
     selectedPublishers,
-    selectedDesigners
+    selectedDesigners,
+    selectedArtists
   } = filters;
 
   return gamesToFilter.filter(game => {
@@ -1265,6 +1311,11 @@ function filterGames(gamesToFilter, filters) {
 
     if (selectedDesigners.length > 0 &&
       !selectedDesigners.some(pub => game.designers.find(obj => obj.name === pub))) {
+      return false;
+    }
+
+    if (selectedArtists.length > 0 &&
+      !selectedArtists.some(pub => game.artists.find(obj => obj.name === pub))) {
       return false;
     }
 
@@ -1489,6 +1540,19 @@ function updateAllFilterCounts(filters) {
     });
   });
   updateCountsInDOM('facet-designers', designerCounts);
+
+  const artistFilters = {
+    ...filters,
+    selectedArtists: []
+  };
+  const gamesForArtCount = filterGames(allGames, artistFilters);
+  const artistCounts = {};
+  gamesForArtCount.forEach(game => {
+    game.artists.forEach(art => {
+      artistCounts[art.name] = (artistCounts[art.name] || 0) + 1;
+    });
+  });
+  updateCountsInDOM('facet-artists', artistCounts);
 
 }
 
