@@ -75,7 +75,7 @@ class BoardGame:
         if "players" in collection_data:
             self.previous_players = list(set(collection_data["players"]))
 
-        self.lastmodified = datetime.strptime(collection_data["last_modified"], '%Y-%m-%d %H:%M:%S').timestamp()
+        self.lastmodified = collection_data["last_modified"] # datetime.strptime(collection_data["last_modified"], '%Y-%m-%d %H:%M:%S').timestamp()
         self.version_name = collection_data["version_name"]
         self.version_year = collection_data["version_year"]
         self.collection_id = collection_data["collection_id"]
@@ -197,17 +197,22 @@ class BoardGame:
         return Decimal(game_data["average"])
 
     def calc_weight(self, game_data):
-        weight_mapping = {
-            -1: "Unknown",
-            0: "Light",
-            1: "Light",
-            2: "Light Medium",
-            3: "Medium",
-            4: "Medium Heavy",
-            5: "Heavy",
-        }
 
-        return weight_mapping[round(Decimal(game_data["weight"] or -1))]
+        if not game_data.get("weight"):
+            return None
+        return Decimal(game_data["weight"])
+
+        # weight_mapping = {
+        #     -1: "Unknown",
+        #     0: "Light",
+        #     1: "Light",
+        #     2: "Light Medium",
+        #     3: "Medium",
+        #     4: "Medium Heavy",
+        #     5: "Heavy",
+        # }
+
+        # return weight_mapping[round(Decimal(game_data["weight"] or -1))]
 
     def calc_suggested_age(self, game_data):
 
@@ -329,3 +334,55 @@ class BoardGame:
         tmp_titles = [ title for title in game_titles if latin_pattern.match(title)]
 
         return tmp_titles
+
+    def todict(self):
+        return {
+            "id": self.id,
+            "name": self.name,
+            "description": self.description,
+            "categories": self.categories,
+            "mechanics": self.mechanics,
+            "players": self.players,
+            "weight": self.weight,
+            "playing_time": self.playing_time,
+            "min_age": self.min_age,
+            "rank": self.rank,
+            "usersrated": self.usersrated,
+            "numowned": self.numowned,
+            "rating": self.rating,
+            "numplays": self.numplays,
+            "image": self.image,
+            "tags": self.tags,
+            "previous_players": getattr(self, 'previous_players', None),
+            "expansions": self.expansions,
+            # Add the color field, ensuring it's handled if not present
+            "color": getattr(self, 'color', None),
+            "alternate_names": self.alternate_names,
+            "comment": self.comment,
+            "wishlist_comment": self.wishlist_comment,
+            "wishlist_priority": self.wishlist_priority,
+            "artists": self.artists,
+            "designers": self.designers,
+            "publishers": self.publishers,
+            "year": self.year,
+            "accessories": self.accessories,
+            "families": self.families,
+            "reimplements": self.reimplements,
+            "reimplementedby": self.reimplementedby,
+            "integrates": self.integrates,
+            "wl_exp": self.wl_exp,
+            "wl_acc": self.wl_acc,
+            "po_exp": self.po_exp,
+            "po_acc": self.po_acc,
+            "contained": self.contained,
+            "weightRating": self.weightRating,
+            "other_ranks": self.other_ranks,
+            "usersrated": self.usersrated,
+            "average": self.average,
+            "suggested_age": self.suggested_age,
+            "last_modified": self.lastmodified,
+            "version_name": self.version_name,
+            "collection_id": self.collection_id,
+            "style": self.style,
+            # "more_exp": self.more_exp
+        }
