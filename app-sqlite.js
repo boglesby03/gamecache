@@ -189,7 +189,7 @@ function loadAllGames() {
     SELECT id, name, description, categories, mechanics, players, weight,
            playing_time, min_age, rank, usersrated, numowned, rating,
            numplays, image, tags, previous_players, expansions, color, unixepoch(last_modified) as last_modified,
-           publishers
+           publishers, designers
     FROM games
     ORDER BY name
   `);
@@ -208,6 +208,7 @@ function loadAllGames() {
       row.previous_players = JSON.parse(row.previous_players || '[]');
       row.expansions = JSON.parse(row.expansions || '[]');
       row.publishers = JSON.parse(row.publishers || '[]');
+      row.designers = JSON.parse(row.designers || '[]');
     } catch (e) {
       console.warn('Error parsing JSON for game:', row.id, e);
     }
@@ -311,6 +312,7 @@ function setupFilters() {
   setupPreviousPlayersFilter();
   setupNumPlaysFilter();
   setupPublisherFilter();
+  setupDesignerFilter();
   setupClearAllButton();
 
   // Ensure player sub-options are hidden initially
@@ -674,6 +676,33 @@ function setupPublisherFilter() {
   }
 }
 
+function setupDesignerFilter() {
+  const designerCounts = {};
+  allGames.forEach(game => {
+    game.designers.forEach(des => {
+      designerCounts[des.name] = (designerCounts[des.name] || 0) + 1;
+    });
+  });
+
+  const sortedDesigners = Object.keys(designerCounts).sort();
+  const items = sortedDesigners.map(des => ({
+    label: des,
+    value: des,
+    count: designerCounts[des]
+  }));
+
+  // Only create the filter if there are publishers
+  if (items.length > 0) {
+    createRefinementFilter('facet-designers', 'Designers', items, 'designers', false, true );
+  } else {
+    // Hide the filter container if no items
+    const container = document.getElementById('facet-designers');
+    if (container) {
+      container.style.display = 'none';
+    }
+  }
+}
+
 function createRefinementFilter(facetId, title, items, attributeName, isRadio = false, enableSearch = false) {
   const container = document.getElementById(facetId);
   if (!container) return;
@@ -857,7 +886,8 @@ function updateClearButtonVisibility(filters) {
     selectedPreviousPlayers,
     selectedMinAge,
     selectedNumPlays,
-    selectedPublishers
+    selectedPublishers,
+    selectedDesigners
   } = filters;
 
   const isAnyFilterActive =
@@ -870,7 +900,8 @@ function updateClearButtonVisibility(filters) {
     (selectedPreviousPlayers && selectedPreviousPlayers.length > 0) ||
     selectedMinAge !== null ||
     selectedNumPlays !== null ||
-    (selectedPublishers && selectedPublishers.length > 0);
+    (selectedPublishers && selectedPublishers.length > 0) ||
+    (selectedDesigners && selectedDesigners.length > 0);
 
   clearContainer.style.display = isAnyFilterActive ? 'flex' : 'none';
 }
@@ -965,6 +996,16 @@ function updateFilterActiveStates(filters) {
       publishersFilter.classList.remove('filter-active');
     }
   }
+
+    // Update designers filter
+    const designersFilters = document.getElementById('facet-designers');
+    if (designersFilters) {
+      if (filters.selectedDesigners && filters.selectedDesigners.length > 0) {
+        designersFilters.classList.add('filter-active');
+      } else {
+        designersFilters.classList.remove('filter-active');
+      }
+    }
 }
 
 function getFiltersFromURL() {
@@ -983,6 +1024,7 @@ function getFiltersFromURL() {
     selectedMinAge: minAgeParam ? { min: Number(minAgeParam.split('-')[0]), max: Number(minAgeParam.split('-')[1]) } : null,
     selectedNumPlays: numPlaysParam ? { min: Number(numPlaysParam.split('-')[0]), max: Number(numPlaysParam.split('-')[1]) } : null,
     selectedPublishers: params.get('publishers')?.split(',').filter(Boolean) || [],
+    selectedDesigners: params.get('designers')?.split(',').filter(Boolean) || [],
     sortBy: params.get('sort') || 'name',
     page: Number(params.get('page')) || 1
   };
@@ -999,6 +1041,7 @@ function getFiltersFromUI() {
   const selectedMinAge = getSelectedRange('min_age');
   const selectedNumPlays = getSelectedRange('numplays');
   const selectedPublishers = getSelectedValues('publishers');
+  const selectedDesigners = getSelectedValues('designers');
   const sortBy = document.getElementById('sort-select')?.value || 'name';
 
   return {
@@ -1012,6 +1055,7 @@ function getFiltersFromUI() {
     selectedMinAge,
     selectedNumPlays,
     selectedPublishers,
+    selectedDesigners,
     sortBy,
     page: currentPage
   };
@@ -1030,6 +1074,7 @@ function updateURLWithFilters(filters) {
   if (filters.selectedMinAge) params.set('min_age', `${filters.selectedMinAge.min}-${filters.selectedMinAge.max}`);
   if (filters.selectedNumPlays) params.set('numplays', `${filters.selectedNumPlays.min}-${filters.selectedNumPlays.max}`);
   if (filters.selectedPublishers?.length) params.set('publishers', filters.selectedPublishers.join(','));
+  if (filters.selectedDesigners?.length) params.set('designers', filters.selectedDesigners.join(','));
   if (filters.sortBy && filters.sortBy !== 'name') params.set('sort', filters.sortBy);
   if (filters.page && filters.page > 1) params.set('page', filters.page);
 
@@ -1143,7 +1188,8 @@ function filterGames(gamesToFilter, filters) {
     selectedPreviousPlayers,
     selectedMinAge,
     selectedNumPlays,
-    selectedPublishers
+    selectedPublishers,
+    selectedDesigners
   } = filters;
 
   return gamesToFilter.filter(game => {
@@ -1214,6 +1260,11 @@ function filterGames(gamesToFilter, filters) {
 
     if (selectedPublishers.length > 0 &&
       !selectedPublishers.some(pub => game.publishers.find(obj => obj.name === pub))) {
+      return false;
+    }
+
+    if (selectedDesigners.length > 0 &&
+      !selectedDesigners.some(pub => game.designers.find(obj => obj.name === pub))) {
       return false;
     }
 
@@ -1425,6 +1476,19 @@ function updateAllFilterCounts(filters) {
     });
   });
   updateCountsInDOM('facet-publishers', publisherCounts);
+
+  const designerFilters = {
+    ...filters,
+    selectedDesigners: []
+  };
+  const gamesForDesCount = filterGames(allGames, designerFilters);
+  const designerCounts = {};
+  gamesForDesCount.forEach(game => {
+    game.designers.forEach(des => {
+      designerCounts[des.name] = (designerCounts[des.name] || 0) + 1;
+    });
+  });
+  updateCountsInDOM('facet-designers', designerCounts);
 
 }
 
