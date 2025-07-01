@@ -741,44 +741,51 @@ function createRefinementFilter(facetId, title, items, attributeName, isRadio = 
   const dropdownTemplate = document.getElementById('filter-dropdown-template');
 
   const createFilterItemsHtml = (items) => {
-    return items.map(item => {
-      const value = (typeof item === 'object' && item.value !== undefined) ? item.value : (typeof item === 'object' && item.min !== undefined ? `${item.min}-${item.max}` : item);
-      const label = (typeof item === 'object' && item.label !== undefined) ? item.label : item;
-      const count = (typeof item === 'object' && item.count !== undefined) ? item.count : null;
-      const checked = (isRadio && typeof item === 'object' && item.default) ? 'checked' : '';
-      const inputType = isRadio ? 'radio' : 'checkbox';
-      const level = (typeof item === 'object' && item.level !== undefined) ? item.level : 0;
-      const parentValue = (typeof item === 'object' && item.parentValue !== undefined) ? item.parentValue : '';
+    return items
+      .filter(item => {
+        // Exclude items with count === 0
+        const count = (typeof item === 'object' && item.count !== undefined) ? item.count : null;
+        return count !== 0; // Filter out items with count === 0
+      })
+      .map(item => {
+        const value = (typeof item === 'object' && item.value !== undefined) ? item.value : (typeof item === 'object' && item.min !== undefined ? `${item.min}-${item.max}` : item);
+        const label = (typeof item === 'object' && item.label !== undefined) ? item.label : item;
+        const count = (typeof item === 'object' && item.count !== undefined) ? item.count : null;
+        const checked = (isRadio && typeof item === 'object' && item.default) ? 'checked' : '';
+        const inputType = isRadio ? 'radio' : 'checkbox';
+        const level = (typeof item === 'object' && item.level !== undefined) ? item.level : 0;
+        const parentValue = (typeof item === 'object' && item.parentValue !== undefined) ? item.parentValue : '';
 
-      const clone = template.content.cloneNode(true);
-      const labelEl = clone.querySelector('.filter-item');
-      const input = clone.querySelector('input');
-      const span = clone.querySelector('.filter-label');
-      const countEl = clone.querySelector('.facet-count');
+        const clone = template.content.cloneNode(true);
+        const labelEl = clone.querySelector('.filter-item');
+        const input = clone.querySelector('input');
+        const span = clone.querySelector('.filter-label');
+        const countEl = clone.querySelector('.facet-count');
 
-      input.type = inputType;
-      input.name = attributeName;
-      input.value = value;
-      if (checked) input.checked = true;
-      span.textContent = label;
+        input.type = inputType;
+        input.name = attributeName;
+        input.value = value;
+        if (checked) input.checked = true;
+        span.textContent = label;
 
-      // Add level and parent attributes for hierarchical structure
-      if (level > 0) {
-        labelEl.setAttribute('data-level', level);
-        labelEl.setAttribute('data-parent-value', parentValue);
-        labelEl.style.display = 'none'; // Initially hide sub-options
-        labelEl.style.paddingLeft = '20px'; // Indent sub-options
-      }
+        // Add level and parent attributes for hierarchical structure
+        if (level > 0) {
+          labelEl.setAttribute('data-level', level);
+          labelEl.setAttribute('data-parent-value', parentValue);
+          labelEl.style.display = 'none'; // Initially hide sub-options
+          labelEl.style.paddingLeft = '20px'; // Indent sub-options
+        }
 
-      if (count !== null) {
-        countEl.textContent = count;
-        countEl.style.display = 'inline';
-      } else {
-        countEl.style.display = 'none';
-      }
+        if (count !== null) {
+          countEl.textContent = count;
+          countEl.style.display = 'inline';
+        } else {
+          countEl.style.display = 'none';
+        }
 
-      return labelEl.outerHTML;
-    }).join('');
+        return labelEl.outerHTML;
+      })
+      .join('');
   };
 
   const filterItemsHtml = createFilterItemsHtml(items);
@@ -821,6 +828,13 @@ function createRefinementFilter(facetId, title, items, attributeName, isRadio = 
       filterItems.forEach(item => {
         const input = item.querySelector('input');
         const labelText = item.querySelector('.filter-label').textContent.toLowerCase();
+        const count = item.querySelector('.facet-count').textContent;
+
+        // Exclude items with count === 0 dynamically
+        if (count === '0') {
+          item.style.display = 'none';
+          return;
+        }
 
         // Group items into selected and unselected
         if (input.checked) {
