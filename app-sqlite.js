@@ -189,7 +189,7 @@ function loadAllGames() {
     SELECT id, name, description, categories, mechanics, players, weight,
            playing_time, min_age, rank, usersrated, numowned, rating,
            numplays, image, tags, previous_players, expansions, color, unixepoch(last_modified) as last_modified,
-           publishers, designers, artists
+           publishers, designers, artists, year, tags, wishlist_priority
     FROM games
     ORDER BY name
   `);
@@ -210,6 +210,9 @@ function loadAllGames() {
       row.publishers = JSON.parse(row.publishers || '[]');
       row.designers = JSON.parse(row.designers || '[]');
       row.artists = JSON.parse(row.artists || '[]');
+      // row.year = JSON.parse(row.year || '[]');
+      //row.status = JSON.parse(row.status || '[]');
+      //row.wishlist_priority = JSON.parse(row.wishlist_priority || '[]');
     } catch (e) {
       console.warn('Error parsing JSON for game:', row.id, e);
     }
@@ -315,6 +318,9 @@ function setupFilters() {
   setupPublisherFilter();
   setupDesignerFilter();
   setupArtistFilter();
+  setupYearFilter();
+ // setupStatusFilter();
+ // setupWishlistFilter();
   setupClearAllButton();
 
   // Ensure player sub-options are hidden initially
@@ -720,12 +726,40 @@ function setupArtistFilter() {
     count: artistCounts[art]
   }));
 
-  // Only create the filter if there are publishers
+  // Only create the filter if there are artists
   if (items.length > 0) {
     createRefinementFilter('facet-artists', 'Artists', items, 'artists', false, true );
   } else {
     // Hide the filter container if no items
     const container = document.getElementById('facet-artists');
+    if (container) {
+      container.style.display = 'none';
+    }
+  }
+}
+
+function setupYearFilter() {
+  const yearCounts = {};
+  allGames.forEach(game => {
+    if (game.year) {
+      yearCounts[game.year] = (yearCounts[game.year] || 0) + 1;
+    }
+  });
+
+  const sortedYears = Object.keys(yearCounts).sort();
+  const items = sortedYears.map(yr => ({
+    label: yr,
+    value: yr,
+    count: yearCounts[yr]
+  }));
+
+  // Check if all items have zero count (effectively empty filter)
+  const hasAnyItems = items.some(item => item.count > 0);
+  if (hasAnyItems) {
+    createRefinementFilter('facet-years', 'Year', items, 'years');
+  } else {
+    // Hide the filter container if no items have counts
+    const container = document.getElementById('facet-years');
     if (container) {
       container.style.display = 'none';
     }
@@ -931,7 +965,8 @@ function updateClearButtonVisibility(filters) {
     selectedNumPlays,
     selectedPublishers,
     selectedDesigners,
-    selectedArtists
+    selectedArtists,
+    selectedYears
   } = filters;
 
   const isAnyFilterActive =
@@ -946,7 +981,8 @@ function updateClearButtonVisibility(filters) {
     selectedNumPlays !== null ||
     (selectedPublishers && selectedPublishers.length > 0) ||
     (selectedDesigners && selectedDesigners.length > 0) ||
-    (selectedArtists && selectedArtists.length > 0);
+    (selectedArtists && selectedArtists.length > 0)||
+    (selectedYears && selectedYears.length > 0);
 
   clearContainer.style.display = isAnyFilterActive ? 'flex' : 'none';
 }
@@ -1052,13 +1088,23 @@ function updateFilterActiveStates(filters) {
       }
     }
 
-    // Update designers filter
+    // Update artists filter
     const artistsFilters = document.getElementById('facet-artists');
     if (artistsFilters) {
       if (filters.selectedArtists && filters.selectedArtists.length > 0) {
         artistsFilters.classList.add('filter-active');
       } else {
         artistsFilters.classList.remove('filter-active');
+      }
+    }
+
+    // Update year filter
+    const yearsFilters = document.getElementById('facet-years');
+    if (yearsFilters) {
+      if (filters.selectedYears && filters.selectedYears.length > 0) {
+        yearsFilters.classList.add('filter-active');
+      } else {
+        yearsFilters.classList.remove('filter-active');
       }
     }
 }
@@ -1081,6 +1127,7 @@ function getFiltersFromURL() {
     selectedPublishers: params.get('publishers')?.split(',').filter(Boolean) || [],
     selectedDesigners: params.get('designers')?.split(',').filter(Boolean) || [],
     selectedArtists: params.get('artists')?.split(',').filter(Boolean) || [],
+    selectedYears: params.get('years')?.split(',').filter(Boolean) || [],
     sortBy: params.get('sort') || 'name',
     page: Number(params.get('page')) || 1
   };
@@ -1099,6 +1146,7 @@ function getFiltersFromUI() {
   const selectedPublishers = getSelectedValues('publishers');
   const selectedDesigners = getSelectedValues('designers');
   const selectedArtists = getSelectedValues('artists');
+  const selectedYears = getSelectedValues('years');
   const sortBy = document.getElementById('sort-select')?.value || 'name';
 
   return {
@@ -1114,6 +1162,7 @@ function getFiltersFromUI() {
     selectedPublishers,
     selectedDesigners,
     selectedArtists,
+    selectedYears,
     sortBy,
     page: currentPage
   };
@@ -1134,6 +1183,7 @@ function updateURLWithFilters(filters) {
   if (filters.selectedPublishers?.length) params.set('publishers', filters.selectedPublishers.join(','));
   if (filters.selectedDesigners?.length) params.set('designers', filters.selectedDesigners.join(','));
   if (filters.selectedArtists?.length) params.set('artists', filters.selectedArtists.join(','));
+  if (filters.selectedYears?.length) params.set('year', filters.selectedYears.join(','));
   if (filters.sortBy && filters.sortBy !== 'name') params.set('sort', filters.sortBy);
   if (filters.page && filters.page > 1) params.set('page', filters.page);
 
@@ -1152,6 +1202,10 @@ function updateUIFromState(state) {
     'weight': state.selectedWeight,
     'playing_time': state.selectedPlayingTime,
     'previous_players': state.selectedPreviousPlayers,
+    'publishers': state.selectedPublishers,
+    'artists': state.selectedArtists,
+    'designers': state.selectedDesigners,
+    'years': state.selectedYears
   };
 
   for (const name in checkboxFilters) {
@@ -1249,7 +1303,8 @@ function filterGames(gamesToFilter, filters) {
     selectedNumPlays,
     selectedPublishers,
     selectedDesigners,
-    selectedArtists
+    selectedArtists,
+    selectedYears
   } = filters;
 
   return gamesToFilter.filter(game => {
@@ -1330,6 +1385,11 @@ function filterGames(gamesToFilter, filters) {
 
     if (selectedArtists.length > 0 &&
       !selectedArtists.some(pub => game.artists.find(obj => obj.name === pub))) {
+      return false;
+    }
+
+    if (selectedYears.length > 0 &&
+      !selectedYears.includes("" + game.year)) {
       return false;
     }
 
@@ -1568,6 +1628,18 @@ function updateAllFilterCounts(filters) {
   });
   updateCountsInDOM('facet-artists', artistCounts);
 
+  const yearFilters = {
+    ...filters,
+    selectedYears: []
+  };
+  const gamesForYearCount = filterGames(allGames, yearFilters);
+  const yearCounts = {};
+  gamesForYearCount.forEach(game => {
+    if (game.year) {
+      yearCounts[game.year] = (yearCounts[game.year] || 0) + 1;
+    }
+  });
+  updateCountsInDOM('facet-years', yearCounts);
 }
 
 function applyFiltersAndSort(filters) {
