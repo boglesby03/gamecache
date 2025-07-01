@@ -1,13 +1,15 @@
 import io
 import re
 import time
+from .http_client import make_http_request
 
 import colorgram
 import requests
 from algoliasearch.search.client import SearchClientSync
 from PIL import Image, ImageFile
+from .vendor import colorgram
 
-# Allow colorgram to read truncated files
+# Allow PIL to read truncated files
 ImageFile.LOAD_TRUNCATED_IMAGES = True
 
 class Indexer:
@@ -219,17 +221,13 @@ class Indexer:
 
     def fetch_image(self, url, tries=0):
         try:
-            response = requests.get(url)
-        except (requests.exceptions.ConnectionError, requests.exceptions.ChunkedEncodingError) as e:
+            response = make_http_request(url)
+            return response
+        except Exception as e:
             if tries < 3:
                 time.sleep(2)
                 return self.fetch_image(url, tries=tries + 1)
             raise e
-
-        if response.status_code == 200:
-            return response.content
-
-        return None
 
     def add_objects(self, collection):
         games = [Indexer.todict(game) for game in collection]

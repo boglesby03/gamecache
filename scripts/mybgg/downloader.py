@@ -12,11 +12,11 @@ from multidict import MultiDict
 EXTRA_EXPANSIONS_GAME_ID=81913
 
 class Downloader():
-    def __init__(self, project_name, cache_bgg, token, debug=False):
+    def __init__(self, cache_bgg, token, debug=False):
         if cache_bgg:
             self.client = BGGClient(
                 cache=CacheBackendSqlite(
-                    path=f"{project_name}-cache.sqlite",
+                    path=f"mybgg-cache.sqlite",
                     ttl=60 * 60 * 24,
                 ),
                 token=token,
@@ -351,7 +351,7 @@ def custom_expansion_mappings(expansions):
         {"id": 30323, "baseId": 154597},
         {"id": 70704, "baseId": 154597},
         # Survive the Island Monster pack
-        {"id": 436998, "baseId": 2653},
+        # {"id": 436998, "baseId": 2653},
     ]
 
     # Original Tuscany should be an expansion for Viticulture Essential Edition (even if there is overlap)

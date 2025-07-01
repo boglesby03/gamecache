@@ -1,5 +1,7 @@
-algoliasearch
 declxml
+pillow
+cryptography
+pynacl
 requests-cache
 colorgram.py
 multidict

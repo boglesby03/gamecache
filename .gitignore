@@ -1,6 +1,8 @@
-*.sqlite
 __pycache__
 update_mybgg.sh
 .vscode
 env
 .python-version
+*.sqlite
+*.sqlite-journal
+*.sqlite.gz
