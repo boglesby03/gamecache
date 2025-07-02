@@ -210,9 +210,6 @@ function loadAllGames() {
       row.publishers = JSON.parse(row.publishers || '[]');
       row.designers = JSON.parse(row.designers || '[]');
       row.artists = JSON.parse(row.artists || '[]');
-      // row.year = JSON.parse(row.year || '[]');
-      //row.status = JSON.parse(row.status || '[]');
-      //row.wishlist_priority = JSON.parse(row.wishlist_priority || '[]');
     } catch (e) {
       console.warn('Error parsing JSON for game:', row.id, e);
     }
@@ -319,8 +316,8 @@ function setupFilters() {
   setupDesignerFilter();
   setupArtistFilter();
   setupYearFilter();
- // setupStatusFilter();
- // setupWishlistFilter();
+  setupStatusFilter();
+  setupWishlistFilter();
   setupClearAllButton();
 
   // Ensure player sub-options are hidden initially
@@ -767,6 +764,60 @@ function setupYearFilter() {
   }
 }
 
+function setupStatusFilter() {
+  const statusCounts = {};
+  allGames.forEach(game => {
+    game.tags.forEach(stat => {
+      statusCounts[stat] = (statusCounts[stat] || 0) + 1;
+    });
+  });
+
+  const sortedStatus = Object.keys(statusCounts).sort();
+  const items = sortedStatus.map(stat => ({
+    label: stat,
+    value: stat,
+    count: statusCounts[stat]
+  }));
+
+  // Only create the filter if there are status
+  if (items.length > 0) {
+    createRefinementFilter('facet-status', 'Status', items, 'status');
+  } else {
+    // Hide the filter container if no items
+    const container = document.getElementById('facet-status');
+    if (container) {
+      container.style.display = 'none';
+    }
+  }
+}
+
+function setupWishlistFilter() {
+  const wishlistCounts = {};
+  allGames.forEach(game => {
+    if (game.wishlist_priority) {
+      wishlistCounts[game.wishlist_priority] = (wishlistCounts[game.wishlist_priority] || 0) + 1;
+    }
+  });
+
+  const sortedWishlists = Object.keys(wishlistCounts).sort();
+  const items = sortedWishlists.map(wl => ({
+    label: wl,
+    value: wl,
+    count: wishlistCounts[wl]
+  }));
+
+  // Only create the filter if there are wishlist levels
+  if (items.length > 0) {
+    createRefinementFilter('facet-wishlist', 'Wishlist', items, 'wishlist', false, true);
+  } else {
+    // Hide the filter container if no items
+    const container = document.getElementById('facet-wishlist');
+    if (container) {
+      container.style.display = 'none';
+    }
+  }
+}
+
 function createRefinementFilter(facetId, title, items, attributeName, isRadio = false, enableSearch = false) {
   const container = document.getElementById(facetId);
   if (!container) return;
@@ -936,7 +987,9 @@ function updateClearButtonVisibility(filters) {
     selectedPublishers,
     selectedDesigners,
     selectedArtists,
-    selectedYears
+    selectedYears,
+    selectedStatus,
+    selectedWishlist
   } = filters;
 
   const isAnyFilterActive =
@@ -951,8 +1004,10 @@ function updateClearButtonVisibility(filters) {
     selectedNumPlays !== null ||
     (selectedPublishers && selectedPublishers.length > 0) ||
     (selectedDesigners && selectedDesigners.length > 0) ||
-    (selectedArtists && selectedArtists.length > 0)||
-    (selectedYears && selectedYears.length > 0);
+    (selectedArtists && selectedArtists.length > 0) ||
+    (selectedYears && selectedYears.length > 0) ||
+    (selectedStatus && selectedStatus.length > 0) ||
+    selectedWishlist !== null;
 
   clearContainer.style.display = isAnyFilterActive ? 'flex' : 'none';
 }
@@ -1077,6 +1132,26 @@ function updateFilterActiveStates(filters) {
         yearsFilters.classList.remove('filter-active');
       }
     }
+
+    // Update status filter
+    const statusFilters = document.getElementById('facet-status');
+    if (statusFilters) {
+      if (filters.selectedStatus && filters.selectedStatus.length > 0) {
+        statusFilters.classList.add('filter-active');
+      } else {
+        statusFilters.classList.remove('filter-active');
+      }
+    }
+
+    // Update wishlist priority filter
+    const wishlistFilters = document.getElementById('facet-wishlist');
+    if (wishlistFilters) {
+      if (filters.selectedWishlist && filters.selectedWishlist.length > 0) {
+        wishlistFilters.classList.add('filter-active');
+      } else {
+        wishlistFilters.classList.remove('filter-active');
+      }
+    }
 }
 
 function getFiltersFromURL() {
@@ -1098,6 +1173,8 @@ function getFiltersFromURL() {
     selectedDesigners: params.get('designers')?.split(',').filter(Boolean) || [],
     selectedArtists: params.get('artists')?.split(',').filter(Boolean) || [],
     selectedYears: params.get('years')?.split(',').filter(Boolean) || [],
+    selectedStatus: params.get('status')?.split(',').filter(Boolean) || [],
+    selectedWishlist: params.get('wishlist')?.split(',').filter(Boolean) || [],
     sortBy: params.get('sort') || 'name',
     page: Number(params.get('page')) || 1
   };
@@ -1117,6 +1194,8 @@ function getFiltersFromUI() {
   const selectedDesigners = getSelectedValues('designers');
   const selectedArtists = getSelectedValues('artists');
   const selectedYears = getSelectedValues('years');
+  const selectedStatus = getSelectedValues('status');
+  const selectedWishlist = getSelectedValues('wishlist');
   const sortBy = document.getElementById('sort-select')?.value || 'name';
 
   return {
@@ -1133,6 +1212,8 @@ function getFiltersFromUI() {
     selectedDesigners,
     selectedArtists,
     selectedYears,
+    selectedStatus,
+    selectedWishlist,
     sortBy,
     page: currentPage
   };
@@ -1154,6 +1235,8 @@ function updateURLWithFilters(filters) {
   if (filters.selectedDesigners?.length) params.set('designers', filters.selectedDesigners.join(','));
   if (filters.selectedArtists?.length) params.set('artists', filters.selectedArtists.join(','));
   if (filters.selectedYears?.length) params.set('year', filters.selectedYears.join(','));
+  if (filters.selectedStatus?.length) params.set('status', filters.selectedStatus.join(','));
+  if (filters.selectedWishlist?.length) params.set('wishlist', filters.selectedWishlist.join(','));
   if (filters.sortBy && filters.sortBy !== 'name') params.set('sort', filters.sortBy);
   if (filters.page && filters.page > 1) params.set('page', filters.page);
 
@@ -1175,7 +1258,9 @@ function updateUIFromState(state) {
     'publishers': state.selectedPublishers,
     'artists': state.selectedArtists,
     'designers': state.selectedDesigners,
-    'years': state.selectedYears
+    'years': state.selectedYears,
+    'status': state.selectedStatus,
+    'wishlist': state.selectedWishlist
   };
 
   for (const name in checkboxFilters) {
@@ -1274,7 +1359,9 @@ function filterGames(gamesToFilter, filters) {
     selectedPublishers,
     selectedDesigners,
     selectedArtists,
-    selectedYears
+    selectedYears,
+    selectedStatus,
+    selectedWishlist
   } = filters;
 
   return gamesToFilter.filter(game => {
@@ -1360,6 +1447,16 @@ function filterGames(gamesToFilter, filters) {
 
     if (selectedYears.length > 0 &&
       !selectedYears.includes("" + game.year)) {
+      return false;
+    }
+
+    if (selectedStatus.length > 0 &&
+      !selectedStatus.some(stat => game.tags.includes(stat))) {
+      return false;
+    }
+
+    if (selectedWishlist.length > 0 &&
+      !selectedWishlist.some(wl => game.wishlist_priority === wl)) {
       return false;
     }
 
@@ -1610,6 +1707,32 @@ function updateAllFilterCounts(filters) {
     }
   });
   updateCountsInDOM('facet-years', yearCounts);
+
+  const statusFilters = {
+    ...filters,
+    selectedStatus: []
+  };
+  const gamesForStatusCount = filterGames(allGames, statusFilters);
+  const statusCounts = {};
+  gamesForStatusCount.forEach(game => {
+    if (game.tags) {
+      statusCounts[game.tags] = (statusCounts[game.tags] || 0) + 1;
+    }
+  });
+  updateCountsInDOM('facet-status', statusCounts);
+
+  const wishlistFilters = {
+    ...filters,
+    selectedWishlist: []
+  };
+  const gamesForWLCount = filterGames(allGames, wishlistFilters);
+  const wishlistCounts = {};
+  gamesForWLCount.forEach(game => {
+    if (game.wishlist_priority) {
+      wishlistCounts[game.wishlist_priority] = (wishlistCounts[game.wishlist_priority] || 0) + 1;
+    }
+  });
+  updateCountsInDOM('facet-wishlist', wishlistCounts);
 }
 
 function applyFiltersAndSort(filters) {
