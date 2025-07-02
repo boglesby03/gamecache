@@ -747,6 +747,7 @@ function setupYearFilter() {
   });
 
   const sortedYears = Object.keys(yearCounts).sort();
+  sortedYears.reverse();
   const items = sortedYears.map(yr => ({
     label: yr,
     value: yr,
@@ -774,6 +775,7 @@ function createRefinementFilter(facetId, title, items, attributeName, isRadio = 
   const template = document.getElementById('filter-item-template');
   const dropdownTemplate = document.getElementById('filter-dropdown-template');
 
+  // Function to create HTML for filter items
   const createFilterItemsHtml = (items) => {
     return items
       .filter(item => {
@@ -856,9 +858,6 @@ function createRefinementFilter(facetId, title, items, attributeName, isRadio = 
       const searchBox = enableSearch ? document.getElementById(searchBoxId) : null;
       const searchText = searchBox ? searchBox.value.toLowerCase() : '';
 
-      const selectedItems = [];
-      const unselectedItems = [];
-
       filterItems.forEach(item => {
         const input = item.querySelector('input');
         const labelText = item.querySelector('.filter-label').textContent.toLowerCase();
@@ -870,39 +869,12 @@ function createRefinementFilter(facetId, title, items, attributeName, isRadio = 
           return;
         }
 
-        // Group items into selected and unselected
-        if (input.checked) {
-          selectedItems.push(item);
-        } else if (!enableSearch || labelText.includes(searchText)) {
-          unselectedItems.push(item);
+        // Show items based on search text or selection
+        if (input.checked || !enableSearch || labelText.includes(searchText)) {
+          item.style.display = 'flex';
+        } else {
+          item.style.display = 'none';
         }
-
-        item.style.display = 'none'; // Hide all items initially
-      });
-
-      // Sort both selected and unselected items alphabetically by their label text
-      selectedItems.sort((a, b) => {
-        const aText = a.querySelector('.filter-label').textContent.toLowerCase();
-        const bText = b.querySelector('.filter-label').textContent.toLowerCase();
-        return aText.localeCompare(bText);
-      });
-
-      unselectedItems.sort((a, b) => {
-        const aText = a.querySelector('.filter-label').textContent.toLowerCase();
-        const bText = b.querySelector('.filter-label').textContent.toLowerCase();
-        return aText.localeCompare(bText);
-      });
-
-      // Render selected items first
-      selectedItems.forEach(item => {
-        item.style.display = 'flex';
-        newContainer.querySelector('.filter-dropdown-content').append(item);
-      });
-
-      // Render unselected items below selected items
-      unselectedItems.forEach(item => {
-        item.style.display = 'flex';
-        newContainer.querySelector('.filter-dropdown-content').append(item);
       });
 
       // Reapply event listeners to all visible inputs
@@ -911,9 +883,7 @@ function createRefinementFilter(facetId, title, items, attributeName, isRadio = 
         input.removeEventListener('change', onFilterChange); // Remove any existing listener to avoid duplicates
         input.addEventListener('change', (event) => {
           onFilterChange(); // Call the external filter change handler
-
-          // Refresh items to resort them after unselecting
-          refreshVisibleItems();
+          refreshVisibleItems(); // Refresh items to update visibility
         });
       });
     };
