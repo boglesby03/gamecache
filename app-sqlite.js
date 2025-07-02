@@ -808,7 +808,7 @@ function setupWishlistFilter() {
 
   // Only create the filter if there are wishlist levels
   if (items.length > 0) {
-    createRefinementFilter('facet-wishlist', 'Wishlist', items, 'wishlist', false, true);
+    createRefinementFilter('facet-wishlist', 'Wishlist', items, 'wishlist');
   } else {
     // Hide the filter container if no items
     const container = document.getElementById('facet-wishlist');
