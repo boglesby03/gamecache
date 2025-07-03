@@ -855,18 +855,46 @@ function createSliderRefinementFilter(facetId, title, min, max) {
   const maxHandle = sliderDropdown.querySelector('.slider-max');
   const sliderTrack = sliderDropdown.querySelector('.slider-track');
 
-  minLabel.textContent = min;
-  maxLabel.textContent = max;
+  // Create a range highlight element
+  const rangeHighlight = document.createElement('div');
+  rangeHighlight.className = 'slider-range-highlight';
+  sliderTrack.appendChild(rangeHighlight); // Add the range highlight to the track
 
+  // **Step 1: Explicitly set initial handle positions**
   minHandle.style.left = '0%';
   maxHandle.style.left = '100%';
 
-  function initializeLabelPositions() {
-      minLabel.style.left = minHandle.style.left;
-      maxLabel.style.left = maxHandle.style.left;
+  // **Step 2: Directly set initial label values (independent of calculations)**
+  minLabel.textContent = min; // Set the minimum value directly
+  maxLabel.textContent = max; // Set the maximum value directly
+
+  // **Step 3: Explicitly set initial label positions**
+  minLabel.style.left = '0%';
+  maxLabel.style.left = '100%';
+
+  // **Step 4: Initialize the range highlight (only after handles are set)**
+  function updateRangeHighlight() {
+      const minPercentage = parseFloat(minHandle.style.left) || 0;
+      const maxPercentage = parseFloat(maxHandle.style.left) || 100;
+
+      // Ensure valid percentages before updating
+      if (minPercentage >= 0 && maxPercentage <= 100) {
+          rangeHighlight.style.left = `${minPercentage}%`;
+          rangeHighlight.style.width = `${maxPercentage - minPercentage}%`;
+      }
   }
 
-  initializeLabelPositions();
+  // **Step 5: Align labels with handles and update highlight**
+  function initializeLabelPositions() {
+      // Align labels with handle positions
+      minLabel.style.left = minHandle.style.left;
+      maxLabel.style.left = maxHandle.style.left;
+
+      // Update the range highlight after initialization
+      updateRangeHighlight();
+  }
+
+  initializeLabelPositions(); // Initialize positions when the slider loads
 
   function handleDrag(handle, event) {
       const sliderRect = sliderTrack.getBoundingClientRect();
@@ -892,6 +920,7 @@ function createSliderRefinementFilter(facetId, title, min, max) {
               }
           }
 
+          updateRangeHighlight(); // Update the range highlight dynamically
           onFilterChange();
           refreshVisibleItems();
       };

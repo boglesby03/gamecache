@@ -678,51 +678,54 @@ body {
     align-items: center;
 }
 
-/* Slider Track */
 .slider-track {
     position: relative;
     width: 100%;
-    /* Full width slider track */
     height: 4px;
-    /* Reduce height of slider track */
     background: #ddd;
+    /* Default track color */
     border-radius: 4px;
 }
 
-/* Slider Handles */
+.slider-range-highlight {
+    position: absolute;
+    height: 100%;
+    background: #007bff;
+    /* Highlighted range color */
+    border-radius: 4px;
+    z-index: 1;
+    /* Ensure the highlight appears below handles */
+}
+
 .slider-handle {
     position: absolute;
     height: 12px;
-    /* Reduce handle size */
     width: 12px;
-    /* Reduce handle size */
     background: #007bff;
     border-radius: 50%;
     cursor: pointer;
     top: 50%;
-    /* Center handles vertically over track */
     transform: translateY(-50%);
-    z-index: 10;
+    z-index: 2;
+    /* Ensure handles appear above the highlight */
 }
 
-/* Slider Value Labels */
 .slider-value {
     position: absolute;
     bottom: 100%;
     /* Place labels directly above the slider handles */
-    transform: translate(-50%, -5px);
+    transform: translate(-50%, -10px);
     /* Adjust position relative to handles */
     font-size: 10px;
-    /* Make label text smaller */
+    /* Label font size */
     background-color: #fff;
     color: #000;
-    padding: 1px 3px;
-    /* Reduce padding for labels */
+    padding: 2px 4px;
+    /* Padding for labels */
     border: 1px solid #ddd;
     border-radius: 3px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     white-space: nowrap;
-    /* Prevent text wrapping */
     z-index: 15;
     text-align: center;
 }
