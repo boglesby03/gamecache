@@ -26,7 +26,7 @@
       <div id="facet-weight"></div>
       <div id="facet-categories"></div>
       <div id="facet-mechanics"></div>
-      <div id="facet-min-age"></div>
+      <!-- <div id="facet-min-age"></div> -->
       <div id="facet-previous-players"></div>
       <div id="facet-numplays"></div>
       <div id="facet-publishers"></div>
@@ -57,6 +57,22 @@
       <span class="facet-count"></span>
     </label>
   </template>
+
+  <template id="slider-refinement-template">
+    <details class="filter-dropdown slider-menu">
+        <summary class="filter-title"></summary>
+        <div class="filter-dropdown-content">
+            <div class="slider-container">
+                <div class="slider-track">
+                    <div class="slider-handle slider-min"></div>
+                    <div class="slider-handle slider-max"></div>
+                </div>
+                <div class="slider-value slider-min-label"></div>
+                <div class="slider-value slider-max-label"></div>
+            </div>
+        </div>
+    </details>
+</template>
 
   <template id="game-card-template">
     <details class="game-card" data-color="">
