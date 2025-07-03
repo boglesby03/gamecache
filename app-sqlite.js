@@ -189,7 +189,7 @@ function loadAllGames() {
     SELECT id, name, description, categories, mechanics, players, weight,
            playing_time, min_age, rank, usersrated, numowned, rating,
            numplays, image, tags, previous_players, expansions, color, unixepoch(last_modified) as last_modified,
-           publishers, designers, artists, year, tags, wishlist_priority, accessories
+           publishers, designers, artists, year, tags, wishlist_priority, accessories, po_exp, po_acc, wl_exp, wl_acc
     FROM games
     ORDER BY name
   `);
@@ -211,6 +211,10 @@ function loadAllGames() {
       row.publishers = JSON.parse(row.publishers || '[]');
       row.designers = JSON.parse(row.designers || '[]');
       row.artists = JSON.parse(row.artists || '[]');
+      row.po_exp = JSON.parse(row.po_exp || '[]');
+      row.po_acc = JSON.parse(row.po_acc || '[]');
+      row.wl_exp = JSON.parse(row.wl_exp || '[]');
+      row.wl_acc = JSON.parse(row.wl_acc || '[]');
     } catch (e) {
       console.warn('Error parsing JSON for game:', row.id, e);
     }
@@ -2076,7 +2080,9 @@ function renderGameCard(game) {
 
   // Set expansions
   const expansionsSection = clone.querySelector('.expansions-section');
-  if (game.expansions && game.expansions.length > 0) {
+  if ((game.expansions && game.expansions.length > 0) ||
+    (game.po_exp && game.po_exp.length > 0) ||
+    (game.wl_exp && game.wl_exp.length > 0)) {
     expansionsSection.style.display = 'block';
     const expansionTemplate = document.getElementById('expansion-chip-template');
     const expansionLinks = game.expansions.map(exp => {
@@ -2086,7 +2092,41 @@ function renderGameCard(game) {
       link.textContent = exp.name;
       return link.outerHTML;
     }).join('');
-    clone.querySelector('.expansion-chips').innerHTML = expansionLinks;
+    clone.querySelector('.original-expansion-chips').innerHTML = expansionLinks;
+  }
+
+  // Handle Wishlist Expansions
+  const wlExpansionSection = clone.querySelector('.wl-expansion-chips');
+  const wlExpansionHeading = clone.querySelector('.wl-expansion-heading');
+  if (game.wl_exp && game.wl_exp.length > 0) {
+    wlExpansionHeading.style.display = 'block'; // Show heading if list exists
+    const wlExpansionLinks = game.wl_exp.map(wlExp => {
+      const link = document.createElement('a');
+      link.href = `https://boardgamegeek.com/boardgame/${wlExp.id}`;
+      link.className = 'wl-expansion-chip'; // Styling for wishlist expansions
+      link.textContent = wlExp.name;
+      return link;
+    });
+    wlExpansionSection.replaceChildren(...wlExpansionLinks);
+  } else {
+    wlExpansionHeading.style.display = 'none'; // Hide heading if list is empty
+  }
+
+  // Handle Preordered Expansions
+  const poExpansionSection = clone.querySelector('.po-expansion-chips');
+  const poExpansionHeading = clone.querySelector('.po-expansion-heading');
+  if (game.po_exp && game.po_exp.length > 0) {
+    poExpansionHeading.style.display = 'block'; // Show heading if list exists
+    const poExpansionLinks = game.po_exp.map(poExp => {
+      const link = document.createElement('a');
+      link.href = `https://boardgamegeek.com/boardgame/${poExp.id}`;
+      link.className = 'po-expansion-chip'; // Styling for preordered expansions
+      link.textContent = poExp.name;
+      return link;
+    });
+    poExpansionSection.replaceChildren(...poExpansionLinks);
+  } else {
+    poExpansionHeading.style.display = 'none'; // Hide heading if list is empty
   }
 
   // Set rating
