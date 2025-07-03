@@ -189,7 +189,7 @@ function loadAllGames() {
     SELECT id, name, description, categories, mechanics, players, weight,
            playing_time, min_age, rank, usersrated, numowned, rating,
            numplays, image, tags, previous_players, expansions, color, unixepoch(last_modified) as last_modified,
-           publishers, designers, artists, year, tags, wishlist_priority
+           publishers, designers, artists, year, tags, wishlist_priority, accessories
     FROM games
     ORDER BY name
   `);
@@ -207,6 +207,7 @@ function loadAllGames() {
       row.tags = JSON.parse(row.tags || '[]');
       row.previous_players = JSON.parse(row.previous_players || '[]');
       row.expansions = JSON.parse(row.expansions || '[]');
+      row.accessories = JSON.parse(row.accessories || '[]');
       row.publishers = JSON.parse(row.publishers || '[]');
       row.designers = JSON.parse(row.designers || '[]');
       row.artists = JSON.parse(row.artists || '[]');
@@ -1511,6 +1512,7 @@ function filterGames(gamesToFilter, filters) {
   } = filters;
 
   return gamesToFilter.filter(game => {
+    // TODO query should look at more fields - extensions, alternative titles, publishers?
     if (query && !game.name.toLowerCase().includes(query) &&
       !game.description.toLowerCase().includes(query)) {
       return false;
@@ -2108,6 +2110,21 @@ function renderGameCard(game) {
   const bggLink = clone.querySelector('.bgg-link');
   if (bggLink && game.id) {
     bggLink.href = `https://boardgamegeek.com/boardgame/${game.id}`;
+  }
+
+  // Set accessories
+  const accessoriesSection = clone.querySelector('.accessories-section');
+  if (game.accessories && game.accessories.length > 0) {
+    accessoriesSection.style.display = 'block';
+    const accessoryTemplate = document.getElementById('accessory-chip-template');
+    const accessoryLinks = game.accessories.map(acc => {
+      const accClone = accessoryTemplate.content.cloneNode(true);
+      const link = accClone.querySelector('.accessory-chip');
+      link.href = acc.link || '#';
+      link.textContent = acc.name;
+      return link.outerHTML;
+    }).join('');
+    clone.querySelector('.accessory-chips').innerHTML = accessoryLinks;
   }
 
   return clone;
