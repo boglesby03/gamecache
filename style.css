@@ -364,17 +364,20 @@ body {
     border-bottom: 1px solid #e0e0e0;
 }
 
-.expansions-section {
+.expansions-section,
+.accessories-section {
     padding: 10px 15px;
 }
 
-.expansion-chips {
+.expansion-chips,
+.accessory-chips {
     display: flex;
     flex-wrap: wrap;
     gap: 5px;
 }
 
-.expansion-chip {
+.expansion-chip,
+.accessory-chip {
     padding: 4px 10px;
     border-radius: 10px;
     font-size: 0.8em;
@@ -385,18 +388,21 @@ body {
     transition: all 0.2s ease;
 }
 
-.expansion-chip:hover {
+.expansion-chip:hover,
+.accessory-chip:hover {
     background: rgba(0, 0, 0, 0.1);
     border-color: rgba(0, 0, 0, 0.2);
     color: #000;
 }
 
-.expansions-section div a {
+.expansions-section div a,
+.accessories-section div a {
     color: #b71c1c;
     text-decoration: none;
 }
 
-.expansions-section div a:hover {
+.expansions-section div a:hover,
+.accessories-section div a:hover {
     text-decoration: underline;
 }
 
