@@ -298,18 +298,6 @@ class Indexer:
             game["po_exp"] = self._minimize_field(game, "po_exp")
             game["po_acc"] = self._minimize_field(game, "po_acc")
 
-            # Limit the number of expansions to 10 to keep the size down
-            # game["has_more_expansions"] = False
-            HAS_MORE_EXPANSIONS = 30
-            game["more_exp"] = len(game["expansions"]) > HAS_MORE_EXPANSIONS
-
-            # Make sure description is not too long
-            if game["more_exp"]:
-                game["expansions"] = game["expansions"][:HAS_MORE_EXPANSIONS]
-                game["description"] = ""
-            else:
-                game["description"] = self._prepare_description(game["description"])
-
             try:
                 self.client.add_or_update_object(
                     index_name = self.index,
