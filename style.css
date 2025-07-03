@@ -593,3 +593,136 @@ body {
     background: yellow;
     color: #333;
 }
+
+/* Dropdown container styling */
+.filter-dropdown {
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #fff;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: 220px;
+    /* Smaller dropdown width */
+}
+
+.filter-dropdown>summary {
+    padding: 8px 12px;
+    /* Reduce padding for dropdown header */
+    list-style: none;
+    margin: 0;
+    height: 35px;
+    /* Reduce header height */
+    width: 100%;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    cursor: pointer;
+    background-color: #fff;
+    transition: background-color 0.3s ease;
+    font-size: 14px;
+    /* Smaller text */
+}
+
+.filter-dropdown>summary:hover {
+    background-color: #f0f0f0;
+    /* Highlight header on hover */
+}
+
+/* Dropdown Content Styling */
+.filter-dropdown[open]>.filter-dropdown-content {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 100;
+    padding: 5px;
+    /* Reduce padding inside dropdown */
+    display: flex;
+    flex-direction: column;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    box-sizing: border-box;
+    width: auto;
+    min-width: 200px;
+    overflow: visible;
+}
+
+/* Slider Menu Adjustments */
+.slider-menu>.filter-dropdown-content {
+    align-items: center;
+    justify-content: center;
+    padding-top: 5px;
+    /* Remove excess space above slider */
+    padding-bottom: 5px;
+    /* Remove excess space below slider */
+    min-width: 250px;
+    /* Keep slider menu width */
+    min-height: 70px;
+    /* Further reduce height of slider menu */
+    overflow: visible;
+}
+
+/* Slider Container Styling */
+.slider-container {
+    position: relative;
+    width: 90%;
+    /* Fit slider snugly inside dropdown content */
+    margin-top: 0;
+    /* Remove spacing above the slider */
+    margin-bottom: 0;
+    /* Remove spacing below the slider */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Slider Track */
+.slider-track {
+    position: relative;
+    width: 100%;
+    /* Full width slider track */
+    height: 4px;
+    /* Reduce height of slider track */
+    background: #ddd;
+    border-radius: 4px;
+}
+
+/* Slider Handles */
+.slider-handle {
+    position: absolute;
+    height: 12px;
+    /* Reduce handle size */
+    width: 12px;
+    /* Reduce handle size */
+    background: #007bff;
+    border-radius: 50%;
+    cursor: pointer;
+    top: 50%;
+    /* Center handles vertically over track */
+    transform: translateY(-50%);
+    z-index: 10;
+}
+
+/* Slider Value Labels */
+.slider-value {
+    position: absolute;
+    bottom: 100%;
+    /* Place labels directly above the slider handles */
+    transform: translate(-50%, -5px);
+    /* Adjust position relative to handles */
+    font-size: 10px;
+    /* Make label text smaller */
+    background-color: #fff;
+    color: #000;
+    padding: 1px 3px;
+    /* Reduce padding for labels */
+    border: 1px solid #ddd;
+    border-radius: 3px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    white-space: nowrap;
+    /* Prevent text wrapping */
+    z-index: 15;
+    text-align: center;
+}

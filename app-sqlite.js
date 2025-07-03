@@ -318,6 +318,7 @@ function setupFilters() {
   setupYearFilter();
   setupStatusFilter();
   setupWishlistFilter();
+  setupAgeRangeFilter();
   setupClearAllButton();
 
   // Ensure player sub-options are hidden initially
@@ -585,6 +586,14 @@ function setupMinAgeFilter() {
   createRefinementFilter('facet-min-age', 'Min age', items, 'min_age', true);
 }
 
+function setupAgeRangeFilter() {
+  const maxAge = Math.max(...allGames.map(game => game.min_age));
+  const minAge = Math.min(...allGames.map(game => game.min_age));
+
+  // Initialize a slider refinement filter
+  createSliderRefinementFilter('facet-age-range', 'Min age', minAge, maxAge, 'min_age');
+}
+
 function setupPreviousPlayersFilter() {
   const playerCounts = {};
   allGames.forEach(game => {
@@ -818,6 +827,114 @@ function setupWishlistFilter() {
   }
 }
 
+function createSliderRefinementFilter(facetId, title, min, max) {
+  const container = document.getElementById(facetId);
+  if (!container) return;
+
+  // Create dropdown structure for slider menu
+  const dropdownContainer = document.createElement('details');
+  dropdownContainer.id = facetId;
+  dropdownContainer.className = 'filter-dropdown slider-menu'; // Add slider-specific class
+
+  // Add dropdown title
+  const dropdownTitle = document.createElement('summary');
+  dropdownTitle.className = 'filter-title';
+  dropdownTitle.textContent = title;
+
+  // Create dropdown content
+  const dropdownContent = document.createElement('div');
+  dropdownContent.className = 'filter-dropdown-content';
+
+  // Create slider container
+  const sliderContainer = document.createElement('div');
+  sliderContainer.className = 'slider-container';
+
+  // Create slider track
+  const sliderTrack = document.createElement('div');
+  sliderTrack.className = 'slider-track';
+
+  // Add slider handles
+  const minHandle = document.createElement('div');
+  minHandle.className = 'slider-handle slider-min';
+  minHandle.style.left = '0%'; // Ensure min handle starts at far left
+
+  const maxHandle = document.createElement('div');
+  maxHandle.className = 'slider-handle slider-max';
+  maxHandle.style.left = '100%'; // Ensure max handle starts at far right
+
+  // Add labels for slider values
+  const minLabel = document.createElement('div');
+  minLabel.className = 'slider-value slider-min-label';
+  minLabel.textContent = min;
+
+  const maxLabel = document.createElement('div');
+  maxLabel.className = 'slider-value slider-max-label';
+  maxLabel.textContent = max;
+
+  // Append slider components
+  sliderTrack.appendChild(minHandle);
+  sliderTrack.appendChild(maxHandle);
+  sliderContainer.appendChild(sliderTrack);
+  sliderContainer.appendChild(minLabel);
+  sliderContainer.appendChild(maxLabel);
+
+  // Append slider to dropdown content
+  dropdownContent.appendChild(sliderContainer);
+
+  // Append title and content to dropdown
+  dropdownContainer.appendChild(dropdownTitle);
+  dropdownContainer.appendChild(dropdownContent);
+
+  // Replace container with dropdown
+  container.replaceWith(dropdownContainer);
+
+  // Ensure labels start directly above their handles
+  function initializeLabelPositions() {
+    minLabel.style.left = minHandle.style.left; // Sync min label with min handle
+    maxLabel.style.left = maxHandle.style.left; // Sync max label with max handle
+  }
+
+  initializeLabelPositions(); // Set label positions when the slider initializes
+
+  // Handle dragging logic for min and max handles
+  function handleDrag(handle, event) {
+    const sliderRect = sliderTrack.getBoundingClientRect();
+    const sliderWidth = sliderRect.width;
+
+    const updatePosition = (e) => {
+      const mouseX = e.clientX - sliderRect.left;
+      const percentage = Math.min(Math.max((mouseX / sliderWidth) * 100, 0), 100);
+
+      if (handle === minHandle) {
+        const maxPercentage = parseFloat(maxHandle.style.left);
+        if (percentage < maxPercentage) {
+          minHandle.style.left = `${percentage}%`;
+          minLabel.style.left = `${percentage}%`;
+          minLabel.textContent = Math.round(min + (percentage / 100) * (max - min));
+        }
+      } else if (handle === maxHandle) {
+        const minPercentage = parseFloat(minHandle.style.left);
+        if (percentage > minPercentage) {
+          maxHandle.style.left = `${percentage}%`;
+          maxLabel.style.left = `${percentage}%`;
+          maxLabel.textContent = Math.round(min + (percentage / 100) * (max - min));
+        }
+      }
+    };
+
+    const stopDrag = () => {
+      document.removeEventListener('mousemove', updatePosition);
+      document.removeEventListener('mouseup', stopDrag);
+    };
+
+    document.addEventListener('mousemove', updatePosition);
+    document.addEventListener('mouseup', stopDrag);
+  }
+
+  minHandle.addEventListener('mousedown', (event) => handleDrag(minHandle, event));
+  maxHandle.addEventListener('mousedown', (event) => handleDrag(maxHandle, event));
+}
+
 function createRefinementFilter(facetId, title, items, attributeName, isRadio = false, enableSearch = false) {
   const container = document.getElementById(facetId);
   if (!container) return;
@@ -989,7 +1106,8 @@ function updateClearButtonVisibility(filters) {
     selectedArtists,
     selectedYears,
     selectedStatus,
-    selectedWishlist
+    selectedWishlist,
+    selectedAgeRange
   } = filters;
 
   const isAnyFilterActive =
@@ -1007,7 +1125,8 @@ function updateClearButtonVisibility(filters) {
     (selectedArtists && selectedArtists.length > 0) ||
     (selectedYears && selectedYears.length > 0) ||
     (selectedStatus && selectedStatus.length > 0) ||
-    selectedWishlist !== null;
+    (selectedWishlist && selectedWishlist.length > 0) ||
+    (selectedAgeRange && selectedAgeRange.min > 0);
 
   clearContainer.style.display = isAnyFilterActive ? 'flex' : 'none';
 }
@@ -1152,12 +1271,23 @@ function updateFilterActiveStates(filters) {
         wishlistFilters.classList.remove('filter-active');
       }
     }
+
+    // Update age range priority filter
+    const ageRangeFilters = document.getElementById('facet-age-range');
+    if (wishlistFilters) {
+      if (filters.selectedAgeRange && filters.selectedAgeRange.min > 0) {
+        wishlistFilters.classList.add('filter-active');
+      } else {
+        wishlistFilters.classList.remove('filter-active');
+      }
+    }
 }
 
 function getFiltersFromURL() {
   const params = new URLSearchParams(window.location.search);
   const minAgeParam = params.get('min_age');
   const numPlaysParam = params.get('numplays');
+  const ageRangeParam = params.get('age');
 
   return {
     query: params.get('q') || '',
@@ -1175,6 +1305,7 @@ function getFiltersFromURL() {
     selectedYears: params.get('years')?.split(',').filter(Boolean) || [],
     selectedStatus: params.get('status')?.split(',').filter(Boolean) || [],
     selectedWishlist: params.get('wishlist')?.split(',').filter(Boolean) || [],
+    selectedAge: ageRangeParam ? { min: Number(minAgeParam.split('-')[0]), max: Number(minAgeParam.split('-')[1]) } : null,
     sortBy: params.get('sort') || 'name',
     page: Number(params.get('page')) || 1
   };
@@ -1196,6 +1327,7 @@ function getFiltersFromUI() {
   const selectedYears = getSelectedValues('years');
   const selectedStatus = getSelectedValues('status');
   const selectedWishlist = getSelectedValues('wishlist');
+  const selectedAgeRange = getSelectedValues('age');
   const sortBy = document.getElementById('sort-select')?.value || 'name';
 
   return {
@@ -1214,6 +1346,7 @@ function getFiltersFromUI() {
     selectedYears,
     selectedStatus,
     selectedWishlist,
+    selectedAgeRange,
     sortBy,
     page: currentPage
   };
@@ -1237,6 +1370,7 @@ function updateURLWithFilters(filters) {
   if (filters.selectedYears?.length) params.set('year', filters.selectedYears.join(','));
   if (filters.selectedStatus?.length) params.set('status', filters.selectedStatus.join(','));
   if (filters.selectedWishlist?.length) params.set('wishlist', filters.selectedWishlist.join(','));
+  if (filters.selectedAgeRange?.length) params.set('age', filters.selectedAgeRange.join(','));
   if (filters.sortBy && filters.sortBy !== 'name') params.set('sort', filters.sortBy);
   if (filters.page && filters.page > 1) params.set('page', filters.page);
 
@@ -1361,7 +1495,8 @@ function filterGames(gamesToFilter, filters) {
     selectedArtists,
     selectedYears,
     selectedStatus,
-    selectedWishlist
+    selectedWishlist,
+    selectedAgeRange
   } = filters;
 
   return gamesToFilter.filter(game => {
@@ -1733,6 +1868,25 @@ function updateAllFilterCounts(filters) {
     }
   });
   updateCountsInDOM('facet-wishlist', wishlistCounts);
+
+  const ageRangeFilters = {
+    ...filters,
+    selectedAgeRange: null
+  };
+  const gamesForAgeRangeCount = filterGames(allGames, ageRangeFilters);
+  const ageCounts = {};
+  document.querySelectorAll('#facet-age-range input[type="radio"]').forEach(radio => {
+    const value = radio.value;
+    const [min, max] = value.split('-').map(Number);
+    if (value === '0-100') {
+      ageCounts[value] = gamesForAgeRangeCount.length;
+    } else {
+      const count = gamesForAgeRangeCount.filter(game => game.min_age >= min && game.min_age <= max).length;
+      ageCounts[value] = count;
+    }
+  });
+  updateCountsInDOM('facet-age-range', ageCounts, true);
+
 }
 
 function applyFiltersAndSort(filters) {
