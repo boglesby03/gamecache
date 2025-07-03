@@ -922,7 +922,6 @@ function createSliderRefinementFilter(facetId, title, min, max) {
 
           updateRangeHighlight(); // Update the range highlight dynamically
           onFilterChange();
-          refreshVisibleItems();
       };
 
       const stopDrag = () => {
