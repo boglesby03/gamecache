@@ -736,132 +736,112 @@ body {
     text-align: center;
 }
 
-/* General Adjustments for the Expansions Section */
-.expansions-section {
-    margin-bottom: 0;
-    /* Remove extra margin underneath the section */
+
+
+/* Subheading Styles for Preordered/Wishlist Subsections */
+.po-expansion-heading,
+.wl-expansion-heading,
+.po-accessory-heading,
+.wl-accessory-heading {
+    font-size: 0.85em;
+    /* Unified size for subheadings */
+    font-weight: normal;
+    /* No bold styling for subheadings */
+    color: #555;
+    /* Subdued secondary heading color */
+    margin-top: 5px;
+    margin-bottom: 5px;
+    display: none;
+    /* Hidden unless populated via JavaScript */
 }
 
-/* Flex Container for Both Types of Chips */
-.expansions-container {
-    display: flex;
-    /* Align the two sections side-by-side */
-    flex-wrap: wrap;
-    /* Allow wrapping if the space is insufficient */
-    gap: 15px;
-    /* Add spacing between the two containers */
-}
-
-/* Original Expansions Chips Styling */
-.original-expansion-chips {
-    display: flex;
-    flex-wrap: wrap;
-    /* Ensure chips wrap */
-    gap: 10px;
-    /* Space between individual chips */
-    margin: 0;
-    /* Ensure no extra space creates unwanted gaps */
-}
-
-/* Preordered Expansions Chips Styling */
-.po-expansion-chips {
-    display: flex;
-    flex-wrap: wrap;
-    /* Ensure chips wrap */
-    gap: 10px;
-    /* Space between individual chips */
-    margin: 0;
-    /* Ensure no extra space creates unwanted gaps */
-}
-
-/* Original Expansion Chip Styling */
-.expansion-chip {
+/* Chip Styles (Base Styling) */
+.expansion-chip,
+.po-expansion-chip,
+.wl-expansion-chip,
+.original-accessory-chip,
+.po-accessory-chip,
+.wl-accessory-chip {
     padding: 4px 10px;
     border-radius: 10px;
+    /* Rounded corners for all chips */
     font-size: 0.8em;
-    border: 1px solid rgba(0, 0, 0, 0.1);
-    background: rgba(0, 0, 0, 0.05);
-    color: #333;
+    /* Uniform font size across chips */
     text-decoration: none;
     transition: all 0.2s ease;
+    /* Smooth transitions */
+}
+
+/* Original Expansions Chip Styling */
+.expansion-chip {
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    background: rgba(0, 0, 0, 0.05);
+    /* Light gray background */
+    color: #333;
 }
 
 .expansion-chip:hover {
     background: rgba(0, 0, 0, 0.1);
+    /* Darker gray on hover */
     border-color: rgba(0, 0, 0, 0.2);
     color: #000;
 }
 
-/* Preordered Expansion Chip Styling */
-.po-expansion-chip {
-    padding: 4px 10px;
-    border-radius: 10px;
-    font-size: 0.8em;
-    border: 1px solid rgba(255, 165, 0, 0.5);
-    background: rgba(255, 165, 0, 0.3);
-    color: #b35900;
-    text-decoration: none;
-    transition: all 0.2s ease;
+/* Player-Owned Expansion Chip Styling */
+.po-expansion-chip,
+.po-accessory-chip {
+    border: 1px solid rgba(0, 128, 0, 0.5);
+    /* Green border */
+    background: rgba(0, 128, 0, 0.1);
+    /* Light green background */
+    color: #085f08;
+    /* Dark green text */
 }
 
-.po-expansion-chip:hover {
-    background: rgba(255, 165, 0, 0.4);
-    border-color: rgba(255, 165, 0, 0.6);
-    color: #803d00;
+.po-expansion-chip:hover,
+.po-accessory-chip:hover {
+    background: rgba(0, 128, 0, 0.2);
+    /* Slightly darker green */
+    border-color: rgba(0, 128, 0, 0.4);
+    color: #044d04;
 }
 
-/* Wishlist Expansions Styling */
-.wl-expansion-chip {
-    padding: 4px 10px;
-    border-radius: 10px;
-    font-size: 0.8em;
+/* Wishlist Expansion Chip Styling */
+.wl-expansion-chip,
+.wl-accessory-chip {
     border: 1px solid rgba(0, 0, 255, 0.5);
-    /* Blue border for wishlist expansions */
+    /* Blue border */
     background: rgba(0, 0, 255, 0.1);
     /* Light blue background */
     color: #003366;
     /* Dark blue text */
-    text-decoration: none;
-    transition: all 0.2s ease;
 }
 
-.wl-expansion-chip:hover {
+.wl-expansion-chip:hover,
+.wl-accessory-chip:hover {
     background: rgba(0, 0, 255, 0.2);
-    /* Slightly darker blue hover effect */
+    /* Slightly darker blue */
     border-color: rgba(0, 0, 255, 0.4);
     color: #001a33;
-    /* Darker blue text hover effect */
 }
 
-/* Adjust flex layout for wishlist chips */
-.wl-expansion-chips {
+/* General Chip Layout */
+.original-expansion-chips,
+.po-expansion-chips,
+.wl-expansion-chips,
+.original-accessory-chips,
+.po-accessory-chips,
+.wl-accessory-chips {
     display: flex;
     flex-wrap: wrap;
-    /* Ensure chips wrap */
+    /* Allow wrapping for chips */
     gap: 10px;
     /* Space between chips */
 }
 
-/* Main Expansions Heading */
-.expansions-section h2 {
-    font-size: 1em;
-    /* Reduce the font size */
-    font-weight: bold;
+/* Section Layout */
+.expansions-section,
+.accessories-section {
     margin-bottom: 10px;
-    color: #333;
-    /* Optional: Adjust color for emphasis */
-}
-
-/* Smaller Subheadings for Preordered and Wishlist */
-.po-expansion-heading,
-.wl-expansion-heading {
-    font-size: 0.85em;
-    /* Make the subheadings smaller */
-    font-weight: normal;
-    color: #555;
-    /* Subdued color for secondary headings */
-    margin-top: 5px;
-    margin-bottom: 5px;
-    display: none;
-    /* Default hidden unless populated */
+    /* Uniform spacing below sections */
 }
