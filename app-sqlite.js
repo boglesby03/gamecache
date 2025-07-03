@@ -591,7 +591,7 @@ function setupAgeRangeFilter() {
   const minAge = Math.min(...allGames.map(game => game.min_age));
 
   // Initialize a slider refinement filter
-  createSliderRefinementFilter('facet-age-range', 'Min age', minAge, maxAge, 'min_age');
+  createSliderRefinementFilter('facet-age-range', 'Min age', minAge, maxAge, 'age');
 }
 
 function setupPreviousPlayersFilter() {
@@ -831,108 +831,84 @@ function createSliderRefinementFilter(facetId, title, min, max) {
   const container = document.getElementById(facetId);
   if (!container) return;
 
-  // Create dropdown structure for slider menu
-  const dropdownContainer = document.createElement('details');
-  dropdownContainer.id = facetId;
-  dropdownContainer.className = 'filter-dropdown slider-menu'; // Add slider-specific class
-
-  // Add dropdown title
-  const dropdownTitle = document.createElement('summary');
-  dropdownTitle.className = 'filter-title';
-  dropdownTitle.textContent = title;
-
-  // Create dropdown content
-  const dropdownContent = document.createElement('div');
-  dropdownContent.className = 'filter-dropdown-content';
-
-  // Create slider container
-  const sliderContainer = document.createElement('div');
-  sliderContainer.className = 'slider-container';
-
-  // Create slider track
-  const sliderTrack = document.createElement('div');
-  sliderTrack.className = 'slider-track';
-
-  // Add slider handles
-  const minHandle = document.createElement('div');
-  minHandle.className = 'slider-handle slider-min';
-  minHandle.style.left = '0%'; // Ensure min handle starts at far left
-
-  const maxHandle = document.createElement('div');
-  maxHandle.className = 'slider-handle slider-max';
-  maxHandle.style.left = '100%'; // Ensure max handle starts at far right
-
-  // Add labels for slider values
-  const minLabel = document.createElement('div');
-  minLabel.className = 'slider-value slider-min-label';
-  minLabel.textContent = min;
-
-  const maxLabel = document.createElement('div');
-  maxLabel.className = 'slider-value slider-max-label';
-  maxLabel.textContent = max;
-
-  // Append slider components
-  sliderTrack.appendChild(minHandle);
-  sliderTrack.appendChild(maxHandle);
-  sliderContainer.appendChild(sliderTrack);
-  sliderContainer.appendChild(minLabel);
-  sliderContainer.appendChild(maxLabel);
-
-  // Append slider to dropdown content
-  dropdownContent.appendChild(sliderContainer);
-
-  // Append title and content to dropdown
-  dropdownContainer.appendChild(dropdownTitle);
-  dropdownContainer.appendChild(dropdownContent);
-
-  // Replace container with dropdown
-  container.replaceWith(dropdownContainer);
-
-  // Ensure labels start directly above their handles
-  function initializeLabelPositions() {
-    minLabel.style.left = minHandle.style.left; // Sync min label with min handle
-    maxLabel.style.left = maxHandle.style.left; // Sync max label with max handle
+  const template = document.getElementById('slider-refinement-template');
+  if (!template) {
+      console.error('Slider refinement template not found!');
+      return;
   }
 
-  initializeLabelPositions(); // Set label positions when the slider initializes
+  const sliderDropdown = template.content.cloneNode(true);
 
-  // Handle dragging logic for min and max handles
+  const dropdown = sliderDropdown.querySelector('details');
+  dropdown.id = facetId;
+
+  // Store the initial min and max values in custom data attributes
+  dropdown.setAttribute('data-min', min);
+  dropdown.setAttribute('data-max', max);
+
+  const dropdownTitle = sliderDropdown.querySelector('.filter-title');
+  dropdownTitle.textContent = title;
+
+  const minLabel = sliderDropdown.querySelector('.slider-min-label');
+  const maxLabel = sliderDropdown.querySelector('.slider-max-label');
+  const minHandle = sliderDropdown.querySelector('.slider-min');
+  const maxHandle = sliderDropdown.querySelector('.slider-max');
+  const sliderTrack = sliderDropdown.querySelector('.slider-track');
+
+  minLabel.textContent = min;
+  maxLabel.textContent = max;
+
+  minHandle.style.left = '0%';
+  maxHandle.style.left = '100%';
+
+  function initializeLabelPositions() {
+      minLabel.style.left = minHandle.style.left;
+      maxLabel.style.left = maxHandle.style.left;
+  }
+
+  initializeLabelPositions();
+
   function handleDrag(handle, event) {
-    const sliderRect = sliderTrack.getBoundingClientRect();
-    const sliderWidth = sliderRect.width;
+      const sliderRect = sliderTrack.getBoundingClientRect();
+      const sliderWidth = sliderRect.width;
 
-    const updatePosition = (e) => {
-      const mouseX = e.clientX - sliderRect.left;
-      const percentage = Math.min(Math.max((mouseX / sliderWidth) * 100, 0), 100);
+      const updatePosition = (e) => {
+          const mouseX = e.clientX - sliderRect.left;
+          const percentage = Math.min(Math.max((mouseX / sliderWidth) * 100, 0), 100);
 
-      if (handle === minHandle) {
-        const maxPercentage = parseFloat(maxHandle.style.left);
-        if (percentage < maxPercentage) {
-          minHandle.style.left = `${percentage}%`;
-          minLabel.style.left = `${percentage}%`;
-          minLabel.textContent = Math.round(min + (percentage / 100) * (max - min));
-        }
-      } else if (handle === maxHandle) {
-        const minPercentage = parseFloat(minHandle.style.left);
-        if (percentage > minPercentage) {
-          maxHandle.style.left = `${percentage}%`;
-          maxLabel.style.left = `${percentage}%`;
-          maxLabel.textContent = Math.round(min + (percentage / 100) * (max - min));
-        }
-      }
-    };
+          if (handle === minHandle) {
+              const maxPercentage = parseFloat(maxHandle.style.left);
+              if (percentage < maxPercentage) {
+                  minHandle.style.left = `${percentage}%`;
+                  minLabel.style.left = `${percentage}%`;
+                  minLabel.textContent = Math.round(min + (percentage / 100) * (max - min));
+              }
+          } else if (handle === maxHandle) {
+              const minPercentage = parseFloat(minHandle.style.left);
+              if (percentage > minPercentage) {
+                  maxHandle.style.left = `${percentage}%`;
+                  maxLabel.style.left = `${percentage}%`;
+                  maxLabel.textContent = Math.round(min + (percentage / 100) * (max - min));
+              }
+          }
 
-    const stopDrag = () => {
-      document.removeEventListener('mousemove', updatePosition);
-      document.removeEventListener('mouseup', stopDrag);
-    };
+          onFilterChange();
+          refreshVisibleItems();
+      };
 
-    document.addEventListener('mousemove', updatePosition);
-    document.addEventListener('mouseup', stopDrag);
+      const stopDrag = () => {
+          document.removeEventListener('mousemove', updatePosition);
+          document.removeEventListener('mouseup', stopDrag);
+      };
+
+      document.addEventListener('mousemove', updatePosition);
+      document.addEventListener('mouseup', stopDrag);
   }
 
   minHandle.addEventListener('mousedown', (event) => handleDrag(minHandle, event));
   maxHandle.addEventListener('mousedown', (event) => handleDrag(maxHandle, event));
+
+  container.replaceWith(dropdown);
 }
 
 function createRefinementFilter(facetId, title, items, attributeName, isRadio = false, enableSearch = false) {
@@ -1110,6 +1086,8 @@ function updateClearButtonVisibility(filters) {
     selectedAgeRange
   } = filters;
 
+  const ageSlider = getSelectedSlider('facet-age-range');
+
   const isAnyFilterActive =
     (query && query !== '') ||
     (selectedCategories && selectedCategories.length > 0) ||
@@ -1126,7 +1104,8 @@ function updateClearButtonVisibility(filters) {
     (selectedYears && selectedYears.length > 0) ||
     (selectedStatus && selectedStatus.length > 0) ||
     (selectedWishlist && selectedWishlist.length > 0) ||
-    (selectedAgeRange && selectedAgeRange.min > 0);
+    (selectedAgeRange && selectedAgeRange.min > ageSlider.min_init) ||
+    (selectedAgeRange && selectedAgeRange.max < ageSlider.max_init);
 
   clearContainer.style.display = isAnyFilterActive ? 'flex' : 'none';
 }
@@ -1274,11 +1253,13 @@ function updateFilterActiveStates(filters) {
 
     // Update age range priority filter
     const ageRangeFilters = document.getElementById('facet-age-range');
-    if (wishlistFilters) {
-      if (filters.selectedAgeRange && filters.selectedAgeRange.min > 0) {
-        wishlistFilters.classList.add('filter-active');
+    const ageSlider = getSelectedSlider('facet-age-range');
+
+    if (ageRangeFilters) {
+      if (filters.selectedAgeRange && (filters.selectedAgeRange.min > ageSlider.min_init || filters.selectedAgeRange.max < ageSlider.max_init)) {
+        ageRangeFilters.classList.add('filter-active');
       } else {
-        wishlistFilters.classList.remove('filter-active');
+        ageRangeFilters.classList.remove('filter-active');
       }
     }
 }
@@ -1305,7 +1286,7 @@ function getFiltersFromURL() {
     selectedYears: params.get('years')?.split(',').filter(Boolean) || [],
     selectedStatus: params.get('status')?.split(',').filter(Boolean) || [],
     selectedWishlist: params.get('wishlist')?.split(',').filter(Boolean) || [],
-    selectedAge: ageRangeParam ? { min: Number(minAgeParam.split('-')[0]), max: Number(minAgeParam.split('-')[1]) } : null,
+    selectedAge: [], // ageRangeParam ? { min: Number(minAgeParam.split('-')[0]), max: Number(minAgeParam.split('-')[1]) } : null,
     sortBy: params.get('sort') || 'name',
     page: Number(params.get('page')) || 1
   };
@@ -1327,7 +1308,7 @@ function getFiltersFromUI() {
   const selectedYears = getSelectedValues('years');
   const selectedStatus = getSelectedValues('status');
   const selectedWishlist = getSelectedValues('wishlist');
-  const selectedAgeRange = getSelectedValues('age');
+  const selectedAgeRange = getSelectedSlider('facet-age-range');
   const sortBy = document.getElementById('sort-select')?.value || 'name';
 
   return {
@@ -1370,7 +1351,7 @@ function updateURLWithFilters(filters) {
   if (filters.selectedYears?.length) params.set('year', filters.selectedYears.join(','));
   if (filters.selectedStatus?.length) params.set('status', filters.selectedStatus.join(','));
   if (filters.selectedWishlist?.length) params.set('wishlist', filters.selectedWishlist.join(','));
-  if (filters.selectedAgeRange?.length) params.set('age', filters.selectedAgeRange.join(','));
+  if (filters.selectedAgeRange) params.set('age', `${filters.selectedAgeRange.min}-${filters.selectedAgeRange.max}`);
   if (filters.sortBy && filters.sortBy !== 'name') params.set('sort', filters.sortBy);
   if (filters.page && filters.page > 1) params.set('page', filters.page);
 
@@ -1450,6 +1431,8 @@ function updateUIFromState(state) {
   const numPlaysValue = state.selectedNumPlays ? `${state.selectedNumPlays.min}-${state.selectedNumPlays.max}` : '0-9999';
   const numPlaysRadio = document.querySelector(`input[name="numplays"][value="${numPlaysValue}"]`);
   if (numPlaysRadio) numPlaysRadio.checked = true;
+
+  resetSlider('facet-age-range');
 
   document.getElementById('sort-select').value = state.sortBy;
   currentPage = state.page;
@@ -1592,6 +1575,10 @@ function filterGames(gamesToFilter, filters) {
 
     if (selectedWishlist.length > 0 &&
       !selectedWishlist.some(wl => game.wishlist_priority === wl)) {
+      return false;
+    }
+
+    if (selectedAgeRange && (game.min_age < selectedAgeRange.min || game.min_age > selectedAgeRange.max)) {
       return false;
     }
 
@@ -1875,16 +1862,12 @@ function updateAllFilterCounts(filters) {
   };
   const gamesForAgeRangeCount = filterGames(allGames, ageRangeFilters);
   const ageCounts = {};
-  document.querySelectorAll('#facet-age-range input[type="radio"]').forEach(radio => {
-    const value = radio.value;
-    const [min, max] = value.split('-').map(Number);
-    if (value === '0-100') {
-      ageCounts[value] = gamesForAgeRangeCount.length;
-    } else {
-      const count = gamesForAgeRangeCount.filter(game => game.min_age >= min && game.min_age <= max).length;
-      ageCounts[value] = count;
-    }
-  });
+  const sliderValues = getSelectedSlider('facet-age-range');
+  const count = 0;
+  if (sliderValues) {
+    const count = gamesForAgeRangeCount.filter(game => game.min_age >= sliderValues.min && game.min_age <= sliderValues.max).length;
+  }
+  ageCounts['range'] = count;
   updateCountsInDOM('facet-age-range', ageCounts, true);
 
 }
@@ -1927,6 +1910,34 @@ function getSelectedRange(name) {
 
   const [min, max] = radio.value.split('-').map(Number);
   return { min, max };
+}
+
+function getSelectedSlider(sliderId) {
+  // Find the slider container using the sliderId
+  const sliderDropdown = document.getElementById(sliderId);
+  if (!sliderDropdown) {
+      console.error('Slider not found! ' + sliderId);
+      return null;
+  }
+
+  // Query the labels for min and max values
+  const minLabel = sliderDropdown.querySelector('.slider-min-label');
+  const maxLabel = sliderDropdown.querySelector('.slider-max-label');
+
+
+  // Retrieve the initial min and max values from data attributes
+  const minData = parseInt(sliderDropdown.getAttribute('data-min'), 10);
+  const maxData = parseInt(sliderDropdown.getAttribute('data-max'), 10);
+
+  // Parse the values from the labels
+  const minValue = parseInt(minLabel.textContent, 10);
+  const maxValue = parseInt(maxLabel.textContent, 10);
+
+  if (minValue == minData && maxValue === maxData) {
+    return null;
+  }
+
+  return { min: minValue, max: maxValue, min_init: minData, max_init: maxData };
 }
 
 function clearAllFilters() {
@@ -2476,3 +2487,31 @@ loadINI('./config.ini', function (settings) {
   console.log('Settings loaded:', settings);
   init(settings);
 });
+
+function resetSlider(sliderId) {
+  const sliderDropdown = document.getElementById(sliderId);
+  if (!sliderDropdown) {
+      console.error('Slider not found!');
+      return;
+  }
+
+  // Retrieve the initial min and max values from data attributes
+  const min = parseInt(sliderDropdown.getAttribute('data-min'), 10);
+  const max = parseInt(sliderDropdown.getAttribute('data-max'), 10);
+
+  const minHandle = sliderDropdown.querySelector('.slider-min');
+  const maxHandle = sliderDropdown.querySelector('.slider-max');
+  const minLabel = sliderDropdown.querySelector('.slider-min-label');
+  const maxLabel = sliderDropdown.querySelector('.slider-max-label');
+
+  minHandle.style.left = '0%';
+  maxHandle.style.left = '100%';
+
+  minLabel.style.left = '0%';
+  maxLabel.style.left = '100%';
+
+  minLabel.textContent = min;
+  maxLabel.textContent = max;
+
+  onFilterChange();
+}
