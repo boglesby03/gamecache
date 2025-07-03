@@ -2154,7 +2154,9 @@ function renderGameCard(game) {
 
   // Set accessories
   const accessoriesSection = clone.querySelector('.accessories-section');
-  if (game.accessories && game.accessories.length > 0) {
+  if ((game.accessories && game.accessories.length > 0) ||
+      (game.wl_acc && game.wl_acc.length > 0) ||
+      (game.po_acc && game.po_acc.length > 0)) {
     accessoriesSection.style.display = 'block';
     const accessoryTemplate = document.getElementById('accessory-chip-template');
     const accessoryLinks = game.accessories.map(acc => {
@@ -2164,8 +2166,41 @@ function renderGameCard(game) {
       link.textContent = acc.name;
       return link.outerHTML;
     }).join('');
-    clone.querySelector('.accessory-chips').innerHTML = accessoryLinks;
+    clone.querySelector('.original-accessory-chips').innerHTML = accessoryLinks;
   }
+
+// Accessories Section
+const poAccessorySection = clone.querySelector('.po-accessory-chips');
+const poAccessoryHeading = clone.querySelector('.po-accessory-heading');
+if (game.po_acc && game.po_acc.length > 0) {
+  poAccessoryHeading.style.display = 'block'; // Show heading if list exists
+  const poAccessoryLinks = game.po_acc.map(poAcc => {
+    const link = document.createElement('a');
+    link.href = `https://boardgamegeek.com/accessory/${poAcc.id}`;
+    link.className = 'po-accessory-chip'; // Styling for player-owned accessories
+    link.textContent = poAcc.name;
+    return link;
+  });
+  poAccessorySection.replaceChildren(...poAccessoryLinks);
+} else {
+  poAccessoryHeading.style.display = 'none'; // Hide heading if list is empty
+}
+
+const wlAccessorySection = clone.querySelector('.wl-accessory-chips');
+const wlAccessoryHeading = clone.querySelector('.wl-accessory-heading');
+if (game.wl_acc && game.wl_acc.length > 0) {
+  wlAccessoryHeading.style.display = 'block'; // Show heading if list exists
+  const wlAccessoryLinks = game.wl_acc.map(wlAcc => {
+    const link = document.createElement('a');
+    link.href = `https://boardgamegeek.com/accessory/${wlAcc.id}`;
+    link.className = 'wl-accessory-chip';
+    link.textContent = wlAcc.name;
+    return link;
+  });
+  wlAccessorySection.replaceChildren(...wlAccessoryLinks);
+} else {
+  wlAccessoryHeading.style.display = 'none'; // Hide heading if empty
+}
 
   return clone;
 }
