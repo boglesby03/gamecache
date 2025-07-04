@@ -189,7 +189,9 @@ function loadAllGames() {
     SELECT id, name, description, categories, mechanics, players, weight,
            playing_time, min_age, rank, usersrated, numowned, rating,
            numplays, image, tags, previous_players, expansions, color, unixepoch(last_modified) as last_modified,
-           publishers, designers, artists, year, tags, wishlist_priority, accessories, po_exp, po_acc, wl_exp, wl_acc
+           publishers, designers, artists, year, tags, wishlist_priority, accessories, po_exp, po_acc, wl_exp, wl_acc,
+           alternate_names, comment, wishlist_comment, families, reimplements, reimplementedby, integrates, contained,
+           weightRating, other_ranks, average, style
     FROM games
     ORDER BY name
   `);
@@ -215,6 +217,13 @@ function loadAllGames() {
       row.po_acc = JSON.parse(row.po_acc || '[]');
       row.wl_exp = JSON.parse(row.wl_exp || '[]');
       row.wl_acc = JSON.parse(row.wl_acc || '[]');
+      row.alternate_names = JSON.parse(row.alternate_names || '[]');
+      row.families = JSON.parse(row.families || '[]');
+      row.reimplements = JSON.parse(row.reimplements || '[]');
+      row.reimplementedby = JSON.parse(row.reimplementedby || '[]');
+      row.integrates = JSON.parse(row.integrates || '[]');
+      row.contained = JSON.parse(row.contained || '[]');
+      row.other_ranks = JSON.parse(row.other_ranks, '[]');
     } catch (e) {
       console.warn('Error parsing JSON for game:', row.id, e);
     }
@@ -2127,6 +2136,64 @@ function renderGameCard(game) {
     poExpansionSection.replaceChildren(...poExpansionLinks);
   } else {
     poExpansionHeading.style.display = 'none'; // Hide heading if list is empty
+  }
+
+  // Dynamic section rendering for Contains
+  const containsSection = clone.querySelector('.contains-section');
+  if (game.contained && game.contained.length > 0) {
+    containsSection.style.display = 'block';
+    const containsLinks = game.contained.map(cont => {
+      const link = document.createElement('a');
+      link.className = 'chip';
+      link.href = `https://boardgamegeek.com/boardgame/${cont.id}`;
+      link.textContent = cont.name;
+      return link.outerHTML;
+    }).join('');
+    clone.querySelector('.contains-chips').innerHTML = containsLinks;
+  }
+
+  // Other sections rendered similarly (like Reimplements, Integrates)
+  // Example for Reimplements Section:
+  const reimplementsSection = clone.querySelector('.reimplements-section');
+  if (game.reimplements && game.reimplements.length > 0) {
+    reimplementsSection.style.display = 'block';
+    const reimplementsLinks = game.reimplements.map(reimpl => {
+      const link = document.createElement('a');
+      link.className = 'chip';
+      link.href = `https://boardgamegeek.com/boardgame/${reimpl.id}`;
+      link.textContent = reimpl.name;
+      return link.outerHTML;
+    }).join('');
+    clone.querySelector('.reimplements-chips').innerHTML = reimplementsLinks;
+  }
+
+  // Dynamic section rendering for Reimplemented By
+  const reimplementedBySection = clone.querySelector('.reimplementedby-section');
+  if (game.reimplementedby && game.reimplementedby.length > 0) {
+    reimplementedBySection.style.display = 'block';
+    const reimplementedByLinks = game.reimplementedby.map(reimplBy => {
+      const link = document.createElement('a');
+      link.className = 'chip';
+      link.href = `https://boardgamegeek.com/boardgame/${reimplBy.id}`;
+      link.textContent = reimplBy.name;
+      return link.outerHTML;
+    }).join('');
+    clone.querySelector('.reimplementedby-chips').innerHTML = reimplementedByLinks;
+  }
+
+
+  // Dynamic section rendering for Reimplemented By
+  const integratesSection = clone.querySelector('.integrates-section');
+  if (game.integrates && game.integrates.length > 0) {
+    integratesSection.style.display = 'block';
+    const integratesLink = game.integrates.map(integrate => {
+      const link = document.createElement('a');
+      link.className = 'chip';
+      link.href = `https://boardgamegeek.com/boardgame/${reimplBy.id}`;
+      link.textContent = integrate.name;
+      return link.outerHTML;
+    }).join('');
+    clone.querySelector('.integrates-chips').innerHTML = integratesLink;
   }
 
   // Set rating
