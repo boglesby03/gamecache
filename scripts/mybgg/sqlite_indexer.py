@@ -157,7 +157,7 @@ class SqliteIndexer:
             families_json = json.dumps(game.get('families', []))
             reimplements_json = json.dumps(game.get('reimplements', []))
             reimplementedby_json = json.dumps(game.get('reimplementedby', []))
-            integrated_json = json.dumps(game.get('integrated', []))
+            integrated_json = json.dumps(game.get('integrates', []))
             contained_json = json.dumps(game.get('contained', []))
             other_ranks_json = json.dumps(game.get('other_ranks', []))
 
@@ -237,11 +237,6 @@ class SqliteIndexer:
                 game.get('style'),
             ))
 
-                # lastmodified INTEGER,
-                # version_name TEXT,
-                # version_year INTEGER,
-                # collection_id INTEGER,
-                # style TEXT,
         conn.commit()
         conn.close()
         logger.info(f"Added {len(collection)} games to SQLite database")
@@ -254,6 +249,7 @@ class SqliteIndexer:
                 'id': expansion.get('id'),
                 'name': expansion.get('name', ''),
                 'players': expansion.get('players', []),
+                'thumbnail': expansion.get('thumbnail', ''),
             }
         if hasattr(expansion, 'todict'):  # If it's an object with todict method
             exp_dict = expansion.todict()
@@ -261,6 +257,7 @@ class SqliteIndexer:
                 'id': exp_dict.get('id'),
                 'name': exp_dict.get('name', ''),
                 'players': exp_dict.get('players', []),
+                'thumbnail': expansion.get('thumbnail', ''),
             }
         if hasattr(expansion, '__dict__'):  # Fallback for simple objects
             exp_vars = vars(expansion)
@@ -268,6 +265,7 @@ class SqliteIndexer:
                 'id': exp_vars.get('id'),
                 'name': exp_vars.get('name', ''),
                 'players': exp_vars.get('players', []),
+                'thumbnail': expansion.get('thumbnail', ''),
             }
         logger.warning(f"Cannot convert expansion to dict: {expansion}")
         return {}
