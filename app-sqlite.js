@@ -2021,6 +2021,72 @@ function updateResults() {
   updatePagination();
 }
 
+/**
+ * Generic function to render hoverable or clickable chips for any section
+ * @param {Array} items - Array of objects containing `id`, `name`, and optionally `image`
+ * @param {HTMLElement} sectionHeading - The subsection heading element (e.g., h3 heading)
+ * @param {HTMLElement} container - The container element where chips will be rendered
+ * @param {HTMLTemplateElement | String} template - Either a `<template>` element to clone or `chip` for simple links
+ * @param {Boolean} [hover=false] - Whether or not the chips should show an image on hover
+ * @param {String} [chipClass=""] - Additional class to differentiate styles (e.g., "po-expansion-chip")
+ */
+function renderChips(items, sectionHeading, container, template, hover = false, chipClass = "") {
+  if (items && items.length > 0) {
+    sectionHeading.style.display = "block"; // Show subsection heading if items exist
+
+    items.forEach((item) => {
+      let chip;
+
+      // Create chip directly if template is "chip", otherwise clone template
+      if (typeof template === "string" && template === "chip") {
+        chip = document.createElement("a");
+        chip.className = `chip ${chipClass}`; // Apply additional class for styled chips
+      } else {
+        const chipClone = template.content.cloneNode(true);
+        chip = chipClone.querySelector(".expansion-chip");
+        if (chipClass) chip.classList.add(chipClass); // Add additional class
+      }
+
+      // Set chip properties based on item data
+      chip.href = `https://boardgamegeek.com/boardgame/${item.id}`;
+      chip.textContent = item.name;
+
+      if (hover && item.image) {
+        // Add hover functionality for chips with images
+        chip.addEventListener("mouseenter", () => {
+          const imgPopup = document.createElement("img");
+          imgPopup.src = item.image; // Set image source dynamically
+          imgPopup.alt = item.name; // Set alt attribute for accessibility
+          imgPopup.style.position = "absolute";
+          imgPopup.style.width = "200px"; // Fixed width
+          imgPopup.style.height = "200px"; // Fixed height
+          imgPopup.style.objectFit = "contain"; // Scale proportionally
+          imgPopup.style.zIndex = "100"; // Ensure it displays above other elements
+
+          // Dynamically position image relative to chip
+          const rect = chip.getBoundingClientRect();
+          imgPopup.style.top = `${window.scrollY + rect.top - 220}px`;
+          imgPopup.style.left = `${window.scrollX + rect.left}px`;
+
+          // Assign unique ID for popup
+          imgPopup.id = `hover-img-${item.id}`;
+          document.body.appendChild(imgPopup);
+        });
+
+        chip.addEventListener("mouseleave", () => {
+          // Remove image popup when mouse leaves
+          const popupImage = document.getElementById(`hover-img-${item.id}`);
+          if (popupImage) popupImage.remove(); // Remove dynamically created pop-up image
+        });
+      }
+
+      container.appendChild(chip); // Append chip to the container
+    });
+  } else {
+    sectionHeading.style.display = "none"; // Hide subsection heading if no items exist
+  }
+}
+
 function renderGameCard(game) {
   const template = document.getElementById('game-card-template');
   const clone = template.content.cloneNode(true);
@@ -2086,56 +2152,32 @@ function renderGameCard(game) {
     mechanicContainer.innerHTML = mechanicChips;
   }
 
-  // Set expansions
-  const expansionsSection = clone.querySelector('.expansions-section');
-  if ((game.expansions && game.expansions.length > 0) ||
-    (game.po_exp && game.po_exp.length > 0) ||
-    (game.wl_exp && game.wl_exp.length > 0)) {
-    expansionsSection.style.display = 'block';
-    const expansionTemplate = document.getElementById('expansion-chip-template');
-    const expansionLinks = game.expansions.map(exp => {
-      const expClone = expansionTemplate.content.cloneNode(true);
-      const link = expClone.querySelector('.expansion-chip');
-      link.href = `https://boardgamegeek.com/boardgame/${exp.id}`;
-      link.textContent = exp.name;
-      return link.outerHTML;
-    }).join('');
-    clone.querySelector('.original-expansion-chips').innerHTML = expansionLinks;
+  // Locate sections and containers in your HTML
+  const expansionsSection = clone.querySelector(".expansions-section");
+  const originalChipsContainer = clone.querySelector(".original-expansion-chips");
+  const poChipsContainer = expansionsSection.querySelector(".po-expansion-chips");
+  const wlChipsContainer = expansionsSection.querySelector(".wl-expansion-chips");
+
+  const originalHeading = clone.querySelector("h2");
+  const poHeading = expansionsSection.querySelector(".po-expansion-heading");
+  const wlHeading = expansionsSection.querySelector(".wl-expansion-heading");
+
+  // Locate the template for chips
+  const expansionChipTemplate = document.getElementById("expansion-chip-template");
+
+  // Check for overall game data
+  if (game.expansions.length > 0 || game.po_exp.length > 0 || game.wl_exp.length > 0) {
+    expansionsSection.style.display = "block"; // Show the section
   }
 
-  // Handle Wishlist Expansions
-  const wlExpansionSection = clone.querySelector('.wl-expansion-chips');
-  const wlExpansionHeading = clone.querySelector('.wl-expansion-heading');
-  if (game.wl_exp && game.wl_exp.length > 0) {
-    wlExpansionHeading.style.display = 'block'; // Show heading if list exists
-    const wlExpansionLinks = game.wl_exp.map(wlExp => {
-      const link = document.createElement('a');
-      link.href = `https://boardgamegeek.com/boardgame/${wlExp.id}`;
-      link.className = 'wl-expansion-chip'; // Styling for wishlist expansions
-      link.textContent = wlExp.name;
-      return link;
-    });
-    wlExpansionSection.replaceChildren(...wlExpansionLinks);
-  } else {
-    wlExpansionHeading.style.display = 'none'; // Hide heading if list is empty
-  }
+ // Render expansions with hover functionality
+renderChips(game.expansions, originalHeading, originalChipsContainer, expansionChipTemplate, true);
 
-  // Handle Preordered Expansions
-  const poExpansionSection = clone.querySelector('.po-expansion-chips');
-  const poExpansionHeading = clone.querySelector('.po-expansion-heading');
-  if (game.po_exp && game.po_exp.length > 0) {
-    poExpansionHeading.style.display = 'block'; // Show heading if list exists
-    const poExpansionLinks = game.po_exp.map(poExp => {
-      const link = document.createElement('a');
-      link.href = `https://boardgamegeek.com/boardgame/${poExp.id}`;
-      link.className = 'po-expansion-chip'; // Styling for preordered expansions
-      link.textContent = poExp.name;
-      return link;
-    });
-    poExpansionSection.replaceChildren(...poExpansionLinks);
-  } else {
-    poExpansionHeading.style.display = 'none'; // Hide heading if list is empty
-  }
+// Render preordered expansions with hover functionality and specific style
+renderChips(game.po_exp, poHeading, poChipsContainer, expansionChipTemplate, true, "po-expansion-chip");
+
+// Render wishlist expansions with hover functionality and specific style
+renderChips(game.wl_exp, wlHeading, wlChipsContainer, expansionChipTemplate, true, "wl-expansion-chip");
 
   // Dynamic section rendering for Contains
   const containsSection = clone.querySelector('.contains-section');

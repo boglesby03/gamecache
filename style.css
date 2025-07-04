@@ -415,6 +415,41 @@ body {
     text-decoration: underline;
 }
 
+.hover-popup {
+    display: block;
+    position: absolute;
+    border-radius: 10px;
+    /* Rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    /* Subtle shadow */
+    width: 200px;
+    /* Width of the popup */
+    height: 200px;
+    /* Height of the popup */
+    z-index: 100;
+    /* Ensure the popup appears above everything */
+    overflow: hidden;
+    /* Ensure anything overflowing the box is clipped */
+}
+
+.hover-popup img {
+    display: block;
+    position: absolute;
+    /* Ensure absolute positioning for placement */
+    width: 200px;
+    height: 200px;
+    object-fit: contain;
+    /* Scale the image neatly within its dimensions */
+    z-index: 100;
+    /* Place the image on top of other elements */
+    border: none;
+    /* Ensure no borders around the image */
+    box-shadow: none;
+    /* Remove any shadow effects */
+    background: none;
+    /* No background for the image */
+}
+
 .close-button {
     position: absolute;
     top: 8px;
@@ -745,8 +780,6 @@ body {
     text-align: center;
 }
 
-
-
 /* Subheading Styles for Preordered/Wishlist Subsections */
 .po-expansion-heading,
 .wl-expansion-heading,
@@ -782,7 +815,7 @@ body {
     /* Smooth transitions */
 }
 
-/* Player-Owned Expansion Chip Styling */
+/* PreOwned Expansion Chip Styling */
 .po-expansion-chip,
 .po-accessory-chip {
     border: 1px solid rgba(0, 128, 0, 0.5);
