@@ -105,7 +105,7 @@ class SqliteIndexer:
 
     def fetch_image(self, url, tries=0):  # Copied from indexer.py
         try:
-            response = make_http_request(url)
+            response, status = make_http_request(url)
         except Exception as e:
             logger.warning(f"Failed to fetch image {url} (try {tries + 1}): {e}")
             if tries < 2:  # Max 3 tries (0, 1, 2)
@@ -257,7 +257,7 @@ class SqliteIndexer:
                 'id': exp_dict.get('id'),
                 'name': exp_dict.get('name', ''),
                 'players': exp_dict.get('players', []),
-                'thumbnail': expansion.get('thumbnail', ''),
+                'thumbnail': exp_dict.get('thumbnail', ''),
             }
         if hasattr(expansion, '__dict__'):  # Fallback for simple objects
             exp_vars = vars(expansion)
@@ -265,7 +265,7 @@ class SqliteIndexer:
                 'id': exp_vars.get('id'),
                 'name': exp_vars.get('name', ''),
                 'players': exp_vars.get('players', []),
-                'thumbnail': expansion.get('thumbnail', ''),
+                'thumbnail': exp_vars.get('thumbnail', ''),
             }
         logger.warning(f"Cannot convert expansion to dict: {expansion}")
         return {}

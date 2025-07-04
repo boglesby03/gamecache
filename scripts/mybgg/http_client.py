@@ -27,13 +27,14 @@ def make_http_request(url, timeout=30, headers=None):
                 request.add_header(key, value)
 
         with urllib.request.urlopen(request, timeout=timeout) as response:
+
             data = response.read()
 
             # Check if response is gzip compressed
             if response.info().get('Content-Encoding') == 'gzip':
                 data = gzip.decompress(data)
 
-            return data
+            return (data, response.code)
     except urllib.error.URLError as e:
         raise Exception(f"HTTP request failed: {e}")
 
@@ -53,7 +54,7 @@ def make_http_post(url, data=None, headers=None, timeout=30):
 
     try:
         with urllib.request.urlopen(req, timeout=timeout) as response:
-            return response.read()
+            return (response.read(), response.code)
     except urllib.error.URLError as e:
         raise Exception(f"HTTP request failed: {e}")
 
@@ -97,8 +98,8 @@ class HttpSession:
             full_url = url
 
         try:
-            response_data = make_http_request(full_url, timeout=timeout, headers=headers)
-            return HttpResponse(response_data, {}, 200, from_cache=False, url=full_url)
+            response_data, code = make_http_request(full_url, timeout=timeout, headers=headers)
+            return HttpResponse(response_data, {}, code, from_cache=False, url=full_url)
         except Exception as e:
             # Re-raise with status code info if possible
             raise Exception(f"HTTP request failed: {e}")
@@ -187,17 +188,18 @@ class CachedHttpClient:
 
         # Cache miss or expired - make actual request
         try:
-            response_data = make_http_request(full_url, timeout=timeout)
-            status_code = 200  # make_http_request only returns data on success
+            response_data, status_code = make_http_request(full_url, timeout=timeout)
+            # status_code = 200  # make_http_request only returns data on success
             # headers = {}  # Simple implementation doesn't capture headers
 
-            # Store in cache
-            cursor.execute("""
-                INSERT OR REPLACE INTO http_cache
-                (url_hash, url, response_data, headers, status_code, timestamp)
-                VALUES (?, ?, ?, ?, ?, ?)
-            """, (url_hash, full_url, response_data, json.dumps(headers), status_code, time_module.time()))
-            conn.commit()
+            if status_code == 200:
+                # Store in cache
+                cursor.execute("""
+                    INSERT OR REPLACE INTO http_cache
+                    (url_hash, url, response_data, headers, status_code, timestamp)
+                    VALUES (?, ?, ?, ?, ?, ?)
+                """, (url_hash, full_url, response_data, json.dumps(headers), status_code, time_module.time()))
+                conn.commit()
 
         except Exception as e:
             conn.close()
@@ -218,7 +220,7 @@ def make_json_request(url, method='GET', data=None, headers=None, timeout=30):
 
     try:
         if method.upper() == 'GET':
-            response_data = make_http_request(url, timeout=timeout, headers=headers)
+            response_data, code = make_http_request(url, timeout=timeout, headers=headers)
         else:
             # For POST requests
             if isinstance(data, dict):
