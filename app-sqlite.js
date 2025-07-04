@@ -127,7 +127,6 @@ async function initializeDatabase(settings) {
     const bytes = new Uint8Array(arrayBuffer);
 
     const dbData = fflate.gunzipSync(bytes);
-
     db = new SQL.Database(dbData);
     console.log('Database loaded successfully');
 
@@ -2225,11 +2224,10 @@ function renderGameCard(game) {
       (game.wl_acc && game.wl_acc.length > 0) ||
       (game.po_acc && game.po_acc.length > 0)) {
     accessoriesSection.style.display = 'block';
-    const accessoryTemplate = document.getElementById('accessory-chip-template');
     const accessoryLinks = game.accessories.map(acc => {
-      const accClone = accessoryTemplate.content.cloneNode(true);
-      const link = accClone.querySelector('.accessory-chip');
-      link.href = acc.link || '#';
+      const link = document.createElement('a');
+      link.href = `https://boardgamegeek.com/boardgameaccessory/${acc.id}`;
+      link.className = 'accessory-chip';
       link.textContent = acc.name;
       return link.outerHTML;
     }).join('');
@@ -2243,7 +2241,7 @@ if (game.po_acc && game.po_acc.length > 0) {
   poAccessoryHeading.style.display = 'block'; // Show heading if list exists
   const poAccessoryLinks = game.po_acc.map(poAcc => {
     const link = document.createElement('a');
-    link.href = `https://boardgamegeek.com/accessory/${poAcc.id}`;
+    link.href = `https://boardgamegeek.com/boardgameaccessory/${poAcc.id}`;
     link.className = 'po-accessory-chip'; // Styling for player-owned accessories
     link.textContent = poAcc.name;
     return link;
@@ -2259,7 +2257,7 @@ if (game.wl_acc && game.wl_acc.length > 0) {
   wlAccessoryHeading.style.display = 'block'; // Show heading if list exists
   const wlAccessoryLinks = game.wl_acc.map(wlAcc => {
     const link = document.createElement('a');
-    link.href = `https://boardgamegeek.com/accessory/${wlAcc.id}`;
+    link.href = `https://boardgamegeek.com/boardgameaccessory/${wlAcc.id}`;
     link.className = 'wl-accessory-chip';
     link.textContent = wlAcc.name;
     return link;
