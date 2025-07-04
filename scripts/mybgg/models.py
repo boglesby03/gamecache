@@ -314,6 +314,8 @@ class BoardGame:
             game_titles.append("Rokoko")
         elif "Small World Underground" in game_titles:
             game_titles.append("Small World")
+        elif "Survive: Escape from Atlantis" in game_titles:
+            game_titles.append("Survive the Island")
         elif any(title in ("Tournament at Avalon", "Tournament at Camelot") for title in game_titles):
             game_titles.insert(0, "Tournament at Camelot/Avalon")
         # elif "Unforgiven" in game_titles:
