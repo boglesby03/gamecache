@@ -2189,7 +2189,7 @@ function renderGameCard(game) {
     const integratesLink = game.integrates.map(integrate => {
       const link = document.createElement('a');
       link.className = 'chip';
-      link.href = `https://boardgamegeek.com/boardgame/${reimplBy.id}`;
+      link.href = `https://boardgamegeek.com/boardgame/${integrate.id}`;
       link.textContent = integrate.name;
       return link.outerHTML;
     }).join('');
