@@ -216,31 +216,69 @@ class Downloader():
                 for exp in game.expansions:
                     exp.players.clear()
 
+                filterReqEx=r"^[j-qJ-Q]"
                 newGame = copy.deepcopy(game)
                 newGame.name = "ZZZ: Expansions without Game (J-Q)"
                 newGame.collection_id = str(game.collection_id) + "2"
-                newGame.expansions = list(filter(lambda x: re.search(r"^[j-qJ-Q]", x.name), game.expansions))
-                newGame.accessories = list(filter(lambda x: re.search(r"^[j-qJ-Q]", x.name), game.accessories))
+
+                newGame.expansions = list(filter(lambda x: re.search(filterReqEx, x.name), game.expansions))
+                newGame.po_exp = list(filter(lambda x: re.search(filterReqEx, x.name), game.po_exp))
+                newGame.wl_exp = list(filter(lambda x: re.search(filterReqEx, x.name), game.wl_exp))
+                newGame.accessories = list(filter(lambda x: re.search(filterReqEx, x.name), game.accessories))
+                newGame.po_acc = list(filter(lambda x: re.search(filterReqEx, x.name), game.po_acc))
+                newGame.wl_acc = list(filter(lambda x: re.search(filterReqEx, x.name), game.wl_acc))
+
                 newGame.expansions = sorted(newGame.expansions, key=lambda x: x.name)
+                newGame.po_exp = sorted(newGame.po_exp, key=lambda x: x.name)
+                newGame.wl_exp = sorted(newGame.wl_exp, key=lambda x: x.name)
                 newGame.accessories = sorted(newGame.accessories, key=lambda x: x.name)
+                newGame.po_acc = sorted(newGame.po_acc, key=lambda x: x.name)
+                newGame.wl_acc = sorted(newGame.wl_acc, key=lambda x: x.name)
+
                 game.expansions = list(set(game.expansions) - set(newGame.expansions))
+                game.po_exp = list(set(game.po_exp) - set(newGame.po_exp))
+                game.wl_exp = list(set(game.wl_exp) - set(newGame.wl_exp))
                 game.accessories = list(set(game.accessories) - set(newGame.accessories))
+                game.po_acc = list(set(game.po_acc) - set(newGame.po_acc))
+                game.wl_acc = list(set(game.wl_acc) - set(newGame.wl_acc))
+
                 newGames.append(newGame)
 
+                filterRegEx=r"^[r-zR-Z]"
                 newGame = copy.deepcopy(game)
                 newGame.name = "ZZZ: Expansions without Game (R-Z)"
                 newGame.collection_id = str(game.collection_id) + "3"
-                newGame.expansions = list(filter(lambda x: re.search(r"^[r-zR-Z]", x.name), game.expansions))
-                newGame.accessories = list(filter(lambda x: re.search(r"^[r-zR-Z]", x.name), game.accessories))
+
+                newGame.expansions = list(filter(lambda x: re.search(filterReqEx, x.name), game.expansions))
+                newGame.po_exp = list(filter(lambda x: re.search(filterReqEx, x.name), game.po_exp))
+                newGame.wl_exp = list(filter(lambda x: re.search(filterReqEx, x.name), game.wl_exp))
+                newGame.accessories = list(filter(lambda x: re.search(filterReqEx, x.name), game.accessories))
+                newGame.po_acc = list(filter(lambda x: re.search(filterReqEx, x.name), game.po_acc))
+                newGame.wl_acc = list(filter(lambda x: re.search(filterReqEx, x.name), game.wl_acc))
+
                 newGame.expansions = sorted(newGame.expansions, key=lambda x: x.name)
+                newGame.po_exp = sorted(newGame.po_exp, key=lambda x: x.name)
+                newGame.wl_exp = sorted(newGame.wl_exp, key=lambda x: x.name)
                 newGame.accessories = sorted(newGame.accessories, key=lambda x: x.name)
+                newGame.po_acc = sorted(newGame.po_acc, key=lambda x: x.name)
+                newGame.wl_acc = sorted(newGame.wl_acc, key=lambda x: x.name)
+
                 game.expansions = list(set(game.expansions) - set(newGame.expansions))
+                game.po_exp = list(set(game.po_exp) - set(newGame.po_exp))
+                game.wl_exp = list(set(game.wl_exp) - set(newGame.wl_exp))
                 game.accessories = list(set(game.accessories) - set(newGame.accessories))
+                game.po_acc = list(set(game.po_acc) - set(newGame.po_acc))
+                game.wl_acc = list(set(game.wl_acc) - set(newGame.wl_acc))
+
                 newGames.append(newGame)
 
             # Resort the list after updating the names
             game.expansions = sorted(game.expansions, key=lambda x: x.name)
+            game.po_exp = sorted(game.po_exp, key=lambda x: x.name)
+            game.wl_exp = sorted(game.wl_exp, key=lambda x: x.name)
             game.accessories = sorted(game.accessories, key=lambda x: x.name)
+            game.po_acc = sorted(game.po_acc, key=lambda x: x.name)
+            game.wl_acc = sorted(game.wl_acc, key=lambda x: x.name)
             game.contained = sorted(game.contained, key=lambda x: x["name"])
             game.families = sorted(game.families, key=lambda x: x["name"])
             game.reimplements = sorted(game.reimplements, key=lambda x: x["name"])
@@ -400,6 +438,9 @@ def is_promo_box(game):
 
     # Mislabeled Marvel Zombies Promo Box - requested fix in data
     if game["id"] == 356731:
+        return False
+    # Mislabeled DC United Promos Box - fix has been requested
+    if game["id"] == 425907:
         return False
 
     # return game["id"] in (178656, 191779, 204573, 231506, 256951, 205611, 232298, 257590, 286086)
