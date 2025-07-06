@@ -140,13 +140,13 @@
           <div class="wl-accessory-chips"></div>
         </div>
 
-        <div class="section integrates-section" style="display: none;">
-          <h2>Integrates</h2>
-          <div class="chip-container integrates-chips"></div>
-        </div>
         <div class="section contains-section" style="display: none;">
           <h2>Contains</h2>
           <div class="chip-container contains-chips"></div>
+        </div>
+        <div class="section integrates-section" style="display: none;">
+          <h2>Integrates</h2>
+          <div class="chip-container integrates-chips"></div>
         </div>
         <div class="section reimplements-section" style="display: none;">
           <h2>Reimplements</h2>
@@ -179,8 +179,12 @@
     </details>
   </template>
 
-  <template id="expansion-chip-template">
+  <!-- <template id="expansion-chip-template">
     <a href="" target="_blank" class="expansion-chip"></a>
+  </template> -->
+
+  <template id="expansion-chip-template">
+    <a class="expansion-chip" href="#" target="_blank"></a>
   </template>
 
   <template id="accessory-chip-template">
