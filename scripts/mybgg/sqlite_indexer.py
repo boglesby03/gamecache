@@ -50,6 +50,7 @@ class SqliteIndexer:
                 rating REAL,
                 numplays INTEGER,
                 image TEXT,
+                thumbnail TEXT,
                 tags TEXT,        -- JSON array
                 previous_players TEXT,  -- JSON array
                 expansions TEXT,        -- JSON array
@@ -162,8 +163,8 @@ class SqliteIndexer:
             other_ranks_json = json.dumps(game.get('other_ranks', []))
 
             color_str = None
-            if game.get("image"):
-                image_data = self.fetch_image(game["image"])
+            if game.get("thumbnail"):
+                image_data = self.fetch_image(game["thumbnail"])
                 if image_data:
                     try:
                         pil_image = Image.open(io.BytesIO(image_data)).convert('RGBA')
@@ -199,12 +200,12 @@ class SqliteIndexer:
                 INSERT INTO games (
                     id, name, description, categories, mechanics, players,
                     weight, playing_time, min_age, rank, usersrated, numowned,
-                    rating, numplays, image, tags, previous_players, expansions, color,
+                    rating, numplays, image, thumbnail, tags, previous_players, expansions, color,
                     alternate_names, comment, wishlist_comment, wishlist_priority,
                     artists, designers, publishers, year, accessories, families, reimplements, reimplementedby,
                     integrates, wl_exp, wl_acc, po_exp, po_acc, contained, weightRating, other_ranks,
                     average, suggested_age, last_modified, version_name, version_year, collection_id, style
-                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
             ''', (
                 game.get('id'), game.get('name'), game.get('description'), categories_json, mechanics_json,
                 players_json,
@@ -215,7 +216,7 @@ class SqliteIndexer:
                 int(game.get('usersrated')) if game.get('usersrated') is not None else None,
                 int(game.get('numowned')) if game.get('numowned') is not None else None,
                 float(game.get('rating')) if game.get('rating') is not None else None,
-                game.get('numplays'), game.get('image'), tags_json, previous_players_json,
+                game.get('numplays'), game.get('image'), game.get('thumbnail'), tags_json, previous_players_json,
                 expansions_json, color_str,
                 alternate_names_json,
                 game.get('comment'),
@@ -237,7 +238,7 @@ class SqliteIndexer:
                 game.get('style'),
             ))
 
-        conn.commit()
+            conn.commit()
         conn.close()
         logger.info(f"Added {len(collection)} games to SQLite database")
 
@@ -250,6 +251,7 @@ class SqliteIndexer:
                 'name': expansion.get('name', ''),
                 'players': expansion.get('players', []),
                 'image': expansion.get('image', ''),
+                'thumbnail': expansion.get('thumbnail', ''),
             }
         if hasattr(expansion, 'todict'):  # If it's an object with todict method
             exp_dict = expansion.todict()
@@ -258,6 +260,7 @@ class SqliteIndexer:
                 'name': exp_dict.get('name', ''),
                 'players': exp_dict.get('players', []),
                 'image': exp_dict.get('image', ''),
+                'thumbnail': exp_dict.get('thumbnail', ''),
             }
         if hasattr(expansion, '__dict__'):  # Fallback for simple objects
             exp_vars = vars(expansion)
@@ -266,6 +269,7 @@ class SqliteIndexer:
                 'name': exp_vars.get('name', ''),
                 'players': exp_vars.get('players', []),
                 'image': exp_vars.get('image', ''),
+                'thumbnail': exp_vars.get('thumbnail', ''),
             }
         logger.warning(f"Cannot convert expansion to dict: {expansion}")
         return {}
