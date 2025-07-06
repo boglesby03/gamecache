@@ -280,6 +280,8 @@ def _create_blank_collection(id, name):
         "numplays": 0,
         "image": None,
         "image_version": None,
+        "thumbnail": None,
+        "thumbnail_version": None,
         "tags": ["own"],
         "comment": "",
         "wishlist_comment": "",

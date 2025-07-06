@@ -180,8 +180,10 @@ class BGGClient:
                     xml.integer(".", attribute="objectid", alias="id"),
                     xml.integer(".", attribute="collid", alias="collection_id"),
                     xml.string("name"),
-                    xml.string("thumbnail", required=False, alias="image"),
-                    xml.string("version/item/thumbnail", required=False, alias="image_version"),
+                    xml.string("image", required=False),
+                    xml.string("thumbnail", required=False),
+                    xml.string("version/item/image", required=False, alias="image_version"),
+                    xml.string("version/item/thumbnail", required=False, alias="thumbnail_version"),
                     xml.string("version/item/name",  required=False, alias="version_name"),
                     xml.integer("version/yearpublished", attribute="value", alias="version_year", required=False),
                     xml.integer("version/item/link[@type='boardgamepublisher']", attribute="objectid", required=False, alias="publisher_id"),
@@ -260,6 +262,7 @@ class BGGClient:
                         xml.integer(".", attribute="id"),
                         xml.string(".", attribute="type"),
                         xml.string("image", required=False),
+                        xml.string("thumbnail", required=False),
                         xml.string("name[@type='primary']", attribute="value", alias="name"),
                         xml.array(
                             xml.string(

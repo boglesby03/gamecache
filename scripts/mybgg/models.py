@@ -67,6 +67,7 @@ class BoardGame:
         self.suggested_age = self.calc_suggested_age(game_data)
         self.numplays = collection_data["numplays"]
         self.image = collection_data["image_version"] or collection_data["image"] or game_data["image"]
+        self.thumbnail = collection_data["thumbnail_version"] or collection_data["thumbnail"] or game_data["thumbnail"]
         self.tags = collection_data["tags"]
         self.comment = collection_data["comment"]
         self.wishlist_comment = collection_data["wishlist_comment"]
@@ -354,6 +355,7 @@ class BoardGame:
             "rating": self.rating,
             "numplays": self.numplays,
             "image": self.image,
+            "thumbnail": self.thumbnail,
             "tags": self.tags,
             "previous_players": getattr(self, 'previous_players', None),
             "expansions": self.expansions,
