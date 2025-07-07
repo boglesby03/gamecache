@@ -2130,8 +2130,47 @@ function renderGameCard(game) {
 
   const playersStat = clone.querySelector('.players-stat');
   if (game.players.length > 0) {
-    playersStat.style.display = 'flex';
-    clone.querySelector('.players-value').textContent = formatPlayerCountShort(game.players);
+    playersStat.style.display = "flex";
+
+    // Set concise player count text using formatPlayerCountShort
+    const playersValue = clone.querySelector(".players-value");
+    playersValue.textContent = formatPlayerCountShort(game.players);
+
+    // Create hover popup for detailed player count using formatPlayerCount
+    const hoverPopup = document.createElement("div");
+    hoverPopup.className = "hover-popup";
+    hoverPopup.innerHTML = formatPlayerCount(game.players); // Detailed player count
+    hoverPopup.style.position = "absolute";
+    hoverPopup.style.backgroundColor = "white";
+    hoverPopup.style.border = "1px solid #ddd";
+    hoverPopup.style.borderRadius = "5px";
+    hoverPopup.style.boxShadow = "0 4px 12px rgba(0, 0, 0, 0.1)";
+    hoverPopup.style.padding = "0.5em";
+    hoverPopup.style.fontSize = "0.85em";
+    hoverPopup.style.display = "none"; // Initially hidden
+    hoverPopup.style.zIndex = "100";
+
+    // Append the hoverPopup to the body
+    document.body.appendChild(hoverPopup);
+
+    // Add mouse event listeners for hover functionality
+    playersStat.addEventListener("mouseenter", () => {
+      hoverPopup.style.display = "block";
+
+      // Calculate popup positioning relative to the player stats element
+      const rect = playersStat.getBoundingClientRect(); // Get bounding rectangles relative to viewport
+      const popupWidth = hoverPopup.offsetWidth || 200; // Default popup width if not available
+      const popupHeight = hoverPopup.offsetHeight || 50; // Default popup height if not available
+      const offset = 2; // Distance between popup and stat
+
+      // Correctly position the popup above and centered relative to the playersStat
+      hoverPopup.style.top = `${rect.top + window.scrollY - popupHeight - offset}px`;
+      hoverPopup.style.left = `${rect.left + window.scrollX + rect.width / 2 - popupWidth / 2}px`;
+    });
+
+    playersStat.addEventListener("mouseleave", () => {
+      hoverPopup.style.display = "none"; // Hide popup when mouse leaves
+    });
   }
 
   const complexityStat = clone.querySelector('.complexity-stat');
@@ -2317,8 +2356,27 @@ function formatMechanicChips(game) {
 
 function formatPlayerCount(players) {
   return players.map(([count, type]) => {
-    const suffix = type === 'best' ? ' (best)' : type === 'recommended' ? ' (rec.)' : '';
-    return count + suffix;
+
+    let str = count;
+
+    switch(type) {
+      case 'b':
+        str = `<strong>${count}★</strong>`;
+        break;
+      case 'rec':
+        str = count;
+        break;
+      case 'sup':
+        str = `<em>${count}~</em>`;
+        break;
+      case 'exp':
+        str = `${count}+`
+        break;
+      case 'exp_s':
+        str = `<em>${count}+~</em>`;
+        break;
+    }
+    return str;
   }).join(', ');
 }
 

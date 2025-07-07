@@ -416,21 +416,29 @@ body {
 }
 
 .hover-popup {
-    display: block;
     position: absolute;
-    border-radius: 10px;
-    /* Rounded corners */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    /* Subtle shadow */
-    width: 200px;
-    /* Width of the popup */
-    height: 200px;
-    /* Height of the popup */
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    padding: 8px;
+    font-size: 0.85em;
     z-index: 100;
-    /* Ensure the popup appears above everything */
-    overflow: hidden;
-    /* Ensure anything overflowing the box is clipped */
+    display: none;
+    /* Popup is hidden by default */
+    max-width: 300px;
+    /* Constrain width */
+    text-align: left;
+    /* Align the text for lists */
 }
+
+.hover-popup ul {
+    margin: 0;
+    padding-left: 20px;
+}
+
+.hover-popup li {
+    margin: 5px 0; }
 
 .hover-popup img {
     display: block;
