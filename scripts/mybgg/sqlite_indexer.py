@@ -79,8 +79,7 @@ class SqliteIndexer:
                 suggested_age REAL,
                 last_modified TEXT,
                 version_name TEXT,
-                version_year INTEGER,
-                style TEXT
+                version_year INTEGER
             )
         ''')
 
@@ -204,8 +203,8 @@ class SqliteIndexer:
                     alternate_names, comment, wishlist_comment, wishlist_priority,
                     artists, designers, publishers, year, accessories, families, reimplements, reimplementedby,
                     integrates, wl_exp, wl_acc, po_exp, po_acc, contained, weightRating, other_ranks,
-                    average, suggested_age, last_modified, version_name, version_year, collection_id, style
-                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                    average, suggested_age, last_modified, version_name, version_year, collection_id
+                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
             ''', (
                 game.get('id'), game.get('name'), game.get('description'), categories_json, mechanics_json,
                 players_json,
@@ -235,7 +234,6 @@ class SqliteIndexer:
                 game.get('version_name'),
                 int(game.get('version_year')) if game.get('version_year') is not None else None,
                 int(game.get('collection_id')) if game.get('collection_id') is not None else None,
-                game.get('style'),
             ))
 
             conn.commit()
