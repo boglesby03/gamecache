@@ -190,7 +190,7 @@ function loadAllGames() {
            numplays, image, tags, previous_players, expansions, color, unixepoch(last_modified) as last_modified,
            publishers, designers, artists, year, tags, wishlist_priority, accessories, po_exp, po_acc, wl_exp, wl_acc,
            alternate_names, comment, wishlist_comment, families, reimplements, reimplementedby, integrates, contained,
-           weightRating, other_ranks, average, style
+           weightRating, other_ranks, average, suggested_age
     FROM games
     ORDER BY name
   `);
@@ -2087,6 +2087,49 @@ function renderChips(items, sectionHeading, container, template, hover = false, 
   }
 }
 
+/**
+ * Helper function to create hover tooltips for any element.
+ * @param {HTMLElement} hoverElement - The element that triggers the tooltip on hover.
+ * @param {String} htmlContent - The HTML content that will be displayed in the tooltip.
+ * @param {Number} offset - The vertical offset distance between the tooltip and the element.
+ */
+function createHoverTooltip(hoverElement, htmlContent, offset = 8) {
+  // Create the hover tooltip element
+  const hoverPopup = document.createElement("div");
+  hoverPopup.className = "hover-popup";
+  hoverPopup.innerHTML = htmlContent; // Set HTML content dynamically
+  hoverPopup.style.position = "absolute";
+  hoverPopup.style.backgroundColor = "white";
+  hoverPopup.style.border = "1px solid #ddd";
+  hoverPopup.style.borderRadius = "5px";
+  hoverPopup.style.boxShadow = "0 4px 12px rgba(0, 0, 0, 0.1)";
+  hoverPopup.style.padding = "0.5em";
+  hoverPopup.style.fontSize = "0.85em";
+  hoverPopup.style.display = "none"; // Initially hidden
+  hoverPopup.style.zIndex = "100";
+
+  // Append tooltip to the document body for correct positioning
+  document.body.appendChild(hoverPopup);
+
+  // Add hover event listeners for showing and hiding the tooltip
+  hoverElement.addEventListener("mouseenter", () => {
+    hoverPopup.style.display = "block";
+
+    // Calculate tooltip positioning relative to the hover element
+    const rect = hoverElement.getBoundingClientRect();
+    const popupWidth = hoverPopup.offsetWidth || 200; // Default width
+    const popupHeight = hoverPopup.offsetHeight || 50; // Default height
+
+    // Position tooltip above and centered relative to the hover element
+    hoverPopup.style.top = `${rect.top + window.scrollY - popupHeight - offset}px`;
+    hoverPopup.style.left = `${rect.left + window.scrollX + rect.width / 2 - popupWidth / 2}px`;
+  });
+
+  hoverElement.addEventListener("mouseleave", () => {
+    hoverPopup.style.display = "none"; // Hide tooltip when hover ends
+  });
+}
+
 function renderGameCard(game) {
   const template = document.getElementById('game-card-template');
   const clone = template.content.cloneNode(true);
@@ -2136,41 +2179,12 @@ function renderGameCard(game) {
     const playersValue = clone.querySelector(".players-value");
     playersValue.textContent = formatPlayerCountShort(game.players);
 
-    // Create hover popup for detailed player count using formatPlayerCount
-    const hoverPopup = document.createElement("div");
-    hoverPopup.className = "hover-popup";
-    hoverPopup.innerHTML = formatPlayerCount(game.players); // Detailed player count
-    hoverPopup.style.position = "absolute";
-    hoverPopup.style.backgroundColor = "white";
-    hoverPopup.style.border = "1px solid #ddd";
-    hoverPopup.style.borderRadius = "5px";
-    hoverPopup.style.boxShadow = "0 4px 12px rgba(0, 0, 0, 0.1)";
-    hoverPopup.style.padding = "0.5em";
-    hoverPopup.style.fontSize = "0.85em";
-    hoverPopup.style.display = "none"; // Initially hidden
-    hoverPopup.style.zIndex = "100";
-
-    // Append the hoverPopup to the body
-    document.body.appendChild(hoverPopup);
-
-    // Add mouse event listeners for hover functionality
-    playersStat.addEventListener("mouseenter", () => {
-      hoverPopup.style.display = "block";
-
-      // Calculate popup positioning relative to the player stats element
-      const rect = playersStat.getBoundingClientRect(); // Get bounding rectangles relative to viewport
-      const popupWidth = hoverPopup.offsetWidth || 200; // Default popup width if not available
-      const popupHeight = hoverPopup.offsetHeight || 50; // Default popup height if not available
-      const offset = 2; // Distance between popup and stat
-
-      // Correctly position the popup above and centered relative to the playersStat
-      hoverPopup.style.top = `${rect.top + window.scrollY - popupHeight - offset}px`;
-      hoverPopup.style.left = `${rect.left + window.scrollX + rect.width / 2 - popupWidth / 2}px`;
-    });
-
-    playersStat.addEventListener("mouseleave", () => {
-      hoverPopup.style.display = "none"; // Hide popup when mouse leaves
-    });
+    // Add hover tooltip for players stats using helper function
+    createHoverTooltip(
+      playersStat,
+      formatPlayerCount(game.players), // Pass HTML for player counts
+      4 // Close distance between tooltip and element
+    );
   }
 
   const complexityStat = clone.querySelector('.complexity-stat');
@@ -2184,6 +2198,17 @@ function renderGameCard(game) {
   if (game.min_age) {
     minAgeStat.style.display = 'flex';
     clone.querySelector('.min-age-value').textContent = game.min_age + "+";
+
+    let hoverText = `<strong>Community Suggested:</strong> ${Math.floor(game.suggested_age)}+`
+    if (game.suggested_age === 0) {
+      hoverText = "No Community Suggested Age";
+    }
+
+    createHoverTooltip(
+      minAgeStat,
+      hoverText,
+      4 // Close distance between tooltip and element
+    );
   }
 
   // Set description
@@ -2269,6 +2294,12 @@ function renderGameCard(game) {
   if (game.rating) {
     ratingSection.style.display = 'flex';
     clone.querySelector('.rating-gauge-container').innerHTML = renderRatingGauge(game.rating);
+
+    createHoverTooltip(
+      ratingSection,
+      `<strong>Total Users Rated:</strong> ${game.usersrated} users`,
+      4 // Close distance between tooltip and element
+    );
   }
 
   // Set rank
