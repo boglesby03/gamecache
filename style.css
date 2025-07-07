@@ -367,6 +367,7 @@ body {
 .section,
 .chips-section,
 .expansions-section,
+.comment-section,
 .accessories-section {
     padding: 10px 15px;
     line-height: 1.5;
@@ -875,4 +876,12 @@ body {
     /* Allow wrapping for chips */
     gap: 10px;
     /* Space between chips */
+}
+
+.comment-text {
+    font-size: 0.9em;
+    color: #555;
+    margin: 0;
+    white-space: pre-wrap;
+    /* Preserve line breaks if present */
 }
