@@ -2130,6 +2130,20 @@ function createHoverTooltip(hoverElement, htmlContent, offset = 8) {
   });
 }
 
+/**
+ * Escapes HTML to prevent injection attacks.
+ * @param {String} unsafe - Unescaped string.
+ * @returns {String} - Escaped string.
+ */
+function escapeHtml(unsafe) {
+  return unsafe
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+}
+
 function renderGameCard(game) {
   const template = document.getElementById('game-card-template');
   const clone = template.content.cloneNode(true);
@@ -2156,6 +2170,22 @@ function renderGameCard(game) {
   // Set title
   const title = clone.querySelector('.game-title');
   title.innerHTML = highlightText(game.name, getCurrentSearchQuery());
+
+  if ((game.comment && game.comment.trim() !== "") ||
+      (game.wishlist_comment && game.wishlist_comment.trim() != "")) {
+    const commentSection = clone.querySelector('.comment-section');
+    if (commentSection) {
+      const commentText = commentSection.querySelector('.comment-text');
+      commentText.innerHTML = escapeHtml(game.comment);
+      commentText.innerHTML += escapeHtml(game.wishlist_comment);
+      commentSection.style.display = "block";
+    }
+  } else {
+    const commentSection = clone.querySelector('.comment-section');
+    if (commentSection) {
+      commentSection.style.display = "none";
+    }
+  }
 
   // Set category chips
   const categoryContainer = clone.querySelector('.category-chips-container');
@@ -2219,6 +2249,8 @@ function renderGameCard(game) {
   const mechanicContainer = clone.querySelector('.mechanic-chips-container');
   const mechanicChips = formatMechanicChips(game);
   if (mechanicChips) {
+    const mechanicSection = clone.querySelector(".tags-section");
+    mechanicSection.style.display = "block";
     mechanicContainer.innerHTML = mechanicChips;
   }
 
