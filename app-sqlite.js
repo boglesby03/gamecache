@@ -2182,8 +2182,8 @@ function renderGameCard(game) {
     // Add hover tooltip for players stats using helper function
     createHoverTooltip(
       playersStat,
-      formatPlayerCount(game.players), // Pass HTML for player counts
-      4 // Close distance between tooltip and element
+      formatPlayerCount(game.players),
+      4
     );
   }
 
@@ -2207,8 +2207,7 @@ function renderGameCard(game) {
     createHoverTooltip(
       minAgeStat,
       hoverText,
-      4 // Close distance between tooltip and element
-    );
+      4);
   }
 
   // Set description
@@ -2298,8 +2297,7 @@ function renderGameCard(game) {
     createHoverTooltip(
       ratingSection,
       `<strong>Total Users Rated:</strong> ${game.usersrated} users`,
-      4 // Close distance between tooltip and element
-    );
+      4);
   }
 
   // Set rank
@@ -2401,10 +2399,10 @@ function formatPlayerCount(players) {
         str = `<em>${count}~</em>`;
         break;
       case 'exp':
-        str = `${count}+`
+        str = `${count}⊕`
         break;
       case 'exp_s':
-        str = `<em>${count}+~</em>`;
+        str = `<em>${count}⊕~</em>`;
         break;
     }
     return str;
