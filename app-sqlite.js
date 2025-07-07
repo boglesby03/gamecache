@@ -2305,6 +2305,17 @@ function renderGameCard(game) {
   if (game.rank) {
     rankSection.style.display = 'flex';
     clone.querySelector('.rank-value').textContent = game.rank;
+
+    let hoverText = ""
+    if (game.other_ranks && game.other_ranks.length > 0) {
+      let rankList = game.other_ranks.map(p => `<li>${p.friendlyname}: ${p.value}</li>`).join("");
+      hoverText = `<strong>Other Ranks:</strong><ul>${rankList}</ul>`;
+
+      createHoverTooltip(
+        rankSection,
+        hoverText,
+        4);
+    }
   }
 
   // Set number of plays
