@@ -216,17 +216,17 @@ class Downloader():
                 for exp in game.expansions:
                     exp.players.clear()
 
-                filterReqEx=r"^[j-qJ-Q]"
+                filterRegEx=r"^[j-qJ-Q]"
                 newGame = copy.deepcopy(game)
                 newGame.name = "ZZZ: Expansions without Game (J-Q)"
                 newGame.collection_id = str(game.collection_id) + "2"
 
-                newGame.expansions = list(filter(lambda x: re.search(filterReqEx, x.name), game.expansions))
-                newGame.po_exp = list(filter(lambda x: re.search(filterReqEx, x.name), game.po_exp))
-                newGame.wl_exp = list(filter(lambda x: re.search(filterReqEx, x.name), game.wl_exp))
-                newGame.accessories = list(filter(lambda x: re.search(filterReqEx, x.name), game.accessories))
-                newGame.po_acc = list(filter(lambda x: re.search(filterReqEx, x.name), game.po_acc))
-                newGame.wl_acc = list(filter(lambda x: re.search(filterReqEx, x.name), game.wl_acc))
+                newGame.expansions = list(filter(lambda x: re.search(filterRegEx, x.name), game.expansions))
+                newGame.po_exp = list(filter(lambda x: re.search(filterRegEx, x.name), game.po_exp))
+                newGame.wl_exp = list(filter(lambda x: re.search(filterRegEx, x.name), game.wl_exp))
+                newGame.accessories = list(filter(lambda x: re.search(filterRegEx, x.name), game.accessories))
+                newGame.po_acc = list(filter(lambda x: re.search(filterRegEx, x.name), game.po_acc))
+                newGame.wl_acc = list(filter(lambda x: re.search(filterRegEx, x.name), game.wl_acc))
 
                 newGame.expansions = sorted(newGame.expansions, key=lambda x: x.name)
                 newGame.po_exp = sorted(newGame.po_exp, key=lambda x: x.name)
@@ -249,12 +249,12 @@ class Downloader():
                 newGame.name = "ZZZ: Expansions without Game (R-Z)"
                 newGame.collection_id = str(game.collection_id) + "3"
 
-                newGame.expansions = list(filter(lambda x: re.search(filterReqEx, x.name), game.expansions))
-                newGame.po_exp = list(filter(lambda x: re.search(filterReqEx, x.name), game.po_exp))
-                newGame.wl_exp = list(filter(lambda x: re.search(filterReqEx, x.name), game.wl_exp))
-                newGame.accessories = list(filter(lambda x: re.search(filterReqEx, x.name), game.accessories))
-                newGame.po_acc = list(filter(lambda x: re.search(filterReqEx, x.name), game.po_acc))
-                newGame.wl_acc = list(filter(lambda x: re.search(filterReqEx, x.name), game.wl_acc))
+                newGame.expansions = list(filter(lambda x: re.search(filterRegEx, x.name), game.expansions))
+                newGame.po_exp = list(filter(lambda x: re.search(filterRegEx, x.name), game.po_exp))
+                newGame.wl_exp = list(filter(lambda x: re.search(filterRegEx, x.name), game.wl_exp))
+                newGame.accessories = list(filter(lambda x: re.search(filterRegEx, x.name), game.accessories))
+                newGame.po_acc = list(filter(lambda x: re.search(filterRegEx, x.name), game.po_acc))
+                newGame.wl_acc = list(filter(lambda x: re.search(filterRegEx, x.name), game.wl_acc))
 
                 newGame.expansions = sorted(newGame.expansions, key=lambda x: x.name)
                 newGame.po_exp = sorted(newGame.po_exp, key=lambda x: x.name)
@@ -392,6 +392,10 @@ def custom_expansion_mappings(expansions):
         {"id": 70704, "baseId": 154597},
         # Survive the Island Monster pack
         {"id": 436998, "baseId": 2653},
+        # Kemet expansions to original version
+        {"id": 313475, "baseId": 127023},
+        {"id": 313480, "baseId": 127023},
+        {"id": 313481, "baseId": 127023},
     ]
 
     # Original Tuscany should be an expansion for Viticulture Essential Edition (even if there is overlap)
@@ -436,11 +440,8 @@ def is_promo_box(game):
     if game["id"] == 155192:
         return True
 
-    # Mislabeled Marvel Zombies Promo Box - requested fix in data
-    if game["id"] == 356731:
-        return False
-    # Mislabeled DC United Promos Box - fix has been requested
-    if game["id"] == 425907:
+    # Mislabeled Marvel Zombies Promo Box, and Marvel/DC Unit Promo boxes - these shouldn't be labeled this way
+    if game["id"] in (356731, 339182, 386892, 425907):
         return False
 
     # return game["id"] in (178656, 191779, 204573, 231506, 256951, 205611, 232298, 257590, 286086)
