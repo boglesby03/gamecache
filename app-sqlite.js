@@ -2092,10 +2092,17 @@ function renderGameCard(game) {
   const clone = template.content.cloneNode(true);
   const card = clone.querySelector('.game-card');
 
-  // Set basic card data
-  card.setAttribute('data-color', game.color || '255,255,255');
+  // Apply background color based on game status
+  if (game.tags.includes("preordered")) {
+    card.style.backgroundColor = "rgba(25, 217, 25, 0.15)"; // Light green background for preordered
+  } else if (game.tags.includes("wishlist")) {
+    card.style.backgroundColor = "rgba(30, 30, 195, 0.15)"; // Light blue background for wishlist
+  } else {
+    card.style.backgroundColor = "rgba(255, 255, 255, 1)"; // Default white background
+  }
 
-  // Set images
+  // Additional logic for rendering game cards
+  card.setAttribute('data-color', game.color || '255,255,255');
   const summaryImg = clone.querySelector('.game-image');
   const coverImg = clone.querySelector('.cover-image-img');
   summaryImg.src = game.image;
