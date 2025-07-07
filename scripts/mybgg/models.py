@@ -81,17 +81,6 @@ class BoardGame:
         self.version_year = collection_data["version_year"]
         self.collection_id = collection_data["collection_id"]
 
-        self.style =  self.set_style() # "border: 2px solid red"
-
-    def set_style(self):
-
-        if 'wishlist' in self.tags:
-            return "border: 3px solid grey"
-        elif 'preordered' in self.tags:
-            return  "border: 3px solid rgb(56, 170, 196);"
-
-        return ''
-
     def __hash__(self):
         return hash(self.id)
 
@@ -386,7 +375,5 @@ class BoardGame:
             "suggested_age": self.suggested_age,
             "last_modified": self.lastmodified,
             "version_name": self.version_name,
-            "collection_id": self.collection_id,
-            "style": self.style,
-            # "more_exp": self.more_exp
+            "collection_id": self.collection_id
         }
