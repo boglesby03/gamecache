@@ -851,6 +851,7 @@ body {
     /* Slightly darker blue */
     border-color: rgba(0, 0, 255, 0.4);
     color: #001a33;
+    text-decoration: underline;
 }
 
 /* General Chip Layout */
