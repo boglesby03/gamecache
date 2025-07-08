@@ -2240,6 +2240,12 @@ function renderGameCard(game) {
       4);
   }
 
+  const yearStat = clone.querySelector('.year-stat');
+  if (game.year) {
+    yearStat.style.display = 'flex';
+    clone.querySelector('.year-value').textContent = game.year;
+  }
+
   // Set description
   const teaserText = clone.querySelector('.teaser-text');
   teaserText.setAttribute('data-full-text', escapeHtml(game.description || ''));
@@ -2358,17 +2364,6 @@ function renderGameCard(game) {
   if (bggLink && game.id) {
     bggLink.href = `https://boardgamegeek.com/boardgame/${game.id}`;
   }
-
-
-  if (game.integrates.length > 0) {
-    const integratesSection = clone.querySelector('.integrates-section');
-    const integratesHeading = integratesSection.querySelector("h2");
-    const integratesChipContainer = integratesSection.querySelector(".integrates-chips");
-
-    integratesSection.style.display = "block";
-    renderChips(game.integrates, integratesHeading, integratesChipContainer, expansionChipTemplate, true);
-  }
-
 
 // Check for overall game data
 if (game.accessories.length > 0 || game.po_acc.length > 0 || game.wl_acc.length > 0) {
