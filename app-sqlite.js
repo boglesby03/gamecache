@@ -2246,6 +2246,13 @@ function renderGameCard(game) {
     clone.querySelector('.year-value').textContent = game.year;
   }
 
+  const statusStat = clone.querySelector('.status-stat');
+  statusStat.style.display = 'flex';
+  clone.querySelector('.status-value').textContent = game.tags[0];
+  if (game.wishlist_priority) {
+    createHoverTooltip(statusStat, game.wishlist_priority, 4);
+  }
+
   // Set description
   const teaserText = clone.querySelector('.teaser-text');
   teaserText.setAttribute('data-full-text', escapeHtml(game.description || ''));
