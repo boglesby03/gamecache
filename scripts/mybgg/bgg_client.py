@@ -210,7 +210,7 @@ class BGGClient:
         return collection
 
 
-    def _games_list_to_games(self, data):
+    def _games_list_to_games(self, data, additional_details = True):
         def numplayers_to_result(_, results):
             result = {result["value"].lower().replace(" ", "_"): int(result["numvotes"]) for result in results}
 
@@ -488,6 +488,38 @@ class BGGClient:
         ])
         games = xml.parse_from_string(game_processor, data)
         games = games["items"]
+
+        # Helper function for fetching and updating image/thumbnail metadata
+        def fetch_additional_metadata(entries, entry_type):
+            for entry in entries:
+                entry_id = entry.get("id")
+                if not entry_id:
+                    continue
+
+                # Make API call to fetch details
+                try:
+                    additional_data = self._make_request(f"/thing/?stats=1&id={entry_id}")
+                    details = self._games_list_to_games(additional_data, False)
+
+                    if details:
+                        entry["image"] = details[0].get("image", "")        # Image URL for the entry
+                        entry["thumbnail"] = details[0].get("thumbnail", "")  # Thumbnail URL for the entry
+                    else:
+                        entry["image"] = None
+                        entry["thumbnail"] = None
+                except Exception as e:
+                    logger.error(f"Failed to fetch image/thumbnail for {entry_type} id {entry_id}: {e}")
+                    entry["image"] = None
+                    entry["thumbnail"] = None
+
+        if additional_details:
+            # Fetch additional metadata for integrations, contained games, and reimplements
+            for game in games:
+                if game['type'] == 'boardgame':
+                    fetch_additional_metadata(game.get("integrates", []), "integration")
+                    fetch_additional_metadata(game.get("contained", []), "contained")
+                    fetch_additional_metadata(game.get("reimplements", []), "reimplements")
+
         return games
 
 class CacheBackendSqlite:
