@@ -2222,6 +2222,8 @@ function renderGameCard(game) {
     complexityStat.style.display = 'flex';
     clone.querySelector('.complexity-gauge-container').innerHTML = renderComplexityGauge(game.weight);
     clone.querySelector('.complexity-name').textContent = getComplexityName(game.weight);
+
+    createHoverTooltip(complexityStat, game.weight.toFixed(2), 4);
   }
 
   const minAgeStat = clone.querySelector('.min-age-stat');
