@@ -73,8 +73,17 @@ class BoardGame:
         self.wishlist_comment = collection_data["wishlist_comment"]
         self.wishlist_priority = self.calc_wishlist_priority(collection_data)
 
+        self.previous_players = None
         if "players" in collection_data:
             self.previous_players = list(set(collection_data["players"]))
+
+        self.lastplayed = None
+        if "last_played" in collection_data:
+            self.lastplayed = collection_data["last_played"]
+
+        self.firstplayed = None
+        if "first_played" in collection_data:
+            self.firstplayed = collection_data["first_played"]
 
         self.lastmodified = collection_data["last_modified"] # datetime.strptime(collection_data["last_modified"], '%Y-%m-%d %H:%M:%S').timestamp()
         self.version_name = collection_data["version_name"]
@@ -375,5 +384,7 @@ class BoardGame:
             "suggested_age": self.suggested_age,
             "last_modified": self.lastmodified,
             "version_name": self.version_name,
-            "collection_id": self.collection_id
+            "collection_id": self.collection_id,
+            "first_played": self.firstplayed,
+            "last_played": self.lastplayed,
         }
