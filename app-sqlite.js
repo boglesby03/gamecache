@@ -7,6 +7,7 @@ const CONFIG = (() => {
     COMPLEXITY_THRESHOLDS: [1.5, 2.5, 3.5, 4.5],
     COMPLEXITY_NAMES: ['Light', 'Light Medium', 'Medium', 'Medium Heavy', 'Heavy'],
     PLAYING_TIMES: ['< 30min', '30min - 1h', '1-2h', '2-3h', '3-4h', '> 4h'],
+    WISHLIST_NAMES: ['Must Have', 'Love to Have', 'Like to Have', 'Thinking About It', 'Don\'t Buy', 'Own', 'PreOrdered'],
     SORT_OPTIONS: [
       { value: 'name', text: 'Name (A-Z)' },
       { value: 'rank', text: 'BGG Rank' },
@@ -821,8 +822,8 @@ function setupWishlistFilter() {
     }
   });
 
-  const sortedWishlists = Object.keys(wishlistCounts).sort();
-  const items = sortedWishlists.map(wl => ({
+  //const sortedWishlists = Object.keys(wishlistCounts).sort();
+  const items = CONFIG.WISHLIST_NAMES.map(wl => ({
     label: wl,
     value: wl,
     count: wishlistCounts[wl]
