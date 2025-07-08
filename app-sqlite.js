@@ -282,14 +282,24 @@ function handleMoreButtonClick(button) {
 }
 
 function setupSearchBox() {
-  const searchBox = document.getElementById('search-box');
-  const input = createElement('input', {
-    type: 'text',
-    id: 'search-input',
-    placeholder: 'Search games...'
+  const input = document.getElementById('search-input');
+  const clearButton = document.getElementById('clear-button');
+
+  // Show/hide the clear button based on input value
+  input.addEventListener('input', debounce((event) => {
+    clearButton.style.display = event.target.value ? 'block' : 'none'; // Show/hide clear button
+
+    // Call the debounced `onFilterChange`
+    onFilterChange(event);
+  }, 300));
+
+  // Clear the input field when the clear button is clicked
+  clearButton.addEventListener('click', () => {
+    input.value = ''; // Clear input
+    clearButton.style.display = 'none'; // Hide the button
+    input.focus(); // Refocus on the input field
+    input.dispatchEvent(new Event('input')); // Trigger any input listeners
   });
-  searchBox.appendChild(input);
-  input.addEventListener('input', debounce(onFilterChange, 300));
 }
 
 function setupSorting() {

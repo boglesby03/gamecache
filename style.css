@@ -885,3 +885,38 @@ body {
     white-space: pre-wrap;
     /* Preserve line breaks if present */
 }
+
+.search-box {
+    max-width: 300px;
+    margin-right: 1em;
+    flex-grow: 1;
+    position: relative;
+    /* Enables absolute positioning for the icon */
+}
+
+#search-input {
+    width: 100%;
+    padding: 0.5em 2.5em 0.5em 0.5em;
+    /* Add padding-right for icon space */
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 1em;
+    box-sizing: border-box;
+}
+
+#clear-button {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 20px;
+    color: #888;
+    cursor: pointer;
+    display: none;
+    /* Initially hidden */
+}
+
+#clear-button:hover {
+    color: #333;
+    /* Darker color on hover */
+}
