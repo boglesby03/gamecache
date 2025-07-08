@@ -190,7 +190,7 @@ function loadAllGames() {
            numplays, image, tags, previous_players, expansions, color, unixepoch(last_modified) as last_modified,
            publishers, designers, artists, year, tags, wishlist_priority, accessories, po_exp, po_acc, wl_exp, wl_acc,
            alternate_names, comment, wishlist_comment, families, reimplements, reimplementedby, integrates, contained,
-           weightRating, other_ranks, average, suggested_age
+           weightRating, other_ranks, average, suggested_age, first_played, last_played
     FROM games
     ORDER BY name
   `);
@@ -2364,7 +2364,20 @@ function renderGameCard(game) {
   }
 
   // Set number of plays
+  const numplaysSection = clone.querySelector('.plays-section');
   clone.querySelector('.numplays-value').textContent = game.numplays || "No";
+  if (game.numplays > 0) {
+    const DATE_FORMAT = 'MMMM Do, YYYY';
+    let played_tooltip = '';
+    if (game.first_played !== game.last_played) {
+      played_tooltip = `First Played: ${moment(game.first_played).format(DATE_FORMAT)}<br>`
+      played_tooltip += `Last Played: ${moment(game.last_played).format(DATE_FORMAT)}`;
+    } else {
+      played_tooltip = `Played: ${moment(game.last_played).format(DATE_FORMAT)}`
+    }
+
+    createHoverTooltip(numplaysSection, played_tooltip, 4);
+  }
 
   // Set BGG link
   const bggLink = clone.querySelector('.bgg-link');

@@ -152,6 +152,7 @@ class BGGClient:
             xml.array(
                 xml.dictionary('play', [
                     xml.integer(".", attribute="id", alias="playid"),
+                    xml.string(".", attribute="date", alias="played_date"),
                     xml.dictionary('item', [
                         xml.string(".", attribute="name", alias="gamename"),
                         xml.integer(".", attribute="objectid", alias="gameid")

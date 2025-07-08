@@ -6,8 +6,10 @@ from mybgg.bgg_client import BGGClient
 from mybgg.bgg_client import CacheBackendSqlite
 from mybgg.models import BoardGame
 
+from datetime import datetime
 from multidict import MultiDict
 
+DATE_FORMAT = "%Y-%m-%d"
 
 EXTRA_EXPANSIONS_GAME_ID=81913
 
@@ -75,7 +77,16 @@ class Downloader():
         for play in plays_data:
             play_id = str(play["game"]["gameid"])
             if play_id in collection_by_id:
+                play_date = datetime.strptime(play["played_date"], DATE_FORMAT)
                 collection_by_id[play_id]["players"].extend(play["players"])
+
+                current_last_played = collection_by_id[play_id].get("last_played")
+                if current_last_played is None or play_date > current_last_played:
+                    collection_by_id[play_id]["last_played"] = play_date
+
+                current_first_played = collection_by_id[play_id].get("first_played")
+                if current_first_played is None or play_date < current_first_played:
+                    collection_by_id[play_id]["first_played"] = play_date
 
         games_data = list(filter(lambda x: x["type"] == "boardgame", game_list_data))
         expansions_data = list(filter(lambda x: x["type"] == "boardgameexpansion", game_list_data))
@@ -327,6 +338,8 @@ def _create_blank_collection(id, name):
         "version_name": "",
         "version_year": "",
         "last_modified": "1970-01-01 00:00:00",
+        "first_played": None,
+        "last_played": None,
         "collection_id": id,
         "publisher_id": 0,
     }
