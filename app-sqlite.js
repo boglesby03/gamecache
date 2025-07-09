@@ -110,7 +110,7 @@ function loadINI(path, callback) {
 async function initializeDatabase(settings) {
   try {
     const SQL = await initSqlJs({
-      locateFile: file => `https://cdn.jsdelivr.net/npm/sql.js@1.10.3/dist/${file}`
+      locateFile: file => `https://cdn.jsdelivr.net/npm/sql.js@1.13.0/dist/${file}`
     });
 
     const isDev = /^(localhost|127\\.0\\.0\\.1)$/.test(location.hostname);
@@ -184,12 +184,26 @@ function parsePlayerCount(countStr) {
   return { min: 0, max: 0, open: false };
 }
 
+function ftsSearch(query) {
+
+  //return
+  const stmt = db.prepare(`select rowid, name from games_fts where games_fts match "${query}"`)
+
+  allGames = []
+  while(stmt.step()) {
+    const row = stmt.getAsObject();
+
+    log.console(row);
+  }
+
+}
+
 function loadAllGames() {
   const stmt = db.prepare(`
     SELECT id, name, description, categories, mechanics, players, weight,
            playing_time, min_age, rank, usersrated, numowned, rating,
            numplays, image, tags, previous_players, expansions, color, unixepoch(last_modified) as last_modified,
-           publishers, designers, artists, year, tags, wishlist_priority, accessories, po_exp, po_acc, wl_exp, wl_acc,
+           publishers, designers, artists, year, wishlist_priority, accessories, po_exp, po_acc, wl_exp, wl_acc,
            alternate_names, comment, wishlist_comment, families, reimplements, reimplementedby, integrates, contained,
            weightRating, other_ranks, average, suggested_age, first_played, last_played
     FROM games
@@ -1535,6 +1549,11 @@ function filterGames(gamesToFilter, filters) {
   } = filters;
 
   return gamesToFilter.filter(game => {
+
+    if (query) {
+      ftsSearch(query);
+    }
+
     // TODO query should look at more fields - extensions, alternative titles, publishers?
     if (query && !game.name.toLowerCase().includes(query) &&
       !game.description.toLowerCase().includes(query)) {
@@ -2146,7 +2165,7 @@ function createHoverTooltip(hoverElement, htmlContent, offset = 8) {
  * @param {String} unsafe - Unescaped string.
  * @returns {String} - Escaped string.
  */
-function escapeHtml(unsafe) {
+function escapeHtmlChars(unsafe) {
   return unsafe
     .replace(/&/g, "&amp;")
     .replace(/</g, "&lt;")
@@ -2187,8 +2206,8 @@ function renderGameCard(game) {
     const commentSection = clone.querySelector('.comment-section');
     if (commentSection) {
       const commentText = commentSection.querySelector('.comment-text');
-      commentText.innerHTML = escapeHtml(game.comment);
-      commentText.innerHTML += escapeHtml(game.wishlist_comment);
+      commentText.innerHTML = escapeHtmlChars(game.comment);
+      commentText.innerHTML += escapeHtmlChars(game.wishlist_comment);
       commentSection.style.display = "block";
     }
   } else {
