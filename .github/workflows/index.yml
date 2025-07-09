@@ -9,6 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       MYBGG_GITHUB_TOKEN: ${{ secrets.MYBGG_GITHUB_TOKEN }}
+      BGG_BEARER_TOKEN: ${{ secrets.BGG_BEARER_TOKEN }}
     steps:
     - uses: actions/checkout@v4
     - uses: actions/setup-python@v5
@@ -19,5 +20,6 @@ jobs:
     - run: pip install -r scripts/requirements.txt
     - name: Run script if token is set
       if: ${{ env.MYBGG_GITHUB_TOKEN != '' }}
+      if: ${{ env.BGG_BEARER_TOKEN != '' }}
       run: |
         python scripts/download_and_index.py --debug
