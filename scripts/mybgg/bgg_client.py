@@ -185,9 +185,9 @@ class BGGClient:
                     xml.string("thumbnail", required=False),
                     xml.string("version/item/image", required=False, alias="image_version"),
                     xml.string("version/item/thumbnail", required=False, alias="thumbnail_version"),
-                    xml.string("version/item/name",  required=False, alias="version_name"),
-                    xml.integer("version/yearpublished", attribute="value", alias="version_year", required=False),
-                    xml.integer("version/item/link[@type='boardgamepublisher']", attribute="objectid", required=False, alias="publisher_id"),
+                    xml.string("version/item/name",  required=False, attribute="value", alias="version_name"),
+                    xml.integer("version/item/yearpublished", attribute="value", alias="version_year", required=False),
+                    xml.integer("version/item/link[@type='boardgamepublisher']", attribute="id", required=False, alias="publisher_id"),
                     xml.string("comment", required=False, alias="comment"),
                     xml.string("wishlistcomment", required=False, alias="wishlist_comment"),
                     xml.string("status", attribute="lastmodified", alias="last_modified"),
@@ -503,15 +503,18 @@ class BGGClient:
                     details = self._games_list_to_games(additional_data, False)
 
                     if details:
-                        entry["image"] = details[0].get("image", "")        # Image URL for the entry
+                        entry["image"] = details[0].get("image", "")          # Image URL for the entry
                         entry["thumbnail"] = details[0].get("thumbnail", "")  # Thumbnail URL for the entry
+                        entry["rating"] = details[0].get("rating", "")
                     else:
                         entry["image"] = None
                         entry["thumbnail"] = None
+                        entry["rating"] = None
                 except Exception as e:
                     logger.error(f"Failed to fetch image/thumbnail for {entry_type} id {entry_id}: {e}")
                     entry["image"] = None
                     entry["thumbnail"] = None
+                    entry["rating"] = None
 
         if additional_details:
             # Fetch additional metadata for integrations, contained games, and reimplements
