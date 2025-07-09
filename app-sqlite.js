@@ -1550,13 +1550,39 @@ function filterGames(gamesToFilter, filters) {
 
   return gamesToFilter.filter(game => {
 
-    if (query) {
-      ftsSearch(query);
-    }
+    // if (query) {
+    //   ftsSearch(query);
+    // }
 
-    // TODO query should look at more fields - extensions, alternative titles, publishers?
+    // TODO Decide if this should look at names (publisher, artist, designer)
+    // also this would be great to add Soundex or Tokenized searching (like FTS)
     if (query && !game.name.toLowerCase().includes(query) &&
-      !game.description.toLowerCase().includes(query)) {
+        !game.description.toLowerCase().includes(query) &&
+        game.alternate_names.filter(item =>
+          item.toLowerCase().indexOf(query.toLowerCase()) === -1) &&
+        game.families.filter(item =>
+          item.name.toLowerCase().indexOf(query.toLowerCase()) === -1) &&
+        game.contained.filter(item =>
+          item.name.toLowerCase().indexOf(query.toLowerCase()) === -1) &&
+        game.reimplementedby.filter(item =>
+          item.name.toLowerCase().indexOf(query.toLowerCase()) === -1) &&
+        game.reimplements.filter(item =>
+          item.name.toLowerCase().indexOf(query.toLowerCase()) === -1) &&
+        game.integrates.filter(item =>
+          item.name.toLowerCase().indexOf(query.toLowerCase()) === -1) &&
+        game.expansions.filter(item =>
+          item.name.toLowerCase().indexOf(query.toLowerCase()) === -1) &&
+        game.wl_exp.filter(item =>
+          item.name.toLowerCase().indexOf(query.toLowerCase()) === -1) &&
+        game.po_exp.filter(item =>
+          item.name.toLowerCase().indexOf(query.toLowerCase()) === -1) &&
+        game.accessories.filter(item =>
+          item.name.toLowerCase().indexOf(query.toLowerCase()) === -1) &&
+        game.wl_acc.filter(item =>
+          item.name.toLowerCase().indexOf(query.toLowerCase()) === -1) &&
+        game.po_acc.filter(item =>
+          item.name.toLowerCase().indexOf(query.toLowerCase()) === -1)
+        ) {
       return false;
     }
 
