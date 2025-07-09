@@ -12,6 +12,7 @@ from multidict import MultiDict
 DATE_FORMAT = "%Y-%m-%d"
 
 EXTRA_EXPANSIONS_GAME_ID=81913
+PUBLIC_DOMAIN_PUBLISHER=171
 
 class Downloader():
     def __init__(self, cache_bgg, token, debug=False):
@@ -336,7 +337,7 @@ def _create_blank_collection(id, name):
         "wishlist_comment": "",
         "players": [],
         "version_name": "",
-        "version_year": "",
+        "version_year": 0,
         "last_modified": "1970-01-01 00:00:00",
         "first_played": None,
         "last_played": None,
@@ -355,7 +356,7 @@ def _uniq(lst):
 def publisher_filter(publishers, publisher_version):
     publisher_list = []
     for pub in publishers:
-        if pub["id"] == 171:  # (Public Domain)
+        if pub["id"] == PUBLIC_DOMAIN_PUBLISHER:  # (Public Domain)
             publisher_list.clear()
             publisher_list.append(pub)
             break
