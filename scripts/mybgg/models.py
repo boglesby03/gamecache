@@ -387,6 +387,7 @@ class BoardGame:
             "suggested_age": self.suggested_age,
             "last_modified": self.lastmodified,
             "version_name": self.version_name,
+            "version_year": self.version_year,
             "collection_id": self.collection_id,
             "first_played": self.firstplayed,
             "last_played": self.lastplayed,

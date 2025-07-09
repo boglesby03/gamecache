@@ -205,7 +205,7 @@ function loadAllGames() {
            numplays, image, tags, previous_players, expansions, color, unixepoch(last_modified) as last_modified,
            publishers, designers, artists, year, wishlist_priority, accessories, po_exp, po_acc, wl_exp, wl_acc,
            alternate_names, comment, wishlist_comment, families, reimplements, reimplementedby, integrates, contained,
-           weightRating, other_ranks, average, suggested_age, first_played, last_played
+           weightRating, other_ranks, average, suggested_age, first_played, last_played, version_name, version_year
     FROM games
     ORDER BY name
   `);
@@ -2227,6 +2227,11 @@ function renderGameCard(game) {
   const title = clone.querySelector('.game-title');
   title.innerHTML = highlightText(game.name, getCurrentSearchQuery());
 
+  if (game.version_name) {
+    const titleSection = clone.querySelector('.title-section');
+    createHoverTooltip(titleSection, game.version_name, 4);
+  }
+
   if ((game.comment && game.comment.trim() !== "") ||
       (game.wishlist_comment && game.wishlist_comment.trim() != "")) {
     const commentSection = clone.querySelector('.comment-section');
@@ -2266,11 +2271,7 @@ function renderGameCard(game) {
     playersValue.textContent = formatPlayerCountShort(game.players);
 
     // Add hover tooltip for players stats using helper function
-    createHoverTooltip(
-      playersStat,
-      formatPlayerCount(game.players),
-      4
-    );
+    createHoverTooltip(playersStat, formatPlayerCount(game.players), 4);
   }
 
   const complexityStat = clone.querySelector('.complexity-stat');
@@ -2292,16 +2293,33 @@ function renderGameCard(game) {
       hoverText = "No Community Suggested Age";
     }
 
-    createHoverTooltip(
-      minAgeStat,
-      hoverText,
-      4);
+    createHoverTooltip(minAgeStat, hoverText, 4);
+  }
+
+  const publisherStat = clone.querySelector('.publisher-stat');
+  if (game.publishers) {
+    publisherStat.style.display = 'flex';
+
+    let publisherWithFlagOwn = game.publishers.find(publisher => publisher.flag === "own");
+
+    if (publisherWithFlagOwn) {
+      //clone.querySelector('.publisher-name').textContent = publisherWithFlagOwn.name;
+
+      let hoverText = `<strong></strong> ${publisherWithFlagOwn.name}`
+      createHoverTooltip(publisherStat, hoverText, 4);
+    }
   }
 
   const yearStat = clone.querySelector('.year-stat');
   if (game.year) {
     yearStat.style.display = 'flex';
     clone.querySelector('.year-value').textContent = game.year;
+
+    if (game.version_year) {
+      let hoverText = `<strong>Version:</strong> ${game.version_year}`
+
+      createHoverTooltip(yearStat, hoverText, 4);
+    }
   }
 
   const statusStat = clone.querySelector('.status-stat');
@@ -2414,10 +2432,7 @@ function renderGameCard(game) {
       let rankList = game.other_ranks.map(p => `<li>${p.friendlyname}: ${p.value}</li>`).join("");
       hoverText = `<strong>Other Ranks:</strong><ul>${rankList}</ul>`;
 
-      createHoverTooltip(
-        rankSection,
-        hoverText,
-        4);
+      createHoverTooltip(rankSection, hoverText, 4);
     }
   } else {
     clone.querySelector('.rank-value').textContent = "Unranked";
