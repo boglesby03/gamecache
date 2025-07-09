@@ -231,7 +231,6 @@ class SqliteIndexer:
                 other_ranks_json,
                 float(game.get('average')) if game.get('average') is not None else None,
                 float(game.get('suggested_age')) if game.get('suggested_age') is not None else None,
-                #int(game.get('last_modified')) if game.get('lastmodified') is not None else None,
                 game.get('last_modified'),
                 game.get('version_name'),
                 int(game.get('version_year')) if game.get('version_year') is not None else None,
@@ -253,6 +252,7 @@ class SqliteIndexer:
                 'players': expansion.get('players', []),
                 'image': expansion.get('image', ''),
                 'thumbnail': expansion.get('thumbnail', ''),
+                'rating': str(expansion.get('rating', '')),
             }
         if hasattr(expansion, 'todict'):  # If it's an object with todict method
             exp_dict = expansion.todict()
@@ -262,6 +262,7 @@ class SqliteIndexer:
                 'players': exp_dict.get('players', []),
                 'image': exp_dict.get('image', ''),
                 'thumbnail': exp_dict.get('thumbnail', ''),
+                'rating': str(exp_dict.get('rating', '')),
             }
         if hasattr(expansion, '__dict__'):  # Fallback for simple objects
             exp_vars = vars(expansion)
@@ -271,6 +272,7 @@ class SqliteIndexer:
                 'players': exp_vars.get('players', []),
                 'image': exp_vars.get('image', ''),
                 'thumbnail': exp_vars.get('thumbnail', ''),
+                'rating': str(exp_vars.get('rating', '')),
             }
         logger.warning(f"Cannot convert expansion to dict: {expansion}")
         return {}
