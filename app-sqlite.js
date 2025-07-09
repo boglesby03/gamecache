@@ -2405,8 +2405,8 @@ function renderGameCard(game) {
 
   // Set rank
   const rankSection = clone.querySelector('.rank-section');
+  rankSection.style.display = 'flex';
   if (game.rank) {
-    rankSection.style.display = 'flex';
     clone.querySelector('.rank-value').textContent = game.rank;
 
     let hoverText = ""
@@ -2419,6 +2419,8 @@ function renderGameCard(game) {
         hoverText,
         4);
     }
+  } else {
+    clone.querySelector('.rank-value').textContent = "Unranked";
   }
 
   // Set number of plays
