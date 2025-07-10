@@ -150,7 +150,7 @@ class BoardGame:
             '5': 'Don\'t Buy'
         }
 
-        if "preorder" in collection_data["tags"]:
+        if "preordered" in collection_data["tags"]:
             return "Preorder"
 
         if "wishlist_priority" in collection_data:
