@@ -2300,13 +2300,10 @@ function renderGameCard(game) {
   if (game.publishers) {
     publisherStat.style.display = 'flex';
 
-    let publisherWithFlagOwn = game.publishers.find(publisher => publisher.flag === "own");
-
+    let publisherWithFlagOwn = game.publishers.filter(publisher => publisher.flag === "own");
     if (publisherWithFlagOwn) {
-      //clone.querySelector('.publisher-name').textContent = publisherWithFlagOwn.name;
-
-      let hoverText = `<strong></strong> ${publisherWithFlagOwn.name}`
-      createHoverTooltip(publisherStat, hoverText, 4);
+      let pubText = publisherWithFlagOwn.map(p => `<li>${p.name}</li>`).join("");
+      createHoverTooltip(publisherStat, pubText, 4);
     }
   }
 

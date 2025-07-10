@@ -342,7 +342,7 @@ def _create_blank_collection(id, name):
         "first_played": None,
         "last_played": None,
         "collection_id": id,
-        "publisher_id": 0,
+        "publisher_ids": [],
     }
 
     return data
@@ -360,7 +360,7 @@ def publisher_filter(publishers, publisher_version):
             publisher_list.clear()
             publisher_list.append(pub)
             break
-        if pub["id"] == publisher_version["publisher_id"]:
+        if pub["id"] in publisher_version["publisher_ids"]:
             pub["flag"] = "own"
         publisher_list.append(pub)
 
