@@ -2298,11 +2298,10 @@ function renderGameCard(game) {
 
   const publisherStat = clone.querySelector('.publisher-stat');
   if (game.publishers) {
-    publisherStat.style.display = 'flex';
-
     let publisherWithFlagOwn = game.publishers.filter(publisher => publisher.flag === "own");
-    if (publisherWithFlagOwn) {
-      let pubText = publisherWithFlagOwn.map(p => `<li>${p.name}</li>`).join("");
+    if (publisherWithFlagOwn && publisherWithFlagOwn.length > 0) {
+      publisherStat.style.display = 'flex';
+      let pubText = publisherWithFlagOwn.map(p => `${p.name}<br>`).join("");
       createHoverTooltip(publisherStat, pubText, 4);
     }
   }
