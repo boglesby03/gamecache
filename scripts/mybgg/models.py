@@ -87,7 +87,7 @@ class BoardGame:
 
         self.lastmodified = collection_data["last_modified"] # datetime.strptime(collection_data["last_modified"], '%Y-%m-%d %H:%M:%S').timestamp()
         self.version_name = collection_data["version_name"]
-        self.version_year = collection_data["version_year"]
+        self.version_year = collection_data["custom_version_year"] or collection_data["version_year"]
         self.collection_id = collection_data["collection_id"]
 
     def __hash__(self):

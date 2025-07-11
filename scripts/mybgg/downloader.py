@@ -331,6 +331,7 @@ def _create_blank_collection(id, name):
         "collection_id": id,
         "publisher_ids": [],
         "version_publisher": 0,
+        "custom_version_year": 0,
     }
 
     return data
