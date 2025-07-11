@@ -61,8 +61,8 @@ def main(args):
     gzip_path = f"{sqlite_path}.gz"
     with open(sqlite_path, 'rb') as f_in, gzip.open(gzip_path, 'wb') as f_out:
         f_out.write(f_in.read())
-    #TODO make this an option to save the original
-    # os.remove(sqlite_path)
+    if not args.save_db:
+        os.remove(sqlite_path)
     print(f"Created gzipped database: {gzip_path}")
 
     # Upload to GitHub if not disabled
@@ -117,6 +117,13 @@ if __name__ == '__main__':
         required=False,
         default="config.ini",
         help="Path to the config file (default: config.ini from the working directory)."
+    )
+    parser.add_argument(
+        '--save_db',
+        action='store_true',
+        help=(
+            "Keep the unzipped copy of the sqlite database."
+        )
     )
 
     args = parser.parse_args()
