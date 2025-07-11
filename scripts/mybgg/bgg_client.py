@@ -191,6 +191,7 @@ class BGGClient:
                             xml.integer("version/item/link[@type='boardgamepublisher']", attribute="id", required=False),
                             alias="publisher_ids",
                     ),
+                    xml.integer("version/publisher", attribute="publisherid", required=False, alias="version_publisher"),
                     xml.string("comment", required=False, alias="comment"),
                     xml.string("wishlistcomment", required=False, alias="wishlist_comment"),
                     xml.string("status", attribute="lastmodified", alias="last_modified"),
