@@ -13,6 +13,7 @@ DATE_FORMAT = "%Y-%m-%d"
 
 EXTRA_EXPANSIONS_GAME_ID=81913
 PUBLIC_DOMAIN_PUBLISHER=171
+UNPUBLISHED_PROTOTYPE=18291
 
 class Downloader():
     def __init__(self, cache_bgg, token, debug=False):
@@ -100,6 +101,9 @@ class Downloader():
             game["expansions_collection"] = []
             game_data_by_id[game["id"]] = game
 
+            if game["id"] == UNPUBLISHED_PROTOTYPE:
+                expansions_data.append(game)
+
         for expansion in expansions_data:
             expansion["accessories_collection"] = []
             expansion["expansions_collection"]  = []
@@ -175,8 +179,13 @@ class Downloader():
 
         newGames = []
 
+        games = filter_games_by_collection_id(games)
+
         # Cleanup the game
         for game in games:
+
+            game = filter_unpublished_expansions(game)
+
             for exp in game.expansions:
                 exp.name = remove_prefix(exp.name, game)
             for exp in game.wl_exp:
@@ -300,28 +309,6 @@ class Downloader():
 
         return games
 
-# def _create_blank_game(id, name):
-#     data = {
-#         "id": id,
-#         "name": name,
-#         "description": "",
-#         "contained": [],
-#         "categories": [],
-#         "mechanics": [],
-#         "families": [],
-#         "artists": [],
-#         "designers": [],
-#         "publishers": [],
-#         "reimplements": [],
-#         "integrates": [],
-#         "suggested_numplayers": 0,
-#         "expansions_collection": [],
-#         "accessories_collection": [],
-#         "alternate_names": [],
-#     }
-
-#     return data
-
 def _create_blank_collection(id, name):
 
     data = {
@@ -343,6 +330,7 @@ def _create_blank_collection(id, name):
         "last_played": None,
         "collection_id": id,
         "publisher_ids": [],
+        "version_publisher": 0,
     }
 
     return data
@@ -353,15 +341,19 @@ def _uniq(lst):
         yield list(grp)[0]
 
 # Ignore publishers for Public Domain games
-def publisher_filter(publishers, publisher_version):
+def publisher_filter(publishers, game):
     publisher_list = []
     for pub in publishers:
         if pub["id"] == PUBLIC_DOMAIN_PUBLISHER:  # (Public Domain)
+            pub["flag"] = "own"
             publisher_list.clear()
             publisher_list.append(pub)
             break
-        if pub["id"] in publisher_version["publisher_ids"]:
+        if pub["id"] in game["publisher_ids"]:
             pub["flag"] = "own"
+        if pub["id"] == game["version_publisher"]:
+            pub["flag"] = "own"
+
         publisher_list.append(pub)
 
     return publisher_list
@@ -382,6 +374,52 @@ def custom_accessories_mapping(accessories):
                 acc["accessories"].append({"id": new_acc["baseId"], "inbound": True})
 
     return accessories
+
+# This maps a specific game to the instance of Unpub to keep
+# The game should also be mapped to Unpub expansion
+# game.id : expansion.collection_id
+unpub_map = {
+    126042: 45853902,  # Nations
+    177736: 66917665,  # A Feast for Odin,
+    178550: 73699094,  # Spheres of influence
+    319966: 89022895,  # King Is Dead
+}
+
+def filter_unpublished_expansions(game):
+    """this will remove extra unpublished prototypes"""
+
+    if game.id in unpub_map.keys():
+        filtered_expansions = []
+        for exp in game.wl_exp:  # look in WL because you can't own something that is Unpublished
+            if exp.id == UNPUBLISHED_PROTOTYPE:
+                if exp.collection_id == unpub_map[game.id]:
+                    filtered_expansions.append(exp)
+            else:
+                filtered_expansions.append(exp)
+        game.wl_exp = filtered_expansions
+
+    return game
+
+def filter_games_by_collection_id(games):
+    """
+    Filters a list of games by removing any game whose collection_id matches
+    one of the values in the unpub_map.
+
+    Args:
+        games (list): A list of game dictionaries.
+
+    Returns:
+        list: The filtered list of games.
+    """
+    # Get all collection_ids from the unpub_map values
+    collection_ids_to_filter = set(unpub_map.values())
+
+    # Filter the games
+    filtered_games = [
+        game for game in games if game.collection_id not in collection_ids_to_filter
+    ]
+
+    return filtered_games
 
 # TODO These mappings should be configurable
 def custom_expansion_mappings(expansions):
@@ -410,6 +448,15 @@ def custom_expansion_mappings(expansions):
         {"id": 313475, "baseId": 127023},
         {"id": 313480, "baseId": 127023},
         {"id": 313481, "baseId": 127023},
+
+        # Unpublished Nations 2nd Expansion
+        {"id": UNPUBLISHED_PROTOTYPE, "baseId": 126042},
+        # Unpublished Feast for Odin Expansions
+        {"id": UNPUBLISHED_PROTOTYPE, "baseId": 177736},
+        # Unpublished Spheres of Influence
+        {"id": UNPUBLISHED_PROTOTYPE, "baseId": 178550},
+        # Unpublished King is Dead Vikings
+        {"id": UNPUBLISHED_PROTOTYPE, "baseId": 319966},
     ]
 
     # Original Tuscany should be an expansion for Viticulture Essential Edition (even if there is overlap)
