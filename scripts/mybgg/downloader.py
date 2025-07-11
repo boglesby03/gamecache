@@ -14,7 +14,7 @@ DATE_FORMAT = "%Y-%m-%d"
 EXTRA_EXPANSIONS_GAME_ID=81913
 PUBLIC_DOMAIN_PUBLISHER=171
 UNPUBLISHED_PROTOTYPE=18291
-
+BOX_OF_PROMOS=39378
 class Downloader():
     def __init__(self, cache_bgg, token, debug=False):
         if cache_bgg:
@@ -508,7 +508,7 @@ def is_promo_box(game):
 
     # return game["id"] in (178656, 191779, 204573, 231506, 256951, 205611, 232298, 257590, 286086)
     # Change this to look for board game family 39378 (Box of Promos)
-    return any(39378 == family["id"] for family in game["families"])
+    return any(BOX_OF_PROMOS == family["id"] for family in game["families"])
 
 
 articles = ['A', 'An', 'The']
