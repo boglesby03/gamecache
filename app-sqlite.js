@@ -24,6 +24,8 @@ const GAMES_PER_PAGE = CONFIG.GAMES_PER_PAGE;
 const MAX_DESCRIPTION_LENGTH = CONFIG.MAX_DESCRIPTION_LENGTH;
 const GAUGE_RADIUS = CONFIG.GAUGE_RADIUS;
 
+const NO_IMAGE_AVAILABLE = 'https://cf.geekdo-images.com/zxVVmggfpHJpmnJY9j-k1w__original/img/eBeOyAv08r-qFkQmVKhtBg_netU=/0x0/filters:format(jpeg)/pic1657689.jpg'
+
 // Global state
 let db = null;
 let allGames = [];
@@ -2218,9 +2220,9 @@ function renderGameCard(game) {
   card.setAttribute('data-color', game.color || '255,255,255');
   const summaryImg = clone.querySelector('.game-image');
   const coverImg = clone.querySelector('.cover-image-img');
-  summaryImg.src = game.image;
+  summaryImg.src = game.image ? game.image : NO_IMAGE_AVAILABLE;
   summaryImg.alt = game.name;
-  coverImg.src = game.image;
+  coverImg.src = game.image ? game.image : NO_IMAGE_AVAILABLE;
   coverImg.alt = game.name;
 
   // Set title
