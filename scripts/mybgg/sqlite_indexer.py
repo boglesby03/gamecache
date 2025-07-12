@@ -195,7 +195,7 @@ class SqliteIndexer:
                         logger.error(f"Error processing image for color extraction {game['image']}: {e}")
 
             if not color_str:  # Default color if extraction fails or no image
-                color_str = "255, 255, 255"  # White
+                color_str = "211, 211, 211"  # Light Grey
 
             cursor.execute('''
                 INSERT INTO games (
