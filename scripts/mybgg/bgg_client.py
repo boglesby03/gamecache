@@ -511,23 +511,30 @@ class BGGClient:
                         entry["image"] = details[0].get("image", "")          # Image URL for the entry
                         entry["thumbnail"] = details[0].get("thumbnail", "")  # Thumbnail URL for the entry
                         entry["rating"] = details[0].get("rating", "")
+                        entry["year"] = details[0].get("year", "")
+                        entry["tags"] = details[0].get("tags", "")
                     else:
                         entry["image"] = None
                         entry["thumbnail"] = None
                         entry["rating"] = None
+                        entry["year"] = None
+                        entry["tags"] = None
                 except Exception as e:
                     logger.error(f"Failed to fetch image/thumbnail for {entry_type} id {entry_id}: {e}")
                     entry["image"] = None
                     entry["thumbnail"] = None
                     entry["rating"] = None
+                    entry["year"] = None
+                    entry["tags"] = NotImplemented
 
         if additional_details:
             # Fetch additional metadata for integrations, contained games, and reimplements
             for game in games:
                 if game['type'] == 'boardgame':
                     fetch_additional_metadata(game.get("integrates", []), "integration")
-                    fetch_additional_metadata(game.get("contained", []), "contained")
                     fetch_additional_metadata(game.get("reimplements", []), "reimplements")
+                #These can also be on Box of Promos
+                fetch_additional_metadata(game.get("contained", []), "contained")
 
         return games
 
