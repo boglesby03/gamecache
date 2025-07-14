@@ -4,7 +4,7 @@
 - [X] Expansions/accessories of expansions
 - [X] Still need to handle exceptions to expansions of expansions - such as calendars - again should be fixed in bgg
 - [X] add publishers, designers, artists to search?
-- [ ] Flag primary publisher or publisher I own - star similar to player count
+- [X] Flag primary publisher or publisher I own - star similar to player count
 - [ ] Make lists - articles, ignored expansions configurable
 - [ ] Move hard-coded expansion name rules
 - [X] I need a place to list expansions that have no associated games
@@ -39,7 +39,7 @@
 - [X] Add someway to determine preorders/wishlists
 - [X] Fix Wishlist rankings to sort correctly - may need to add numbers to them during indexing
 - [X] Add images to rest of the fields - accessories, contains, reimplements, etc.
-- [ ] Add rating (i.e. a small card) and other details to the hover image?
+- [ ] Add rating, year, status (Preorder/Wishlist) (i.e. a small card) and other details to the hover image?
 - [ ] Should data be split out into different tables?
 - [X] Undo data saving changes - don't have to reduce comments or filter expansions
 - [ ] Should I continue to split out Expansions without games into 3 entries?
@@ -47,8 +47,11 @@
 - [X] Search box needs a clear X in it
 - [ ] Is there anyway to improve search - soundex, search more fields, score searches (e.g. Inis) - fd5?
 - [ ] How about just updating the database rather than starting from scratch every time?
+  - [ ] Also cache detail requests since I re-need details for cover arts now
+- [ ] Add the BGG Logo (per the new API requirements)
 
-# Fields i'd like to have - but aren't available in APIs
+# API fix requests
 
 - [ ] Version description - some games have additional details on the version details (Like Amun Re Expanded Edition)
 - [ ] Short description - short blurb might be useful - those these are normally more marketing like.  Probably would use on hover of the cover art.
+- [ ] Request that item details are still included even if there are custom details (e.g. custom selected cover cancels out rest of item details)
