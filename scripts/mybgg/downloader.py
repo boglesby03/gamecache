@@ -449,6 +449,11 @@ def custom_expansion_mappings(expansions):
         {"id": 313475, "baseId": 127023},
         {"id": 313480, "baseId": 127023},
         {"id": 313481, "baseId": 127023},
+        # Sonar/Captain Sonar Expansions
+        {"id": 206873, "baseId": 231819},
+        {"id": 207122, "baseId": 231819},
+        {"id": 207123, "baseId": 231819},
+        {"id": 329903, "baseId": 231819},
 
         # Unpublished Nations 2nd Expansion
         {"id": UNPUBLISHED_PROTOTYPE, "baseId": 126042},
