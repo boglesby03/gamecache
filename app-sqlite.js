@@ -204,7 +204,7 @@ function loadAllGames() {
   const stmt = db.prepare(`
     SELECT id, name, description, categories, mechanics, players, weight,
            playing_time, min_age, rank, usersrated, numowned, rating,
-           numplays, image, tags, previous_players, expansions, color, unixepoch(last_modified) as last_modified,
+           numplays, image, thumbnail, tags, previous_players, expansions, color, unixepoch(last_modified) as last_modified,
            publishers, designers, artists, year, wishlist_priority, accessories, po_exp, po_acc, wl_exp, wl_acc,
            alternate_names, comment, wishlist_comment, families, reimplements, reimplementedby, integrates, contained,
            weightRating, other_ranks, average, suggested_age, first_played, last_played, version_name, version_year
@@ -2220,9 +2220,9 @@ function renderGameCard(game) {
   card.setAttribute('data-color', game.color || '255,255,255');
   const summaryImg = clone.querySelector('.game-image');
   const coverImg = clone.querySelector('.cover-image-img');
-  summaryImg.src = game.image ? game.image : NO_IMAGE_AVAILABLE;
+  summaryImg.src = game.thumbnail ? game.thumbnail : NO_IMAGE_AVAILABLE;
   summaryImg.alt = game.name;
-  coverImg.src = game.image ? game.image : NO_IMAGE_AVAILABLE;
+  coverImg.src = game.thumbnail ? game.thumbnail : NO_IMAGE_AVAILABLE;
   coverImg.alt = game.name;
 
   // Set title
