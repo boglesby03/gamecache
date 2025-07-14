@@ -1,5 +1,6 @@
 from decimal import Decimal
 from datetime import datetime
+import copy
 import html
 import re
 
@@ -10,6 +11,7 @@ articles = ['A', 'An', 'The']
 # Allow special characters - add any additional ones as they come available
 latin_pattern = re.compile(r'^[a-zA-Zà-ÿÀ-ßĀ-ž0-9\:\-\%\&—–\,\'\`\"\$\(\)\.\!\s]+$')
 
+PUBLIC_DOMAIN_PUBLISHER=171
 class BoardGame:
     def __init__(self, game_data, collection_data, expansions=[], accessories=[]):
         self.id = game_data["id"]
@@ -48,7 +50,7 @@ class BoardGame:
         self.families = game_data["families"]
         self.artists = game_data["artists"]
         self.designers = game_data["designers"]
-        self.publishers = game_data["publishers"]
+        self.publishers = self.publisher_filter(game_data["publishers"], collection_data)
         self.reimplements = list(filter(lambda g: g["inbound"], game_data["reimplements"]))
         self.reimplementedby = list(filter(lambda g: not g["inbound"], game_data["reimplements"]))
         self.integrates = game_data["integrates"]
@@ -95,6 +97,24 @@ class BoardGame:
 
     def __eq__(self, other):
         return (self.__class__ == other.__class__ and self.id == other.id)
+
+    def publisher_filter(self, publishers, game):
+        publisher_list = []
+        for pub in copy.deepcopy(publishers):
+
+            if pub["id"] == PUBLIC_DOMAIN_PUBLISHER:  # (Public Domain)
+                pub["flag"] = "own"
+                publisher_list.clear()
+                publisher_list.append(pub)
+                break
+            if pub["id"] in game["publisher_ids"]:
+                pub["flag"] = "own"
+            if pub["id"] == game["version_publisher"]:
+                pub["flag"] = "own"
+
+            publisher_list.append(pub)
+
+        return publisher_list
 
     def calc_num_players(self, game_data, expansions):
         num_players = game_data["suggested_numplayers"].copy()
