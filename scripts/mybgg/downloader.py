@@ -12,9 +12,9 @@ from multidict import MultiDict
 DATE_FORMAT = "%Y-%m-%d"
 
 EXTRA_EXPANSIONS_GAME_ID=81913
-PUBLIC_DOMAIN_PUBLISHER=171
 UNPUBLISHED_PROTOTYPE=18291
 BOX_OF_PROMOS=39378
+
 class Downloader():
     def __init__(self, cache_bgg, token, debug=False):
         if cache_bgg:
@@ -227,8 +227,6 @@ class Downloader():
                     family_list.append(newFam)
             game.families = family_list
 
-            game.publishers = publisher_filter(game.publishers, collection_by_id[str(game.id)])
-
             # TODO This is terrible, but split the extra expansions by letter
             if game.id == EXTRA_EXPANSIONS_GAME_ID:
 
@@ -340,25 +338,6 @@ def _uniq(lst):
     lst = sorted(lst, key=lambda x: x['id'])
     for _, grp in itertools.groupby(lst, lambda d: (d['id'])):
         yield list(grp)[0]
-
-# Ignore publishers for Public Domain games
-def publisher_filter(publishers, game):
-    publisher_list = []
-    for pub in publishers:
-        if pub["id"] == PUBLIC_DOMAIN_PUBLISHER:  # (Public Domain)
-            pub["flag"] = "own"
-            publisher_list.clear()
-            publisher_list.append(pub)
-            break
-        if pub["id"] in game["publisher_ids"]:
-            pub["flag"] = "own"
-        if pub["id"] == game["version_publisher"]:
-            pub["flag"] = "own"
-
-        publisher_list.append(pub)
-
-    return publisher_list
-
 
 def custom_accessories_mapping(accessories):
 
