@@ -2123,15 +2123,17 @@ function renderChips(items, sectionHeading, container, template, hover = false, 
                   imgPopup = document.createElement("img");
                   imgPopup.src = item.image;
                   imgPopup.alt = item.name;
-                  imgPopup.style.maxWidth = "300px"; // Maximum width relative to viewport
-                  imgPopup.style.maxHeight = "400px"; // Maximum height relative to viewport
+
                   imgPopup.style.width = "auto"; // Maintain width based on aspect ratio
                   imgPopup.style.height = "auto"; // Maintain height based on aspect ratio
+                  imgPopup.style.maxWidth = "400px"; // Maximum width relative to viewport
+                  imgPopup.style.maxHeight = "500px"; // Maximum height relative to viewport
                   imgPopup.style.borderRadius = "15px"; // Round the corners
-                  imgPopup.style.objectFit = "contain"; // Ensure the image fits within its defined space
 
                   // Create text overlay
                   const textOverlay = document.createElement("div");
+
+                  // Customize the text that shows on the hover image
                   const ratingValue = Number(item.rating);
                   let overText = `Rating: ${isNaN(ratingValue) ? 'N/A' : ratingValue.toFixed(2)}<br>${item.year}`
                   if (item.wishlist) {
@@ -2144,6 +2146,7 @@ function renderChips(items, sectionHeading, container, template, hover = false, 
                     }
                   }
                   textOverlay.innerHTML = overText;
+
                   textOverlay.style.color = "white";
                   textOverlay.style.position = "absolute";
                   textOverlay.style.top = "10px";
@@ -2160,10 +2163,22 @@ function renderChips(items, sectionHeading, container, template, hover = false, 
               if (imgPopup) {
                 // Wait for the image to load to get its height and position
                 imgPopup.onload = () => {
+                    const chipOffset = 5;
+
                     // Calculate the position directly above the chip
                     const rect = chip.getBoundingClientRect();
-                    hoverWrapper.style.top = `${window.scrollY + rect.top - imgPopup.offsetHeight - 5}px`; // Set position above the chip
+                    const imgHeight = imgPopup.offsetHeight; // Get the height of the hover image
+                    let topPosition = window.scrollY + rect.top - imgHeight - chipOffset; // Default position above the chip
+
+                    // Check if the position is above the viewport
+                    if (topPosition < 0) {
+                        topPosition = window.scrollY + rect.bottom + chipOffset; // Adjust the position below the chip if it goes off the top
+                    }
+
+                    // Set final hover wrapper position
+                    hoverWrapper.style.top = `${topPosition}px`; // Set position above or below based on the check
                     hoverWrapper.style.left = `${window.scrollX + rect.left}px`; // Align with the left of the chip
+
                 };
 
                 // If the image has already loaded before, we manually call onload to set position
