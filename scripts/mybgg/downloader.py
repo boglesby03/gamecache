@@ -433,6 +433,11 @@ def custom_expansion_mappings(expansions):
         {"id": 207122, "baseId": 231819},
         {"id": 207123, "baseId": 231819},
         {"id": 329903, "baseId": 231819},
+        # Agricola Cards
+        # {"id": 263965, "baseId": 31260},
+        # Camel Up Cards Trophies in Camel UP
+        {"id": 213282, "baseId": 153938},
+        {"id": 213282, "baseId": 260605}, # Camel Up 2nd Edition
 
         # Unpublished Nations 2nd Expansion
         {"id": UNPUBLISHED_PROTOTYPE, "baseId": 126042},
@@ -443,26 +448,6 @@ def custom_expansion_mappings(expansions):
         # Unpublished King is Dead Vikings
         {"id": UNPUBLISHED_PROTOTYPE, "baseId": 319966},
     ]
-
-    # Original Tuscany should be an expansion for Viticulture Essential Edition (even if there is overlap)
-    # expansions[147101]["expansions"].append({ "id": 183394, "inbound": True})
-
-    # Poison Expansion for Council of Verona
-    # expansions[147827]["expansions"].append({ "id": 165469, "inbound": True})
-
-    # TODO Should be fixed. Map the Carcassonne Map Chips to Carcassonne
-    # expansions[291518]["expansions"].append({"id": 822, "inbound": True})
-
-    # TODO Should be fixed. Africa mapped to TtR: Europe
-    # expansions[131188]["expansions"].append({"id": 14996, "inbound": True})
-    # expansions[131188]["expansions"].append({"id": 225244, "inbound": True}) # TtR: Germany
-
-    # Vegas Wits & Wager -> Wits & Wagers It's Vegas Baby
-    # expansions[229967]["expansions"].append({"id": 286428, "inbound": True})
-
-    # # Hive pocket includes these
-    # expansions[30323]["expansions"].append({"id": 154597, "inbound": True})
-    # expansions[70704]["expansions"].append({"id": 154597, "inbound": True})
 
     for exp in exp_map:
         expansions[exp["id"]]["expansions"].append({"id": exp["baseId"], "inbound": True})
@@ -486,7 +471,7 @@ def is_promo_box(game):
     if game["id"] == 155192:
         return True
 
-    # Mislabeled Marvel Zombies Promo Box, and Marvel/DC Unit Promo boxes - these shouldn't be labeled this way
+    # This is fixed. Mislabeled Marvel Zombies Promo Box, and Marvel/DC Unit Promo boxes - these shouldn't be labeled this way
     if game["id"] in (356731, 339182, 386892, 425907):
         return False
 
