@@ -2225,6 +2225,30 @@ function renderGameCard(game) {
   coverImg.src = game.thumbnail ? game.thumbnail : NO_IMAGE_AVAILABLE;
   coverImg.alt = game.name;
 
+  coverImg.addEventListener("mouseenter", () => {
+    // Create a larger image element for hover
+    const hoverImg = document.createElement("img");
+    hoverImg.src = game.image ? game.image : NO_IMAGE_AVAILABLE;
+    hoverImg.alt = "Larger Cover Image";
+    hoverImg.style.position = "absolute";
+    hoverImg.style.width = "300px"; // Adjust width as needed
+    hoverImg.style.height = "auto"; // Maintain aspect ratio
+    hoverImg.style.zIndex = "1000";
+
+    // Dynamically position the hover image
+    const rect = coverImg.getBoundingClientRect();
+    hoverImg.style.top = `${window.scrollY + rect.bottom + 10}px`; // Position it below the cover image
+    hoverImg.style.left = `${window.scrollX + rect.left}px`;
+
+    hoverImg.id = `hover-cover-img-${game.id}`; // Assign unique ID to avoid overlap
+    document.body.appendChild(hoverImg); // Append to body
+  });
+
+  coverImg.addEventListener("mouseleave", () => {
+    const popupImage = document.getElementById(`hover-cover-img-${game.id}`);
+    if (popupImage) popupImage.remove(); // Remove the larger image
+  });
+
   // Set title
   const title = clone.querySelector('.game-title');
   title.innerHTML = highlightText(game.name, getCurrentSearchQuery());
