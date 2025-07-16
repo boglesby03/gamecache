@@ -254,6 +254,7 @@ class SqliteIndexer:
                 'thumbnail': expansion.get('thumbnail', ''),
                 'rating': str(expansion.get('rating', '')),
                 'year': expansion.get('year', ''),
+                'wishlist': expansion.get('wishlist_priority', ''),
             }
         if hasattr(expansion, 'todict'):  # If it's an object with todict method
             exp_dict = expansion.todict()
@@ -265,6 +266,7 @@ class SqliteIndexer:
                 'thumbnail': exp_dict.get('thumbnail', ''),
                 'rating': str(exp_dict.get('rating', '')),
                 'year': exp_dict.get('year', ''),
+                'wishlist': exp_dict.get('wishlist_priority', ''),
             }
         if hasattr(expansion, '__dict__'):  # Fallback for simple objects
             exp_vars = vars(expansion)
@@ -276,6 +278,8 @@ class SqliteIndexer:
                 'thumbnail': exp_vars.get('thumbnail', ''),
                 'rating': str(exp_vars.get('rating', '')),
                 'year': exp_vars.get('year', ''),
+                'wishlist': exp_vars.get('wishlist_priority', ''),
+
             }
         logger.warning(f"Cannot convert expansion to dict: {expansion}")
         return {}

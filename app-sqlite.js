@@ -31,6 +31,8 @@ let db = null;
 let allGames = [];
 let filteredGames = [];
 let currentPage = 1;
+let hoverWrapper;
+let imgPopup;
 
 // Utility functions
 function showError(message) {
@@ -848,7 +850,6 @@ function setupWishlistFilter() {
     }
   });
 
-  //const sortedWishlists = Object.keys(wishlistCounts).sort();
   const items = CONFIG.WISHLIST_NAMES.map(wl => ({
     label: wl,
     value: wl,
@@ -2107,35 +2108,78 @@ function renderChips(items, sectionHeading, container, template, hover = false, 
 
       // Set chip properties dynamically
       chip.href = item.image
-        ? `https://boardgamegeek.com/boardgameaccessory/${item.id}` // Accessories
-        : `https://boardgamegeek.com/boardgame/${item.id}`; // Expansions or wishlist expansions
+        ? `https://boardgamegeek.com/boardgameaccessory/${item.id}`
+        : `https://boardgamegeek.com/boardgame/${item.id}`;
       chip.textContent = item.name;
 
       if (hover && item.image) {
-        // Add hover functionality to display images
-        chip.addEventListener("mouseenter", () => {
-          const imgPopup = document.createElement("img");
-          imgPopup.src = item.image;
-          imgPopup.alt = item.name;
-          imgPopup.style.position = "absolute";
-          imgPopup.style.width = "200px";
-          imgPopup.style.height = "200px";
-          imgPopup.style.objectFit = "contain"; // Maintain aspect ratio
-          imgPopup.style.zIndex = "100";
+          chip.addEventListener("mouseenter", () => {
+              if (!hoverWrapper) {
+                  hoverWrapper = document.createElement("div");
+                  hoverWrapper.style.position = "absolute";
+                  hoverWrapper.style.zIndex = "1000";
+                  hoverWrapper.style.pointerEvents = "none";
 
-          // Dynamically position popup relative to chip
-          const rect = chip.getBoundingClientRect();
-          imgPopup.style.top = `${window.scrollY + rect.top - 220}px`;
-          imgPopup.style.left = `${window.scrollX + rect.left}px`;
+                  imgPopup = document.createElement("img");
+                  imgPopup.src = item.image;
+                  imgPopup.alt = item.name;
+                  imgPopup.style.maxWidth = "300px"; // Maximum width relative to viewport
+                  imgPopup.style.maxHeight = "400px"; // Maximum height relative to viewport
+                  imgPopup.style.width = "auto"; // Maintain width based on aspect ratio
+                  imgPopup.style.height = "auto"; // Maintain height based on aspect ratio
+                  imgPopup.style.borderRadius = "15px"; // Round the corners
+                  imgPopup.style.objectFit = "contain"; // Ensure the image fits within its defined space
 
-          imgPopup.id = `hover-img-${item.id}`; // Assign unique ID to avoid overlap
-          document.body.appendChild(imgPopup); // Append popup to body
-        });
+                  // Create text overlay
+                  const textOverlay = document.createElement("div");
+                  const ratingValue = Number(item.rating);
+                  let overText = `Rating: ${isNaN(ratingValue) ? 'N/A' : ratingValue.toFixed(2)}<br>${item.year}`
+                  if (item.wishlist) {
+                    if (item.wishlist !== 'Own') {
+                      overText += `<br>`
+                      if (item.wishlist !== 'Preorder') {
+                        overText += `Wishlist: `;
+                      }
+                      overText += item.wishlist
+                    }
+                  }
+                  textOverlay.innerHTML = overText;
+                  textOverlay.style.color = "white";
+                  textOverlay.style.position = "absolute";
+                  textOverlay.style.top = "10px";
+                  textOverlay.style.left = "10px";
+                  textOverlay.style.backgroundColor = "rgba(0, 0, 0, 0.7)"; // Semi-transparent background
+                  textOverlay.style.padding = "5px";
+                  textOverlay.style.borderRadius = "5px";
 
-        chip.addEventListener("mouseleave", () => {
-          const popupImage = document.getElementById(`hover-img-${item.id}`);
-          if (popupImage) popupImage.remove(); // Remove popup image dynamically
-        });
+                  hoverWrapper.appendChild(imgPopup);
+                  hoverWrapper.appendChild(textOverlay);
+                  document.body.appendChild(hoverWrapper);
+              }
+
+              if (imgPopup) {
+                // Wait for the image to load to get its height and position
+                imgPopup.onload = () => {
+                    // Calculate the position directly above the chip
+                    const rect = chip.getBoundingClientRect();
+                    hoverWrapper.style.top = `${window.scrollY + rect.top - imgPopup.offsetHeight - 5}px`; // Set position above the chip
+                    hoverWrapper.style.left = `${window.scrollX + rect.left}px`; // Align with the left of the chip
+                };
+
+                // If the image has already loaded before, we manually call onload to set position
+                if (imgPopup.complete) {
+                    imgPopup.onload();
+                }
+              }
+          });
+
+          chip.addEventListener("mouseleave", () => {
+              if (hoverWrapper) {
+                  hoverWrapper.remove();
+                  hoverWrapper = null;
+                  imgPopup = null;
+              }
+          });
       }
 
       container.appendChild(chip); // Append chip to the container
@@ -2165,6 +2209,7 @@ function createHoverTooltip(hoverElement, htmlContent, offset = 8) {
   hoverPopup.style.fontSize = "0.85em";
   hoverPopup.style.display = "none"; // Initially hidden
   hoverPopup.style.zIndex = "100";
+  hoverPopup.style.borderRadius = "5px";
 
   // Append tooltip to the document body for correct positioning
   document.body.appendChild(hoverPopup);
@@ -2231,9 +2276,10 @@ function renderGameCard(game) {
     hoverImg.src = game.image ? game.image : NO_IMAGE_AVAILABLE;
     hoverImg.alt = "Larger Cover Image";
     hoverImg.style.position = "absolute";
-    hoverImg.style.width = "300px"; // Adjust width as needed
+    hoverImg.style.width = "400px"; // Adjust width as needed
     hoverImg.style.height = "auto"; // Maintain aspect ratio
     hoverImg.style.zIndex = "1000";
+    hoverImg.style.borderRadius = "15px";
 
     // Dynamically position the hover image
     const rect = coverImg.getBoundingClientRect();
