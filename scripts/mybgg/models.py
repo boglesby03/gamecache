@@ -74,6 +74,7 @@ class BoardGame:
         self.comment = collection_data["comment"]
         self.wishlist_comment = collection_data["wishlist_comment"]
         self.wishlist_priority = self.calc_wishlist_priority(collection_data)
+        self.promo = self.is_promo()
 
         self.previous_players = None
         if "players" in collection_data:
@@ -115,6 +116,11 @@ class BoardGame:
             publisher_list.append(pub)
 
         return publisher_list
+
+    def is_promo(self):
+        cat_match = any(item["name"].split(':', 1)[0] == 'Promotional' for item in self.families)
+        name_match = re.search(r'\bPromo(tional)?\b', self.name, re.IGNORECASE) is not None
+        return cat_match or name_match
 
     def calc_num_players(self, game_data, expansions):
         num_players = game_data["suggested_numplayers"].copy()
@@ -411,4 +417,5 @@ class BoardGame:
             "collection_id": self.collection_id,
             "first_played": self.firstplayed,
             "last_played": self.lastplayed,
+            "promo": self.promo,
         }

@@ -479,7 +479,6 @@ def is_promo_box(game):
     # Change this to look for board game family 39378 (Box of Promos)
     return any(BOX_OF_PROMOS == family["id"] for family in game["families"])
 
-
 articles = ['A', 'An', 'The']
 def move_article_to_end(orig):
     """Move articles to the end of the title for proper title sorting"""
@@ -539,15 +538,14 @@ def remove_prefix(expansion, game_details):
             new_exp = new_exp[len(title):]
             break
 
-    #no_base_title = new_exp
     promoOnly = r"(\W*)Promo(?:tional)?(s?):?[\s-]*(?:(?:Box|Card|Deck|Pack|Set)(s?))?\s*(.*)"
     promo = re.match(promoOnly, new_exp)
     if promo:
-        new_exp = new_exp + " [Promo]"
+        new_exp = new_exp # + " [Promo]"
     else:
         # Relabel Promos
         new_exp = re.sub(r"(.*)s*Promo(?:tional)?(s?):?[\s-]*(?:(?:Box|Card|Deck|Pack|Set)(s?))?\s*(.*)",
-                        r"\1 \4 [Promo\2\3]", new_exp, flags=re.IGNORECASE)
+                        r"\1 \4 [\3]", new_exp, flags=re.IGNORECASE)
 
     # Expansions don't need to be labeled Expansion
     # TODO what about "Age of Expansion" or just "Expansion" (Legendary Encounters: Alien - Expansion)?
@@ -606,12 +604,5 @@ def remove_prefix(expansion, game_details):
     # If we ended up removing everything - then just reset to what it started with
     if len(new_exp) == 0:
         return expansion
-    # Also look for the case where the name is nothing but Promo
-    # elif new_exp.startswith("Promo"):
-    #     return expansion
-    # elif new_exp.startswith("Wishlist"):
-    #     return expansion
-    # elif new_exp.startswith("Preorder"):
-    #     return expansion
 
     return new_exp

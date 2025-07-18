@@ -2444,14 +2444,50 @@ function renderGameCard(game) {
 
     expansionsSection.style.display = "block"; // Show the section
 
-    // Render expansions with hover functionality
-    renderChips(game.expansions, originalHeading, originalChipsContainer, expansionChipTemplate, true);
+    // Separate expansions into promo and regular
+    const regularExpansions = game.expansions.filter(item => !item.promo);
+    const promoExpansions = game.expansions.filter(item => item.promo);
 
-    // Render preordered expansions with hover functionality and specific style
-    renderChips(game.po_exp, poHeading, poChipsContainer, expansionChipTemplate, true, "po-expansion-chip");
+    // Render regular expansions
+    renderChips(regularExpansions, originalHeading, originalChipsContainer, expansionChipTemplate, true);
 
-    // Render wishlist expansions with hover functionality and specific style
-    renderChips(game.wl_exp, wlHeading, wlChipsContainer, expansionChipTemplate, true, "wl-expansion-chip");
+    // Render promo expansions if any
+    if (promoExpansions.length > 0) {
+        const promoChipsContainer = expansionsSection.querySelector(".promo-expansion-chips");
+        const promoHeading = expansionsSection.querySelector(".promo-expansion-heading");
+        promoHeading.style.display = "block"; // Show promo heading
+        renderChips(promoExpansions, promoHeading, promoChipsContainer, expansionChipTemplate, true, "promo-expansion-chip");
+    }
+
+    // Separate preordered expansions into promo and regular
+    const regularPoExp = game.po_exp.filter(item => !item.promo);
+    const promoPoExp = game.po_exp.filter(item => item.promo);
+
+    // Render preordered regular expansions
+    renderChips(regularPoExp, poHeading, poChipsContainer, expansionChipTemplate, true, "po-expansion-chip");
+
+    // Render preordered promo expansions if any
+    if (promoPoExp.length > 0) {
+        const promoPoChipsContainer = expansionsSection.querySelector(".promo-po-expansion-chips");
+        const promoPoHeading = expansionsSection.querySelector(".promo-po-expansion-heading");
+        promoPoHeading.style.display = "block"; // Show promo PO heading
+        renderChips(promoPoExp, promoPoHeading, promoPoChipsContainer, expansionChipTemplate, true, "promo-po-expansion-chip");
+    }
+
+    // Separate wishlist expansions into promo and regular
+    const regularWlExp = game.wl_exp.filter(item => !item.promo);
+    const promoWlExp = game.wl_exp.filter(item => item.promo);
+
+    // Render wishlist regular expansions
+    renderChips(regularWlExp, wlHeading, wlChipsContainer, expansionChipTemplate, true, "wl-expansion-chip");
+
+    // Render wishlist promo expansions if any
+    if (promoWlExp.length > 0) {
+        const promoWlChipsContainer = expansionsSection.querySelector(".promo-wl-expansion-chips");
+        const promoWlHeading = expansionsSection.querySelector(".promo-wl-expansion-heading");
+        promoWlHeading.style.display = "block"; // Show promo WL heading
+        renderChips(promoWlExp, promoWlHeading, promoWlChipsContainer, expansionChipTemplate, true, "promo-wl-expansion-chip");
+    }
   }
 
   // Dynamic section rendering for Contains
