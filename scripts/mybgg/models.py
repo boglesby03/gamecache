@@ -9,7 +9,7 @@ articles = ['A', 'An', 'The']
 
 # Regular expression pattern for Latin characters including accented characters to save space
 # Allow special characters - add any additional ones as they come available
-latin_pattern = re.compile(r'^[a-zA-Zà-ÿÀ-ßĀ-ž0-9\:\-\%\&—–\,\'\`\"\$\(\)\.\!\s]+$')
+latin_pattern = re.compile(r'^[a-zA-Zà-ÿÀ-ßĀ-ž0-9\:\-\%\&—–\,\'\`\"\$\(\)\.\!\/\s]+$')
 
 PUBLIC_DOMAIN_PUBLISHER=171
 class BoardGame:
@@ -119,7 +119,7 @@ class BoardGame:
 
     def is_promo(self):
         cat_match = any(item["name"].split(':', 1)[0] == 'Promotional' for item in self.families)
-        name_match = re.search(r'\bPromo(tional)?\b', self.name, re.IGNORECASE) is not None
+        name_match = re.search(r'\bPromo(nal|tions?|s?)\b', self.name, re.IGNORECASE) is not None
         return cat_match or name_match
 
     def calc_num_players(self, game_data, expansions):
@@ -318,6 +318,8 @@ class BoardGame:
         elif any(title in ("King of Tokyo", "King of New York") for title in game_titles):
             game_titles.insert(0, "King of Tokyo/New York")
             game_titles.insert(0, "King of Tokyo/King of New York")
+            game_titles.append("King of Tokyo")
+            game_titles.append("King of New York")
         elif "Legends of Andor" in game_titles:
             game_titles.append("Die Legenden von Andor")
         elif "Massive Darkness 2" in game_titles:
