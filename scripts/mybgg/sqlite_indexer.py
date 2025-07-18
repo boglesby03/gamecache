@@ -235,7 +235,7 @@ class SqliteIndexer:
                 game.get('version_name'),
                 int(game.get('version_year')) if game.get('version_year') is not None else None,
                 int(game.get('collection_id')) if game.get('collection_id') is not None else None,
-                game.get('first_played'), game.get('last_played'),
+                game.get('first_played'), game.get('last_played')
             ))
 
             conn.commit()
@@ -255,6 +255,7 @@ class SqliteIndexer:
                 'rating': str(expansion.get('rating', '')),
                 'year': expansion.get('year', ''),
                 'wishlist': expansion.get('wishlist_priority', ''),
+                'promo': expansion.get('promo', ''),
             }
         if hasattr(expansion, 'todict'):  # If it's an object with todict method
             exp_dict = expansion.todict()
@@ -267,6 +268,7 @@ class SqliteIndexer:
                 'rating': str(exp_dict.get('rating', '')),
                 'year': exp_dict.get('year', ''),
                 'wishlist': exp_dict.get('wishlist_priority', ''),
+                'promo': exp_dict.get('promo', ''),
             }
         if hasattr(expansion, '__dict__'):  # Fallback for simple objects
             exp_vars = vars(expansion)
@@ -279,7 +281,7 @@ class SqliteIndexer:
                 'rating': str(exp_vars.get('rating', '')),
                 'year': exp_vars.get('year', ''),
                 'wishlist': exp_vars.get('wishlist_priority', ''),
-
+                'promo': exp_vars.get('promo', ''),
             }
         logger.warning(f"Cannot convert expansion to dict: {expansion}")
         return {}
