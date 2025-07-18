@@ -376,7 +376,10 @@ body {
 
 .chips,
 .expansion-chips,
-.accessory-chips {
+.accessory-chips,
+.promo-expansion-chips,
+.promo-po-expansion-chips,
+.promo-wl-expansion-chips {
     display: flex;
     flex-wrap: wrap;
     gap: 5px;
@@ -384,7 +387,13 @@ body {
 
 .chip,
 .expansion-chip,
-.accessory-chip {
+.accessory-chip,
+.original-accessory-chip
+.po-expansion-chip,
+.wl-expansion-chip,
+.promo-expansion-chip,
+.promo-po-expansion-chip,
+.promo-wl-expansion-chip {
     padding: 4px 10px;
     border-radius: 10px;
     font-size: 0.8em;
@@ -397,17 +406,94 @@ body {
 
 .chip:hover,
 .expansion-chip:hover,
-.accessory-chip:hover {
+.accessory-chip:hover,
+.promo-expansion-chip:hover,
+.promo-po-expansion-chip:hover,
+.promo-wl-expansion-chip:hover {
     background: rgba(0, 0, 0, 0.1);
     border-color: rgba(0, 0, 0, 0.2);
     color: #000;
 }
 
-.chip-section div a,
-.expansions-section div a,
-.accessories-section div a {
-    color: #b71c1c;
-    text-decoration: none;
+.po-expansion-heading,
+.wl-expansion-heading,
+.po-accessory-heading,
+.wl-accessory-heading {
+    font-size: 0.85em;
+    font-weight: normal;
+    color: #555;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    display: none;
+}
+
+.promo-expansion-heading,
+.promo-po-expansion-heading,
+.promo-wl-expansion-heading,
+.promo-accessory-heading,
+.promo-po-accessory-heading,
+.promo-wl-accessory-heading {
+    font-size: 0.75em;
+    font-weight: normal;
+    color: #555;
+    margin-top: 2px;
+    margin-bottom: 2px;
+    display: none;
+}
+
+.po-expansion-chip,
+.po-accessory-chip,
+.promo-po-expansion-chip,
+.promo-po-accessory-chip {
+    border: 1px solid rgba(0, 128, 0, 0.5);
+    background: rgba(17, 160, 17, 0.1);
+    color: #085f08;
+}
+
+.po-expansion-chip:hover,
+.po-accessory-chip:hover,
+.promo-po-expansion-chip:hover,
+.promo-po-accessory-chip:hover {
+    background: rgba(0, 128, 0, 0.2);
+    border-color: rgba(0, 128, 0, 0.4);
+    color: #044d04;
+}
+
+.wl-expansion-chip,
+.wl-accessory-chip,
+.promo-wl-expansion-chip,
+.promo-wl-accessory-chip {
+    border: 1px solid rgba(0, 0, 255, 0.5);
+    background: rgba(0, 0, 255, 0.1);
+    color: #003366;
+}
+
+.wl-expansion-chip:hover,
+.wl-accessory-chip:hover,
+.promo-wl-expansion-chip:hover,
+.promo-wl-accessory-chip:hover {
+    background: rgba(0, 0, 255, 0.2);
+    border-color: rgba(0, 0, 255, 0.4);
+    color: #001a33;
+    text-decoration: underline;
+}
+
+.chip-container,
+.original-expansion-chips,
+.po-expansion-chips,
+.wl-expansion-chips,
+.original-accessory-chips,
+.po-accessory-chips,
+.wl-accessory-chips,
+.promo-expansion-chip,
+.promo-accessory-chip,
+.promo-wl-expansion-chip,
+.promo-wl-accessory-chip,
+.promo-po-expansion-chip,
+.promo-po-accessory-chip {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
 }
 
 .chip-section div a:hover,
@@ -426,11 +512,8 @@ body {
     font-size: 0.85em;
     z-index: 100;
     display: none;
-    /* Popup is hidden by default */
     max-width: 300px;
-    /* Constrain width */
     text-align: left;
-    /* Align the text for lists */
 }
 
 .hover-popup ul {
@@ -439,24 +522,19 @@ body {
 }
 
 .hover-popup li {
-    margin: 5px 0; }
+    margin: 5px 0;
+}
 
 .hover-popup img {
     display: block;
     position: absolute;
-    /* Ensure absolute positioning for placement */
     width: 200px;
     height: 200px;
     object-fit: contain;
-    /* Scale the image neatly within its dimensions */
     z-index: 100;
-    /* Place the image on top of other elements */
     border: none;
-    /* Ensure no borders around the image */
     box-shadow: none;
-    /* Remove any shadow effects */
     background: none;
-    /* No background for the image */
 }
 
 .close-button {
@@ -787,95 +865,6 @@ body {
     white-space: nowrap;
     z-index: 15;
     text-align: center;
-}
-
-/* Subheading Styles for Preordered/Wishlist Subsections */
-.po-expansion-heading,
-.wl-expansion-heading,
-.po-accessory-heading,
-.wl-accessory-heading {
-    font-size: 0.85em;
-    /* Unified size for subheadings */
-    font-weight: normal;
-    /* No bold styling for subheadings */
-    color: #555;
-    /* Subdued secondary heading color */
-    margin-top: 5px;
-    margin-bottom: 5px;
-    display: none;
-    /* Hidden unless populated via JavaScript */
-}
-
-/* Chip Styles (Base Styling) */
-.chip,
-.expansion-chip,
-.po-expansion-chip,
-.wl-expansion-chip,
-.original-accessory-chip,
-.po-accessory-chip,
-.wl-accessory-chip {
-    padding: 4px 10px;
-    border-radius: 10px;
-    /* Rounded corners for all chips */
-    font-size: 0.8em;
-    /* Uniform font size across chips */
-    text-decoration: none;
-    transition: all 0.2s ease;
-    /* Smooth transitions */
-}
-
-/* PreOwned Expansion Chip Styling */
-.po-expansion-chip,
-.po-accessory-chip {
-    border: 1px solid rgba(0, 128, 0, 0.5);
-    /* Green border */
-    background: rgba(0, 128, 0, 0.1);
-    /* Light green background */
-    color: #085f08;
-    /* Dark green text */
-}
-
-.po-expansion-chip:hover,
-.po-accessory-chip:hover {
-    background: rgba(0, 128, 0, 0.2);
-    /* Slightly darker green */
-    border-color: rgba(0, 128, 0, 0.4);
-    color: #044d04;
-}
-
-/* Wishlist Expansion Chip Styling */
-.wl-expansion-chip,
-.wl-accessory-chip {
-    border: 1px solid rgba(0, 0, 255, 0.5);
-    /* Blue border */
-    background: rgba(0, 0, 255, 0.1);
-    /* Light blue background */
-    color: #003366;
-    /* Dark blue text */
-}
-
-.wl-expansion-chip:hover,
-.wl-accessory-chip:hover {
-    background: rgba(0, 0, 255, 0.2);
-    /* Slightly darker blue */
-    border-color: rgba(0, 0, 255, 0.4);
-    color: #001a33;
-    text-decoration: underline;
-}
-
-/* General Chip Layout */
-.chip-container,
-.original-expansion-chips,
-.po-expansion-chips,
-.wl-expansion-chips,
-.original-accessory-chips,
-.po-accessory-chips,
-.wl-accessory-chips {
-    display: flex;
-    flex-wrap: wrap;
-    /* Allow wrapping for chips */
-    gap: 10px;
-    /* Space between chips */
 }
 
 .comment-text {
