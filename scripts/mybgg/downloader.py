@@ -54,7 +54,7 @@ class Downloader():
         collection_data = list(filter(lambda item: any(tag in filtered_tags for tag in item.get("tags", [])), collection_data))
 
         # Dummy game for linking extra promos and accessories
-        collection_data.append(_create_blank_collection(EXTRA_EXPANSIONS_GAME_ID, "ZZZ: Expansions without Game (A-I)"))
+        collection_data.append(_create_blank_collection(EXTRA_EXPANSIONS_GAME_ID, "ZZZ: Expansions without Game"))
 
         params = {"subtype": "boardgameaccessory"}
         accessory_collection = self.client.collection(user_name=user_name, **params)
@@ -228,68 +228,68 @@ class Downloader():
             game.families = family_list
 
             # TODO This is terrible, but split the extra expansions by letter
-            if game.id == EXTRA_EXPANSIONS_GAME_ID:
+            # if game.id == EXTRA_EXPANSIONS_GAME_ID:
 
-                game.description = ""
-                game.players = []
-                for exp in game.expansions:
-                    exp.players.clear()
+            #     game.description = ""
+            #     game.players = []
+            #     for exp in game.expansions:
+            #         exp.players.clear()
 
-                filterRegEx=r"^[j-qJ-Q]"
-                newGame = copy.deepcopy(game)
-                newGame.name = "ZZZ: Expansions without Game (J-Q)"
-                newGame.collection_id = str(game.collection_id) + "2"
+            #     filterRegEx=r"^[j-qJ-Q]"
+            #     newGame = copy.deepcopy(game)
+            #     newGame.name = "ZZZ: Expansions without Game (J-Q)"
+            #     newGame.collection_id = str(game.collection_id) + "2"
 
-                newGame.expansions = list(filter(lambda x: re.search(filterRegEx, x.name), game.expansions))
-                newGame.po_exp = list(filter(lambda x: re.search(filterRegEx, x.name), game.po_exp))
-                newGame.wl_exp = list(filter(lambda x: re.search(filterRegEx, x.name), game.wl_exp))
-                newGame.accessories = list(filter(lambda x: re.search(filterRegEx, x.name), game.accessories))
-                newGame.po_acc = list(filter(lambda x: re.search(filterRegEx, x.name), game.po_acc))
-                newGame.wl_acc = list(filter(lambda x: re.search(filterRegEx, x.name), game.wl_acc))
+            #     newGame.expansions = list(filter(lambda x: re.search(filterRegEx, x.name), game.expansions))
+            #     newGame.po_exp = list(filter(lambda x: re.search(filterRegEx, x.name), game.po_exp))
+            #     newGame.wl_exp = list(filter(lambda x: re.search(filterRegEx, x.name), game.wl_exp))
+            #     newGame.accessories = list(filter(lambda x: re.search(filterRegEx, x.name), game.accessories))
+            #     newGame.po_acc = list(filter(lambda x: re.search(filterRegEx, x.name), game.po_acc))
+            #     newGame.wl_acc = list(filter(lambda x: re.search(filterRegEx, x.name), game.wl_acc))
 
-                newGame.expansions = sorted(newGame.expansions, key=lambda x: x.name)
-                newGame.po_exp = sorted(newGame.po_exp, key=lambda x: x.name)
-                newGame.wl_exp = sorted(newGame.wl_exp, key=lambda x: x.name)
-                newGame.accessories = sorted(newGame.accessories, key=lambda x: x.name)
-                newGame.po_acc = sorted(newGame.po_acc, key=lambda x: x.name)
-                newGame.wl_acc = sorted(newGame.wl_acc, key=lambda x: x.name)
+            #     newGame.expansions = sorted(newGame.expansions, key=lambda x: x.name)
+            #     newGame.po_exp = sorted(newGame.po_exp, key=lambda x: x.name)
+            #     newGame.wl_exp = sorted(newGame.wl_exp, key=lambda x: x.name)
+            #     newGame.accessories = sorted(newGame.accessories, key=lambda x: x.name)
+            #     newGame.po_acc = sorted(newGame.po_acc, key=lambda x: x.name)
+            #     newGame.wl_acc = sorted(newGame.wl_acc, key=lambda x: x.name)
 
-                game.expansions = list(set(game.expansions) - set(newGame.expansions))
-                game.po_exp = list(set(game.po_exp) - set(newGame.po_exp))
-                game.wl_exp = list(set(game.wl_exp) - set(newGame.wl_exp))
-                game.accessories = list(set(game.accessories) - set(newGame.accessories))
-                game.po_acc = list(set(game.po_acc) - set(newGame.po_acc))
-                game.wl_acc = list(set(game.wl_acc) - set(newGame.wl_acc))
+            #     game.expansions = list(set(game.expansions) - set(newGame.expansions))
+            #     game.po_exp = list(set(game.po_exp) - set(newGame.po_exp))
+            #     game.wl_exp = list(set(game.wl_exp) - set(newGame.wl_exp))
+            #     game.accessories = list(set(game.accessories) - set(newGame.accessories))
+            #     game.po_acc = list(set(game.po_acc) - set(newGame.po_acc))
+            #     game.wl_acc = list(set(game.wl_acc) - set(newGame.wl_acc))
 
-                newGames.append(newGame)
+            #     newGames.append(newGame)
 
-                filterRegEx=r"^[r-zR-Z]"
-                newGame = copy.deepcopy(game)
-                newGame.name = "ZZZ: Expansions without Game (R-Z)"
-                newGame.collection_id = str(game.collection_id) + "3"
+            #     filterRegEx=r"^[r-zR-Z]"
+            #     newGame = copy.deepcopy(game)
+            #     newGame.name = "ZZZ: Expansions without Game (R-Z)"
+            #     newGame.collection_id = str(game.collection_id) + "3"
 
-                newGame.expansions = list(filter(lambda x: re.search(filterRegEx, x.name), game.expansions))
-                newGame.po_exp = list(filter(lambda x: re.search(filterRegEx, x.name), game.po_exp))
-                newGame.wl_exp = list(filter(lambda x: re.search(filterRegEx, x.name), game.wl_exp))
-                newGame.accessories = list(filter(lambda x: re.search(filterRegEx, x.name), game.accessories))
-                newGame.po_acc = list(filter(lambda x: re.search(filterRegEx, x.name), game.po_acc))
-                newGame.wl_acc = list(filter(lambda x: re.search(filterRegEx, x.name), game.wl_acc))
+            #     newGame.expansions = list(filter(lambda x: re.search(filterRegEx, x.name), game.expansions))
+            #     newGame.po_exp = list(filter(lambda x: re.search(filterRegEx, x.name), game.po_exp))
+            #     newGame.wl_exp = list(filter(lambda x: re.search(filterRegEx, x.name), game.wl_exp))
+            #     newGame.accessories = list(filter(lambda x: re.search(filterRegEx, x.name), game.accessories))
+            #     newGame.po_acc = list(filter(lambda x: re.search(filterRegEx, x.name), game.po_acc))
+            #     newGame.wl_acc = list(filter(lambda x: re.search(filterRegEx, x.name), game.wl_acc))
 
-                newGame.expansions = sorted(newGame.expansions, key=lambda x: x.name)
-                newGame.po_exp = sorted(newGame.po_exp, key=lambda x: x.name)
-                newGame.wl_exp = sorted(newGame.wl_exp, key=lambda x: x.name)
-                newGame.accessories = sorted(newGame.accessories, key=lambda x: x.name)
-                newGame.po_acc = sorted(newGame.po_acc, key=lambda x: x.name)
-                newGame.wl_acc = sorted(newGame.wl_acc, key=lambda x: x.name)
+            #     newGame.expansions = sorted(newGame.expansions, key=lambda x: x.name)
+            #     newGame.po_exp = sorted(newGame.po_exp, key=lambda x: x.name)
+            #     newGame.wl_exp = sorted(newGame.wl_exp, key=lambda x: x.name)
+            #     newGame.accessories = sorted(newGame.accessories, key=lambda x: x.name)
+            #     newGame.po_acc = sorted(newGame.po_acc, key=lambda x: x.name)
+            #     newGame.wl_acc = sorted(newGame.wl_acc, key=lambda x: x.name)
 
-                game.expansions = list(set(game.expansions) - set(newGame.expansions))
-                game.po_exp = list(set(game.po_exp) - set(newGame.po_exp))
-                game.wl_exp = list(set(game.wl_exp) - set(newGame.wl_exp))
-                game.accessories = list(set(game.accessories) - set(newGame.accessories))
-                game.po_acc = list(set(game.po_acc) - set(newGame.po_acc))
-                game.wl_acc = list(set(game.wl_acc) - set(newGame.wl_acc))
+            #     game.expansions = list(set(game.expansions) - set(newGame.expansions))
+            #     game.po_exp = list(set(game.po_exp) - set(newGame.po_exp))
+            #     game.wl_exp = list(set(game.wl_exp) - set(newGame.wl_exp))
+            #     game.accessories = list(set(game.accessories) - set(newGame.accessories))
+            #     game.po_acc = list(set(game.po_acc) - set(newGame.po_acc))
+            #     game.wl_acc = list(set(game.wl_acc) - set(newGame.wl_acc))
 
-                newGames.append(newGame)
+            #     newGames.append(newGame)
 
             # Resort the list after updating the names
             game.expansions = sorted(game.expansions, key=lambda x: x.name)
@@ -548,7 +548,7 @@ def remove_prefix(expansion, game_details):
     # Fix consistency with different '-' being used.
     new_exp = re.sub(r"\–", "-", new_exp)
     # Pack sorting
-    new_exp = re.sub(r"(.*)\s(Hero|Scenario|Ally|Villain|Mythos|Figure|Army|Faction|Investigator|Companion App|Reinforcement|Character) *(?:Starter|-)? +(?:Card|Deck|Pack|Set)\s*(#?\d*)", r"\2: \1", new_exp)
+    new_exp = re.sub(r"(.*)\s(Hero|Scenario|Ally|Villain|Mythos|Figure|Army|Faction|Investigator|Companion App|Reinforcement|Character) *(?:Starter|-)? +(?:Card|Deck|Pack|Set)\s*(?:-)?\s*(\#?\d*)", r"\2: \1", new_exp)
     # Scenarios
     new_exp = re.sub(r"(.*)\s(Scenario)s?\s*", r"\2: \1", new_exp)
     # Massive Darkness
@@ -591,13 +591,17 @@ def remove_prefix(expansion, game_details):
     new_exp = move_article_to_end(new_exp)
 
     # Lazy fix to move tags back to the end of the name
-    new_exp = re.sub(r"( \[(?:Fan|Promo)\]), (.*)", r",\2\1", new_exp)
+    new_exp = re.sub(r"( \[(?:Fan)\]), (.*)", r",\2\1", new_exp)
 
-    # collapse any remaining multispaces
+    # collapse any remaining multi-spaces
     new_exp = re.sub(r"/s/s+", " ", new_exp)
 
     # If we ended up removing everything - then just reset to what it started with
     if len(new_exp) == 0:
+        tmp_title = re.sub(r"(.*)s*[\(\[]?(Promo(?:tional)?(s?):?[\s-]*(?:(?:Box|Card|Deck|Pack|Set|Character)(s?))?)\s*[\)\]]?\s*(.*)",
+                           r"\2", expansion, flags=re.IGNORECASE)
+        if len(tmp_title) > 0:
+            return tmp_title
         return expansion
 
     return new_exp

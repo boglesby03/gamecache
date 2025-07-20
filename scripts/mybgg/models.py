@@ -4,12 +4,11 @@ import copy
 import html
 import re
 
-
 articles = ['A', 'An', 'The']
 
 # Regular expression pattern for Latin characters including accented characters to save space
 # Allow special characters - add any additional ones as they come available
-latin_pattern = re.compile(r'^[a-zA-Zà-ÿÀ-ßĀ-ž0-9\:\-\%\&—–\,\'\`\"\$\(\)\.\!\/\s]+$')
+latin_pattern = re.compile(r'^[a-zA-Zà-ÿÀ-ßĀ-ž0-9\:\-\%\&—–\,\'\`\"\$\(\)\.\!\/\\\s\₂]+$')
 
 PUBLIC_DOMAIN_PUBLISHER=171
 class BoardGame:
@@ -30,10 +29,6 @@ class BoardGame:
         self.tags = collection_data["tags"]
 
         # TODO put this in external datamap - tag -> label
-        # if 'preordered' in self.tags:
-        #     name += " [Preorder]"
-        # elif 'wishlist' in self.tags:
-        #     name += " [Wishlist]"
         self.wl_exp = list(filter(lambda e: 'wishlist' in e.tags, expansions))
         self.wl_acc = list(filter(lambda e: 'wishlist' in e.tags, accessories))
         self.po_exp = list(filter(lambda e: 'preordered' in e.tags, expansions))
@@ -293,8 +288,6 @@ class BoardGame:
             game_titles.append("Burgle Bros 2")
         elif "Burgle Bros 2" in game_titles:
             game_titles.append("Burgle Bros.")
-        # elif "Cartographers" in game_titles:
-        #     game_titles.insert(0, "Cartographers: A Roll Player Tale")  # This needs to be first in the list
         elif "Cartographers Heroes" in game_titles:
             game_titles.append("Cartographers: A Roll Player Tale")
             game_titles.append("Cartographers")
@@ -311,6 +304,8 @@ class BoardGame:
             game_titles.append("DC Deck Building Game")
         elif "Endeavor: Deep Sea Deluxe Edition" in game_titles:
             game_titles.append("Endeavor: Deep Sea")
+        elif "Hero Realms Dungeons" in game_titles:
+            game_titles.append("Hero Realms")
         elif "Hive Pocket" in game_titles:
             game_titles.append("Hive")
         elif "Horizons of Spirit Island" in game_titles:
@@ -324,6 +319,8 @@ class BoardGame:
             game_titles.append("Die Legenden von Andor")
         elif "Massive Darkness 2" in game_titles:
             game_titles.append("Massive Darkness")
+        elif "Massive Darkness" in game_titles:
+            game_titles.append("Massive Darkness 2")
         elif "No Thanks!" in game_titles:
             game_titles.append("Schöne Sch#!?e")
         elif "Power Grid Deluxe" in game_titles:
@@ -344,8 +341,10 @@ class BoardGame:
             game_titles.append("Rokoko")
         elif "Small World Underground" in game_titles:
             game_titles.append("Small World")
-        elif "Survive: Escape from Atlantis" in game_titles:
-            game_titles.append("Survive the Island")
+        elif "Suburbia" in game_titles:
+            game_titles.insert(0, "Suburbia: Collector's Edition")
+        elif "Survive: Escape from Atlantis!" in game_titles:
+            game_titles.insert(0, "Survive the Island")
         elif any(title in ("Tournament at Avalon", "Tournament at Camelot") for title in game_titles):
             game_titles.insert(0, "Tournament at Camelot/Avalon")
         # elif "Unforgiven" in game_titles:
@@ -362,6 +361,7 @@ class BoardGame:
         #game_titles.extend([ game["name"] for game in game_data["reimplementedby"]])
         #game_titles.extend([ game["name"] for game in game_data["integrates"]])
 
+        #return game_titles
         # Scrub non-latin based titles
         tmp_titles = [ title for title in game_titles if latin_pattern.match(title)]
 
