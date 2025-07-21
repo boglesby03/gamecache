@@ -2129,6 +2129,7 @@ function renderChips(items, sectionHeading, container, template, hover = false, 
                   imgPopup.style.maxWidth = "400px"; // Maximum width relative to viewport
                   imgPopup.style.maxHeight = "500px"; // Maximum height relative to viewport
                   imgPopup.style.borderRadius = "15px"; // Round the corners
+                  imgPopup.style.boxShadow = "0 4px 12px rgba(0, 0, 0, 0.3)";
 
                   // Create text overlay
                   const textOverlay = document.createElement("div");
@@ -2163,22 +2164,33 @@ function renderChips(items, sectionHeading, container, template, hover = false, 
               if (imgPopup) {
                 // Wait for the image to load to get its height and position
                 imgPopup.onload = () => {
-                    const chipOffset = 5;
+                  const chipOffset = 5;
 
-                    // Calculate the position directly above the chip
-                    const rect = chip.getBoundingClientRect();
-                    const imgHeight = imgPopup.offsetHeight; // Get the height of the hover image
-                    let topPosition = window.scrollY + rect.top - imgHeight - chipOffset; // Default position above the chip
+                  // Calculate the position directly above the chip
+                  const rect = chip.getBoundingClientRect();
+                  const imgHeight = imgPopup.offsetHeight; // Get the height of the hover image
+                  let topPosition =
+                    window.scrollY + rect.top - imgHeight - chipOffset; // Default position above the chip
+                  let leftPosition = window.scrollX + rect.left; // Align with the left of the chip
 
-                    // Check if the position is above the viewport
-                    if (topPosition < 0) {
-                        topPosition = window.scrollY + rect.bottom + chipOffset; // Adjust the position below the chip if it goes off the top
-                    }
+                  // Check if the calculated position is off the right side of the viewport
+                  const rightEdge = leftPosition + imgPopup.offsetWidth; // Right edge of the image
+                  const viewportWidth = window.innerWidth; // Get viewport width
 
-                    // Set final hover wrapper position
-                    hoverWrapper.style.top = `${topPosition}px`; // Set position above or below based on the check
-                    hoverWrapper.style.left = `${window.scrollX + rect.left}px`; // Align with the left of the chip
+                  if (rightEdge > viewportWidth) {
+                    // Shift to the left if it goes off the right edge
+                    leftPosition =
+                      viewportWidth - imgPopup.offsetWidth - chipOffset; // Position it to fit within the viewport
+                  }
 
+                  // Check if the position is above the viewport
+                  if (topPosition < 0) {
+                    topPosition = window.scrollY + rect.bottom + chipOffset; // Adjust position below the chip
+                  }
+
+                  // Set final hover wrapper position
+                  hoverWrapper.style.top = `${topPosition}px`; // Set position above or below based on the check
+                  hoverWrapper.style.left = `${leftPosition}px`; // Set final left position
                 };
 
                 // If the image has already loaded before, we manually call onload to set position
@@ -2286,7 +2298,6 @@ function renderGameCard(game) {
   coverImg.alt = game.name;
 
   coverImg.addEventListener("mouseenter", () => {
-    // Create a larger image element for hover
     const hoverImg = document.createElement("img");
     hoverImg.src = game.image ? game.image : NO_IMAGE_AVAILABLE;
     hoverImg.alt = "Larger Cover Image";
@@ -2295,19 +2306,43 @@ function renderGameCard(game) {
     hoverImg.style.height = "auto"; // Maintain aspect ratio
     hoverImg.style.zIndex = "1000";
     hoverImg.style.borderRadius = "15px";
+    hoverImg.style.boxShadow = "0 4px 12px rgba(0, 0, 0, 0.3)";
 
-    // Dynamically position the hover image
-    const rect = coverImg.getBoundingClientRect();
-    hoverImg.style.top = `${window.scrollY + rect.bottom + 10}px`; // Position it below the cover image
-    hoverImg.style.left = `${window.scrollX + rect.left}px`;
+    // Append immediately to the DOM to allow measurement
+    document.body.appendChild(hoverImg);
 
-    hoverImg.id = `hover-cover-img-${game.id}`; // Assign unique ID to avoid overlap
-    document.body.appendChild(hoverImg); // Append to body
-  });
+    // Use the load event to ensure the image has rendered
+    hoverImg.onload = () => {
+      const rect = coverImg.getBoundingClientRect();
+      let topPosition = rect.bottom + 10; // Default below the image
+      let leftPosition = rect.left; // Align with the left of the image
 
-  coverImg.addEventListener("mouseleave", () => {
-    const popupImage = document.getElementById(`hover-cover-img-${game.id}`);
-    if (popupImage) popupImage.remove(); // Remove the larger image
+      const hoverImgHeight = hoverImg.offsetHeight; // Dynamic height
+
+      // Check for bottom overflow
+      const viewportHeight = window.innerHeight;
+      if (topPosition + hoverImgHeight > viewportHeight) {
+        // Position above the cover image if it goes off the bottom
+        topPosition = rect.top - hoverImgHeight - 10; // 10px space
+      }
+
+      // Check for right overflow
+      const rightEdge = leftPosition + hoverImg.offsetWidth;
+      const viewportWidth = window.innerWidth;
+      if (rightEdge > viewportWidth) {
+        // Shift to left if it goes off the right edge
+        leftPosition = viewportWidth - hoverImg.offsetWidth - 10;
+      }
+
+      // Set final positions
+      hoverImg.style.top = `${topPosition}px`;
+      hoverImg.style.left = `${leftPosition}px`;
+    };
+
+    // Ensure hover image is removed properly
+    coverImg.addEventListener("mouseleave", () => {
+      if (hoverImg) hoverImg.remove(); // Remove the larger image
+    });
   });
 
   // Set title
