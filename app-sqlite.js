@@ -1431,6 +1431,11 @@ function updateURLWithFilters(filters) {
 function updateUIFromState(state) {
   document.getElementById('search-input').value = state.query;
 
+  // Update the clear button visibility based on the input value
+  const clearButton = document.getElementById("clear-button");
+  clearButton.style.display = state.query ? "block" : "none";
+
+
   document.querySelectorAll('input[type="checkbox"]').forEach(cb => cb.checked = false);
 
   const checkboxFilters = {
