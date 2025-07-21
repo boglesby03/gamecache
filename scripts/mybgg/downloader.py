@@ -346,6 +346,8 @@ def custom_accessories_mapping(accessories):
         {"id": 359371, "baseId": 125618},
         # They don't match in art, but GeekUp Bits can be used with new Amun-Re
         {"id": 283524, "baseId": 354568},
+        # Ice Cool2 Promos to Ice Cool
+        {"id": 265033, "baseId": 177524},
     ]
 
     for new_acc in acc_map:
@@ -438,8 +440,6 @@ def custom_expansion_mappings(expansions):
         # Camel Up Cards Trophies in Camel UP
         {"id": 213282, "baseId": 153938},
         {"id": 213282, "baseId": 260605}, # Camel Up 2nd Edition
-        # Ice Cool2 Promos to Ice Cool
-        {"id": 265033, "baseId": 177524},
 
         # Unpublished Nations 2nd Expansion
         {"id": UNPUBLISHED_PROTOTYPE, "baseId": 126042},
