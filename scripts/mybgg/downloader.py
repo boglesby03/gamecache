@@ -515,6 +515,11 @@ def name_scrubber(title):
     # Funkoverse
     new_title = re.sub(r"Funkoverse Strategy Game", "Funkoverse", new_title)
 
+    # We know it's a board game
+    new_title = re.sub(r"\bBoard\s*game\b", " ", new_title, flags=re.IGNORECASE)
+
+    new_title = re.sub(r"\s\s+", " ", new_title)
+
     new_title = move_article_to_end(new_title)
 
     if len(new_title) == 0:
@@ -541,8 +546,8 @@ def remove_prefix(expansion, game_details):
             break
 
     # Relabel Promos
-    new_exp = re.sub(r"(.*)s*Promo(?:tional)?(s?):?[\s-]*(?:(?:Box|Card|Deck|Pack|Set|Character)(s?))?\s*\s*[\)\]]?\s*(.*)",
-                    r"\1 \4", new_exp, flags=re.IGNORECASE)
+    new_exp = re.sub(r"(.*)s*Promo(?:tion(?:al)?)?s?:?(?:[\s-]*(?:(?:Box|Card|Deck|Pack|Set|Character)s?)?)+\s*\s*[\)\]]?\s*(.*)",
+                    r"\1 \2", new_exp, flags=re.IGNORECASE)
 
     # Expansions don't need to be labeled Expansion
     # TODO what about "Age of Expansion" or just "Expansion" (Legendary Encounters: Alien - Expansion)?
@@ -550,9 +555,11 @@ def remove_prefix(expansion, game_details):
     # Fix consistency with different '-' being used.
     new_exp = re.sub(r"\–", "-", new_exp)
     # Pack sorting
-    new_exp = re.sub(r"(.*)\s(Hero|Scenario|Ally|Villain|Mythos|Figure|Army|Faction|Investigator|Companion App|Reinforcement|Character) *(?:Starter|-)? +(?:Card|Deck|Pack|Set)\s*(?:-)?\s*(\#?\d*)", r"\2: \1", new_exp)
+    new_exp = re.sub(r"(.*)\s(Hero|Scenario|Ally|Villain|Mythos|Figure|Army|Faction|Investigator|Companion App|Reinforcement|Character) *(?:Starter|-)?(?:\s+(?:Card|Deck|Pack|Set))+\s*(?:-)?(\s+\#?\d*)", r"\2\3: \1", new_exp)
     # Scenarios
     new_exp = re.sub(r"(.*)\s(Scenario)s?\s*", r"\2: \1", new_exp)
+    # Remove Boardgame or Board Game from the title
+    new_exp = re.sub(r"\s*Board\s*game\s*", " ", new_exp, flags=re.IGNORECASE)
     # Massive Darkness
     new_exp = re.sub(r"Heroes & Monster Set", "Hero Set", new_exp)
     # Heroic Bystanders
@@ -581,6 +588,8 @@ def remove_prefix(expansion, game_details):
     new_exp = re.sub(r"\s*Map Collection: Volume ", "Map Pack ", new_exp, flags=re.IGNORECASE)
     # Remove leading whitespace and special characters
     new_exp = re.sub(r"^[^\w\"'`]+", "", new_exp)
+    # Empty parenthesis
+    new_exp = re.sub(r"\s*\(\s*\)\s*", "", new_exp)
     # Remove trailing special characters
     new_exp = re.sub(r"[\s,:\(\[\-]+$", "", new_exp)
     # If there is still a dash (secondary delimiter), swap it to a colon
@@ -596,11 +605,13 @@ def remove_prefix(expansion, game_details):
     new_exp = re.sub(r"( \[(?:Fan)\]), (.*)", r",\2\1", new_exp)
 
     # collapse any remaining multi-spaces
-    new_exp = re.sub(r"/s/s+", " ", new_exp)
+    new_exp = re.sub(r"\s\s+", " ", new_exp)
+
+    new_exp = new_exp.strip()
 
     # If we ended up removing everything - then just reset to what it started with
     if len(new_exp) == 0:
-        tmp_title = re.sub(r"(.*)s*[\(\[]?(Promo(?:tional)?(s?):?[\s-]*(?:(?:Box|Card|Deck|Pack|Set|Character)(s?))?)\s*[\)\]]?\s*(.*)",
+        tmp_title = re.sub(r"^(.*?)\s*([\(?:\[]?Promo(?:tion(?:al)?)?s?:?(?:[\s-]*(?:(?:Box|Card|Deck|Pack|Set|Character)s?)+)+)\s*[\)\]]?\s*(.*)$",
                            r"\2", expansion, flags=re.IGNORECASE)
         if len(tmp_title) > 0:
             return tmp_title
