@@ -221,11 +221,16 @@ class Downloader():
                 id = str(reimps["id"])
                 if id in collection_by_id:
                     reimps["tags"] = collection_by_id[id]["tags"]
+                else:
+                    reimps["tags"] = ["unowned"]
+
             for reimpby in game.reimplementedby:
                 reimpby["name"] = name_scrubber(reimpby["name"])
                 id = str(reimpby["id"])
                 if id in collection_by_id:
                     reimpby["tags"] = collection_by_id[id]["tags"]
+                else:
+                    reimps["tags"] = ["unowned"]
 
             family_list = []
             for fam in game.families:

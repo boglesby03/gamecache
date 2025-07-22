@@ -2117,6 +2117,25 @@ function renderChips(items, sectionHeading, container, template, hover = false, 
         : `https://boardgamegeek.com/boardgame/${item.id}`;
       chip.textContent = item.name;
 
+      if (
+        (Array.isArray(item.tags) && item.tags.includes("wishlist")) ||
+        item.tags === "wishlist"
+      ) {
+        chip.classList.add("wl-expansion-chip");
+      } else if (
+        (Array.isArray(item.tags) && item.tags.includes("preordered")) ||
+        item.tags === "preordered"
+      ) {
+        chip.classList.add("po-expansion-chip");
+      } else if (
+        (Array.isArray(item.tags) && item.tags.includes("unowned")) ||
+        item.tags === "unowned"
+      ) {
+        chip.classList.add("un-expansion-chip");
+      } else if (chipClass) {
+        chip.classList.add(chipClass);
+      };
+
       if (hover && item.image) {
           chip.addEventListener("mouseenter", () => {
               if (!hoverWrapper) {
@@ -2565,7 +2584,7 @@ function renderGameCard(game) {
     const integratesChipContainer = integratesSection.querySelector(".integrates-chips");
 
     integratesSection.style.display = "block";
-    renderChips(game.integrates, integratesHeading, integratesChipContainer, expansionChipTemplate, true);
+    renderChips(game.integrates, integratesHeading, integratesChipContainer, expansionChipTemplate, true, "");
   }
 
   // Set rating
