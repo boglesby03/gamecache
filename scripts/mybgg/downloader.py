@@ -156,7 +156,6 @@ class Downloader():
                 game_data_by_id[id]["expansions_collection"].extend(expansion_data_by_id[expansion_data["id"]]["expansions_collection"])
                 game_data_by_id[id]["accessories_collection"].extend(expansion_data_by_id[expansion_data["id"]]["accessories_collection"])
 
-
         games_collection = list(filter(lambda x: x["id"] in game_data_by_id, collection_by_id.values()))
 
         games = [
@@ -210,15 +209,23 @@ class Downloader():
             integrates_list = []
             for integrate in game.integrates:
                 # Filter integrates to owned games
-                if str(integrate["id"]) in collection_by_id:
+                id = str(integrate["id"])
+                if id in collection_by_id:
                     integrate["name"] = name_scrubber(integrate["name"])
+                    integrate["tags"] = collection_by_id[id]["tags"]
                     integrates_list.append(integrate)
             game.integrates = sorted(integrates_list, key=lambda x: x["name"])
 
             for reimps in game.reimplements:
                 reimps["name"] = name_scrubber(reimps["name"])
+                id = str(reimps["id"])
+                if id in collection_by_id:
+                    reimps["tags"] = collection_by_id[id]["tags"]
             for reimpby in game.reimplementedby:
                 reimpby["name"] = name_scrubber(reimpby["name"])
+                id = str(reimpby["id"])
+                if id in collection_by_id:
+                    reimpby["tags"] = collection_by_id[id]["tags"]
 
             family_list = []
             for fam in game.families:
@@ -516,11 +523,13 @@ def name_scrubber(title):
     new_title = re.sub(r"Funkoverse Strategy Game", "Funkoverse", new_title)
 
     # We know it's a board game
-    new_title = re.sub(r"\bBoard\s*game\b", " ", new_title, flags=re.IGNORECASE)
+    new_title = re.sub(r"\s*Board\s*game\s*", " ", new_title, flags=re.IGNORECASE)
 
-    new_title = re.sub(r"\s\s+", " ", new_title)
+    new_title = re.sub(r"\s\s+", " ", new_title.strip())
 
     new_title = move_article_to_end(new_title)
+
+    new_title = new_title.strip()
 
     if len(new_title) == 0:
         return title
