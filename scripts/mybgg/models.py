@@ -114,7 +114,7 @@ class BoardGame:
 
     def is_promo(self):
         cat_match = any(item["name"].split(':', 1)[0] == 'Promotional' for item in self.families)
-        name_match = re.search(r'\bPromo(nal|tions?|s?)\b', self.name, re.IGNORECASE) is not None
+        name_match = re.search(r'\bPromo(tion(al)?)?s?\b', self.name, re.IGNORECASE) is not None
         return cat_match or name_match
 
     def calc_num_players(self, game_data, expansions):
@@ -304,6 +304,9 @@ class BoardGame:
             game_titles.append("DC Deck Building Game")
         elif "Endeavor: Deep Sea Deluxe Edition" in game_titles:
             game_titles.append("Endeavor: Deep Sea")
+        # Some reason the spacing is different on the expansion
+        # elif "Expanse Boardgame, The" in game_titles:
+        #     game_titles.append("Expanse Board Game, The")
         elif "Hero Realms Dungeons" in game_titles:
             game_titles.append("Hero Realms")
         elif "Hive Pocket" in game_titles:
@@ -345,6 +348,8 @@ class BoardGame:
             game_titles.insert(0, "Suburbia: Collector's Edition")
         elif "Survive: Escape from Atlantis!" in game_titles:
             game_titles.insert(0, "Survive the Island")
+        elif "Sushi Go!" in game_titles:
+            game_titles.insert(0, "Sushi Go Party!")
         elif any(title in ("Tournament at Avalon", "Tournament at Camelot") for title in game_titles):
             game_titles.insert(0, "Tournament at Camelot/Avalon")
         # elif "Unforgiven" in game_titles:
