@@ -502,6 +502,14 @@ body {
     text-decoration: underline;
 }
 
+.un-expansion-chip {
+    background: rgba(143, 143, 143, 0.93);
+    /* dark grey, subtle transparency */
+    color: #fff;
+    border: 1px solid rgba(40, 40, 40, 0.95);
+    /* even darker border */
+}
+
 .hover-popup {
     position: absolute;
     background-color: white;
