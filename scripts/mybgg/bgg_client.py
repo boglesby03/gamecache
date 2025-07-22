@@ -50,7 +50,7 @@ class BGGClient:
 
         return all_plays
 
-    def game_list(self, game_ids):
+    def game_list(self, game_ids, additional_details = True):
         if not game_ids:
             return []
 
@@ -63,7 +63,7 @@ class BGGClient:
         for game_ids_subset in chunks(game_ids, 20):
             url = "/thing/?stats=1&id=" + ",".join([str(id_) for id_ in game_ids_subset])
             data = self._make_request(url)
-            games += self._games_list_to_games(data)
+            games += self._games_list_to_games(data, additional_details)
 
         return games
 
@@ -497,35 +497,34 @@ class BGGClient:
 
         # Helper function for fetching and updating image/thumbnail metadata
         def fetch_additional_metadata(entries, entry_type):
+
+            if len(entries) == 0:
+                return
+
+            entry_list = []
             for entry in entries:
                 entry_id = entry.get("id")
                 if not entry_id:
                     continue
+                entry_list.append(entry_id)
 
-                # Make API call to fetch details
-                try:
-                    additional_data = self._make_request(f"/thing/?stats=1&id={entry_id}")
-                    details = self._games_list_to_games(additional_data, False)
-
+            try:
+                details = self.game_list(entry_list, additional_details=False)
+                idx = 0
+                for entry in entries:
                     if details:
-                        entry["image"] = details[0].get("image", "")          # Image URL for the entry
-                        entry["thumbnail"] = details[0].get("thumbnail", "")  # Thumbnail URL for the entry
-                        entry["rating"] = details[0].get("rating", "")
-                        entry["year"] = details[0].get("year", "")
-                        entry["tags"] = details[0].get("tags", "")
+                        entry["image"] = details[idx].get("image", "")          # Image URL for the entry
+                        entry["thumbnail"] = details[idx].get("thumbnail", "")  # Thumbnail URL for the entry
+                        entry["rating"] = details[idx].get("rating", "")
+                        entry["year"] = details[idx].get("year", "")
                     else:
                         entry["image"] = None
                         entry["thumbnail"] = None
                         entry["rating"] = None
                         entry["year"] = None
-                        entry["tags"] = None
-                except Exception as e:
-                    logger.error(f"Failed to fetch image/thumbnail for {entry_type} id {entry_id}: {e}")
-                    entry["image"] = None
-                    entry["thumbnail"] = None
-                    entry["rating"] = None
-                    entry["year"] = None
-                    entry["tags"] = NotImplemented
+                    idx += 1
+            except Exception as e:
+                logger.error(f"Failed to fetch image/thumbnail for {entry_type} id {entry_list}: {e}")
 
         if additional_details:
             # Fetch additional metadata for integrations, contained games, and reimplements
