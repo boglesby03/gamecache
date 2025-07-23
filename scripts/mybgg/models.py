@@ -1,7 +1,8 @@
 from decimal import Decimal
-from datetime import datetime
+# from datetime import datetime
 import copy
 import html
+import unicodedata
 import re
 
 articles = ['A', 'An', 'The']
@@ -237,6 +238,12 @@ class BoardGame:
 
         # return weight_mapping[round(Decimal(game_data["weight"] or -1))]
 
+    def remove_accents(self, input_str):
+        """Converts input_str to ASCII, removing accented characters."""
+        nfkd_form = unicodedata.normalize('NFKD', input_str)
+        only_ascii = ''.join([c for c in nfkd_form if not unicodedata.combining(c)])
+        return only_ascii
+
     def calc_suggested_age(self, game_data):
 
         sum = 0
@@ -275,6 +282,10 @@ class BoardGame:
         game_titles.append(game.split("-")[0].strip()) # Medium Title - different dash
         game_titles.append(game.split(":")[0].strip()) # Short Title
         game_titles.append(game.split("(")[0].strip()) # No Edition
+
+        ascii_only = self.remove_accents(game)
+        if ascii_only != game:
+            game_titles.append(ascii_only)
 
         # Carcassonne Big Box 5, Alien Frontiers Big Box, El Grande Big Box
         if any("Big Box" in title for title in game_titles):
