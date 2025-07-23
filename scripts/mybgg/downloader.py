@@ -242,85 +242,43 @@ class Downloader():
                     family_list.append(newFam)
             game.families = family_list
 
-            # TODO This is terrible, but split the extra expansions by letter
-            # if game.id == EXTRA_EXPANSIONS_GAME_ID:
-
-            #     game.description = ""
-            #     game.players = []
-            #     for exp in game.expansions:
-            #         exp.players.clear()
-
-            #     filterRegEx=r"^[j-qJ-Q]"
-            #     newGame = copy.deepcopy(game)
-            #     newGame.name = "ZZZ: Expansions without Game (J-Q)"
-            #     newGame.collection_id = str(game.collection_id) + "2"
-
-            #     newGame.expansions = list(filter(lambda x: re.search(filterRegEx, x.name), game.expansions))
-            #     newGame.po_exp = list(filter(lambda x: re.search(filterRegEx, x.name), game.po_exp))
-            #     newGame.wl_exp = list(filter(lambda x: re.search(filterRegEx, x.name), game.wl_exp))
-            #     newGame.accessories = list(filter(lambda x: re.search(filterRegEx, x.name), game.accessories))
-            #     newGame.po_acc = list(filter(lambda x: re.search(filterRegEx, x.name), game.po_acc))
-            #     newGame.wl_acc = list(filter(lambda x: re.search(filterRegEx, x.name), game.wl_acc))
-
-            #     newGame.expansions = sorted(newGame.expansions, key=lambda x: x.name)
-            #     newGame.po_exp = sorted(newGame.po_exp, key=lambda x: x.name)
-            #     newGame.wl_exp = sorted(newGame.wl_exp, key=lambda x: x.name)
-            #     newGame.accessories = sorted(newGame.accessories, key=lambda x: x.name)
-            #     newGame.po_acc = sorted(newGame.po_acc, key=lambda x: x.name)
-            #     newGame.wl_acc = sorted(newGame.wl_acc, key=lambda x: x.name)
-
-            #     game.expansions = list(set(game.expansions) - set(newGame.expansions))
-            #     game.po_exp = list(set(game.po_exp) - set(newGame.po_exp))
-            #     game.wl_exp = list(set(game.wl_exp) - set(newGame.wl_exp))
-            #     game.accessories = list(set(game.accessories) - set(newGame.accessories))
-            #     game.po_acc = list(set(game.po_acc) - set(newGame.po_acc))
-            #     game.wl_acc = list(set(game.wl_acc) - set(newGame.wl_acc))
-
-            #     newGames.append(newGame)
-
-            #     filterRegEx=r"^[r-zR-Z]"
-            #     newGame = copy.deepcopy(game)
-            #     newGame.name = "ZZZ: Expansions without Game (R-Z)"
-            #     newGame.collection_id = str(game.collection_id) + "3"
-
-            #     newGame.expansions = list(filter(lambda x: re.search(filterRegEx, x.name), game.expansions))
-            #     newGame.po_exp = list(filter(lambda x: re.search(filterRegEx, x.name), game.po_exp))
-            #     newGame.wl_exp = list(filter(lambda x: re.search(filterRegEx, x.name), game.wl_exp))
-            #     newGame.accessories = list(filter(lambda x: re.search(filterRegEx, x.name), game.accessories))
-            #     newGame.po_acc = list(filter(lambda x: re.search(filterRegEx, x.name), game.po_acc))
-            #     newGame.wl_acc = list(filter(lambda x: re.search(filterRegEx, x.name), game.wl_acc))
-
-            #     newGame.expansions = sorted(newGame.expansions, key=lambda x: x.name)
-            #     newGame.po_exp = sorted(newGame.po_exp, key=lambda x: x.name)
-            #     newGame.wl_exp = sorted(newGame.wl_exp, key=lambda x: x.name)
-            #     newGame.accessories = sorted(newGame.accessories, key=lambda x: x.name)
-            #     newGame.po_acc = sorted(newGame.po_acc, key=lambda x: x.name)
-            #     newGame.wl_acc = sorted(newGame.wl_acc, key=lambda x: x.name)
-
-            #     game.expansions = list(set(game.expansions) - set(newGame.expansions))
-            #     game.po_exp = list(set(game.po_exp) - set(newGame.po_exp))
-            #     game.wl_exp = list(set(game.wl_exp) - set(newGame.wl_exp))
-            #     game.accessories = list(set(game.accessories) - set(newGame.accessories))
-            #     game.po_acc = list(set(game.po_acc) - set(newGame.po_acc))
-            #     game.wl_acc = list(set(game.wl_acc) - set(newGame.wl_acc))
-
-            #     newGames.append(newGame)
-
             # Resort the list after updating the names
-            game.expansions = sorted(game.expansions, key=lambda x: x.name)
-            game.po_exp = sorted(game.po_exp, key=lambda x: x.name)
-            game.wl_exp = sorted(game.wl_exp, key=lambda x: x.name)
-            game.accessories = sorted(game.accessories, key=lambda x: x.name)
-            game.po_acc = sorted(game.po_acc, key=lambda x: x.name)
-            game.wl_acc = sorted(game.wl_acc, key=lambda x: x.name)
-            game.contained = sorted(game.contained, key=lambda x: x["name"])
-            game.families = sorted(game.families, key=lambda x: x["name"])
-            game.reimplements = sorted(game.reimplements, key=lambda x: x["name"])
-            game.reimplementedby = sorted(game.reimplementedby, key=lambda x: x["name"])
+            game.expansions = sorted(game.expansions, key=sort_key)
+            game.po_exp = sorted(game.po_exp, key=sort_key)
+            game.wl_exp = sorted(game.wl_exp, key=sort_key)
+            game.accessories = sorted(game.accessories, key=sort_key)
+            game.po_acc = sorted(game.po_acc, key=sort_key)
+            game.wl_acc = sorted(game.wl_acc, key=sort_key)
+            game.contained = sorted(game.contained, key=sort_key)
+            game.families = sorted(game.families, key=sort_key)
+            game.reimplements = sorted(game.reimplements, key=sort_key)
+            game.reimplementedby = sorted(game.reimplementedby, key=sort_key)
 
         games.extend(newGames)
 
         return games
+
+def get_name(obj):
+    # Try to get name as attribute, fallback to dict key
+    if hasattr(obj, 'name'):
+        return obj.name
+    elif isinstance(obj, dict) and "name" in obj:
+        return obj["name"]
+    else:
+        raise ValueError("Object does not have a 'name' attribute or key.")
+
+def sort_key(obj):
+    s = get_name(obj)
+    # Splits: prefix group (everything before first number), number group, then rest
+    match = re.match(r'^(.*?)(\d+)(.*)$', s)
+    if match:
+        prefix = match.group(1).strip()
+        num = int(match.group(2))
+        suffix = match.group(3).strip()
+        return (prefix.lower(), num, suffix.lower())
+    else:
+        # If no digits at all, just sort by the whole string, and number as "lowest"
+        return (s.lower(), float('-inf'), "")
 
 def _create_blank_collection(id, name):
 
@@ -363,6 +321,8 @@ def custom_accessories_mapping(accessories):
         {"id": 283524, "baseId": 354568},
         # Ice Cool2 Promos to Ice Cool
         {"id": 265033, "baseId": 177524},
+        # Geek Bits can be used with the Deluxe Edition
+        {"id": 266277, "baseId": 171905},
     ]
 
     for new_acc in acc_map:
