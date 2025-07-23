@@ -9,6 +9,7 @@ import time  # Added for fetch_image retry
 from .vendor import colorgram
 from PIL import Image, ImageFile
 from .http_client import make_http_request
+from tqdm import tqdm
 
 # Allow colorgram to read truncated files
 ImageFile.LOAD_TRUNCATED_IMAGES = True
@@ -126,10 +127,7 @@ class SqliteIndexer:
         # Clear existing data
         cursor.execute('DELETE FROM games')
 
-        count = len(collection)
-        current = 0
-
-        for game_obj in collection:  # Renamed game to game_obj to avoid conflict with game dict
+        for game_obj in tqdm(collection, desc="Processing games", total=len(collection)):
             game = game_obj.todict()  # Convert BoardGame object to dictionary
 
             # Convert complex fields to JSON strings
@@ -243,12 +241,6 @@ class SqliteIndexer:
             ))
 
             conn.commit()
-
-            current += 1
-            percent = current / count
-            bar = '█' * int(percent * 30) + '-' * (30 - int(percent * 30))
-            sys.stdout.write('\r|%s| %d%% (%d/%d)' % (bar, percent*100, current, count))
-            sys.stdout.flush()
 
         conn.close()
         logger.info(f"Added {len(collection)} games to SQLite database")
