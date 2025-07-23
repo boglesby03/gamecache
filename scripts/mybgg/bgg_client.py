@@ -1,6 +1,7 @@
 import logging
 import random
 import time
+from tqdm import tqdm
 from xml.etree.ElementTree import fromstring
 
 import declxml as xml
@@ -60,11 +61,12 @@ class BGGClient:
                 yield iterable[i:i + n]
 
         games = []
-        for game_ids_subset in chunks(game_ids, 20):
-            url = "/thing/?stats=1&id=" + ",".join([str(id_) for id_ in game_ids_subset])
+        chunked = list(chunks(game_ids, 20))
+        iterator = tqdm(chunked, desc="Downloading games", unit="batch") if additional_details else chunked
+        for game_ids_subset in iterator:
+            url = "/thing/?stats=1&id=" + ",".join(str(id_) for id_ in game_ids_subset)
             data = self._make_request(url)
             games += self._games_list_to_games(data, additional_details)
-
         return games
 
     def _make_request(self, url, params={}, tries=0):

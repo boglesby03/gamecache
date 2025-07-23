@@ -5,3 +5,4 @@ pynacl
 requests-cache
 colorgram.py
 multidict
+tqdm
