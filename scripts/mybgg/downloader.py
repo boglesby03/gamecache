@@ -36,6 +36,7 @@ class Downloader():
         collection_data = []
         plays_data = []
 
+        print("Retrieving collection")
         if isinstance(extra_params, list):
             for params in extra_params:
                 collection_data += self.client.collection(
@@ -56,6 +57,7 @@ class Downloader():
         # Dummy game for linking extra promos and accessories
         collection_data.append(_create_blank_collection(EXTRA_EXPANSIONS_GAME_ID, "ZZZ: Expansions without Game"))
 
+        print("Begin retrieving accessory details")
         params = {"subtype": "boardgameaccessory"}
         accessory_collection = self.client.collection(user_name=user_name, **params)
         accessory_collection = list(filter(lambda item: any(tag in filtered_tags for tag in item.get("tags", [])), accessory_collection))
@@ -69,6 +71,7 @@ class Downloader():
             user_name=user_name,
         )
 
+        print("Begin retrieving game details")
         game_list_data = self.client.game_list([game_in_collection["id"] for game_in_collection in collection_data])
 
         collection_by_id = MultiDict();
@@ -230,7 +233,7 @@ class Downloader():
                 if id in collection_by_id:
                     reimpby["tags"] = collection_by_id[id]["tags"]
                 else:
-                    reimps["tags"] = ["unowned"]
+                    reimpby["tags"] = ["unowned"]
 
             family_list = []
             for fam in game.families:
@@ -528,13 +531,13 @@ def name_scrubber(title):
     new_title = re.sub(r"Funkoverse Strategy Game", "Funkoverse", new_title)
 
     # We know it's a board game
-    new_title = re.sub(r"\s*Board\s*game\s*", " ", new_title, flags=re.IGNORECASE)
+    new_title = re.sub(r"(\s*The)?\s*Board\s*games?\s*", "", new_title, flags=re.IGNORECASE)
 
-    new_title = re.sub(r"\s\s+", " ", new_title.strip())
-
-    new_title = move_article_to_end(new_title)
+    new_title = re.sub(r"\s\s+", " ", new_title)
 
     new_title = new_title.strip()
+
+    new_title = move_article_to_end(new_title)
 
     if len(new_title) == 0:
         return title
@@ -569,11 +572,11 @@ def remove_prefix(expansion, game_details):
     # Fix consistency with different '-' being used.
     new_exp = re.sub(r"\–", "-", new_exp)
     # Pack sorting
-    new_exp = re.sub(r"(.*)\s(Hero|Scenario|Ally|Villain|Mythos|Figure|Army|Faction|Investigator|Companion App|Reinforcement|Character) *(?:Starter|-)?(?:\s+(?:Card|Deck|Pack|Set))+\s*(?:-)?(\s+\#?\d*)", r"\2\3: \1", new_exp)
+    new_exp = re.sub(r"(.*?)\s*(Hero|Scenario|Ally|Villain|Mythos|Figure|Army|Faction|Investigator|Companion App|Reinforcement|Character)\s*(?:Starter|-)?\s*(?:Card|Deck|Pack|Set)(?:\s-)*(\s*#?\s*\d*)", r"\2\3: \1", new_exp)
     # Scenarios
     new_exp = re.sub(r"(.*)\s(Scenario)s?\s*", r"\2: \1", new_exp)
     # Remove Boardgame or Board Game from the title
-    new_exp = re.sub(r"\s*Board\s*game\s*", " ", new_exp, flags=re.IGNORECASE)
+    new_exp = re.sub(r"(\s*The)?\s*Board\s*games?\s*", " ", new_exp, flags=re.IGNORECASE)
     # Massive Darkness
     new_exp = re.sub(r"Heroes & Monster Set", "Hero Set", new_exp)
     # Heroic Bystanders
