@@ -305,8 +305,8 @@ class BoardGame:
         elif "Endeavor: Deep Sea Deluxe Edition" in game_titles:
             game_titles.append("Endeavor: Deep Sea")
         # Some reason the spacing is different on the expansion
-        # elif "Expanse Boardgame, The" in game_titles:
-        #     game_titles.append("Expanse Board Game, The")
+        elif "The Expanse Board Game" in game_titles:
+            game_titles.append("The Expanse Boardgame")
         elif "Hero Realms Dungeons" in game_titles:
             game_titles.append("Hero Realms")
         elif "Hive Pocket" in game_titles:
@@ -360,6 +360,8 @@ class BoardGame:
             game_titles.append("Tiny Epic Galaxies")
         elif "Unmatched Adventures" in game_titles:
             game_titles.append("Unmatched")
+        elif "Wingspan Asia" in game_titles:
+            game_titles.append("Wingspan")
 
         game_titles.extend(game_data["alternate_names"])
         #game_titles.extend([ game["name"] for game in game_data["reimplements"]])
