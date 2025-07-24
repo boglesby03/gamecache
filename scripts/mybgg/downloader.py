@@ -207,14 +207,12 @@ class Downloader():
                     contained_list.append(con)
             game.contained = sorted(contained_list, key=lambda x: x["name"])
 
-            game.name = name_scrubber(game.name)
-
             integrates_list = []
             for integrate in game.integrates:
                 # Filter integrates to owned games
                 id = str(integrate["id"])
                 if id in collection_by_id:
-                    integrate["name"] = name_scrubber(integrate["name"])
+                    integrate["name"] = remove_prefix(integrate["name"], game)
                     integrate["tags"] = collection_by_id[id]["tags"]
                     integrates_list.append(integrate)
             game.integrates = sorted(integrates_list, key=lambda x: x["name"])
@@ -234,6 +232,8 @@ class Downloader():
                     reimpby["tags"] = collection_by_id[id]["tags"]
                 else:
                     reimpby["tags"] = ["unowned"]
+
+            game.name = name_scrubber(game.name)
 
             family_list = []
             for fam in game.families:
