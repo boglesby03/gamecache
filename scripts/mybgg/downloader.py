@@ -577,7 +577,7 @@ def remove_prefix(expansion, game_details):
     # Edge case where multiple ":" are in a row
     new_exp = re.sub(r"\s*:\s[:\s]*", ": ", new_exp)
     # extra space around (
-    new_exp = re.sub(r"( [(/]) ", "\1", new_exp)
+    new_exp = re.sub(r"( [(]) ", "\1", new_exp)
 
     new_exp = move_article_to_end(new_exp)
 
