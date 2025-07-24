@@ -522,6 +522,11 @@ def remove_prefix(expansion, game_details):
             new_exp = new_exp[len(title):]
             break
 
+    # Fix consistency with different '-' being used.
+    new_exp = re.sub(r"\–", "-", new_exp)
+    # Remove special characters left
+    new_exp = re.sub(r"^[\s:-]+", "", new_exp)
+
     # Relabel Promos
     new_exp = re.sub(r"(.*)s*Promo(?:tion(?:al)?)?s?:?(?:[\s-]*(?:(?:Box|Card|Deck|Pack|Set|Character)s?)?)+\s*\s*[\)\]]?\s*(.*)",
                     r"\1 \2", new_exp, flags=re.IGNORECASE)
@@ -529,8 +534,6 @@ def remove_prefix(expansion, game_details):
     # Expansions don't need to be labeled Expansion
     # TODO what about "Age of Expansion" or just "Expansion" (Legendary Encounters: Alien - Expansion)?
     # new_exp = re.sub(r"\s*(?:Mini|Micro)?[\s-]*Expansion\s*(?:Pack)?\s*", "", new_exp)
-    # Fix consistency with different '-' being used.
-    new_exp = re.sub(r"\–", "-", new_exp)
     # Pack sorting
     new_exp = re.sub(r"(.*?)\s*(Hero|Scenario|Ally|Villain|Mythos|Figure|Army|Faction|Investigator|Companion App|Reinforcement|Character)\s*(?:Starter|-)?\s*(?:Card|Deck|Pack|Set)(?:\s-)*(\s*#?\s*\d*)", r"\2\3: \1", new_exp)
     # Scenarios
