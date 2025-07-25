@@ -29,6 +29,7 @@
 ## New tasks for SQLite
 
 - [ ] Fix filter sorts - shouldn't sort pre-sorted lists (number of players, playing times)
+- [ ] Facets should have behavior similar to Algolia.  MOve selected options to the top, then return when unselect.  Always show selected, etc.
 - [-] All details missing from game cards
   - [X] Hover on player count for details (recommend, specific player counts, etc)
   - [X] Hover community age
@@ -48,7 +49,7 @@
 - [ ] Is there anyway to improve search - soundex, search more fields, score searches (e.g. Inis) - fd5?
 - [ ] How about just updating the database rather than starting from scratch every time?
   - [ ] Also cache detail requests since I re-need details for cover arts now
-  - [ ] How can I bulk load implements, expansions, etc. Rather than grab them individually
+  - [X] How can I bulk load implements, expansions, etc. Rather than grab them individually
 - [ ] Add the BGG Logo (per the new API requirements)
 - [X] Add full size cover on hover of the thumbnail in the GameCard
   - [ ] Probably should add name or other details to this hover as well
@@ -56,7 +57,11 @@
 - [ ] Missing items from BGG - Point Galaxy KS Promo, Propolis KS Promo
 - [X] Fix Box of Promos for Marvel United Promo boxes
 - [X] Look at Family Promotional:* to flag promo items?
-- [ ] Flag wishlisted/preorders for "integrates with" games
+- [X] Flag wishlisted/preorders for "integrates with" games, the label them on the cards
+- [X] Any ideas for a progress bar as the loading script is running..since my additions are taking a while?
+  - [X] Need to add for query portion of the app so I can turn off debug
+  - [ ] Add attempt counts to Retrieving collection
+- [ ] Should I combine the wl and po lists and just differentiate by color, like I do now for Reimplemented by?
 
 ## API fix requests
 
