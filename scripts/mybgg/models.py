@@ -114,6 +114,7 @@ class BoardGame:
         return publisher_list
 
     def is_promo(self):
+        # NOTE: This could also potentially look for 'Magazine', which is normally a promo as well
         cat_match = any(item["name"].split(':', 1)[0] == 'Promotional' for item in self.families)
         name_match = re.search(r'\bPromo(tion(al)?)?s?\b', self.name, re.IGNORECASE) is not None
         return cat_match or name_match
@@ -307,6 +308,8 @@ class BoardGame:
         elif "Chronicles of Crime" in game_titles:
             game_titles.insert(0, "The Millennium Series")
             game_titles.insert(0, "Chronicles of Crime: The Millennium Series")
+        elif "Clank! Legacy" in game_titles:
+            game_titles.append("Clank!")
         elif "DC Comics Deck-Building Game" in game_titles:
             game_titles.append("DC Deck-Building Game")
             game_titles.append("DC Deck Building Game")
@@ -369,7 +372,7 @@ class BoardGame:
             game_titles.append("Viticulture")
         elif "Ultra Tiny Epic Galaxies" in game_titles:
             game_titles.append("Tiny Epic Galaxies")
-        elif "Unmatched Adventures" in game_titles:
+        elif any(title in ("Unmatched Adventures", "Unmatched Game System") for title in game_titles):
             game_titles.append("Unmatched")
         elif "Wingspan Asia" in game_titles:
             game_titles.append("Wingspan")
