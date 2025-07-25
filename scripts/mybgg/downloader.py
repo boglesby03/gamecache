@@ -493,6 +493,8 @@ def name_scrubber(title):
     # We know it's a board game
     new_title = re.sub(r"(\s*The)?\s*Board\s*games?\s*", "", new_title, flags=re.IGNORECASE)
 
+    new_title = re.sub(r"(.*): A Zombicide Game", r"\1", new_title)
+
     new_title = re.sub(r"\s\s+", " ", new_title)
 
     new_title = new_title.strip()
@@ -547,7 +549,7 @@ def remove_prefix(expansion, game_details):
     # Marvel Masterpiece
     new_exp = re.sub(r"Marvel Masterpiece Trading Card:\s*(.*)", r"\1 [Alt Art]", new_exp)
     # Marvel Zombies
-    new_exp = re.sub(r"(.*): A Zombicide Game", "\1", new_exp)
+    new_exp = re.sub(r"(.*)(?:: )?A Zombicide Game", r"\1", new_exp)
     # Brettspiel Adventskalender
     new_exp = re.sub(r"Brettspiel Adventskalender", "Brettspiel", new_exp, flags=re.IGNORECASE)
     # Welcome to...
