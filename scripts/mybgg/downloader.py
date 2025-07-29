@@ -323,6 +323,8 @@ def custom_accessories_mapping(accessories):
         {"id": 265033, "baseId": 177524},
         # Geek Bits can be used with the Deluxe Edition
         {"id": 266277, "baseId": 171905},
+         # Kemet
+        {"id": 297562, "baseId": 127023},
     ]
 
     for new_acc in acc_map:
@@ -340,6 +342,7 @@ unpub_map = {
     177736: 66917665,  # A Feast for Odin,
     178550: 73699094,  # Spheres of influence
     319966: 89022895,  # King Is Dead
+    119506: 134702681, # Freedom - Bravery
 }
 
 def filter_unpublished_expansions(game):
@@ -405,6 +408,8 @@ def custom_expansion_mappings(expansions):
         {"id": 313475, "baseId": 127023},
         {"id": 313480, "baseId": 127023},
         {"id": 313481, "baseId": 127023},
+        {"id": 424595, "baseId": 127023},
+        {"id": 424596, "baseId": 127023},
         # Sonar/Captain Sonar Expansions
         {"id": 206873, "baseId": 231819},
         {"id": 207122, "baseId": 231819},
@@ -424,6 +429,8 @@ def custom_expansion_mappings(expansions):
         {"id": UNPUBLISHED_PROTOTYPE, "baseId": 178550},
         # Unpublished King is Dead Vikings
         {"id": UNPUBLISHED_PROTOTYPE, "baseId": 319966},
+        # Unpublished Freedom Expansion
+        {"id": UNPUBLISHED_PROTOTYPE, "baseId": 119506},
     ]
 
     for exp in exp_map:
