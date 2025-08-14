@@ -47,9 +47,9 @@ class BoardGame:
         self.artists = game_data["artists"]
         self.designers = game_data["designers"]
         self.publishers = self.publisher_filter(game_data["publishers"], collection_data)
-        self.reimplements = list(filter(lambda g: g["inbound"], game_data["reimplements"]))
-        self.reimplementedby = list(filter(lambda g: not g["inbound"], game_data["reimplements"]))
-        self.integrates = game_data["integrates"]
+        self.reimplements = self.process_external_game_list(list(filter(lambda g: g["inbound"], game_data["reimplements"])))
+        self.reimplementedby = self.process_external_game_list(list(filter(lambda g: not g["inbound"], game_data["reimplements"])))
+        self.integrates = self.process_external_game_list(game_data["integrates"])
         self.players = self.calc_num_players(game_data, self.expansions)
         self.weight = self.calc_weight(game_data)
         self.weightRating = float(game_data["weight"]) if game_data["weight"].strip() else -1
@@ -112,6 +112,14 @@ class BoardGame:
             publisher_list.append(pub)
 
         return publisher_list
+
+    def process_external_game_list(self, games):
+
+        return games
+        # for now just update the wishlist for other items
+        for game in games:
+            None
+            # game["wishlist"] = self.calc_wishlist_priority(game)
 
     def is_promo(self):
         # NOTE: This could also potentially look for 'Magazine', which is normally a promo as well

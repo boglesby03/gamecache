@@ -214,6 +214,7 @@ class Downloader():
                 if id in collection_by_id:
                     integrate["name"] = remove_prefix(integrate["name"], game)
                     integrate["tags"] = collection_by_id[id]["tags"]
+                    integrate["wishlist"] = game.calc_wishlist_priority(collection_by_id[id]) # ["wishlist_priority"]
                     integrates_list.append(integrate)
             game.integrates = sorted(integrates_list, key=lambda x: x["name"])
 
@@ -222,6 +223,7 @@ class Downloader():
                 id = str(reimps["id"])
                 if id in collection_by_id:
                     reimps["tags"] = collection_by_id[id]["tags"]
+                    reimps["wishlist"] = collection_by_id[id]["wishlist_priority"]
                 else:
                     reimps["tags"] = ["unowned"]
 
@@ -230,6 +232,7 @@ class Downloader():
                 id = str(reimpby["id"])
                 if id in collection_by_id:
                     reimpby["tags"] = collection_by_id[id]["tags"]
+                    reimpby["wishlist"] = collection_by_id[id]["wishlist_priority"]
                 else:
                     reimpby["tags"] = ["unowned"]
 
@@ -544,7 +547,7 @@ def remove_prefix(expansion, game_details):
     # TODO what about "Age of Expansion" or just "Expansion" (Legendary Encounters: Alien - Expansion)?
     # new_exp = re.sub(r"\s*(?:Mini|Micro)?[\s-]*Expansion\s*(?:Pack)?\s*", "", new_exp)
     # Pack sorting
-    new_exp = re.sub(r"(.*?)\s*(Hero|Scenario|Ally|Villain|Mythos|Figure|Army|Faction|Investigator|Companion App|Reinforcement|Character)\s*(?:Starter|-)?\s*(?:Card|Deck|Pack|Set)(?:\s-)*(\s*#?\s*\d*)", r"\2\3: \1", new_exp)
+    new_exp = re.sub(r"(.*?)\s*(Hero|Scenario|Ally|Villain|Mythos|Figure|Army|Faction|Investigator|Companion App|Reinforcement|Character)\s*(?:Starter|-)?\s*(?:Card|Deck|Packet|Pack|Set)(?:\s-)*(\s*#?\s*\d*)", r"\2\3: \1", new_exp)
     # Scenarios
     new_exp = re.sub(r"(.*)\s(Scenario)s?\s*", r"\2: \1", new_exp)
     # Remove Boardgame or Board Game from the title
