@@ -29,7 +29,15 @@ Create a beautiful, searchable website for your BoardGameGeek collection! This p
 
 * [GitHub](https://github.com) account (free). We will store and share your database using GitHub Releases.
 * [BoardGameGeek](https://boardgamegeek.com) account (free). We will fetch all your games and game metadata from here.
-* Computer with Python 3.8+ installed.
+* Computer with Python 3.8-3.12 installed.
+   <details>
+      <summary>Using a newer Python version?</summary>
+      This project is tested with Python versions up to 3.12. If you are using a newer version (like 3.13+), you may need to regenerate the dependencies file. After installing `pip-tools` (`pip install pip-tools`), run the following command:
+      ```bash
+      pip-compile scripts/requirements.in -o scripts/requirements.txt
+      ```
+      Then, proceed with the installation command in step 4.
+   </details>
 
 ## Getting started
 
