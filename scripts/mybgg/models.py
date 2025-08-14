@@ -42,6 +42,8 @@ class BoardGame:
         self.description = html.unescape(game_data["description"])
         self.categories = game_data["categories"]
         self.mechanics = game_data["mechanics"]
+        self.min_players = int(game_data["min_players"])
+        self.max_players = int(game_data["max_players"])
         self.contained = game_data["contained"]
         self.families = game_data["families"]
         self.artists = game_data["artists"]
@@ -145,6 +147,12 @@ class BoardGame:
                 if expansion_num not in [num for num, _ in num_players]:
                     if support == "sup":
                         num_players.append((expansion_num, "exp_s"))
+
+        # Add official player counts
+        for i in range(self.min_players, self.max_players + 1):
+            num_str = str(i)
+            if num_str not in [num for num, _ in num_players]:
+                num_players.append((num_str, "official"))
 
         num_players = sorted(num_players, key=lambda x: int(x[0].replace("+", "")))
 
@@ -406,6 +414,8 @@ class BoardGame:
             "players": self.players,
             "weight": self.weight,
             "playing_time": self.playing_time,
+            "min_players": self.min_players,
+            "max_players": self.max_players,
             "min_age": self.min_age,
             "rank": self.rank,
             "usersrated": self.usersrated,
