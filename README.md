@@ -4,7 +4,7 @@
 > Project renamed: This project was previously called "MyBGG" and is now "GameCache". Existing deployments using the old name continue to work (asset names and the CORS proxy remain compatible), but new forks should use the new name and paths shown below.
 
 
-_This project is meant to be forked. The original project is available here: https://github.com/EmilStenstrom/gamecache_
+_This repository is published as a **GitHub Template**. Create your own copy via "Use this template" (recommended) rather than forking. The canonical upstream lives at: https://github.com/EmilStenstrom/gamecache_
 
 Create a beautiful, searchable website for your BoardGameGeek collection! This project downloads your games from BoardGameGeek, creates a database, and automatically hosts it as a website using GitHub Pages.
 
@@ -18,7 +18,7 @@ Create a beautiful, searchable website for your BoardGameGeek collection! This p
 
 ## Quick Start Checklist
 
-- [ ] **Fork this repository** to your GitHub account
+- [ ] **Create a new repository from this template** (green "Use this template" button → "Create a new repository")
 - [ ] **Edit config.ini** with your BGG and GitHub usernames  
 - [ ] **Enable GitHub Pages** in your repository settings
 - [ ] **Install Python dependencies**: `pip install -r scripts/requirements.txt`
@@ -45,16 +45,16 @@ Create a beautiful, searchable website for your BoardGameGeek collection! This p
 
 ## Getting started
 
-1. **Fork this project** (EmilStenstrom/gamecache) to your own GitHub account.
+1. **Create a repository from this template.**
    <details>
       <summary>Details</summary>
-      Forking a project copies it to your own GitHub account. On the top of this page, click the "Fork" button and accept all the defaults. You now have a copy of this project you can make changes to.
+   On the repository page click the green **Use this template** button → **Create a new repository**. Pick a name (you can keep `gamecache` or choose something else). Leave **Include all branches** unchecked. Click **Create repository**. You now have your own independent copy (not a fork) that can pull updates from upstream manually.
    </details>
 
 2. **Update the config.ini file** with your details:
 
    **Easy way (recommended)**: Edit directly on GitHub:
-   * Go to your forked repository on GitHub
+   * Go to the repository you just created on GitHub
    * Click on `config.ini`
    * Click the pencil icon (✏️) to edit
    * Replace `YOUR_NAME` with your name (for the website title)
@@ -81,7 +81,7 @@ Create a beautiful, searchable website for your BoardGameGeek collection! This p
    <details>
       <summary>Alternative: Edit on your computer</summary>
 
-      * Clone your forked project: `git clone https://github.com/YOUR_USERNAME/gamecache.git`
+      * Clone your new project: `git clone https://github.com/YOUR_USERNAME/REPO_NAME.git`
       * Edit the `config.ini` file
       * Commit and push your changes:
       ```bash
@@ -95,7 +95,7 @@ Create a beautiful, searchable website for your BoardGameGeek collection! This p
    <details>
       <summary>Step-by-step instructions</summary>
 
-      * Go to your forked repository on GitHub
+      * Go to your repository on GitHub
       * Click the **Settings** tab (at the top of your repository page)
       * Scroll down to **Pages** in the left sidebar and click it
       * Under "Source", select **Deploy from a branch**
@@ -320,30 +320,34 @@ To update your database with new games or changed ratings:
 * **Enable debug logging**: Add `--debug` flag  
 * **Use custom config file**: Add `--config path/to/config.ini`
 
-## Updating this project with changes I make to GameCache
+## Keeping Your Copy Updated
 
-To get the latest features and bug fixes:
+Because you created your repository from a **template** (not a fork), GitHub will NOT show the built‑in "Sync fork" button. Updating is still easy:
 
-1. **Add the upstream remote** (first time only):
+1. (First time) **Add upstream remote**:
    ```bash
    git remote add upstream https://github.com/EmilStenstrom/gamecache.git
    ```
-
-2. **Fetch and merge updates**:
+2. **Fetch upstream**:
    ```bash
    git fetch upstream
    git merge upstream/master
    ```
-
-3. **Update dependencies**:
+3. **Merge or rebase** the main branch (pick one style and stick with it):
+   ```bash
+   git checkout main
+   git merge upstream/main   # keeps explicit merge commits
+   # or
+   git rebase upstream/main  # linear history
+   ```
+4. **Resolve any conflicts**, update dependencies if needed, then:
    ```bash
    pip install -r scripts/requirements.txt
-   ```
-
-4. **Push to your fork**:
-   ```bash
    git push
    ```
+
+### Watching for Upstream Changes
+Star or watch the upstream repo to get notified of releases. Release notes will summarize noteworthy changes (schema, flags, etc.).
 
 ### Updating after the rename
 
