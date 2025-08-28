@@ -16,7 +16,6 @@ ImageFile.LOAD_TRUNCATED_IMAGES = True
 
 logger = logging.getLogger(__name__)
 
-
 class SqliteIndexer:
     """SQLite-based indexer to replace Algolia indexer."""
 
@@ -123,6 +122,10 @@ class SqliteIndexer:
         """Add BoardGame objects to the SQLite database."""
         conn = sqlite3.connect(self.db_path)
         cursor = conn.cursor()
+
+        cursor.execute("PRAGMA synchronous = OFF")
+        cursor.execute("PRAGMA journal_mode = WAL")
+        cursor.execute("PRAGMA cache_size = -20000")
 
         # Clear existing data
         cursor.execute('DELETE FROM games')
@@ -240,8 +243,7 @@ class SqliteIndexer:
                 game.get('first_played'), game.get('last_played')
             ))
 
-            conn.commit()
-
+        conn.commit()
         conn.close()
         logger.info(f"Added {len(collection)} games to SQLite database")
 
