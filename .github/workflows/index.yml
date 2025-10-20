@@ -1,24 +1,53 @@
-name: Update mybgg.sqlite.gz with BGG data
+name: Update gamecache.sqlite.gz with BGG data
 
 on:
   schedule:
-    - cron: '0 8 * * *' # Runs every day
+    - cron: '0 0,6,12,18 * * *' # Runs every 8 hours
   workflow_dispatch:
+
 jobs:
   index:
     runs-on: ubuntu-latest
-    env:
-      MYBGG_GITHUB_TOKEN: ${{ secrets.MYBGG_GITHUB_TOKEN }}
-      BGG_BEARER_TOKEN: ${{ secrets.BGG_BEARER_TOKEN }}
+    permissions:
+      contents: write   # needed to create/update releases
     steps:
-    - uses: actions/checkout@v4
-    - uses: actions/setup-python@v5
-      with:
-        python-version: '3.12'
-        cache: 'pip'
-    - run: python -m pip install --upgrade pip
-    - run: pip install -r scripts/requirements.txt
-    - name: Run script if token is set
-      if: ${{ env.MYBGG_GITHUB_TOKEN != '' && env.BGG_BEARER_TOKEN != '' }}
-      run: |
-        python scripts/download_and_index.py --debug
+      - name: Check enabled (secret present?)
+        id: enabled
+        env:
+            GAMECACHE_GITHUB_TOKEN: ${{ secrets.GAMECACHE_GITHUB_TOKEN }}
+            MYBGG_GITHUB_TOKEN: ${{ secrets.MYBGG_GITHUB_TOKEN }}
+            BGG_BEARER_TOKEN: ${{ secrets.BGG_BEARER_TOKEN }}
+        run: |
+          if [ -n "$GAMECACHE_GITHUB_TOKEN" ] || [ -n "$MYBGG_GITHUB_TOKEN" ]; then
+            echo "enabled=true" >> $GITHUB_OUTPUT
+            if [ -z "$GAMECACHE_GITHUB_TOKEN" ] && [ -n "$MYBGG_GITHUB_TOKEN" ]; then
+              echo "::warning::Using deprecated MYBGG_GITHUB_TOKEN (rename to GAMECACHE_GITHUB_TOKEN)." >&2
+            else
+              echo "Hourly updates enabled." >&2
+            fi
+          else
+            echo "enabled=false" >> $GITHUB_OUTPUT
+            echo "::notice::GAMECACHE_GITHUB_TOKEN not set; skipping run." >&2
+          fi
+      - name: Checkout
+        if: steps.enabled.outputs.enabled == 'true'
+        uses: actions/checkout@v4
+      - name: Setup Python
+        if: steps.enabled.outputs.enabled == 'true'
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: 'pip'
+      - name: Build & index (auto-skip if not enabled)
+        if: steps.enabled.outputs.enabled == 'true'
+        env:
+          GAMECACHE_GITHUB_TOKEN: ${{ secrets.GAMECACHE_GITHUB_TOKEN }}
+          MYBGG_GITHUB_TOKEN: ${{ secrets.MYBGG_GITHUB_TOKEN }}
+        run: |
+          # Fallback: promote legacy token if new one absent
+          if [ -z "$GAMECACHE_GITHUB_TOKEN" ] && [ -n "$MYBGG_GITHUB_TOKEN" ]; then
+            export GAMECACHE_GITHUB_TOKEN="$MYBGG_GITHUB_TOKEN"
+          fi
+          python -m pip install --upgrade pip
+          pip install -r scripts/requirements.txt
+          python scripts/download_and_index.py --debug
