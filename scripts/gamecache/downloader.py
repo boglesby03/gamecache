@@ -2,9 +2,9 @@ import copy
 import itertools
 import re
 
-from mybgg.bgg_client import BGGClient
-from mybgg.bgg_client import CacheBackendSqlite
-from mybgg.models import BoardGame
+from gamecache.bgg_client import BGGClient
+from gamecache.bgg_client import CacheBackendSqlite
+from gamecache.models import BoardGame
 
 from datetime import datetime
 from multidict import MultiDict
@@ -20,7 +20,7 @@ class Downloader():
         if cache_bgg:
             self.client = BGGClient(
                 cache=CacheBackendSqlite(
-                    path=f"mybgg-cache.sqlite",
+                    path=f"gamecache-cache.sqlite",
                     ttl=60 * 60 * 24,
                 ),
                 token=token,
