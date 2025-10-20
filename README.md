@@ -20,6 +20,8 @@ Create a beautiful, searchable website for your BoardGameGeek collection! This p
 
 - [ ] **Create a new repository from this template** (green "Use this template" button → "Create a new repository")
 - [ ] **Edit config.ini** with your BGG and GitHub usernames
+- [ ] **Create a new public repository from this template** (green "Use this template" button → "Create a new repository")
+- [ ] **Edit config.ini** with your BGG and GitHub usernames
 - [ ] **Enable GitHub Pages** in your repository settings
 - [ ] **Install Python dependencies**: `pip install -r scripts/requirements.txt`
 - [ ] **Validate setup**: `python scripts/validate_setup.py`
@@ -45,10 +47,10 @@ Create a beautiful, searchable website for your BoardGameGeek collection! This p
 
 ## Getting started
 
-1. **Create a repository from this template.**
+1. **Create a public repository from this template.**
    <details>
       <summary>Details</summary>
-   On the repository page click the green **Use this template** button → **Create a new repository**. Pick a name (you can keep `gamecache` or choose something else). Leave **Include all branches** unchecked. Click **Create repository**. You now have your own independent copy (not a fork) that can pull updates from upstream manually.
+   On the repository page click the green **Use this template** button → **Create a new repository**. Pick a name (you can keep `gamecache` or choose something else). Make sure you make the repository **public**, or else you will have to pay to use GitHub Pages. Leave **Include all branches** unchecked. Click **Create repository**. You now have your own independent copy of gamecache.
    </details>
 
 2. **Update the config.ini file** with your details:
