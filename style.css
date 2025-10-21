@@ -193,6 +193,24 @@ body {
     height: calc(1em + 1em + 2px);
 }
 
+.content-left {
+    border-right: 10px solid #000000;
+    /* Adds a vertical line to the right of this div */
+    padding-right: 20px;
+    /* Add some spacing */
+}
+
+.ref {
+    opacity: 0.3;
+    filter: grayscale(100%);
+    margin-top: 3px;
+}
+
+.ref:hover,
+.ref:focus-within {
+    filter: none;
+    opacity: 1;
+}
 
 .stats {
     display: inline-block;
