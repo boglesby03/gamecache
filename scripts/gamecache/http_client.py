@@ -193,7 +193,7 @@ class CachedHttpClient:
 
         # Cache miss or expired - make actual request
         try:
-            response_data, status_code = make_http_request(full_url, timeout=timeout)
+            response_data, status_code = make_http_request(full_url, timeout=timeout, headers=headers)
             # status_code = 200  # make_http_request only returns data on success
             # headers = {}  # Simple implementation doesn't capture headers
 
