@@ -18,7 +18,7 @@ def parse_config_file(config_path="config.txt"):
             line = line.strip()
 
             # Skip empty lines and comments
-            if not line or line.startswith('#'):
+            if not line or line.startswith('#') or line.startswith(';'):
                 continue
 
             # Parse key=value
@@ -29,11 +29,18 @@ def parse_config_file(config_path="config.txt"):
             key = key.strip()
             value = value.strip()
 
+            if ';' in value:
+                value = value.split(';', 1)[0].strip()
+            if '#' in value:
+                value = value.split('#', 1)[0].strip()
+
             # Remove quotes if present
             if value.startswith('"') and value.endswith('"'):
                 value = value[1:-1]
             elif value.startswith("'") and value.endswith("'"):
                 value = value[1:-1]
+
+
 
             config[key] = value
 
