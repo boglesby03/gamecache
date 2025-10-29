@@ -43,6 +43,7 @@ jobs:
         env:
           GAMECACHE_GITHUB_TOKEN: ${{ secrets.GAMECACHE_GITHUB_TOKEN }}
           MYBGG_GITHUB_TOKEN: ${{ secrets.MYBGG_GITHUB_TOKEN }}
+          BGG_BEARER_TOKEN: ${{ secrets.BGG_BEARER_TOKEN }}
         run: |
           # Fallback: promote legacy token if new one absent
           if [ -z "$GAMECACHE_GITHUB_TOKEN" ] && [ -n "$MYBGG_GITHUB_TOKEN" ]; then
