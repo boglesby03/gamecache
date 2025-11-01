@@ -134,8 +134,7 @@ def save_token_to_config(token, config_path="config.ini"):
 
     print(f"\n✅ Token saved to {env_file}")
     print(f"\n💡 Your token is stored securely in .env (not committed to git)")
-    print(f"   To use it, run: export GAMECACHE_BGG_TOKEN=$(grep GAMECACHE_BGG_TOKEN .env | cut -d= -f2)")
-    print(f"   Or add it to your shell profile for persistence.")
+    print(f"   The token will be automatically loaded when you run scripts.")
     return True
 
 
