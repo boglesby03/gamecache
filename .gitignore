@@ -3,3 +3,6 @@ __pycache__
 *.sqlite
 *.sqlite-journal
 *.sqlite.gz
+
+# Private configuration (keep tokens secret!)
+.env

@@ -91,8 +91,12 @@ class HttpResponse:
 
 class HttpSession:
     """Simple session-like class that mimics requests.Session interface"""
+    
+    def __init__(self, headers=None):
+        """Initialize session with optional default headers"""
+        self.headers = headers or {}
 
-    def get(self, url, params=None, timeout=30):
+    def get(self, url, params=None, timeout=30, headers=None):
         """GET request that mimics requests.Session.get()"""
         # Build full URL with parameters
         if params:
@@ -101,8 +105,13 @@ class HttpSession:
         else:
             full_url = url
 
+        # Merge session headers with request-specific headers
+        merged_headers = self.headers.copy()
+        if headers:
+            merged_headers.update(headers)
+
         try:
-            response_data = make_http_request(full_url, timeout=timeout)
+            response_data = make_http_request(full_url, timeout=timeout, headers=merged_headers if merged_headers else None)
             return HttpResponse(response_data, {}, 200, from_cache=False, url=full_url)
         except Exception as e:
             # Re-raise with status code info if possible
@@ -112,13 +121,14 @@ class HttpSession:
 class CachedHttpClient:
     """HTTP client with SQLite-based caching"""
 
-    def __init__(self, cache_name="http_cache", expire_after=3600):
+    def __init__(self, cache_name="http_cache", expire_after=3600, headers=None):
         """
         Initialize cache with SQLite backend
 
         Args:
             cache_name: Name/path of the cache database
             expire_after: Cache TTL in seconds (default 1 hour)
+            headers: Default headers to include in all requests (dict)
         """
         # Only add .sqlite extension if not already present
         if cache_name.endswith('.sqlite'):
@@ -126,6 +136,7 @@ class CachedHttpClient:
         else:
             self.cache_path = f"{cache_name}.sqlite"
         self.expire_after = expire_after
+        self.headers = headers or {}
         self._init_cache()
 
     def _init_cache(self):
@@ -192,16 +203,19 @@ class CachedHttpClient:
 
         # Cache miss or expired - make actual request
         try:
-            response_data = make_http_request(full_url, timeout=timeout)
+            # Use session headers for the request
+            request_headers = dict(self.headers) if self.headers else {}
+
+            response_data = make_http_request(full_url, timeout=timeout, headers=request_headers)
             status_code = 200  # make_http_request only returns data on success
-            headers = {}  # Simple implementation doesn't capture headers
+            response_headers = {}  # Simple implementation doesn't capture response headers
 
             # Store in cache
             cursor.execute("""
                 INSERT OR REPLACE INTO http_cache
                 (url_hash, url, response_data, headers, status_code, timestamp)
                 VALUES (?, ?, ?, ?, ?, ?)
-            """, (url_hash, full_url, response_data, json.dumps(headers), status_code, time_module.time()))
+            """, (url_hash, full_url, response_data, json.dumps(response_headers), status_code, time_module.time()))
             conn.commit()
 
         except Exception as e:
@@ -210,7 +224,7 @@ class CachedHttpClient:
             raise Exception(f"HTTP request failed: {e}")
 
         conn.close()
-        return HttpResponse(response_data, headers, status_code, from_cache=False, url=full_url)
+        return HttpResponse(response_data, response_headers, status_code, from_cache=False, url=full_url)
 
 def make_json_request(url, method='GET', data=None, headers=None, timeout=30,
                       _redirects=0, _max_redirects=5):
