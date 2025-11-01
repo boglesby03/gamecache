@@ -59,15 +59,22 @@ def create_nested_config(config):
     bgg_token = os.environ.get('GAMECACHE_BGG_TOKEN')
 
     # If not in environment, try to load from .env file
+    # Look for .env in: current dir, parent dir (scripts), or grandparent (repo root)
     if not bgg_token:
-        env_file = Path('.env')
-        if env_file.exists():
-            with open(env_file, 'r', encoding='utf-8') as f:
-                for line in f:
-                    line = line.strip()
-                    if line.startswith('GAMECACHE_BGG_TOKEN='):
-                        bgg_token = line.split('=', 1)[1].strip()
-                        break
+        env_locations = [
+            Path('.env'),
+            Path(__file__).parent.parent.parent / '.env',  # repo root from scripts/gamecache/config.py
+        ]
+        for env_file in env_locations:
+            if env_file.exists():
+                with open(env_file, 'r', encoding='utf-8') as f:
+                    for line in f:
+                        line = line.strip()
+                        if line.startswith('GAMECACHE_BGG_TOKEN='):
+                            bgg_token = line.split('=', 1)[1].strip()
+                            break
+                if bgg_token:
+                    break
 
     # Fall back to config file if still not found
     if bgg_token:
