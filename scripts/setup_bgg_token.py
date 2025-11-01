@@ -11,14 +11,18 @@ from pathlib import Path
 
 # Import our own HTTP client
 from gamecache.http_client import make_json_request
+from gamecache.config import parse_config_file
 
 
-def get_bgg_username():
+def get_bgg_username_from_config(config_path="config.ini"):
     """
-    Get the BGG username from the user.
+    Get the BGG username from config.ini.
+
+    Args:
+        config_path: Path to the config file
 
     Returns:
-        The username string, or None if cancelled
+        The username string, or None if not found
     """
     print("\n" + "="*70)
     print("🎮 BGG TOKEN GENERATOR")
@@ -27,21 +31,26 @@ def get_bgg_username():
     print("This script will automatically generate a BGG API token for you.")
     print()
 
-    username = input("Enter your BoardGameGeek username: ").strip()
-
-    if not username:
-        print("\n❌ No username provided. Setup cancelled.")
-        return None
-
-    # Basic validation
-    if not username.replace('-', '').replace('_', '').isalnum():
-        print("\n⚠️  Warning: Username contains unusual characters.")
-        confirm = input("   Continue anyway? (yes/no): ").strip().lower()
-        if confirm not in ['yes', 'y']:
-            print("\n❌ Setup cancelled.")
+    try:
+        config = parse_config_file(config_path)
+        username = config.get('bgg_username')
+        
+        if not username:
+            print(f"❌ Error: 'bgg_username' not found in {config_path}")
+            print(f"   Please add your BGG username to the config file:")
+            print(f"   bgg_username = YourUsername")
             return None
-
-    return username
+        
+        print(f"📖 Read BGG username from {config_path}: {username}")
+        return username
+        
+    except FileNotFoundError:
+        print(f"❌ Error: Config file '{config_path}' not found")
+        print(f"   Please create a config.ini file with your BGG username")
+        return None
+    except Exception as e:
+        print(f"❌ Error reading config file: {e}")
+        return None
 
 
 def generate_token_via_worker(username):
@@ -135,8 +144,8 @@ def main():
     print("BGG Token Setup for GameCache")
     print("-" * 70)
 
-    # Get username
-    username = get_bgg_username()
+    # Get username from config.ini
+    username = get_bgg_username_from_config()
     if not username:
         sys.exit(1)
 
