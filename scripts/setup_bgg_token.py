@@ -38,7 +38,7 @@ def get_bgg_username_from_config(config_path="config.ini"):
         if not username:
             print(f"❌ Error: 'bgg_username' not found in {config_path}")
             print(f"   Please add your BGG username to the config file:")
-            print(f"   bgg_username = YourUsername")
+            print(f"   bgg_username = YOUR_BGG_USERNAME")
             return None
         
         print(f"📖 Read BGG username from {config_path}: {username}")
