@@ -19,8 +19,8 @@ Create a beautiful, searchable website for your BoardGameGeek collection! This p
 ## Quick Start Checklist
 
 - [ ] **Create a new public repository from this template** (green "Use this template" button → "Create a new repository")
-- [ ] **Edit config.ini** with your BGG and GitHub usernames  
-- [ ] **Get BGG token** (optional - see note below): `python scripts/setup_bgg_token.py`
+- [ ] **Edit config.ini** with your BGG and GitHub usernames (required before next step!)
+- [ ] **Get BGG token**: `python scripts/setup_bgg_token.py` (reads username from config.ini)
 - [ ] **Enable GitHub Pages** in your repository settings
 - [ ] **Install Python dependencies**: `pip install -r scripts/requirements.txt`
 - [ ] **Validate setup**: `python scripts/validate_setup.py`
@@ -106,8 +106,8 @@ Create a beautiful, searchable website for your BoardGameGeek collection! This p
       <summary>What happens during token setup</summary>
 
       **Process**:
-      * The script will ask for your BGG username
-      * It will automatically generate a token for you using GameCache's shared BGG application
+      * The script reads your BGG username from `config.ini` (make sure you edited it first!)
+      * It automatically generates a token for you using GameCache's shared BGG application
       * The token is saved securely to a `.env` file (not committed to git)
       * **No manual application registration needed** - everything is handled automatically!
 
