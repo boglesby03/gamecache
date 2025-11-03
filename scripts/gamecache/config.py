@@ -40,8 +40,6 @@ def parse_config_file(config_path="config.txt"):
             elif value.startswith("'") and value.endswith("'"):
                 value = value[1:-1]
 
-
-
             config[key] = value
 
     return config
