@@ -111,8 +111,8 @@ class HttpSession:
             merged_headers.update(headers)
 
         try:
-            response_data = make_http_request(full_url, timeout=timeout, headers=merged_headers if merged_headers else None)
-            return HttpResponse(response_data, {}, 200, from_cache=False, url=full_url)
+            response_data, status_code = make_http_request(full_url, timeout=timeout, headers=merged_headers if merged_headers else None)
+            return HttpResponse(response_data, {}, status_code, from_cache=False, url=full_url)
         except Exception as e:
             # Re-raise with status code info if possible
             raise Exception(f"HTTP request failed: {e}")
