@@ -158,6 +158,26 @@ def get_repo_from_config() -> str | None:
     except Exception:
         return None
 
+
+def get_bgg_token_from_env() -> str | None:
+    """Get the BGG token from .env file."""
+    env_file = Path(__file__).parent.parent / '.env'
+
+    if not env_file.exists():
+        return None
+
+    try:
+        with open(env_file, 'r') as f:
+            for line in f:
+                line = line.strip()
+                if line.startswith('GAMECACHE_BGG_TOKEN='):
+                    token = line.split('=', 1)[1].strip()
+                    if token:
+                        return token
+        return None
+    except Exception:
+        return None
+
 def main():
     # Prefer new path, fall back to legacy
     new_token_file = Path.home() / '.gamecache' / 'token.json'
@@ -202,40 +222,60 @@ def main():
         
         if repo:
             print(f"✅ Found repository: {repo}")
-            print(f"\n🔄 Creating GitHub secrets 'GAMECACHE_GITHUB_TOKEN' and 'MYBGG_GITHUB_TOKEN' in {repo}...")
+            print(f"\n🔄 Creating GitHub secrets in {repo}...")
 
             try:
+                # Create GitHub token secrets
                 create_github_secret(repo, token, 'GAMECACHE_GITHUB_TOKEN', token)
                 create_github_secret(repo, token, 'MYBGG_GITHUB_TOKEN', token)
-                print("✅ Successfully created both GitHub secrets!")
+                print("✅ Successfully created GitHub token secrets!")
+
+                # Create BGG token secret if available
+                bgg_token = get_bgg_token_from_env()
+                if bgg_token:
+                    print("\n🔄 Creating BGG token secret...")
+                    create_github_secret(repo, token, 'GAMECACHE_BGG_TOKEN', bgg_token)
+                    print("✅ Successfully created BGG token secret!")
+                else:
+                    print("\n⚠️  No BGG token found in .env file")
+                    print("   Run 'python scripts/setup_bgg_token.py' to generate one,")
+                    print("   then run this script again to upload it to GitHub.")
+
                 print("\n🎉 Hourly updates are now enabled!")
                 print("Your board game collection will be automatically updated every hour.")
                 print("You can test it by going to the Actions tab in your repository.")
             except Exception as e:
                 print(f"❌ Failed to create GitHub secret: {e}")
                 print("\nFalling back to manual setup...")
-                show_manual_instructions(token)
+                show_manual_instructions(token, get_bgg_token_from_env())
         else:
             print("⚠️  Could not determine repository from config.ini")
-            show_manual_instructions(token)
+            show_manual_instructions(token, get_bgg_token_from_env())
 
     except Exception as e:
         print(f"❌ Error reading token file: {e}")
         sys.exit(1)
 
 
-def show_manual_instructions(token: str):
+def show_manual_instructions(token: str, bgg_token: str | None = None):
     """Show manual setup instructions."""
-    print(f"\nToken: {token}")
+    print(f"\nGitHub Token: {token}")
+    if bgg_token:
+        print(f"BGG Token: {bgg_token}")
+    else:
+        print("BGG Token: Not found (run 'python scripts/setup_bgg_token.py' to generate)")
+
     print("\nManual setup steps:")
-    print("1. Copy the token above")
+    print("1. Copy the tokens above")
     print("2. Go to your GitHub repository settings")
     print("3. Navigate to Settings > Secrets and variables > Actions")
     print("4. Click 'New repository secret'")
-    print("5. Create both of these:")
-    print("   - GAMECACHE_GITHUB_TOKEN = <paste token>")
-    print("   - MYBGG_GITHUB_TOKEN = <paste token>")
-    print("7. Click 'Add secret'")
+    print("5. Create these secrets:")
+    print("   - GAMECACHE_GITHUB_TOKEN = <paste GitHub token>")
+    print("   - MYBGG_GITHUB_TOKEN = <paste GitHub token>")
+    if bgg_token:
+        print("   - GAMECACHE_BGG_TOKEN = <paste BGG token>")
+    print("6. Click 'Add secret' for each one")
 
 
 if __name__ == "__main__":

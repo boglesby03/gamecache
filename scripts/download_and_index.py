@@ -19,13 +19,13 @@ def main(args):
     # Convert flat config to nested structure for backward compatibility
     SETTINGS = create_nested_config(config)
 
-    bearer = SETTINGS["boardgamegeek"]["token"]
-    token = bearer if bearer and bearer != '<token>' else os.environ.get('BGG_BEARER_TOKEN')
+    # Get BGG token from config
+    bgg_token = SETTINGS["boardgamegeek"].get("token")
 
     downloader = Downloader(
         cache_bgg=args.cache_bgg,
         debug=args.debug,
-        token=token,
+        token=bgg_token,
     )
     extra_params = {} # SETTINGS["boardgamegeek"].get("extra_params", {"own": 1})
     collection = downloader.collection(

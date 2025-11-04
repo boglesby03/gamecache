@@ -21,7 +21,8 @@ Create a beautiful, searchable website for your BoardGameGeek collection! This p
 - [ ] **Create a new repository from this template** (green "Use this template" button → "Create a new repository")
 - [ ] **Edit config.ini** with your BGG and GitHub usernames
 - [ ] **Create a new public repository from this template** (green "Use this template" button → "Create a new repository")
-- [ ] **Edit config.ini** with your BGG and GitHub usernames
+- [ ] **Edit config.ini** with your BGG and GitHub usernames (required before next step!)
+- [ ] **Get BGG token**: `python scripts/setup_bgg_token.py` (reads username from config.ini)
 - [ ] **Enable GitHub Pages** in your repository settings
 - [ ] **Install Python dependencies**: `pip install -r scripts/requirements.txt`
 - [ ] **Validate setup**: `python scripts/validate_setup.py`
@@ -30,6 +31,8 @@ Create a beautiful, searchable website for your BoardGameGeek collection! This p
 - [ ] **Enable hourly updates** (optional): `python scripts/enable_hourly_updates.py`
 
 💡 **New to this?** Follow the detailed instructions below.
+
+> **Note about BGG tokens**: BGG is transitioning to requiring API tokens. Run the setup_bgg_token.py script to generate a valid token!
 
 ## Requirements
 
@@ -93,7 +96,36 @@ Create a beautiful, searchable website for your BoardGameGeek collection! This p
       ```
    </details>
 
-3. **Enable GitHub Pages** to host your website:
+3. **Get a BGG Application Token**:
+
+   To access BoardGameGeek's API, you need an application token. GameCache provides a fully automated setup:
+
+   ```bash
+   python scripts/setup_bgg_token.py
+   ```
+
+   <details>
+      <summary>What happens during token setup</summary>
+
+      **Process**:
+      * The script reads your BGG username from `config.ini` (make sure you edited it first!)
+      * It automatically generates a token for you using GameCache's shared BGG application
+      * The token is saved securely to a `.env` file (not committed to git)
+      * **No manual application registration needed** - everything is handled automatically!
+
+      **Important notes**:
+      * Please use the API responsibly - rate limiting is shared across all GameCache users
+      * The token is stored in `.env` as `GAMECACHE_BGG_TOKEN` (kept private)
+
+      **Success indicators**:
+      * You'll see "✅ Token generated successfully!"
+      * You'll see "✅ Token saved to .env"
+      * A `.env` file is created in your project root (not committed to git)
+
+      **If the automated setup fails**: Contact the GameCache maintainer or file an issue on GitHub
+   </details>
+
+4. **Enable GitHub Pages** to host your website:
    <details>
       <summary>Step-by-step instructions</summary>
 
@@ -107,10 +139,10 @@ Create a beautiful, searchable website for your BoardGameGeek collection! This p
 
       **Verification**: You should see a green checkmark and a message like "Your site is published at https://YOUR_USERNAME.github.io/gamecache". This might take a few minutes to appear.
 
-      ⏰ **Note**: GitHub Pages can take 5-10 minutes to activate. Your website will be available at: `https://YOUR_USERNAME.github.io/gamecache` (after you generate your database in step 5)
+      ⏰ **Note**: GitHub Pages can take 5-10 minutes to activate. Your website will be available at: `https://YOUR_USERNAME.github.io/gamecache` (after you generate your database in step 6)
    </details>
 
-4. **Install the required Python libraries**:
+5. **Install the required Python libraries**:
    ```bash
    pip install -r scripts/requirements.txt
    ```
@@ -119,7 +151,7 @@ Create a beautiful, searchable website for your BoardGameGeek collection! This p
       <summary>Python installation help</summary>
 
       **If you don't have Python installed:**
-      * Download Python 3.8+ from https://python.org
+      * Download Python 3.12+ from https://python.org
       * During installation, make sure to check "Add Python to PATH"
       * Restart your terminal/command prompt after installing
 
@@ -131,14 +163,14 @@ Create a beautiful, searchable website for your BoardGameGeek collection! This p
       **Verification**: You should see messages about packages being installed successfully. If you see "Successfully installed..." at the end, you're good to go!
    </details>
 
-5. **Validate your setup** (optional but recommended):
+6. **Validate your setup** (optional but recommended):
    ```bash
    python scripts/validate_setup.py
    ```
 
-   This checks that your config.ini is valid, your BGG username exists, and all Python dependencies are installed. If everything looks good, proceed to step 6!
+   This checks that your config.ini is valid, your BGG username exists, and all Python dependencies are installed. If everything looks good, proceed to step 7!
 
-6. **Generate your database**:
+7. **Generate your database**:
    ```bash
    python scripts/download_and_index.py
    ```
@@ -246,6 +278,17 @@ python scripts/enable_hourly_updates.py
 - Check your internet connection
 - Clear your browser cache and try again
 - Make sure popup blockers aren't preventing the GitHub page from opening
+
+**BGG token generation fails**:
+- Check your internet connection
+- Verify your BGG username is correct (no spaces, special characters)
+- If the automated token generator is temporarily unavailable, please file an issue on GitHub or contact the maintainer
+
+**"Authorization" errors when downloading from BGG**:
+- Make sure you ran `python scripts/setup_bgg_token.py` first
+- Check that `.env` file exists with `GAMECACHE_BGG_TOKEN=...`
+- Make sure the environment variable is exported: `export GAMECACHE_BGG_TOKEN=$(grep GAMECACHE_BGG_TOKEN .env | cut -d= -f2)`
+- Try regenerating your token by running the setup script again
 
 **Website shows "Loading database..." forever**:
 - **Most common**: GitHub Pages isn't enabled yet → Go to Settings → Pages and enable it

@@ -14,15 +14,22 @@ logger = logging.getLogger(__name__)
 class BGGClient:
     BASE_URL = "https://www.boardgamegeek.com/xmlapi2"
 
-    def __init__(self, cache=None, token="", debug=False):
-        if not cache:
-            self.requester = HttpSession()
-        else:
-            self.requester = cache.cache
+    def __init__(self, cache=None, debug=False, token=None):
+        # Set up headers for authentication
+        # BGG XML API requires: Authorization: Bearer {token}
+        # See: https://boardgamegeek.com/using_the_xml_api
+        headers = {}
+        if token:
+            headers['Authorization'] = f'Bearer {token}'
 
-        self.headers = {
-            'Authorization': f'Bearer {token}'
-        }
+        if not cache:
+            self.requester = HttpSession(headers=headers)
+        else:
+            # Pass headers to cached client for authentication
+            self.requester = cache.cache
+            self.requester.headers = headers
+
+        self.token = token
 
         if debug:
             logging.basicConfig(level=logging.DEBUG)
@@ -102,11 +109,26 @@ class BGGClient:
             time.sleep(sleep_time)
 
         try:
-            response = self.requester.get(BGGClient.BASE_URL + url, params=params, headers=self.headers)
+            response = self.requester.get(BGGClient.BASE_URL + url, params=params)
             response.raise_for_status()  # This will raise an exception for 4xx and 5xx status codes
         except Exception as e:
             # Handle both requests exceptions and our simple cache exceptions
             error_message = str(e)
+
+            # Check for authentication errors - fail immediately with helpful message
+            if "401" in error_message or "Unauthorized" in error_message:
+                if not self.token:
+                    raise BGGException(
+                        "BGG API authentication required (401 Unauthorized). "
+                        "Please run: python scripts/setup_bgg_token.py"
+                    )
+                else:
+                    raise BGGException(
+                        "BGG API authentication failed (401 Unauthorized). "
+                        f"Token present but rejected by BGG. "
+                        f"Try regenerating your token: python scripts/setup_bgg_token.py\n"
+                        f"Token being used: {self.token[:8]}..."
+                    )
 
             # Check for Too Many Requests (429)
             if "429" in error_message or "Too Many Requests" in error_message:
