@@ -16,7 +16,7 @@ jobs:
         env:
             GAMECACHE_GITHUB_TOKEN: ${{ secrets.GAMECACHE_GITHUB_TOKEN }}
             MYBGG_GITHUB_TOKEN: ${{ secrets.MYBGG_GITHUB_TOKEN }}
-            BGG_BEARER_TOKEN: ${{ secrets.BGG_BEARER_TOKEN }}
+            GAMECACHE_BGG_TOKEN: ${{ secrets.GAMECACHE_BGG_TOKEN }}
         run: |
           if [ -n "$GAMECACHE_GITHUB_TOKEN" ] || [ -n "$MYBGG_GITHUB_TOKEN" ]; then
             echo "enabled=true" >> $GITHUB_OUTPUT
@@ -28,6 +28,11 @@ jobs:
           else
             echo "enabled=false" >> $GITHUB_OUTPUT
             echo "::notice::GAMECACHE_GITHUB_TOKEN not set; skipping run." >&2
+          fi
+
+          # Check for BGG token
+          if [ -z "$GAMECACHE_BGG_TOKEN" ]; then
+            echo "::warning::GAMECACHE_BGG_TOKEN not set; BGG authentication may fail." >&2
           fi
       - name: Checkout
         if: steps.enabled.outputs.enabled == 'true'
@@ -43,7 +48,7 @@ jobs:
         env:
           GAMECACHE_GITHUB_TOKEN: ${{ secrets.GAMECACHE_GITHUB_TOKEN }}
           MYBGG_GITHUB_TOKEN: ${{ secrets.MYBGG_GITHUB_TOKEN }}
-          BGG_BEARER_TOKEN: ${{ secrets.BGG_BEARER_TOKEN }}
+          GAMECACHE_BGG_TOKEN: ${{ secrets.GAMECACHE_BGG_TOKEN }}
         run: |
           # Fallback: promote legacy token if new one absent
           if [ -z "$GAMECACHE_GITHUB_TOKEN" ] && [ -n "$MYBGG_GITHUB_TOKEN" ]; then

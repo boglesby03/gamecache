@@ -8,3 +8,6 @@ env
 *.sqlite.gz
 *.sqlite-shm
 *.sqlite-wal
+
+# Private configuration (keep tokens secret!)
+.env

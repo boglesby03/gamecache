@@ -16,20 +16,20 @@ UNPUBLISHED_PROTOTYPE=18291
 BOX_OF_PROMOS=39378
 
 class Downloader():
-    def __init__(self, cache_bgg, token, debug=False):
+    def __init__(self, cache_bgg, debug=False, token=None):
         if cache_bgg:
             self.client = BGGClient(
                 cache=CacheBackendSqlite(
                     path=f"gamecache-cache.sqlite",
                     ttl=60 * 60 * 24,
                 ),
-                token=token,
                 debug=debug,
+                token=token,
             )
         else:
             self.client = BGGClient(
-                token=token,
                 debug=debug,
+                token=token,
             )
 
     def collection(self, user_name, extra_params):
