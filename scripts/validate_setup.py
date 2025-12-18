@@ -4,8 +4,12 @@ Simple validation script to check if setup is correct before running the main sc
 """
 
 import sys
+import re
+import json
 from pathlib import Path
 from urllib.parse import unquote
+import urllib.request
+import urllib.error
 
 # Add the scripts directory to the path so we can import gamecache modules
 script_dir = Path(__file__).parent
@@ -14,6 +18,151 @@ sys.path.insert(0, str(script_dir))
 # Now import after path is set
 from gamecache.config import parse_config_file  # noqa: E402
 from gamecache.http_client import make_http_request  # noqa: E402
+
+
+def _http_request(method, url, timeout=10, headers=None):
+    """HTTP request helper that returns (status, headers, body_bytes).
+
+    Uses urllib directly so we can do HEAD requests and read error bodies.
+    """
+    req = urllib.request.Request(url, method=method)
+    req.add_header('User-Agent', 'GameCache/1.0')
+    if headers:
+        for k, v in headers.items():
+            req.add_header(k, v)
+
+    try:
+        with urllib.request.urlopen(req, timeout=timeout) as resp:
+            return resp.status, dict(resp.headers), resp.read()
+    except urllib.error.HTTPError as e:
+        try:
+            body = e.read()
+        except Exception:
+            body = b''
+        return e.code, dict(e.headers), body
+
+
+def _decode_snippet(body, limit=300):
+    if not body:
+        return ''
+    try:
+        return body[:limit].decode('utf-8', errors='replace')
+    except Exception:
+        return str(body[:limit])
+
+
+def _normalize_github_repo(raw_value):
+    """Return (normalized_repo, warnings).
+
+    Accepts:
+      - owner/repo
+      - https://github.com/owner/repo
+      - github.com/owner/repo
+    """
+    value = str(raw_value).strip()
+    warnings = []
+
+    value = value.rstrip('/')
+
+    m = re.match(r'^(?:https?://)?(?:www\.)?github\.com/([^/]+)/([^/]+)$', value, re.IGNORECASE)
+    if m:
+        owner, repo = m.group(1), m.group(2)
+        warnings.append("github_repo should be just 'owner/repo' (not a full URL)")
+        return f"{owner}/{repo}", warnings
+
+    return value, warnings
+
+
+def _is_valid_github_owner(owner):
+    # Reasonably strict (not perfect): GitHub user/org names are 1-39 chars,
+    # alphanumeric or single hyphens between segments.
+    return re.fullmatch(r'[A-Za-z0-9](?:[A-Za-z0-9-]{0,37}[A-Za-z0-9])?', owner) is not None
+
+
+def _is_valid_github_repo_name(repo):
+    # Repo names can include dots/underscores. Avoid path-ish patterns.
+    if repo in {'.', '..'}:
+        return False
+    if '..' in repo:
+        return False
+    if '%' in repo:
+        return False
+    return re.fullmatch(r'[A-Za-z0-9._-]+', repo) is not None
+
+
+def validate_github_repo(repo_value):
+    """Validate github_repo format and sanity-check proxy/repo reachability."""
+    normalized, warnings = _normalize_github_repo(repo_value)
+    for w in warnings:
+        print(f"⚠️  {w}")
+        print(f"   Suggested value: {normalized}")
+
+    if '/' not in normalized or normalized.count('/') != 1:
+        print("❌ github_repo must be in the form 'OWNER/REPO'")
+        print("   Example: EmilStenstrom/gamecache")
+        return False
+
+    owner, repo = normalized.split('/', 1)
+
+    if not _is_valid_github_owner(owner) or not _is_valid_github_repo_name(repo):
+        print("❌ github_repo contains invalid characters")
+        print("   It must look like: OWNER/REPO")
+        print("   Repo names may include '.', '_' and '-' (e.g. doszek-games.github.io)")
+        print(f"   Current value: {normalized}")
+        return False
+
+    print(f"✅ GitHub repo format looks good: {normalized}")
+
+    # Check repo exists (helps catch typos and private repos).
+    print("🔍 Checking GitHub repo exists...")
+    api_url = f"https://api.github.com/repos/{owner}/{repo}"
+    status, headers, body = _http_request('GET', api_url, timeout=10, headers={'Accept': 'application/vnd.github+json'})
+
+    if status == 200:
+        print("✅ GitHub repo is reachable")
+    elif status == 404:
+        print("❌ GitHub repo not found (404)")
+        print("   Check that the repo is public and the owner/repo is spelled correctly")
+        return False
+    elif status == 403:
+        msg = ''
+        try:
+            msg = json.loads(body.decode('utf-8', errors='ignore')).get('message', '')
+        except Exception:
+            msg = _decode_snippet(body)
+        print(f"⚠️  GitHub API returned 403 (rate limit or access restriction)")
+        if msg:
+            print(f"   Details: {msg}")
+    else:
+        print(f"⚠️  GitHub API returned HTTP {status}")
+        snippet = _decode_snippet(body)
+        if snippet:
+            print(f"   Details: {snippet}")
+
+    # Check the exact URL the website will fetch in production.
+    print("🔍 Checking CORS proxy download endpoint...")
+    proxy_url = f"https://cors-proxy.mybgg.workers.dev/{owner}/{repo}"
+    status, _, body = _http_request('HEAD', proxy_url, timeout=20)
+    if status == 200:
+        print("✅ CORS proxy can access your latest database release")
+        return True
+    if status == 404:
+        print("❌ CORS proxy returned 404 (database asset not found)")
+        print("   Run: python scripts/download_and_index.py --cache_bgg")
+        print("   Then ensure a GitHub Release exists with asset 'gamecache.sqlite.gz'")
+        return False
+    if status == 400:
+        # HEAD responses often have empty body; try GET for details.
+        status2, _, body2 = _http_request('GET', proxy_url, timeout=20)
+        detail = _decode_snippet(body2)
+        print("❌ CORS proxy rejected your github_repo (HTTP 400)")
+        if detail:
+            print(f"   Details: {detail}")
+        print("   github_repo must be OWNER/REPO (no extra path segments)")
+        return False
+
+    print(f"⚠️  CORS proxy returned HTTP {status}")
+    return True
 
 def validate_config():
     """Validate the config.ini file"""
@@ -154,6 +303,11 @@ def main():
         return
 
     print()
+
+    # Validate GitHub repo and proxy endpoint (helps diagnose browser 'NetworkError')
+    if config_valid:
+        all_good &= validate_github_repo(config["github"]["repo"])
+        print()
 
     # Validate Python dependencies
     all_good &= validate_python_deps()
