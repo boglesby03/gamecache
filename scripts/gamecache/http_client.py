@@ -18,7 +18,9 @@ def make_http_request(url, params=None, timeout=30, headers=None):
     try:
         # URL encode params and add to URL
         if params:
-            query_string = urllib.parse.urlencode(params)
+            # BGG endpoints appear to require spaces encoded as %20 (not '+'),
+            # so use urllib.parse.quote instead of quote_plus.
+            query_string = urllib.parse.urlencode(params, quote_via=urllib.parse.quote)
             url += "?" + query_string
 
         # Create request with proper headers
@@ -91,7 +93,7 @@ class HttpResponse:
 
 class HttpSession:
     """Simple session-like class that mimics requests.Session interface"""
-    
+
     def __init__(self, headers=None):
         """Initialize session with optional default headers"""
         self.headers = headers or {}
@@ -100,7 +102,7 @@ class HttpSession:
         """GET request that mimics requests.Session.get()"""
         # Build full URL with parameters
         if params:
-            param_str = urllib.parse.urlencode(params)
+            param_str = urllib.parse.urlencode(params, quote_via=urllib.parse.quote)
             full_url = f"{url}?{param_str}" if '?' not in url else f"{url}&{param_str}"
         else:
             full_url = url
@@ -177,7 +179,7 @@ class CachedHttpClient:
         """
         # Build full URL with parameters
         if params:
-            param_str = urllib.parse.urlencode(params)
+            param_str = urllib.parse.urlencode(params, quote_via=urllib.parse.quote)
             full_url = f"{url}?{param_str}" if '?' not in url else f"{url}&{param_str}"
         else:
             full_url = url
