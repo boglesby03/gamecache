@@ -1,6 +1,9 @@
 import sys
 import gzip
 import os
+import json
+import urllib.request
+import urllib.error
 from pathlib import Path
 
 # Add the scripts directory to the path for imports
@@ -14,10 +17,92 @@ from gamecache.github_integration import setup_github_integration  # noqa: E402
 from gamecache.config import parse_config_file, create_nested_config  # noqa: E402
 from setup_logging import setup_logging  # noqa: E402
 
+
+UPGRADE_INSTRUCTIONS_URL = "https://github.com/EmilStenstrom/gamecache#keeping-your-copy-updated"
+
+
+def _print_info_box(title, lines):
+    content = [title] + list(lines)
+    width = max(len(s) for s in content) if content else len(title)
+    border = "+" + ("-" * (width + 2)) + "+"
+    print(border)
+    print(f"| {title.ljust(width)} |")
+    print("|" + (" " * (width + 2)) + "|")
+    for line in lines:
+        print(f"| {line.ljust(width)} |")
+    print(border)
+
+
+def _http_get_json(url, timeout=10, headers=None):
+    req = urllib.request.Request(url)
+    req.add_header('Accept', 'application/vnd.github+json')
+    req.add_header('User-Agent', 'GameCache/1.0')
+    if headers:
+        for k, v in headers.items():
+            req.add_header(k, v)
+
+    with urllib.request.urlopen(req, timeout=timeout) as resp:
+        data = resp.read()
+        return json.loads(data.decode('utf-8', errors='replace'))
+
+
+def _get_default_branch(owner, repo):
+    info = _http_get_json(f"https://api.github.com/repos/{owner}/{repo}")
+    return info.get('default_branch')
+
+
+def check_for_upstream_updates_via_github(github_repo):
+    """Check whether the user's repo is behind the upstream template.
+
+    Uses GitHub's compare API (HTTP GET) so it works without git installed.
+    """
+    if os.environ.get("GAMECACHE_SKIP_UPDATE_CHECK"):
+        return
+
+    if not github_repo or '/' not in github_repo:
+        return
+
+    owner, repo = github_repo.split('/', 1)
+
+    try:
+        upstream_owner = 'EmilStenstrom'
+        upstream_repo = 'gamecache'
+
+        upstream_branch = _get_default_branch(upstream_owner, upstream_repo) or 'master'
+        head_branch = _get_default_branch(owner, repo) or 'master'
+
+        compare_url = (
+            f"https://api.github.com/repos/{upstream_owner}/{upstream_repo}"
+            f"/compare/{upstream_branch}...{owner}:{head_branch}"
+        )
+        comparison = _http_get_json(compare_url, timeout=10)
+
+        behind_by = int(comparison.get('behind_by', 0) or 0)
+        if behind_by > 0:
+            _print_info_box(
+                "New GameCache version available",
+                [
+                    f"Your repo ({github_repo}) is {behind_by} commits behind upstream.",
+                    f"How to update: {UPGRADE_INSTRUCTIONS_URL}",
+                    "(Set GAMECACHE_SKIP_UPDATE_CHECK=1 to hide this message)",
+                ],
+            )
+    except urllib.error.HTTPError as e:
+        # Don't block the main script if GitHub is rate-limiting or unavailable.
+        if e.code == 403:
+            # Often rate limit.
+            return
+        return
+    except Exception:
+        return
+
 def main(args):
     config = parse_config_file(args.config)
     # Convert flat config to nested structure for backward compatibility
     SETTINGS = create_nested_config(config)
+
+    # Best-effort update check (does not affect script success)
+    check_for_upstream_updates_via_github(SETTINGS.get("github", {}).get("repo"))
 
     # Get BGG token from config
     bgg_token = SETTINGS["boardgamegeek"].get("token")

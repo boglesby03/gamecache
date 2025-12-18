@@ -95,7 +95,7 @@ Create a beautiful, searchable website for your BoardGameGeek collection! This p
    </details>
 
 3. **Get a BGG Application Token**:
-   
+
    To access BoardGameGeek's API, you need an application token. GameCache provides a fully automated setup:
 
    ```bash
@@ -260,7 +260,7 @@ python scripts/enable_hourly_updates.py
 ### Common Setup Issues
 
 **"No games imported" error**:
-- Check that your BGG username in `config.ini` is correct (no spaces, special characters)
+- Check that your BGG username in `config.ini` is correct (spelling and casing)
 - Make sure your BoardGameGeek collection is set to public ([BGG Collection Settings](https://boardgamegeek.com/collection/settings))
 - Verify you have games marked as "owned" in your BGG collection
 - Try the validation script: `python scripts/validate_setup.py`
