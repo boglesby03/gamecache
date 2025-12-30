@@ -90,6 +90,43 @@ def _is_valid_github_repo_name(repo):
     return re.fullmatch(r'[A-Za-z0-9._-]+', repo) is not None
 
 
+def _validate_github_user(owner):
+    """Validate that the GitHub user/organization exists.
+    
+    Returns True if the user exists, False otherwise.
+    """
+    print(f"🔍 Checking GitHub user '{owner}' exists...")
+    api_url = f"https://api.github.com/users/{owner}"
+    req_headers = {'Accept': 'application/vnd.github+json'}
+    status, resp_headers, body = _http_request('GET', api_url, timeout=10, headers=req_headers)
+    
+    if status == 200:
+        print(f"✅ GitHub user '{owner}' exists")
+        return True
+    elif status == 404:
+        print(f"❌ GitHub user '{owner}' not found (404)")
+        print("   Check that the username is spelled correctly")
+        return False
+    elif status == 403:
+        msg = ''
+        try:
+            msg = json.loads(body.decode('utf-8', errors='ignore')).get('message', '')
+        except Exception:
+            msg = _decode_snippet(body)
+        print(f"⚠️  GitHub API returned 403 when checking user (rate limit or access restriction)")
+        if msg:
+            print(f"   Details: {msg}")
+        # Don't fail validation on rate limit, let repo check handle it
+        return True
+    else:
+        print(f"⚠️  GitHub API returned HTTP {status} when checking user")
+        snippet = _decode_snippet(body)
+        if snippet:
+            print(f"   Details: {snippet}")
+        # Don't fail on other errors, let repo check handle it
+        return True
+
+
 def validate_github_repo(repo_value):
     """Validate github_repo format and sanity-check proxy/repo reachability."""
     normalized, warnings = _normalize_github_repo(repo_value)
@@ -113,16 +150,26 @@ def validate_github_repo(repo_value):
 
     print(f"✅ GitHub repo format looks good: {normalized}")
 
+    # First, validate that the GitHub user exists.
+    # This makes an additional API call but provides clearer error messages
+    # by distinguishing username typos from repository issues.
+    if not _validate_github_user(owner):
+        return False
+
     # Check repo exists (helps catch typos and private repos).
     print("🔍 Checking GitHub repo exists...")
     api_url = f"https://api.github.com/repos/{owner}/{repo}"
-    status, headers, body = _http_request('GET', api_url, timeout=10, headers={'Accept': 'application/vnd.github+json'})
+    req_headers = {'Accept': 'application/vnd.github+json'}
+    status, headers, body = _http_request('GET', api_url, timeout=10, headers=req_headers)
 
     if status == 200:
         print("✅ GitHub repo is reachable")
     elif status == 404:
-        print("❌ GitHub repo not found (404)")
-        print("   Check that the repo is public and the owner/repo is spelled correctly")
+        print(f"❌ GitHub repo '{repo}' not found in user '{owner}' account (404)")
+        print("   Check that:")
+        print("   - The repository name is spelled correctly")
+        print("   - The repository is public (not private)")
+        print("   - The repository exists in your GitHub account")
         return False
     elif status == 403:
         msg = ''
