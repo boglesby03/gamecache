@@ -106,7 +106,6 @@ def _validate_github_user(owner):
     elif status == 404:
         print(f"❌ GitHub user '{owner}' not found (404)")
         print("   Check that the username is spelled correctly")
-        print("   Note: GitHub usernames are case-insensitive but should match the actual account")
         return False
     elif status == 403:
         msg = ''
@@ -151,7 +150,9 @@ def validate_github_repo(repo_value):
 
     print(f"✅ GitHub repo format looks good: {normalized}")
 
-    # First, validate that the GitHub user exists
+    # First, validate that the GitHub user exists.
+    # This makes an additional API call but provides clearer error messages
+    # by distinguishing username typos from repository issues.
     if not _validate_github_user(owner):
         return False
 
