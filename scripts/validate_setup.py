@@ -97,7 +97,8 @@ def _validate_github_user(owner):
     """
     print(f"🔍 Checking GitHub user '{owner}' exists...")
     api_url = f"https://api.github.com/users/{owner}"
-    status, headers, body = _http_request('GET', api_url, timeout=10, headers={'Accept': 'application/vnd.github+json'})
+    req_headers = {'Accept': 'application/vnd.github+json'}
+    status, resp_headers, body = _http_request('GET', api_url, timeout=10, headers=req_headers)
     
     if status == 200:
         print(f"✅ GitHub user '{owner}' exists")
@@ -157,7 +158,8 @@ def validate_github_repo(repo_value):
     # Check repo exists (helps catch typos and private repos).
     print("🔍 Checking GitHub repo exists...")
     api_url = f"https://api.github.com/repos/{owner}/{repo}"
-    status, headers, body = _http_request('GET', api_url, timeout=10, headers={'Accept': 'application/vnd.github+json'})
+    req_headers = {'Accept': 'application/vnd.github+json'}
+    status, headers, body = _http_request('GET', api_url, timeout=10, headers=req_headers)
 
     if status == 200:
         print("✅ GitHub repo is reachable")
