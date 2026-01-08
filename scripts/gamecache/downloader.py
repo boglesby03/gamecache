@@ -419,10 +419,13 @@ def custom_expansion_mappings(expansions):
         {"id": 207123, "baseId": 231819},
         {"id": 329903, "baseId": 231819},
         # Agricola Cards
-        # {"id": 263965, "baseId": 31260},
+        # {"did": 263965, "baseId": 31260},
         # Camel Up Cards Trophies in Camel UP
         {"id": 213282, "baseId": 153938},
         {"id": 213282, "baseId": 260605}, # Camel Up 2nd Edition
+
+        # Rebel Princess 2 to Rebel Princess Deluxe
+        {"id": 443292, "baseId": 418556},
 
         # Unpublished Nations 2nd Expansion
         {"id": UNPUBLISHED_PROTOTYPE, "baseId": 126042},
