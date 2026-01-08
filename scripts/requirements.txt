@@ -16,7 +16,7 @@ pillow==12.0.0
     # via -r requirements.in
 pycparser==2.22
     # via cffi
-pynacl==1.6.1
+pynacl==1.6.2
     # via -r requirements.in
 typing==3.7.4.3
     # via declxml
