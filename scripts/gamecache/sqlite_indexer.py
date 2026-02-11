@@ -31,6 +31,7 @@ class SqliteIndexer:
 
         # Drop existing table if it exists
         cursor.execute('DROP TABLE IF EXISTS games')
+        cursor.execute('DROP TABLE IF EXISTS games_fts')
 
         # Create games table with all necessary fields
         cursor.execute('''
@@ -67,7 +68,7 @@ class SqliteIndexer:
                 accessories TEXT,       -- JSON array
                 families TEXT,          -- JSON array
                 reimplements TEXT,      -- JSON array
-                reimplementedby TEXt,   -- JSON array
+                reimplementedby TEXT,   -- JSON array
                 integrates TEXT,        -- JSON array
                 wl_exp TEXT,          -- JSON array
                 wl_acc TEXT,          -- JSON array
@@ -83,6 +84,38 @@ class SqliteIndexer:
                 version_year INTEGER,
                 first_played TEXT,
                 last_played TEXT
+            )
+        ''')
+
+        cursor.execute('''
+            CREATE VIRTUAL TABLE games_fts USING fts5 (
+                collection_id,
+                id,
+                name,
+                description,
+                categories,
+                mechanics,
+                tags,
+                expansions,
+                alternate_names,
+                comment,
+                wishlist_comment,
+                artists,
+                designers,
+                publishers,
+                year,
+                accessories,
+                families,
+                reimplements,
+                reimplementedby,
+                integrates,
+                wl_exp,
+                wl_acc,
+                po_exp,
+                po_acc,
+                contained,
+                other_ranks,
+                version_name
             )
         ''')
 
@@ -241,6 +274,39 @@ class SqliteIndexer:
                 int(game.get('version_year')) if game.get('version_year') is not None else None,
                 int(game.get('collection_id')) if game.get('collection_id') is not None else None,
                 game.get('first_played'), game.get('last_played')
+            ))
+
+            cursor.execute('''
+                INSERT INTO games_fts (
+                    collection_id, id, name, description, categories, mechanics, tags, expansions,
+                    alternate_names, comment, wishlist_comment, artists, designers, publishers, year,
+                    accessories, families, reimplements, reimplementedby, integrates, wl_exp, wl_acc,
+                    po_exp, po_acc, contained, other_ranks, version_name
+                )
+                VALUES (
+                    ?, ?, ?, ?, ?, ?, ?, ?,
+                    ?, ?, ?, ?, ?, ?, ?,
+                    ?, ?, ?, ?, ?, ?, ?,
+                    ?, ?, ?, ?, ?
+                )
+            ''', (
+                game.get('collection_id'),
+                game.get('id'),
+                game.get('name'),
+                game.get('description'),
+                categories_json,
+                mechanics_json,
+                tags_json,
+                expansions_json,
+                alternate_names_json,
+                game.get('comment'),
+                game.get('wishlist_comment'),
+                artists_json, designers_json, publishers_json,
+                game.get('year'),
+                accessories_json, families_json, reimplements_json, reimplementedby_json,
+                integrated_json, wl_exp_json, wl_acc_json, po_exp_json, po_acc_json, contained_json,
+                other_ranks_json,
+                game.get('version_name')
             ))
 
         conn.commit()
