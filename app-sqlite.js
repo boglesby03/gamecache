@@ -114,7 +114,8 @@ function loadINI(path, callback) {
 async function initializeDatabase(settings) {
   try {
     const SQL = await initSqlJs({
-      locateFile: file => `https://cdn.jsdelivr.net/npm/sql.js@1.13.0/dist/${file}`
+      //locateFile: file => `https://cdn.jsdelivr.net/npm/sql.js@1.13.0/dist/${file}`
+      locateFile: file => `/sqljs/${file}`
     });
 
     const isDev = /^(localhost|127\\.0\\.0\\.1)$/.test(location.hostname);
@@ -197,16 +198,17 @@ function parsePlayerCount(countStr) {
 
 function ftsSearch(query) {
 
-  //return
-  const stmt = db.prepare(`select rowid, name from games_fts where games_fts match "${query}"`)
+  const fts_stmt = db.prepare(`select id, name from games_fts where games_fts match "${query}"`)
 
-  allGames = []
-  while(stmt.step()) {
-    const row = stmt.getAsObject();
-
-    log.console(row);
+  ftsGames = []
+  while(fts_stmt.step()) {
+    const fts_row = fts_stmt.getAsObject();
+    ftsGames.push(fts_row.id);
   }
 
+  fts_stmt.free()
+
+  return ftsGames;
 }
 
 function loadAllGames() {
@@ -1563,43 +1565,50 @@ function filterGames(gamesToFilter, filters) {
     selectedAgeRange
   } = filters;
 
+  var ftsQueryResults = [];
+  if (query) {
+    ftsQueryResults = ftsSearch(query);
+  }
+
   return gamesToFilter.filter(game => {
 
-    // if (query) {
-    //   ftsSearch(query);
-    // }
+    if (query) {
+      if (!ftsQueryResults.includes(game.id)) {
+        return false;
+      }
+    }
 
     // TODO Decide if this should look at names (publisher, artist, designer)
     // also this would be great to add Soundex or Tokenized searching (like FTS)
-    if (query && !game.name.toLowerCase().includes(query) &&
-        !game.description.toLowerCase().includes(query) &&
-        (game.alternate_names.filter(item =>
-          item.toLowerCase().indexOf(query.toLowerCase()) !== -1).length == 0) &&
-        (game.families.filter(item =>
-          item.name.toLowerCase().indexOf(query.toLowerCase()) !== -1).length == 0) &&
-        (game.contained.filter(item =>
-          item.name.toLowerCase().indexOf(query.toLowerCase()) !== -1).length == 0) &&
-        (game.reimplementedby.filter(item =>
-          item.name.toLowerCase().indexOf(query.toLowerCase()) !== -1).length == 0) &&
-        (game.reimplements.filter(item =>
-          item.name.toLowerCase().indexOf(query.toLowerCase()) !== -1).length == 0) &&
-        (game.integrates.filter(item =>
-          item.name.toLowerCase().indexOf(query.toLowerCase()) !== -1).length == 0) &&
-        (game.expansions.filter(item =>
-          item.name.toLowerCase().indexOf(query.toLowerCase()) !== -1).length == 0) &&
-        (game.wl_exp.filter(item =>
-          item.name.toLowerCase().indexOf(query.toLowerCase()) !== -1).length == 0) &&
-        (game.po_exp.filter(item =>
-          item.name.toLowerCase().indexOf(query.toLowerCase()) !== -1).length == 0) &&
-        (game.accessories.filter(item =>
-          item.name.toLowerCase().indexOf(query.toLowerCase()) !== -1).length == 0) &&
-        (game.wl_acc.filter(item =>
-          item.name.toLowerCase().indexOf(query.toLowerCase()) !== -1).length == 0) &&
-        (game.po_acc.filter(item =>
-          item.name.toLowerCase().indexOf(query.toLowerCase()) !== -1).length == 0)
-        ) {
-      return false;
-    }
+    // if (query && !game.name.toLowerCase().includes(query) &&
+    //     !game.description.toLowerCase().includes(query) &&
+    //     (game.alternate_names.filter(item =>
+    //       item.toLowerCase().indexOf(query.toLowerCase()) !== -1).length == 0) &&
+    //     (game.families.filter(item =>
+    //       item.name.toLowerCase().indexOf(query.toLowerCase()) !== -1).length == 0) &&
+    //     (game.contained.filter(item =>
+    //       item.name.toLowerCase().indexOf(query.toLowerCase()) !== -1).length == 0) &&
+    //     (game.reimplementedby.filter(item =>
+    //       item.name.toLowerCase().indexOf(query.toLowerCase()) !== -1).length == 0) &&
+    //     (game.reimplements.filter(item =>
+    //       item.name.toLowerCase().indexOf(query.toLowerCase()) !== -1).length == 0) &&
+    //     (game.integrates.filter(item =>
+    //       item.name.toLowerCase().indexOf(query.toLowerCase()) !== -1).length == 0) &&
+    //     (game.expansions.filter(item =>
+    //       item.name.toLowerCase().indexOf(query.toLowerCase()) !== -1).length == 0) &&
+    //     (game.wl_exp.filter(item =>
+    //       item.name.toLowerCase().indexOf(query.toLowerCase()) !== -1).length == 0) &&
+    //     (game.po_exp.filter(item =>
+    //       item.name.toLowerCase().indexOf(query.toLowerCase()) !== -1).length == 0) &&
+    //     (game.accessories.filter(item =>
+    //       item.name.toLowerCase().indexOf(query.toLowerCase()) !== -1).length == 0) &&
+    //     (game.wl_acc.filter(item =>
+    //       item.name.toLowerCase().indexOf(query.toLowerCase()) !== -1).length == 0) &&
+    //     (game.po_acc.filter(item =>
+    //       item.name.toLowerCase().indexOf(query.toLowerCase()) !== -1).length == 0)
+    //     ) {
+    //   return false;
+    // }
 
     if (selectedCategories.length > 0 &&
       !selectedCategories.some(cat => game.categories.includes(cat))) {
