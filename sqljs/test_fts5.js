@@ -10,4 +10,11 @@ initSqlJs({
   } catch (e) {
     console.error("FTS5 not enabled:", e.message);
   }
+
+  try {
+    const res = db.exec("SELECT soundex('settlers') AS sx");
+    console.log('SOUNDEX is available! Result:', res[0].values[0][0]);
+  } catch (e) {
+    console.error('SOUNDEX not available:', e.message);
+  }
 });
