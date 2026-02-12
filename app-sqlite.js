@@ -199,7 +199,7 @@ function parsePlayerCount(countStr) {
 function ftsSearch(query) {
 
   const fts_stmt = db.prepare(`
-    SELECT id, name FROM games_fts WHERE games_fts match "${query}"
+    SELECT id, name FROM games_fts WHERE games_fts MATCH "${query}"
     UNION
     SELECT id, name FROM games_fts  WHERE soundex(name) = soundex("${query}")`)
 

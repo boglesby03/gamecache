@@ -167,38 +167,71 @@ class SqliteIndexer:
             game = game_obj.todict()  # Convert BoardGame object to dictionary
 
             # Convert complex fields to JSON strings
-            categories_json = json.dumps(game.get('categories', []))
-            mechanics_json = json.dumps(game.get('mechanics', []))
+            categories_list = game.get('categories', [])
+            categories_json = json.dumps(categories_list)
+
+            mechanics_list = game.get('mechanics', [])
+            mechanics_json = json.dumps(mechanics_list)
+
             players_json = json.dumps(game.get('players', []))
-            tags_json = json.dumps(game.get('tags', []))
+
+            tags_list = game.get('tags', [])
+            tags_json = json.dumps(tags_list)
+
             previous_players_json = json.dumps(game.get('previous_players', []))
+
             expansions_list = game.get('expansions', [])
+            expansions_names_list = ' '.join(item.name for item in expansions_list)
             expansions_json = json.dumps([self._expansion_to_dict(exp) for exp in expansions_list if exp])
 
             accessories_list = game.get('accessories', [])
+            accessories_name_list = ' '.join(item.name for item in accessories_list)
             accessories_json = json.dumps([self._expansion_to_dict(acc) for acc in accessories_list if acc])
 
             wl_exp_list = game.get('wl_exp', [])
+            wl_exp_name_list = ' '.join(item.name for item in wl_exp_list)
             wl_exp_json = json.dumps([self._expansion_to_dict(exp) for exp in wl_exp_list if exp])
 
             wl_acc_list = game.get('wl_acc', [])
+            wl_acc_name_list = ' '.join(item.name for item in wl_acc_list)
             wl_acc_json = json.dumps([self._expansion_to_dict(acc) for acc in wl_acc_list if acc])
 
             po_exp_list = game.get('po_exp', [])
+            po_exp_name_list = ' '.join(item.name for item in po_exp_list)
             po_exp_json = json.dumps([self._expansion_to_dict(exp) for exp in po_exp_list if exp])
 
             po_acc_list = game.get('po_acc', [])
+            po_acc_name_list = ' '.join(item.name for item in po_acc_list)
             po_acc_json = json.dumps([self._expansion_to_dict(acc) for acc in po_acc_list if acc])
 
-            alternate_names_json = json.dumps(game.get('alternate_names', []))
+            alternate_names_list = game.get('alternate_names', [])
+            alternate_names_json = json.dumps(alternate_names_list)
+
+            artists_name_list = ' '.join(item.get("name", "") for item in game.get('artists', []))
             artists_json = json.dumps(game.get('artists', []))
+
+            designers_name_list = ' '.join(item.get("name", "") for item in game.get('designers', []))
             designers_json = json.dumps(game.get('designers', []))
+
+            publishers_name_list = ' '.join(item.get("name", "") for item in game.get('publishers', []))
             publishers_json = json.dumps(game.get('publishers', []))
+
+            families_name_list = ' '.join(item.get("name", "") for item in game.get('families', []))
             families_json = json.dumps(game.get('families', []))
+
+            reimplements_name_list = ' '.join(item.get("name", "") for item in game.get('reimplements', []))
             reimplements_json = json.dumps(game.get('reimplements', []))
+
+            reimplementedby_name_list = ' '.join(item.get("name", "") for item in game.get('reimplementedby', []))
             reimplementedby_json = json.dumps(game.get('reimplementedby', []))
+
+            integrated_name_list = ' '.join(item.get("name", "") for item in game.get('integrates', []))
             integrated_json = json.dumps(game.get('integrates', []))
+
+            contained_name_list = ' '.join(item.get("name", "") for item in game.get('contained', []))
             contained_json = json.dumps(game.get('contained', []))
+
+            other_ranks_name_list = ' '.join(item.get("friendlyname", "") for item in game.get('other_ranks', []))
             other_ranks_json = json.dumps(game.get('other_ranks', []))
 
             color_str = None
@@ -294,18 +327,18 @@ class SqliteIndexer:
                 game.get('id'),
                 game.get('name'),
                 game.get('description'),
-                categories_json,
-                mechanics_json,
-                tags_json,
-                expansions_json,
-                alternate_names_json,
+                ' '.join(categories_list),
+                ' '.join(mechanics_list),
+                ' '.join(tags_list),
+                expansions_names_list,
+                ' '.join(alternate_names_list),
                 game.get('comment'),
                 game.get('wishlist_comment'),
-                artists_json, designers_json, publishers_json,
+                artists_name_list, designers_name_list, publishers_name_list,
                 game.get('year'),
-                accessories_json, families_json, reimplements_json, reimplementedby_json,
-                integrated_json, wl_exp_json, wl_acc_json, po_exp_json, po_acc_json, contained_json,
-                other_ranks_json,
+                accessories_name_list, families_name_list, reimplements_name_list, reimplementedby_name_list,
+                integrated_name_list, wl_exp_name_list, wl_acc_name_list, po_exp_name_list, po_acc_name_list, contained_name_list,
+                other_ranks_name_list,
                 game.get('version_name')
             ))
 
