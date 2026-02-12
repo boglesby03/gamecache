@@ -1962,9 +1962,9 @@ function updateAllFilterCounts(filters) {
   const gamesForStatusCount = filterGames(allGames, statusFilters);
   const statusCounts = {};
   gamesForStatusCount.forEach(game => {
-    if (game.tags) {
-      statusCounts[game.tags] = (statusCounts[game.tags] || 0) + 1;
-    }
+    game.tags.forEach(tag => {
+      statusCounts[tag] = (statusCounts[tag] || 0) + 1;
+    })
   });
   updateCountsInDOM('facet-status', statusCounts);
 

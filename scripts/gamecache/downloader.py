@@ -343,7 +343,7 @@ def custom_accessories_mapping(accessories):
 unpub_map = {
     126042: 45853902,  # Nations
     177736: 66917665,  # A Feast for Odin,
-    178550: 73699094,  # Spheres of influence
+    178550: 73699094,  # Spheres of Influence
     319966: 89022895,  # King Is Dead
     119506: 134702681, # Freedom - Bravery
 }
