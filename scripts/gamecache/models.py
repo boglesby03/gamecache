@@ -91,6 +91,15 @@ class BoardGame:
         self.version_year = collection_data["custom_version_year"] or collection_data["version_year"]
         self.collection_id = collection_data["collection_id"]
 
+        if len(self.wl_exp) > 0:
+            self.tags.append("wishlist: expansion")
+        if len(self.wl_acc) > 0:
+            self.tags.append("wishlist: accessory")
+        if len(self.po_exp) > 0:
+            self.tags.append("preorder: expansion")
+        if len(self.po_acc) > 0:
+            self.tags.append("preorder: accessory")
+
     def __hash__(self):
         return hash(self.id)
 
