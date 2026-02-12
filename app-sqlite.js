@@ -115,7 +115,7 @@ async function initializeDatabase(settings) {
   try {
     const SQL = await initSqlJs({
       //locateFile: file => `https://cdn.jsdelivr.net/npm/sql.js@1.13.0/dist/${file}`
-      locateFile: file => `/sqljs/${file}`
+      locateFile: file => `sqljs/${file}`
     });
 
     const isDev = /^(localhost|127\\.0\\.0\\.1)$/.test(location.hostname);
