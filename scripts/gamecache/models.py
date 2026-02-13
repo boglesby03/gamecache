@@ -135,7 +135,21 @@ class BoardGame:
     def is_promo(self):
         # NOTE: This could also potentially look for 'Magazine', which is normally a promo as well
         cat_match = any(item["name"].split(':', 1)[0] == 'Promotional' for item in self.families)
-        name_match = re.search(r'\bPromo(tion(al)?)?s?\b', self.name, re.IGNORECASE) is not None
+        # TODO should record the ones that are name match, but not category match to fix BGG
+        name_match = re.search(r'\bPromo(tion(al)?)?s?\b(?!\s*Box\b)', self.name, re.IGNORECASE) is not None
+
+        # there's still some that BGG has mislabeled promos
+        # Marvel United Kickstarter Promos Boxes shouldn't be promo items
+        not_promos = [386892, 425907]
+
+        # Symbiote Companion Decks
+        promos = [426614]
+
+        if self.id in not_promos:
+            return False
+        if self.id in promos:
+            return True
+
         return cat_match or name_match
 
     def calc_num_players(self, game_data, expansions):
