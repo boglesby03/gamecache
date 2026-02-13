@@ -504,7 +504,7 @@ def name_scrubber(title):
     new_title = re.sub(r"Funkoverse Strategy Game", "Funkoverse", new_title)
 
     # We know it's a board game
-    new_title = re.sub(r"(\s*The)?\s*Board\s*games?\s*", "", new_title, flags=re.IGNORECASE)
+    new_title = re.sub(r"(?<!\bof )(The\s*)?Board\s*games?\s*", "", new_title, flags=re.IGNORECASE)
 
     new_title = re.sub(r"(.*): A Zombicide Game", r"\1", new_title)
 
@@ -543,7 +543,7 @@ def remove_prefix(expansion, game_details):
     new_exp = re.sub(r"^[\s:-]+", "", new_exp)
 
     # Relabel Promos
-    new_exp = re.sub(r"(.*)s*Promo(?:tion(?:al)?)?s?:?(?:[\s-]*(?:(?:Box|Card|Deck|Pack|Set|Character)s?)?)+\s*\s*[\)\]]?\s*(.*)",
+    new_exp = re.sub(r"(.*?)(?<!&) Promo(?:tion(?:al)?)?s?:?(?:[\s-]*(?:(?:Box|Card|Deck|Pack|Set|Character)s?)?)+\s*\s*[\)\]]?\s*(.*)",
                     r"\1 \2", new_exp, flags=re.IGNORECASE)
 
     # Expansions don't need to be labeled Expansion
@@ -554,7 +554,8 @@ def remove_prefix(expansion, game_details):
     # Scenarios
     new_exp = re.sub(r"(.*)\s(Scenario)s?\s*", r"\2: \1", new_exp)
     # Remove Boardgame or Board Game from the title
-    new_exp = re.sub(r"(\s*The)?\s*Board\s*games?\s*", " ", new_exp, flags=re.IGNORECASE)
+    # Carve out the oddly titled "Apropos of Board Games"
+    new_exp = re.sub(r"(?<!\bof )(The\s*)?Board\s*games?\s*", " ", new_exp, flags=re.IGNORECASE)
     # Massive Darkness
     new_exp = re.sub(r"Heroes & Monster Set", "Hero Set", new_exp)
     # Heroic Bystanders
@@ -579,6 +580,8 @@ def remove_prefix(expansion, game_details):
     new_exp = re.sub(r"Funkoverse Strategy Game", "Funkoverse", new_exp)
     # Shorten Fan Expansions to just [Fan]
     new_exp = re.sub(r"\s*\(?Fan expans.*", " [Fan]", new_exp, flags=re.IGNORECASE)
+    # Wingspan Bird Packs
+    new_exp = re.sub(r"\s*Fan[\s-]*Designed\s*Birds?\s*(.*)", r"\1 [Fan]", new_exp, flags=re.IGNORECASE)
     # Ticket to Ride Map Collection Titles are too long
     new_exp = re.sub(r"\s*Map Collection: Volume ", "Map Pack ", new_exp, flags=re.IGNORECASE)
     # Remove leading whitespace and special characters
