@@ -11,6 +11,74 @@ import sqlite3
 import hashlib
 import time as time_module
 import gzip
+import ssl
+
+try:
+    import certifi
+except ImportError:
+    certifi = None
+
+
+class CertificateVerificationError(Exception):
+    """Raised when HTTPS certificate verification fails."""
+
+
+def _build_ssl_context():
+    """Create a shared SSL context, preferring certifi when available."""
+    if certifi is not None:
+        try:
+            return ssl.create_default_context(cafile=certifi.where()), True
+        except Exception:
+            pass
+    return ssl.create_default_context(), False
+
+
+SSL_CONTEXT, USING_CERTIFI_CA_BUNDLE = _build_ssl_context()
+
+
+def _is_certificate_verification_error(error):
+    reason = getattr(error, 'reason', error)
+    if isinstance(reason, ssl.SSLCertVerificationError):
+        return True
+
+    error_text = f"{reason} {error}".lower()
+    return (
+        'certificate_verify_failed' in error_text
+        or 'certificate verify failed' in error_text
+        or 'unable to get local issuer certificate' in error_text
+    )
+
+
+def _build_certificate_verification_message(error):
+    message = (
+        "HTTPS certificate verification failed. Python could not verify the remote SSL certificate."
+    )
+    if USING_CERTIFI_CA_BUNDLE:
+        message += (
+            " GameCache is already using the bundled certifi CA bundle, so your machine may be "
+            "missing a required root certificate or intercepting HTTPS traffic (for example via "
+            "a proxy or antivirus)."
+        )
+    else:
+        message += (
+            " Reinstall the project dependencies to install the bundled CA bundle "
+            "(`pip install -r scripts/requirements.txt`), or update Python's local certificates."
+        )
+    return f"{message} Original error: {error}"
+
+
+def _raise_http_error(error):
+    if _is_certificate_verification_error(error):
+        raise CertificateVerificationError(_build_certificate_verification_message(error)) from error
+    raise Exception(f"HTTP request failed: {error}") from error
+
+
+def open_url(request, timeout=30):
+    """Open a URL with the shared SSL context for HTTPS requests."""
+    url = request.full_url if hasattr(request, 'full_url') else str(request)
+    if str(url).lower().startswith('https://'):
+        return urllib.request.urlopen(request, timeout=timeout, context=SSL_CONTEXT)
+    return urllib.request.urlopen(request, timeout=timeout)
 
 
 def make_http_request(url, params=None, timeout=30, headers=None):
@@ -33,7 +101,7 @@ def make_http_request(url, params=None, timeout=30, headers=None):
             for key, value in headers.items():
                 request.add_header(key, value)
 
-        with urllib.request.urlopen(request, timeout=timeout) as response:
+        with open_url(request, timeout=timeout) as response:
             data = response.read()
 
             # Check if response is gzip compressed
@@ -41,8 +109,8 @@ def make_http_request(url, params=None, timeout=30, headers=None):
                 data = gzip.decompress(data)
 
             return data
-    except urllib.error.URLError as e:
-        raise Exception(f"HTTP request failed: {e}")
+    except (urllib.error.URLError, ssl.SSLError) as e:
+        _raise_http_error(e)
 
 
 def make_http_post(url, data=None, headers=None, timeout=30):
@@ -59,10 +127,10 @@ def make_http_post(url, data=None, headers=None, timeout=30):
     req = urllib.request.Request(url, data=data, headers=headers)
 
     try:
-        with urllib.request.urlopen(req, timeout=timeout) as response:
+        with open_url(req, timeout=timeout) as response:
             return response.read()
-    except urllib.error.URLError as e:
-        raise Exception(f"HTTP request failed: {e}")
+    except (urllib.error.URLError, ssl.SSLError) as e:
+        _raise_http_error(e)
 
 
 class HttpResponse:
@@ -260,7 +328,7 @@ def make_json_request(url, method='GET', data=None, headers=None, timeout=30,
             request = urllib.request.Request(url, data=data, headers=headers)
             request.get_method = lambda: method
 
-            with urllib.request.urlopen(request, timeout=timeout) as response:
+            with open_url(request, timeout=timeout) as response:
                 response_data = response.read()
 
                 # Check if response is gzip compressed
@@ -309,8 +377,8 @@ def make_json_request(url, method='GET', data=None, headers=None, timeout=30,
             return {}
         snippet = f" Body: {body[:300]}" if body else ''
         raise Exception(f"HTTP {e.code}: {e.reason}.{snippet}")
-    except urllib.error.URLError as e:
-        raise Exception(f"HTTP request failed: {e}")
+    except (urllib.error.URLError, ssl.SSLError) as e:
+        _raise_http_error(e)
 
 
 def make_form_post(url, data, headers=None, timeout=30):

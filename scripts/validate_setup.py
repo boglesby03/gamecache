@@ -17,7 +17,7 @@ sys.path.insert(0, str(script_dir))
 
 # Now import after path is set
 from gamecache.config import parse_config_file  # noqa: E402
-from gamecache.http_client import make_http_request  # noqa: E402
+from gamecache.http_client import CertificateVerificationError, make_http_request, open_url  # noqa: E402
 
 
 def _http_request(method, url, timeout=10, headers=None):
@@ -32,7 +32,7 @@ def _http_request(method, url, timeout=10, headers=None):
             req.add_header(k, v)
 
     try:
-        with urllib.request.urlopen(req, timeout=timeout) as resp:
+        with open_url(req, timeout=timeout) as resp:
             return resp.status, dict(resp.headers), resp.read()
     except urllib.error.HTTPError as e:
         try:
@@ -150,66 +150,75 @@ def validate_github_repo(repo_value):
 
     print(f"✅ GitHub repo format looks good: {normalized}")
 
-    # First, validate that the GitHub user exists.
-    # This makes an additional API call but provides clearer error messages
-    # by distinguishing username typos from repository issues.
-    if not _validate_github_user(owner):
-        return False
+    try:
+        # First, validate that the GitHub user exists.
+        # This makes an additional API call but provides clearer error messages
+        # by distinguishing username typos from repository issues.
+        if not _validate_github_user(owner):
+            return False
 
-    # Check repo exists (helps catch typos and private repos).
-    print("🔍 Checking GitHub repo exists...")
-    api_url = f"https://api.github.com/repos/{owner}/{repo}"
-    req_headers = {'Accept': 'application/vnd.github+json'}
-    status, headers, body = _http_request('GET', api_url, timeout=10, headers=req_headers)
+        # Check repo exists (helps catch typos and private repos).
+        print("🔍 Checking GitHub repo exists...")
+        api_url = f"https://api.github.com/repos/{owner}/{repo}"
+        status, _, body = _http_request(
+            'GET',
+            api_url,
+            timeout=10,
+            headers={'Accept': 'application/vnd.github+json'},
+        )
 
-    if status == 200:
-        print("✅ GitHub repo is reachable")
-    elif status == 404:
-        print(f"❌ GitHub repo '{repo}' not found in user '{owner}' account (404)")
-        print("   Check that:")
-        print("   - The repository name is spelled correctly")
-        print("   - The repository is public (not private)")
-        print("   - The repository exists in your GitHub account")
-        return False
-    elif status == 403:
-        msg = ''
-        try:
-            msg = json.loads(body.decode('utf-8', errors='ignore')).get('message', '')
-        except Exception:
-            msg = _decode_snippet(body)
-        print(f"⚠️  GitHub API returned 403 (rate limit or access restriction)")
-        if msg:
-            print(f"   Details: {msg}")
-    else:
-        print(f"⚠️  GitHub API returned HTTP {status}")
-        snippet = _decode_snippet(body)
-        if snippet:
-            print(f"   Details: {snippet}")
+        if status == 200:
+            print("✅ GitHub repo is reachable")
+        elif status == 404:
+            print(f"❌ GitHub repo '{repo}' not found in user '{owner}' account (404)")
+            print("   Check that:")
+            print("   - The repository name is spelled correctly")
+            print("   - The repository is public (not private)")
+            print("   - The repository exists in your GitHub account")
+            return False
+        elif status == 403:
+            msg = ''
+            try:
+                msg = json.loads(body.decode('utf-8', errors='ignore')).get('message', '')
+            except Exception:
+                msg = _decode_snippet(body)
+            print(f"⚠️  GitHub API returned 403 (rate limit or access restriction)")
+            if msg:
+                print(f"   Details: {msg}")
+        else:
+            print(f"⚠️  GitHub API returned HTTP {status}")
+            snippet = _decode_snippet(body)
+            if snippet:
+                print(f"   Details: {snippet}")
 
-    # Check the exact URL the website will fetch in production.
-    print("🔍 Checking CORS proxy download endpoint...")
-    proxy_url = f"https://cors-proxy.mybgg.workers.dev/{owner}/{repo}"
-    status, _, body = _http_request('HEAD', proxy_url, timeout=20)
-    if status == 200:
-        print("✅ CORS proxy can access your latest database release")
+        # Check the exact URL the website will fetch in production.
+        print("🔍 Checking CORS proxy download endpoint...")
+        proxy_url = f"https://cors-proxy.mybgg.workers.dev/{owner}/{repo}"
+        status, _, body = _http_request('HEAD', proxy_url, timeout=20)
+        if status == 200:
+            print("✅ CORS proxy can access your latest database release")
+            return True
+        if status == 404:
+            print("❌ CORS proxy returned 404 (database asset not found)")
+            print("   Run: python scripts/download_and_index.py --cache_bgg")
+            print("   Then ensure a GitHub Release exists with asset 'gamecache.sqlite.gz'")
+            return False
+        if status == 400:
+            # HEAD responses often have empty body; try GET for details.
+            _, _, body2 = _http_request('GET', proxy_url, timeout=20)
+            detail = _decode_snippet(body2)
+            print("❌ CORS proxy rejected your github_repo (HTTP 400)")
+            if detail:
+                print(f"   Details: {detail}")
+            print("   github_repo must be OWNER/REPO (no extra path segments)")
+            return False
+
+        print(f"⚠️  CORS proxy returned HTTP {status}")
         return True
-    if status == 404:
-        print("❌ CORS proxy returned 404 (database asset not found)")
-        print("   Run: python scripts/download_and_index.py --cache_bgg")
-        print("   Then ensure a GitHub Release exists with asset 'gamecache.sqlite.gz'")
+    except CertificateVerificationError as e:
+        print("❌ GitHub HTTPS certificate verification failed")
+        print(f"   {e}")
         return False
-    if status == 400:
-        # HEAD responses often have empty body; try GET for details.
-        status2, _, body2 = _http_request('GET', proxy_url, timeout=20)
-        detail = _decode_snippet(body2)
-        print("❌ CORS proxy rejected your github_repo (HTTP 400)")
-        if detail:
-            print(f"   Details: {detail}")
-        print("   github_repo must be OWNER/REPO (no extra path segments)")
-        return False
-
-    print(f"⚠️  CORS proxy returned HTTP {status}")
-    return True
 
 def validate_config():
     """Validate the config.ini file"""
@@ -281,6 +290,9 @@ def validate_bgg_user(username):
 
         return True
 
+    except CertificateVerificationError as e:
+        print(f"❌ HTTPS certificate verification failed: {e}")
+        return False
     except Exception as e:
         print(f"❌ Error checking BGG user: {e}")
         print("   Check your internet connection and BGG username")

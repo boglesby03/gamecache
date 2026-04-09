@@ -276,6 +276,8 @@ python scripts/enable_hourly_updates.py
 - Check your internet connection
 - Clear your browser cache and try again
 - Make sure popup blockers aren't preventing the GitHub page from opening
+- If you see `CERTIFICATE_VERIFY_FAILED`, reinstall dependencies with `pip install -r scripts/requirements.txt`
+- If `CERTIFICATE_VERIFY_FAILED` continues after reinstalling, your machine may be missing a root certificate or intercepting HTTPS traffic (proxy/antivirus)
 
 **BGG token generation fails**:
 - Check your internet connection
