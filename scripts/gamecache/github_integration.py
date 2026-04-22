@@ -6,7 +6,7 @@ import logging
 import getpass
 from pathlib import Path
 from typing import Optional, Dict, Any
-from .http_client import make_json_request, make_form_post
+from .http_client import CertificateVerificationError, make_json_request, make_form_post
 
 
 logger = logging.getLogger(__name__)
@@ -253,17 +253,25 @@ class GitHubAuth:
             else:
                 logger.info("Token validation failed: received None response (possibly 404)")
                 return False
+        except CertificateVerificationError:
+            logger.info("Token validation could not be completed because HTTPS certificate verification failed")
+            raise
         except Exception as e:
             # Log as info since we want to see why validation failed
             error_msg = str(e)
             if "401" in error_msg or "Unauthorized" in error_msg:
                 logger.info("Token validation failed: Token is no longer valid (401 Unauthorized)")
                 logger.info("This usually means the token has expired or been revoked")
+                return False
             elif "403" in error_msg or "Forbidden" in error_msg:
                 logger.info("Token validation failed: Token lacks required permissions (403 Forbidden)")
-            else:
-                logger.info(f"Token validation failed: {error_msg}")
-            return False
+                return False
+
+            logger.info(f"Token validation could not be completed due to a request failure: {error_msg}")
+            raise Exception(
+                "Could not validate the saved GitHub token because the GitHub request itself failed. "
+                f"{error_msg}"
+            ) from e
 
     def _perform_device_flow(self) -> str:
         """Perform the complete OAuth Device Flow."""
