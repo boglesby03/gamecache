@@ -11,6 +11,19 @@ articles = ['A', 'An', 'The']
 # Allow special characters - add any additional ones as they come available
 latin_pattern = re.compile(r'^[a-zA-Zà-ÿÀ-ßĀ-ž0-9\:\-\%\&—–\,\'\`\"\$\(\)\.\!\/\\\s\₂]+$')
 
+# there's still some that BGG has mislabeled promos
+not_promos = [
+    386892,  # Marvel United: Kickstarter Promos Box
+    425907,  # DC United: Gamefound Promos Box
+]
+
+promos = [
+    426614,   # Symbiote Companion Decks
+    372781,   # Iron Maiden Pack #1
+    372782,   # Iron Maiden Pack #2
+    372783,   # Iron Maiden Pack #3
+]
+
 PUBLIC_DOMAIN_PUBLISHER=171
 class BoardGame:
     def __init__(self, game_data, collection_data, expansions=[], accessories=[]):
@@ -137,13 +150,6 @@ class BoardGame:
         cat_match = any(item["name"].split(':', 1)[0] == 'Promotional' for item in self.families)
         # TODO should record the ones that are name match, but not category match to fix BGG
         name_match = re.search(r'\bPromo(tion(al)?)?s?\b(?!\s*Box\b)', self.name, re.IGNORECASE) is not None
-
-        # there's still some that BGG has mislabeled promos
-        # Marvel United Kickstarter Promos Boxes shouldn't be promo items
-        not_promos = [386892, 425907]
-
-        # Symbiote Companion Decks
-        promos = [426614]
 
         if self.id in not_promos:
             return False

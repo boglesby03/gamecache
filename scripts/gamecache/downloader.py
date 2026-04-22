@@ -543,7 +543,7 @@ def remove_prefix(expansion, game_details):
     new_exp = re.sub(r"^[\s:-]+", "", new_exp)
 
     # Relabel Promos
-    new_exp = re.sub(r"(.*?)(?<!&) Promo(?:tion(?:al)?)?s?:?(?:[\s-]*(?:(?:Box|Card|Deck|Pack|Set|Character)s?)?)+\s*\s*[\)\]]?\s*(.*)",
+    new_exp = re.sub(r"(.*?)(?<!&|\d) Promo(?:tion(?:al)?)?s?:?(?:[\s-]*(?:(?:Box|Card|Deck|Pack|Set|Character)s?)?)+\s*\s*[\)\]]?\s*(.*)",
                     r"\1 \2", new_exp, flags=re.IGNORECASE)
 
     # Expansions don't need to be labeled Expansion
@@ -555,7 +555,7 @@ def remove_prefix(expansion, game_details):
     new_exp = re.sub(r"(.*)\s(Scenario)s?\s*", r"\2: \1", new_exp)
     # Remove Boardgame or Board Game from the title
     # Carve out the oddly titled "Apropos of Board Games"
-    new_exp = re.sub(r"(?<!\bof )(The\s*)?Board\s*games?\s*", " ", new_exp, flags=re.IGNORECASE)
+    new_exp = re.sub(r"(?<!\bof )(The\s*)?Board\s*games?\s*\b", " ", new_exp, flags=re.IGNORECASE)
     # Massive Darkness
     new_exp = re.sub(r"Heroes & Monster Set", "Hero Set", new_exp)
     # Heroic Bystanders

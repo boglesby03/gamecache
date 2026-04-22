@@ -70,3 +70,9 @@
 - [ ] Version description - some games have additional details on the version details (Like Amun Re Expanded Edition)
 - [ ] Short description - short blurb might be useful - those these are normally more marketing like.  Probably would use on hover of the cover art.
 - [ ] Request that item details are still included even if there are custom details (e.g. custom selected cover cancels out rest of item details)
+
+## Data cleanup rules
+- [x] Praga Caput Regni: Wooden Eggs & Promo Cards - "Promo Cards" should stay in this case
+- [X] Apropos of Board Games - Removing "Board Games" from title
+- [X] Wingspan: Fan-Designed Bird Promo Pack – Additional Asian Avians - clean this up to shorten fan name.  Maybe make it "Additional Asian Avians [Fan]"
+- [X] Marvel United: Kickstarter Promos Box - registering as promos - will have to create exceptions for these boxes
