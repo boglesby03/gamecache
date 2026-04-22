@@ -17,7 +17,8 @@ from pathlib import Path
 script_dir = Path(__file__).parent
 sys.path.insert(0, str(script_dir))
 
-from gamecache.github_integration import _make_http_request, _make_http_post_json  # noqa: E402
+from gamecache.github_integration import _make_http_request  # noqa: E402
+from gamecache.http_client import CertificateVerificationError, open_url  # noqa: E402
 
 
 def encrypt_secret(public_key: str, secret_value: str) -> str:
@@ -102,12 +103,15 @@ def create_github_secret(repo: str, token: str, secret_name: str, secret_value: 
     try:
         request = urllib.request.Request(url, data=json.dumps(data).encode('utf-8'), headers=headers)
         request.get_method = lambda: 'PUT'
-        
-        with urllib.request.urlopen(request, timeout=30) as response:
+
+        with open_url(request, timeout=30) as response:
             response_data = response.read()  # noqa: F841
             print("✅ Secret created/updated successfully!")
             return True
-            
+
+    except CertificateVerificationError as e:
+        print(f"❌ HTTPS certificate verification failed: {e}")
+        raise
     except urllib.error.HTTPError as e:
         error_response = e.read().decode('utf-8')
         print(f"❌ HTTP {e.code}: {e.reason}")

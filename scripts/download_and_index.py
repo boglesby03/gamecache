@@ -15,6 +15,7 @@ from gamecache.downloader import Downloader  # noqa: E402
 from gamecache.sqlite_indexer import SqliteIndexer  # noqa: E402
 from gamecache.github_integration import setup_github_integration  # noqa: E402
 from gamecache.config import parse_config_file, create_nested_config  # noqa: E402
+from gamecache.http_client import open_url  # noqa: E402
 from setup_logging import setup_logging  # noqa: E402
 
 
@@ -41,7 +42,7 @@ def _http_get_json(url, timeout=10, headers=None):
         for k, v in headers.items():
             req.add_header(k, v)
 
-    with urllib.request.urlopen(req, timeout=timeout) as resp:
+    with open_url(req, timeout=timeout) as resp:
         data = resp.read()
         return json.loads(data.decode('utf-8', errors='replace'))
 
