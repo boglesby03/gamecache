@@ -10,7 +10,7 @@ attrs==26.1.0
     #   requests-cache
 cattrs==26.1.0
     # via requests-cache
-certifi==2026.4.22
+certifi==2026.5.20
     # via
     #   -r requirements.in
     #   requests
@@ -22,11 +22,11 @@ charset-normalizer==3.4.7
     # via requests
 colorgram-py==1.2.0
     # via -r requirements.in
-cryptography==46.0.7
+cryptography==48.0.0
     # via -r requirements.in
 declxml==1.1.3
     # via -r requirements.in
-idna==3.13
+idna==3.18
     # via
     #   requests
     #   url-normalize
@@ -36,15 +36,15 @@ pillow==12.2.0
     # via
     #   -r requirements.in
     #   colorgram-py
-platformdirs==4.9.6
+platformdirs==4.10.0
     # via requests-cache
 pycparser==3.0
     # via cffi
 pynacl==1.6.2
     # via -r requirements.in
-requests==2.33.1
+requests==2.34.2
     # via requests-cache
-requests-cache==1.3.1
+requests-cache==1.3.2
     # via -r requirements.in
 tqdm==4.67.3
     # via -r requirements.in
@@ -52,9 +52,9 @@ typing==3.7.4.3
     # via declxml
 typing-extensions==4.15.0
     # via cattrs
-url-normalize==2.2.1
+url-normalize==3.0.0
     # via requests-cache
-urllib3==2.6.3
+urllib3==2.7.0
     # via
     #   requests
     #   requests-cache
