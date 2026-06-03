@@ -197,19 +197,23 @@ function parsePlayerCount(countStr) {
 }
 
 function ftsSearch(query) {
+  // For FTS, wrap in double quotes to treat as literal phrase and escape any internal quotes
+  const ftsQuery = `"${query.replace(/"/g, '""')}"`;
 
   const fts_stmt = db.prepare(`
-    SELECT id, name FROM games_fts WHERE games_fts MATCH "${query}"
+    SELECT id, name FROM games_fts WHERE games_fts MATCH ?
     UNION
-    SELECT id, name FROM games_fts  WHERE soundex(name) = soundex("${query}")`)
+    SELECT id, name FROM games_fts WHERE soundex(name) = soundex(?)`);
+
+  fts_stmt.bind([ftsQuery, query]);
 
   ftsGames = []
-  while(fts_stmt.step()) {
+  while (fts_stmt.step()) {
     const fts_row = fts_stmt.getAsObject();
     ftsGames.push(fts_row.id);
   }
 
-  fts_stmt.free()
+  fts_stmt.free();
 
   return ftsGames;
 }
@@ -2462,6 +2466,17 @@ function renderGameCard(game) {
   }
 
   const publisherStat = clone.querySelector('.publisher-stat');
+  const designerStat = clone.querySelector('.designer-stat');
+  if (game.designers) {
+    const designerNames = game.designers.map(designer => designer.name).filter(Boolean);
+    if (designerNames.length > 0) {
+      designerStat.style.display = 'flex';
+      const designerLabel = designerNames.length === 1 ? designerNames[0] : `${designerNames[0]} +${designerNames.length - 1}`;
+      clone.querySelector('.designer-name').textContent = designerLabel;
+      createHoverTooltip(designerStat, designerNames.join('<br>'), 4);
+    }
+  }
+
   if (game.publishers) {
     let publisherWithFlagOwn = game.publishers.filter(publisher => publisher.flag === "own");
     if (publisherWithFlagOwn && publisherWithFlagOwn.length > 0) {
