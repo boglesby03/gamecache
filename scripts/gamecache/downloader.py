@@ -427,6 +427,11 @@ def custom_expansion_mappings(expansions):
         # Rebel Princess 2 to Rebel Princess Deluxe
         {"id": 443292, "baseId": 418556},
 
+        # Monopoly expansions for Monopoly Deluxe Edition
+        {"id": 436810, "baseId": 7098},
+        {"id": 436806, "baseId": 7098},
+        {"id": 436805, "baseId": 7098},
+
         # Unpublished Nations 2nd Expansion
         {"id": UNPUBLISHED_PROTOTYPE, "baseId": 126042},
         # Unpublished Feast for Odin Expansions
