@@ -26,10 +26,11 @@
 - [X] Player ages - recommended/community
 - [X] Other rankings (Family/War/etc)
 
-## New tasks for SQLite
+## New tasks for SQLite Version
 
+- [X] Search box doesn't handle ' such as "Let's Go to Japan"
 - [ ] Fix filter sorts - shouldn't sort pre-sorted lists (number of players, playing times)
-- [ ] Facets should have behavior similar to Algolia.  MOve selected options to the top, then return when unselect.  Always show selected, etc.
+- [ ] Facets should have behavior similar to Algolia.  Move selected options to the top, then return when unselect.  Always show selected, etc.
 - [-] All details missing from game cards
   - [X] Hover on player count for details (recommend, specific player counts, etc)
   - [X] Hover community age
