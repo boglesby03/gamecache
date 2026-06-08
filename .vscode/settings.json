@@ -1,14 +1,36 @@
 {
   "cSpell.words": [
+    "Adventskalender",
+    "Amun",
+    "Barkham",
+    "boardgame",
+    "boardgameaccessory",
+    "boardgameexpansion",
+    "Brettspiel",
     "Deutscher",
     "Duell",
+    "expans",
+    "Funkoverse",
+    "gamecache",
     "gameid",
+    "getall",
+    "Kemet",
+    "Knightmare",
+    "Libertalia",
     "numplayers",
     "numplays",
     "numvotes",
     "objectid",
     "playid",
-    "wanttobuy"
+    "Preorder",
+    "preordered",
+    "reimpby",
+    "reimplementedby",
+    "reimps",
+    "Spielepreile",
+    "unpub",
+    "wanttobuy",
+    "Zombicide"
   ],
   "sqltools.connections": [
     {
@@ -19,5 +41,6 @@
     }
   ],
   "sqltools.useNodeRuntime": true,
-  "python.pythonPath": "${workspaceFolder:mybgg}/env/bin/python3"
+  "python.pythonPath": "${workspaceFolder:mybgg}/env/bin/python3",
+  "python-envs.defaultEnvManager": "ms-python.python:system"
 }
