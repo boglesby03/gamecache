@@ -5,6 +5,7 @@ import json
 import urllib.request
 import urllib.error
 from pathlib import Path
+from datetime import datetime
 
 # Add the scripts directory to the path for imports
 script_dir = Path(__file__).parent
@@ -142,6 +143,11 @@ def main(args):
     indexer = SqliteIndexer(sqlite_path)
     indexer.add_objects(collection)
     print(f"Created SQLite database with {num_games} games and {num_expansions} expansions.")
+
+    # Store the last run date in metadata
+    now = datetime.now().isoformat()
+    indexer.set_metadata("last_run_date", now)
+    print(f"Stored last run date: {now}")
 
     # Gzip the database and remove the original
     gzip_path = f"{sqlite_path}.gz"

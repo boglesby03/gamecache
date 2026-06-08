@@ -135,6 +135,14 @@ class SqliteIndexer:
         cursor.execute('CREATE INDEX idx_year on games(year)')
         cursor.execute('CREATE INDEX idx_priority on games(wishlist_priority)')
 
+        # Create metadata table for storing database metadata
+        cursor.execute('''
+            CREATE TABLE metadata (
+                key TEXT PRIMARY KEY,
+                value TEXT NOT NULL
+            )
+        ''')
+
         conn.commit()
         conn.close()
         logger.info(f"Initialized SQLite database: {self.db_path}")
@@ -345,6 +353,18 @@ class SqliteIndexer:
         conn.commit()
         conn.close()
         logger.info(f"Added {len(collection)} games to SQLite database")
+
+    def set_metadata(self, key: str, value: str):
+        """Set a metadata value in the database."""
+        conn = sqlite3.connect(self.db_path)
+        cursor = conn.cursor()
+        cursor.execute('''
+            INSERT OR REPLACE INTO metadata (key, value)
+            VALUES (?, ?)
+        ''', (key, value))
+        conn.commit()
+        conn.close()
+        logger.info(f"Set metadata: {key} = {value}")
 
     def _expansion_to_dict(self, expansion) -> Dict[str, Any]:
         """Convert expansion object to dictionary for JSON serialization."""
