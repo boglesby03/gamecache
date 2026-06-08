@@ -137,7 +137,7 @@ class SqliteIndexer:
 
         # Create metadata table for storing database metadata
         cursor.execute('''
-            CREATE TABLE metadata (
+            CREATE TABLE IF NOT EXISTS metadata (
                 key TEXT PRIMARY KEY,
                 value TEXT NOT NULL
             )
