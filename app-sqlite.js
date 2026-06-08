@@ -33,6 +33,7 @@ let filteredGames = [];
 let currentPage = 1;
 let hoverWrapper;
 let imgPopup;
+let lastRunDate = null;
 
 // Utility functions
 function showError(message) {
@@ -144,6 +145,7 @@ async function initializeDatabase(settings) {
     console.log('Database loaded successfully');
 
     loadAllGames();
+    loadMetadata();
     initializeUI();
 
   } catch (error) {
@@ -268,6 +270,23 @@ function loadAllGames() {
 
   filteredGames = [...allGames];
   console.log(`Loaded ${allGames.length} games.`);
+}
+
+function loadMetadata() {
+  try {
+    const stmt = db.prepare(`
+      SELECT key, value FROM metadata WHERE key = 'last_run_date'
+    `);
+
+    if (stmt.step()) {
+      const row = stmt.getAsObject();
+      lastRunDate = row.value;
+      console.log(`Last run date loaded: ${lastRunDate}`);
+    }
+    stmt.free();
+  } catch (e) {
+    console.warn('Metadata table not found or error reading metadata:', e);
+  }
 }
 
 function initializeUI() {
@@ -2869,7 +2888,26 @@ function updateStats() {
   if (totalGames !== totalAllGames) {
     statsText += ` of ${totalAllGames.toLocaleString()}`;
   }
-  statsContainer.textContent = `${statsText} games`;
+  statsText += ` games`;
+
+  if (lastRunDate) {
+    try {
+      const runDate = new Date(lastRunDate);
+      const formattedDate = runDate.toLocaleDateString('en-US', {
+        month: 'short',
+        day: 'numeric',
+        year: 'numeric',
+        hour: 'numeric',
+        minute: '2-digit',
+        hour12: true
+      });
+      statsText += ` • Updated ${formattedDate}`;
+    } catch (e) {
+      console.warn('Error formatting last run date:', e);
+    }
+  }
+
+  statsContainer.textContent = statsText;
 }
 
 function createPaginationButton(page, text, isCurrent = false) {
