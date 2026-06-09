@@ -34,18 +34,20 @@ class BGGClient:
         if debug:
             logging.basicConfig(level=logging.DEBUG)
 
-    def collection(self, user_name, **kwargs):
+    def collection(self, user_name, ignore_cache=False, **kwargs):
         params = kwargs.copy()
         params["username"] = unquote(user_name)
-        data = self._make_request("/collection?version=1", params)
+        data = self._make_request("/collection?version=1", params, ignore_cache=ignore_cache)
         collection = self._collection_to_games(data)
         return collection
 
-    def plays(self, user_name):
+    def plays(self, user_name, mindate=None):
         params = {
             "username": unquote(user_name),
             "page": 1,
         }
+        if mindate:
+            params["mindate"] = mindate
         all_plays = []
 
         data = self._make_request("/plays?version=1", params)
@@ -77,7 +79,7 @@ class BGGClient:
             games += self._games_list_to_games(data, additional_details)
         return games
 
-    def _make_request(self, url, params={}, tries=0):
+    def _make_request(self, url, params={}, tries=0, ignore_cache=False):
         """
         Makes a request to the specified URL with the given parameters.
 
@@ -109,7 +111,11 @@ class BGGClient:
             time.sleep(sleep_time)
 
         try:
-            response = self.requester.get(BGGClient.BASE_URL + url, params=params)
+            response = self.requester.get(
+                BGGClient.BASE_URL + url,
+                params=params,
+                ignore_cache=ignore_cache,
+            )
             response.raise_for_status()  # This will raise an exception for 4xx and 5xx status codes
         except Exception as e:
             # Handle both requests exceptions and our simple cache exceptions
@@ -135,14 +141,14 @@ class BGGClient:
                 if tries < 3:
                     logger.debug("BGG returned \"Too Many Requests\", waiting 30 seconds before trying again...")
                     sleep_with_backoff_and_jitter(30, tries)
-                    return self._make_request(url, params=params, tries=tries + 1)
+                    return self._make_request(url, params=params, tries=tries + 1, ignore_cache=ignore_cache)
                 else:
                     raise BGGException("BGG returned Too Many Requests")
             else:
                 # Other HTTP errors or connection errors
                 if tries < 10:
                     sleep_with_backoff_and_jitter(1, tries)
-                    return self._make_request(url, params=params, tries=tries + 1)
+                    return self._make_request(url, params=params, tries=tries + 1, ignore_cache=ignore_cache)
                 else:
                     raise BGGException("BGG API closed the connection prematurely, please try again...")
 
@@ -157,7 +163,7 @@ class BGGClient:
                     "waiting 10 seconds before trying again..."
                 )
                 sleep_with_backoff_and_jitter(10, tries)
-                return self._make_request(url, params=params, tries=tries + 1)
+                return self._make_request(url, params=params, tries=tries + 1, ignore_cache=ignore_cache)
             else:
                 raise BGGException("BGG API request not processed in time, please try again later.")
 
@@ -520,45 +526,64 @@ class BGGClient:
         games = xml.parse_from_string(game_processor, data)
         games = games["items"]
 
-        # Helper function for fetching and updating image/thumbnail metadata
-        def fetch_additional_metadata(entries, entry_type):
+        def enrich_entries_with_metadata(all_games):
+            """Batch-fetch metadata for related entries to avoid per-game API calls."""
+            related_ids = []
+            seen = set()
 
-            if len(entries) == 0:
+            def add_related_id(entry):
+                entry_id = entry.get("id")
+                if not entry_id or entry_id in seen:
+                    return
+                seen.add(entry_id)
+                related_ids.append(entry_id)
+
+            for game in all_games:
+                if game['type'] == 'boardgame':
+                    for entry in game.get("integrates", []):
+                        add_related_id(entry)
+                    for entry in game.get("reimplements", []):
+                        add_related_id(entry)
+                # These can also be on Box of Promos
+                for entry in game.get("contained", []):
+                    add_related_id(entry)
+
+            if not related_ids:
                 return
 
-            entry_list = []
-            for entry in entries:
-                entry_id = entry.get("id")
-                if not entry_id:
-                    continue
-                entry_list.append(entry_id)
-
             try:
-                details = self.game_list(entry_list, additional_details=False)
-                idx = 0
-                for entry in entries:
-                    if details:
-                        entry["image"] = details[idx].get("image", "")          # Image URL for the entry
-                        entry["thumbnail"] = details[idx].get("thumbnail", "")  # Thumbnail URL for the entry
-                        entry["rating"] = details[idx].get("rating", "")
-                        entry["year"] = details[idx].get("year", "")
-                    else:
-                        entry["image"] = None
-                        entry["thumbnail"] = None
-                        entry["rating"] = None
-                        entry["year"] = None
-                    idx += 1
+                details = self.game_list(related_ids, additional_details=False)
+                details_by_id = {
+                    detail.get("id"): detail
+                    for detail in details
+                    if detail.get("id") is not None
+                }
+
+                for game in all_games:
+                    target_lists = [game.get("contained", [])]
+                    if game['type'] == 'boardgame':
+                        target_lists.append(game.get("integrates", []))
+                        target_lists.append(game.get("reimplements", []))
+
+                    for entry_list in target_lists:
+                        for entry in entry_list:
+                            detail = details_by_id.get(entry.get("id"))
+                            if detail:
+                                entry["image"] = detail.get("image", "")
+                                entry["thumbnail"] = detail.get("thumbnail", "")
+                                entry["rating"] = detail.get("rating", "")
+                                entry["year"] = detail.get("year", "")
+                            else:
+                                entry["image"] = None
+                                entry["thumbnail"] = None
+                                entry["rating"] = None
+                                entry["year"] = None
             except Exception as e:
-                logger.error(f"Failed to fetch image/thumbnail for {entry_type} id {entry_list}: {e}")
+                logger.error(f"Failed to batch-fetch related game metadata: {e}")
 
         if additional_details:
-            # Fetch additional metadata for integrations, contained games, and reimplements
-            for game in games:
-                if game['type'] == 'boardgame':
-                    fetch_additional_metadata(game.get("integrates", []), "integration")
-                    fetch_additional_metadata(game.get("reimplements", []), "reimplements")
-                #These can also be on Box of Promos
-                fetch_additional_metadata(game.get("contained", []), "contained")
+            # Fetch related metadata in one deduplicated batch.
+            enrich_entries_with_metadata(games)
 
         return games
 
