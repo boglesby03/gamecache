@@ -166,7 +166,7 @@ class HttpSession:
         """Initialize session with optional default headers"""
         self.headers = headers or {}
 
-    def get(self, url, params=None, timeout=30, headers=None):
+    def get(self, url, params=None, timeout=30, headers=None, ignore_cache=False):
         """GET request that mimics requests.Session.get()"""
         # Build full URL with parameters
         if params:
@@ -233,7 +233,7 @@ class CachedHttpClient:
         """Check if cache entry is expired"""
         return time_module.time() - timestamp > self.expire_after
 
-    def get(self, url, timeout=30, params=None, headers={}):
+    def get(self, url, timeout=30, params=None, headers={}, ignore_cache=False):
         """
         GET request with caching
 
@@ -254,22 +254,24 @@ class CachedHttpClient:
 
         url_hash = self._get_url_hash(full_url)
 
-        # Check cache first
         conn = sqlite3.connect(self.cache_path)
         cursor = conn.cursor()
-        cursor.execute(
-            "SELECT response_data, headers, status_code, timestamp FROM http_cache WHERE url_hash = ?",
-            (url_hash,)
-        )
-        result = cursor.fetchone()
 
-        if result:
-            response_data, headers_json, status_code, timestamp = result
-            if not self._is_expired(timestamp):
-                # Return cached response
-                conn.close()
-                headers = json.loads(headers_json) if headers_json else {}
-                return HttpResponse(response_data, headers, status_code, from_cache=True, url=full_url)
+        if not ignore_cache:
+            # Check cache first unless explicitly bypassed
+            cursor.execute(
+                "SELECT response_data, headers, status_code, timestamp FROM http_cache WHERE url_hash = ?",
+                (url_hash,)
+            )
+            result = cursor.fetchone()
+
+            if result:
+                response_data, headers_json, status_code, timestamp = result
+                if not self._is_expired(timestamp):
+                    # Return cached response
+                    conn.close()
+                    headers = json.loads(headers_json) if headers_json else {}
+                    return HttpResponse(response_data, headers, status_code, from_cache=True, url=full_url)
 
         # Cache miss or expired - make actual request
         try:

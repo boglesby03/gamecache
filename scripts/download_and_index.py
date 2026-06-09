@@ -2,10 +2,11 @@ import sys
 import gzip
 import os
 import json
+import sqlite3
 import urllib.request
 import urllib.error
 from pathlib import Path
-from datetime import datetime
+from datetime import datetime, timedelta
 
 # Add the scripts directory to the path for imports
 script_dir = Path(__file__).parent
@@ -21,6 +22,24 @@ from setup_logging import setup_logging  # noqa: E402
 
 
 UPGRADE_INSTRUCTIONS_URL = "https://github.com/EmilStenstrom/gamecache#keeping-your-copy-updated"
+
+
+def get_last_run_date_from_sqlite(sqlite_path):
+    """Read last successful run timestamp from existing SQLite metadata."""
+    if not os.path.exists(sqlite_path):
+        return None
+
+    try:
+        conn = sqlite3.connect(sqlite_path)
+        cursor = conn.cursor()
+        cursor.execute("SELECT value FROM metadata WHERE key = ?", ("last_run_date",))
+        row = cursor.fetchone()
+        conn.close()
+        if not row or not row[0]:
+            return None
+        return datetime.fromisoformat(row[0])
+    except Exception:
+        return None
 
 
 def _print_info_box(title, lines):
@@ -114,10 +133,20 @@ def main(args):
         debug=args.debug,
         token=bgg_token,
     )
+    sqlite_path = "gamecache.sqlite"
+    last_run_date = get_last_run_date_from_sqlite(sqlite_path)
+    plays_mindate = None
+    if last_run_date:
+        # Include a one-day overlap to avoid missing plays around timezone boundaries.
+        plays_mindate = (last_run_date - timedelta(days=1)).strftime("%Y-%m-%d")
+        print(f"Using incremental plays sync from {plays_mindate}")
+
     extra_params = {} # SETTINGS["boardgamegeek"].get("extra_params", {"own": 1})
     collection = downloader.collection(
         user_name=SETTINGS["boardgamegeek"]["user_name"],
         extra_params=extra_params,
+        plays_mindate=plays_mindate,
+        ignore_collection_cache=args.ignore_collection_cache,
     )
 
     #TODO Fix allowing duplicates
@@ -139,7 +168,6 @@ def main(args):
         assert False, "No games imported, is the boardgamegeek part of config.ini correctly set?"
 
     # Create SQLite database
-    sqlite_path = "gamecache.sqlite"
     indexer = SqliteIndexer(sqlite_path)
     indexer.add_objects(collection)
     print(f"Created SQLite database with {num_games} games and {num_expansions} expansions.")
@@ -215,6 +243,13 @@ if __name__ == '__main__':
         action='store_true',
         help=(
             "Keep the unzipped copy of the sqlite database."
+        )
+    )
+    parser.add_argument(
+        '--ignore_collection_cache',
+        action='store_true',
+        help=(
+            "Bypass cache for BGG collection endpoint calls only (main and accessory collection)."
         )
     )
 

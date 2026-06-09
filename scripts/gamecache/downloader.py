@@ -10,6 +10,7 @@ from datetime import datetime
 from multidict import MultiDict
 
 DATE_FORMAT = "%Y-%m-%d"
+CACHE_TTL_SECONDS = 60 * 60 * 24 * 7
 
 EXTRA_EXPANSIONS_GAME_ID=81913
 UNPUBLISHED_PROTOTYPE=18291
@@ -21,7 +22,7 @@ class Downloader():
             self.client = BGGClient(
                 cache=CacheBackendSqlite(
                     path=f"gamecache-cache.sqlite",
-                    ttl=60 * 60 * 24,
+                    ttl=CACHE_TTL_SECONDS,
                 ),
                 debug=debug,
                 token=token,
@@ -32,7 +33,7 @@ class Downloader():
                 token=token,
             )
 
-    def collection(self, user_name, extra_params):
+    def collection(self, user_name, extra_params, plays_mindate=None, ignore_collection_cache=False):
         collection_data = []
         plays_data = []
 
@@ -41,11 +42,13 @@ class Downloader():
             for params in extra_params:
                 collection_data += self.client.collection(
                     user_name=user_name,
+                    ignore_cache=ignore_collection_cache,
                     **params,
                 )
         else:
             collection_data = self.client.collection(
                 user_name=user_name,
+                ignore_cache=ignore_collection_cache,
                 **extra_params,
             )
 
@@ -59,7 +62,11 @@ class Downloader():
 
         print("Begin retrieving accessory details")
         params = {"subtype": "boardgameaccessory"}
-        accessory_collection = self.client.collection(user_name=user_name, **params)
+        accessory_collection = self.client.collection(
+            user_name=user_name,
+            ignore_cache=ignore_collection_cache,
+            **params,
+        )
         accessory_collection = list(filter(lambda item: any(tag in filtered_tags for tag in item.get("tags", [])), accessory_collection))
 
         accessory_list_data = self.client.game_list([game_in_collection["id"] for game_in_collection in accessory_collection])
@@ -69,6 +76,7 @@ class Downloader():
 
         plays_data = self.client.plays(
             user_name=user_name,
+            mindate=plays_mindate,
         )
 
         print("Begin retrieving game details")
