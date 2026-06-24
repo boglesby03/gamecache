@@ -2893,13 +2893,14 @@ function updateStats() {
   if (lastRunDate) {
     try {
       const runDate = new Date(lastRunDate);
-      const formattedDate = runDate.toLocaleDateString('en-US', {
+      const formattedDate = runDate.toLocaleString(undefined, {
         month: 'short',
         day: 'numeric',
         year: 'numeric',
         hour: 'numeric',
         minute: '2-digit',
-        hour12: true
+        hour12: true,
+        timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone
       });
       statsText += ` • Updated ${formattedDate}`;
     } catch (e) {
