@@ -6,7 +6,7 @@ import sqlite3
 import urllib.request
 import urllib.error
 from pathlib import Path
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 
 # Add the scripts directory to the path for imports
 script_dir = Path(__file__).parent
@@ -172,8 +172,8 @@ def main(args):
     indexer.add_objects(collection)
     print(f"Created SQLite database with {num_games} games and {num_expansions} expansions.")
 
-    # Store the last run date in metadata
-    now = datetime.now().isoformat()
+    # Store the last run date in metadata (UTC with timezone info so browsers can convert to local time)
+    now = datetime.now(timezone.utc).isoformat()
     indexer.set_metadata("last_run_date", now)
     print(f"Stored last run date: {now}")
 
