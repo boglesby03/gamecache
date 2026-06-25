@@ -4,6 +4,7 @@
   // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
   "version": "0.2.0",
   "configurations": [
+    {"name":"Python: Current File","type":"python","request":"launch","program":"${file}","console":"integratedTerminal","justMyCode":true},
     {
       "name": "mybgg",
       "type": "python",
@@ -11,9 +12,16 @@
       "program": "${workspaceFolder}/scripts/download_and_index.py",
       "console": "integratedTerminal",
       "args": [
-        "--apikey",
-        "NEW_API_KEY_HERE"
-      ]
+        "--cache_bgg",
+        "--no_upload",
+        "--debug",
+        "--save_db",
+        //"--apikey",
+        //"53d1ab9276193bc4fdd6d9f69dc040d2"
+      ],
+      "env": {
+                "GAMECACHE_BGG_TOKEN": "ee8405d9-4df6-4080-8d03-00b7dfd1fca4"
+            },
     }
   ]
 }
