@@ -115,7 +115,7 @@ function loadINI(path, callback) {
 async function initializeDatabase(settings) {
   try {
     const SQL = await initSqlJs({
-      //locateFile: file => `https://cdn.jsdelivr.net/npm/sql.js@1.13.0/dist/${file}`
+      //locateFile: file => `https://cdn.jsdelivr.net/npm/sql.js@1.14.1/dist/${file}`
       locateFile: file => `sqljs/${file}`
     });
 
