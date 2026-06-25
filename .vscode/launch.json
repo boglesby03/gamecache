@@ -17,10 +17,10 @@
         "--debug",
         "--save_db",
         //"--apikey",
-        //"53d1ab9276193bc4fdd6d9f69dc040d2"
+        //"<API_TOKEN>"
       ],
       "env": {
-                "GAMECACHE_BGG_TOKEN": "REDACTED"
+                "GAMECACHE_BGG_TOKEN": <BGG_TOKEN>
             },
     }
   ]
