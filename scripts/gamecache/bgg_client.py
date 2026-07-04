@@ -11,7 +11,7 @@ from .http_client import CachedHttpClient, HttpSession
 logger = logging.getLogger(__name__)
 
 class BGGClient:
-    BASE_URL = "https://www.boardgamegeek.com/xmlapi2"
+    BASE_URL = "https://boardgamegeek.com/xmlapi2"
 
     def __init__(self, cache=None, debug=False, token=None):
         # Set up headers for authentication

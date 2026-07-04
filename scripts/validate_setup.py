@@ -6,6 +6,8 @@ Simple validation script to check if setup is correct before running the main sc
 import sys
 import re
 import json
+import argparse
+import os
 from pathlib import Path
 from urllib.parse import unquote
 import urllib.request
@@ -16,7 +18,7 @@ script_dir = Path(__file__).parent
 sys.path.insert(0, str(script_dir))
 
 # Now import after path is set
-from gamecache.config import parse_config_file  # noqa: E402
+from gamecache.config import create_nested_config, parse_config_file  # noqa: E402
 from gamecache.http_client import CertificateVerificationError, make_http_request, open_url  # noqa: E402
 
 
@@ -259,27 +261,56 @@ def validate_config():
 
     print("✅ config.ini looks good!")
 
-    # Convert flat config to nested structure for compatibility with other functions
-    nested_config = {
-        "project": {"title": config["title"]},
-        "boardgamegeek": {"user_name": config["bgg_username"]},
-        "github": {"repo": config["github_repo"]}
-    }
+    # Convert flat config to nested structure using the shared loader so .env
+    # values like GAMECACHE_BGG_TOKEN are included consistently.
+    nested_config = create_nested_config(config)
     return True, nested_config
 
-def validate_bgg_user(username):
+
+def _read_dotenv_bgg_token():
+    env_file = Path('.env')
+    if not env_file.exists():
+        return None
+
+    with open(env_file, 'r', encoding='utf-8') as f:
+        for line in f:
+            stripped = line.strip()
+            if stripped.startswith('GAMECACHE_BGG_TOKEN='):
+                return stripped.split('=', 1)[1].strip()
+
+    return None
+
+
+def _print_bgg_token_source_hint():
+    env_token = os.environ.get('GAMECACHE_BGG_TOKEN')
+    dotenv_token = _read_dotenv_bgg_token()
+
+    if env_token and dotenv_token and env_token != dotenv_token:
+        print("   Your exported GAMECACHE_BGG_TOKEN differs from .env.")
+        print("   The exported environment variable takes precedence.")
+        print("   Run: unset GAMECACHE_BGG_TOKEN")
+        print("   Or export the new value from .env before validating again.")
+
+
+def validate_bgg_user(username, token=None):
     """Check if BGG username exists and has a public collection"""
     print(f"🔍 Checking BGG user '{username}'...")
     safe_username = unquote(username)
+    headers = {'Authorization': f'Bearer {token}'} if token else None
 
     try:
         # Check user exists
         url = "https://boardgamegeek.com/xmlapi2/user"
-        response = make_http_request(url, params={"name": safe_username}, timeout=10)
+        response = make_http_request(url, params={"name": safe_username}, timeout=10, headers=headers)
 
         # Check collection exists and is public
         url = "https://boardgamegeek.com/xmlapi2/collection"
-        response = make_http_request(url, params={"username": safe_username, "own": 1}, timeout=10)
+        response = make_http_request(
+            url,
+            params={"username": safe_username, "own": 1},
+            timeout=10,
+            headers=headers,
+        )
 
         # Basic check for collection content
         if b"<item " in response:
@@ -294,6 +325,16 @@ def validate_bgg_user(username):
         print(f"❌ HTTPS certificate verification failed: {e}")
         return False
     except Exception as e:
+        if "401" in str(e) or "Unauthorized" in str(e):
+            print(f"❌ Error checking BGG user: {e}")
+            if token:
+                print("   BGG rejected your configured API token.")
+                print("   Regenerate it with: python scripts/setup_bgg_token.py")
+                _print_bgg_token_source_hint()
+            else:
+                print("   BGG requires an API token for this request.")
+                print("   Generate one with: python scripts/setup_bgg_token.py")
+            return False
         print(f"❌ Error checking BGG user: {e}")
         print("   Check your internet connection and BGG username")
         return False
@@ -347,7 +388,15 @@ def validate_python_deps():
     print("✅ All Python dependencies are installed!")
     return True
 
-def main():
+def parse_args(argv=None):
+    parser = argparse.ArgumentParser(
+        description="Validate the local GameCache configuration and remote service access."
+    )
+    return parser.parse_args(argv)
+
+
+def main(argv=None):
+    parse_args(argv)
     print("🧪 Validating GameCache setup...\n")
 
     all_good = True
@@ -375,7 +424,8 @@ def main():
     # Validate BGG user
     if config_valid:
         bgg_username = config["boardgamegeek"]["user_name"]
-        all_good &= validate_bgg_user(bgg_username)
+        bgg_token = config["boardgamegeek"].get("token")
+        all_good &= validate_bgg_user(bgg_username, bgg_token)
 
     print("\n" + "=" * 50)
 
