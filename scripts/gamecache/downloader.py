@@ -68,7 +68,10 @@ class Downloader():
                 numplays=game_id_to_numplays[game_data["id"]],
                 previous_players=game_id_to_players[game_data["id"]],
                 expansions=[
-                    BoardGame(expansion_data)
+                    BoardGame(
+                        expansion_data,
+                        image=game_id_to_image.get(expansion_data["id"]) or expansion_data.get("image") or "",
+                    )
                     for expansion_data in game_id_to_expansion[game_data["id"]]
                 ]
             )

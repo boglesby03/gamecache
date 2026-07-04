@@ -22,6 +22,9 @@ let GAMES_PER_PAGE = CONFIG.GAMES_PER_PAGE;
 const MAX_DESCRIPTION_LENGTH = CONFIG.MAX_DESCRIPTION_LENGTH;
 const GAUGE_RADIUS = CONFIG.GAUGE_RADIUS;
 
+// Expansions shown in a game's details before the "show all" toggle kicks in
+const VISIBLE_EXPANSIONS = 6;
+
 // Global state
 let db = null;
 let allGames = [];
@@ -1515,15 +1518,43 @@ function renderGameCard(game) {
   const expansionsSection = clone.querySelector('.expansions-section');
   if (game.expansions && game.expansions.length > 0) {
     expansionsSection.style.display = 'block';
-    const expansionTemplate = document.getElementById('expansion-chip-template');
-    const expansionLinks = game.expansions.map(exp => {
-      const expClone = expansionTemplate.content.cloneNode(true);
-      const link = expClone.querySelector('.expansion-chip');
+    const container = clone.querySelector('.expansion-chips');
+    const tileTemplate = document.getElementById('expansion-tile-template');
+    const chipTemplate = document.getElementById('expansion-chip-template');
+
+    // Databases indexed before expansion images were added have no image field
+    if (game.expansions.some(exp => exp.image)) {
+      container.classList.add('expansion-grid');
+    }
+
+    const expansionLinks = game.expansions.map((exp, index) => {
+      const template = exp.image ? tileTemplate : chipTemplate;
+      const expClone = template.content.cloneNode(true);
+      const link = expClone.querySelector('a');
       link.href = `https://boardgamegeek.com/boardgame/${exp.id}`;
-      link.textContent = exp.name;
+      if (exp.image) {
+        const thumb = link.querySelector('.expansion-thumb');
+        thumb.src = exp.image;
+        thumb.alt = exp.name;
+        link.querySelector('.expansion-tile-name').textContent = exp.name;
+        link.title = exp.name;
+      } else {
+        link.textContent = exp.name;
+      }
+      if (index >= VISIBLE_EXPANSIONS) {
+        link.classList.add('expansion-overflow');
+      }
       return link.outerHTML;
     }).join('');
-    clone.querySelector('.expansion-chips').innerHTML = expansionLinks;
+    container.innerHTML = expansionLinks;
+
+    if (game.expansions.length > VISIBLE_EXPANSIONS) {
+      const toggleClone = document.getElementById('expansions-toggle-template').content.cloneNode(true);
+      const button = toggleClone.querySelector('button');
+      button.dataset.total = game.expansions.length;
+      button.textContent = `show all ${game.expansions.length}`;
+      expansionsSection.appendChild(toggleClone);
+    }
   }
 
   // Set rating
@@ -1781,6 +1812,12 @@ function goToPage(page) {
     top: 0,
     behavior: 'smooth'
   });
+}
+
+function handleExpansionsToggle(button) {
+  const section = button.closest('.expansions-section');
+  const expanded = section.classList.toggle('expansions-expanded');
+  button.textContent = expanded ? 'show fewer' : `show all ${button.dataset.total}`;
 }
 
 function debounce(func, wait) {
