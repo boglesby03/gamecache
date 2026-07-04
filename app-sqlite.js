@@ -18,7 +18,7 @@ const CONFIG = (() => {
 })();
 
 // Legacy constants for compatibility
-const GAMES_PER_PAGE = CONFIG.GAMES_PER_PAGE;
+let GAMES_PER_PAGE = CONFIG.GAMES_PER_PAGE;
 const MAX_DESCRIPTION_LENGTH = CONFIG.MAX_DESCRIPTION_LENGTH;
 const GAUGE_RADIUS = CONFIG.GAUGE_RADIUS;
 
@@ -92,6 +92,7 @@ function loadINI(path, callback) {
       // Transform flat config into nested structure expected by the app
       const settings = {
         title: config.title || "GameCache",
+        games_per_page: config.games_per_page,
         bgg: {
           username: config.bgg_username
         },
@@ -1945,6 +1946,10 @@ document.addEventListener("click", closeAll);
 
 function init(settings) {
   console.log('Initializing GameCache SQLite app...');
+  const gamesPerPage = parseInt(settings.games_per_page, 10);
+  if (gamesPerPage > 0) {
+    GAMES_PER_PAGE = gamesPerPage;
+  }
   initializeDatabase(settings);
 }
 
