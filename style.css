@@ -83,7 +83,7 @@ body {
     padding-bottom: 1em;
     position: relative;
     z-index: 10;
-    flex-wrap: nowrap;
+    flex-wrap: wrap;
     background-color: #F8FAFC;
     gap: 1em;
 }
@@ -116,6 +116,13 @@ body {
     justify-content: flex-start;
     text-align: left;
     gap: 5px;
+    min-width: 0;
+}
+
+.filter-dropdown>summary .filter-title {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .filter-dropdown[open]>.filter-dropdown-content {
@@ -127,6 +134,8 @@ body {
     border: 1px solid #ccc;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     min-width: 200px;
+    max-width: calc(100vw - 16px);
+    box-sizing: border-box;
     padding: 5px 0;
 }
 
@@ -176,10 +185,15 @@ body {
     box-sizing: border-box;
 }
 
+.sort-group {
+    display: flex;
+    align-items: center;
+    gap: 0.3em;
+    margin-right: 1em;
+}
+
 .sort-by {
     max-width: 150px;
-    margin-right: 1em;
-    margin-left: 0.3em;
     flex-grow: 1;
 }
 
@@ -199,12 +213,6 @@ body {
     margin-right: 1em;
     text-align: right;
     flex-grow: 1;
-}
-
-@media screen and (max-width: 530px) {
-    .stats {
-        display: none;
-    }
 }
 
 .game-grid {
@@ -261,7 +269,7 @@ body {
     left: 8px;
     position: absolute;
     top: 8px;
-    width: 400px;
+    width: min(400px, calc(100vw - 16px));
     z-index: 100;
     padding: 0;
     overflow: hidden;
@@ -409,8 +417,8 @@ body {
     border: none;
     border-radius: 50%;
     cursor: pointer;
-    width: 24px;
-    height: 24px;
+    width: 32px;
+    height: 32px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -592,4 +600,85 @@ body {
 .highlight {
     background: yellow;
     color: #333;
+}
+
+/* Mobile: keep last so these override the base rules above */
+@media screen and (max-width: 640px) {
+    .stats {
+        display: none;
+    }
+
+    .search {
+        flex-wrap: wrap;
+        gap: 0.75em;
+    }
+
+    .logo {
+        margin-right: 0;
+    }
+
+    .search-box {
+        flex: 1 1 12em;
+        max-width: none;
+        margin-right: 0;
+    }
+
+    .sort-group {
+        flex: 1 1 100%;
+        margin-right: 0;
+    }
+
+    .sort-by {
+        flex: 1 1 auto;
+        max-width: none;
+    }
+
+    #sort-select {
+        width: 100%;
+    }
+
+    /* 16px minimum stops iOS Safari from zooming in on focus */
+    #search-input,
+    #sort-select {
+        font-size: 16px;
+    }
+
+    .facets {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 0.5em;
+    }
+
+    .clear-all {
+        grid-column: 1 / -1;
+    }
+
+    .clear-button {
+        padding: 0.6em;
+    }
+
+    .filter-dropdown>summary {
+        padding: 8px 10px;
+    }
+
+    .filter-item {
+        padding: 0.6em 0.8em;
+    }
+
+    .pagination button {
+        min-width: 36px;
+        min-height: 36px;
+    }
+
+    .game-details {
+        font-size: 14px;
+    }
+
+    .game-details h2 {
+        font-size: 11px;
+    }
+
+    .game-details .tag-chips {
+        font-size: 11px;
+    }
 }

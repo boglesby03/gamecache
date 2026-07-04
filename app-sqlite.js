@@ -771,6 +771,17 @@ function createRefinementFilter(facetId, title, items, attributeName, isRadio = 
         dropdownContent.style.display = 'flex';
         dropdownContent.style.overflowY = 'auto';
 
+        // clientWidth, not innerWidth: mobile viewports expand to fit
+        // overflowing content, which would hide the very overflow we measure
+        const viewportMargin = 8;
+        const viewportWidth = document.documentElement.clientWidth;
+        const contentRect = dropdownContent.getBoundingClientRect();
+        const overflowRight = contentRect.right - (viewportWidth - viewportMargin);
+        if (overflowRight > 0) {
+          const maxShift = Math.max(contentRect.left - viewportMargin, 0);
+          dropdownContent.style.left = `${-Math.min(overflowRight, maxShift)}px`;
+        }
+
         scrollHandler();
         window.addEventListener('scroll', scrollHandler, {
           passive: true
@@ -1791,19 +1802,21 @@ function getTextColorForBg(rgbColor) {
 
 function positionPopupInViewport(popup, trigger, clickEvent = null) {
   const triggerRect = trigger.getBoundingClientRect();
-  const viewportWidth = window.innerWidth;
+  const viewportWidth = document.documentElement.clientWidth;
   const viewportHeight = window.innerHeight;
   const margin = 8;
 
   popup.style.height = '';
   popup.style.overflowY = '';
+  // Measure from a known baseline: left/top offset the popup from its offset
+  // parent (the card), not from the trigger, so zero them before measuring and
+  // apply the viewport-space delta afterwards.
+  popup.style.left = '0px';
+  popup.style.top = '0px';
   const popupRect = popup.getBoundingClientRect();
 
-  let desiredAbsoluteLeft = triggerRect.left + (triggerRect.width - popupRect.width) / 2;
-  let desiredAbsoluteTop = triggerRect.top + (triggerRect.height - popupRect.height) / 2;
-
-  let currentAbsoluteLeft = desiredAbsoluteLeft;
-  let currentAbsoluteTop = desiredAbsoluteTop;
+  let currentAbsoluteLeft = triggerRect.left + (triggerRect.width - popupRect.width) / 2;
+  let currentAbsoluteTop = triggerRect.top + (triggerRect.height - popupRect.height) / 2;
 
   if (currentAbsoluteLeft < margin) {
     currentAbsoluteLeft = margin;
@@ -1830,11 +1843,8 @@ function positionPopupInViewport(popup, trigger, clickEvent = null) {
     currentAbsoluteTop = margin;
   }
 
-  const finalLeftStyle = currentAbsoluteLeft - triggerRect.left;
-  const finalTopStyle = currentAbsoluteTop - triggerRect.top;
-
-  popup.style.left = finalLeftStyle + 'px';
-  popup.style.top = finalTopStyle + 'px';
+  popup.style.left = (currentAbsoluteLeft - popupRect.left) + 'px';
+  popup.style.top = (currentAbsoluteTop - popupRect.top) + 'px';
 }
 
 function on_render() {
