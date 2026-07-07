@@ -2523,6 +2523,70 @@ function renderTiles(items, sectionHeading, container, tileTemplate, chipTemplat
             imgPopup = null;
           }
         });
+      } else if (hover && !item.image && !item.thumbnail) {
+        // Add text-only hover for chips without images
+        link.addEventListener("mouseenter", () => {
+          if (!hoverWrapper) {
+            hoverWrapper = document.createElement("div");
+            hoverWrapper.style.position = "absolute";
+            hoverWrapper.style.zIndex = "1000";
+            hoverWrapper.style.pointerEvents = "none";
+
+            // Create text-only overlay
+            const textBox = document.createElement("div");
+            const ratingValue = Number(item.rating);
+            let overText = `<strong>${item.name}</strong><br>Rating: ${isNaN(ratingValue) ? 'N/A' : ratingValue.toFixed(2)}<br>${item.year}`;
+            if (item.wishlist) {
+              if (item.wishlist !== 'Own') {
+                overText += `<br>`;
+                if (item.wishlist !== 'Preorder') {
+                  overText += `Wishlist: `;
+                }
+                overText += item.wishlist;
+              }
+            }
+            textBox.innerHTML = overText;
+
+            textBox.style.color = "white";
+            textBox.style.backgroundColor = "rgba(0, 0, 0, 0.8)";
+            textBox.style.padding = "8px 12px";
+            textBox.style.borderRadius = "5px";
+            textBox.style.minWidth = "150px";
+            textBox.style.whiteSpace = "nowrap";
+            textBox.style.fontSize = "0.9em";
+
+            hoverWrapper.appendChild(textBox);
+            document.body.appendChild(hoverWrapper);
+
+            // Position the text box near the chip
+            const chipOffset = 5;
+            const rect = link.getBoundingClientRect();
+            let topPosition = window.scrollY + rect.top - textBox.offsetHeight - chipOffset;
+            let leftPosition = window.scrollX + rect.left;
+
+            const rightEdge = leftPosition + textBox.offsetWidth;
+            const viewportWidth = window.innerWidth;
+
+            if (rightEdge > viewportWidth) {
+              leftPosition = viewportWidth - textBox.offsetWidth - chipOffset;
+            }
+
+            if (topPosition < 0) {
+              topPosition = window.scrollY + rect.bottom + chipOffset;
+            }
+
+            hoverWrapper.style.top = `${topPosition}px`;
+            hoverWrapper.style.left = `${leftPosition}px`;
+          }
+        });
+
+        link.addEventListener("mouseleave", () => {
+          if (hoverWrapper) {
+            hoverWrapper.remove();
+            hoverWrapper = null;
+            imgPopup = null;
+          }
+        });
       }
 
       container.appendChild(link);
