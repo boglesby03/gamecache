@@ -485,6 +485,7 @@ body {
     text-align: center;
     min-width: 0;
     border-radius: 10px;
+    padding: 8px;
 }
 
 .expansion-tile:hover .expansion-thumb {
@@ -568,6 +569,7 @@ body {
     text-align: center;
     min-width: 0;
     border-radius: 10px;
+    padding: 8px;
 }
 
 .accessory-tile:hover .accessory-thumb {
