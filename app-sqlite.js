@@ -2348,6 +2348,181 @@ function renderChips(items, sectionHeading, container, template, hover = false, 
 }
 
 /**
+ * Unified function to render tiles (with images) or chips (text-only), with overflow handling.
+ * @param {Array} items - Array of objects containing `id`, `name`, and optionally `thumbnail`
+ * @param {HTMLElement} sectionHeading - The subsection heading element
+ * @param {HTMLElement} container - The container element where tiles/chips will be rendered
+ * @param {HTMLTemplateElement} tileTemplate - Template for tiles with images
+ * @param {HTMLTemplateElement} chipTemplate - Template for chips without images
+ * @param {String} [tileClass=""] - Additional class for custom styling (e.g., "po-expansion-tile")
+ * @param {Boolean} [hover=false] - Whether to show hover popups
+ * @param {Number} [visibleCount=null] - If set, items beyond this index get 'overflow' class and are hidden initially
+ * @param {HTMLElement} [toggleContainer=null] - Container to append toggle button if visibleCount is specified
+ */
+function renderTiles(items, sectionHeading, container, tileTemplate, chipTemplate, tileClass = "", hover = false, visibleCount = null, toggleContainer = null) {
+  // Return early if sectionHeading is null or items is empty
+  if (!sectionHeading || !items || items.length === 0) {
+    if (sectionHeading) {
+      sectionHeading.style.display = "none";
+    }
+    return;
+  }
+
+  sectionHeading.style.display = "block";
+
+    // Check if any items have thumbnails
+    const hasImages = items.some(item => item.thumbnail);
+    if (hasImages) {
+      // Use grid class based on container class (expansion-chips or accessory-chips)
+      const gridClass = container.classList.contains('accessory-chips') ? 'accessory-grid' : 'expansion-grid';
+      container.classList.add(gridClass);
+    }
+
+    items.forEach((item, index) => {
+      let element;
+      const template = item.thumbnail ? tileTemplate : chipTemplate;
+      const clone = template.content.cloneNode(true);
+      const link = clone.querySelector('a');
+
+      // Determine if it's a tile or chip based on whether it has an image selector
+      const isTile = item.thumbnail && clone.querySelector('img') !== null;
+
+      // Set href based on item type
+      link.href = item.image || item.thumbnail
+        ? `https://boardgamegeek.com/boardgameaccessory/${item.id}`
+        : `https://boardgamegeek.com/boardgame/${item.id}`;
+
+      // Add custom tile/chip class if provided
+      if (tileClass) {
+        link.classList.add(tileClass);
+      }
+
+      // Handle tile-specific elements (image, name)
+      if (isTile) {
+        const thumb = clone.querySelector('img');
+        const nameSpan = clone.querySelector('span[class*="-name"]');
+        if (thumb) {
+          thumb.src = item.thumbnail;
+          thumb.alt = item.name;
+        }
+        if (nameSpan) {
+          nameSpan.textContent = item.name;
+        }
+        link.title = item.name;
+      } else {
+        // Chip: just set text content
+        link.textContent = item.name;
+      }
+
+      // Apply overflow class for items beyond visible count
+      if (visibleCount !== null && index >= visibleCount) {
+        link.classList.add('expansion-overflow');
+      }
+
+      // Add hover functionality for image popup (same as renderChips)
+      if (hover && (item.image || item.thumbnail)) {
+        link.addEventListener("mouseenter", () => {
+          if (!hoverWrapper) {
+            hoverWrapper = document.createElement("div");
+            hoverWrapper.style.position = "absolute";
+            hoverWrapper.style.zIndex = "1000";
+            hoverWrapper.style.pointerEvents = "none";
+
+            imgPopup = document.createElement("img");
+            imgPopup.src = item.image || item.thumbnail;
+            imgPopup.alt = item.name;
+
+            imgPopup.style.width = "auto";
+            imgPopup.style.height = "auto";
+            imgPopup.style.maxWidth = "400px";
+            imgPopup.style.maxHeight = "500px";
+            imgPopup.style.borderRadius = "15px";
+            imgPopup.style.boxShadow = "0 4px 12px rgba(0, 0, 0, 0.3)";
+
+            // Create text overlay
+            const textOverlay = document.createElement("div");
+
+            // Customize the text that shows on the hover image
+            const ratingValue = Number(item.rating);
+            let overText = `<strong>${item.name}</strong><br>Rating: ${isNaN(ratingValue) ? 'N/A' : ratingValue.toFixed(2)}<br>${item.year}`;
+            if (item.wishlist) {
+              if (item.wishlist !== 'Own') {
+                overText += `<br>`;
+                if (item.wishlist !== 'Preorder') {
+                  overText += `Wishlist: `;
+                }
+                overText += item.wishlist;
+              }
+            }
+            textOverlay.innerHTML = overText;
+
+            textOverlay.style.color = "white";
+            textOverlay.style.position = "absolute";
+            textOverlay.style.top = "10px";
+            textOverlay.style.left = "10px";
+            textOverlay.style.backgroundColor = "rgba(0, 0, 0, 0.7)";
+            textOverlay.style.padding = "5px";
+            textOverlay.style.borderRadius = "5px";
+
+            hoverWrapper.appendChild(imgPopup);
+            hoverWrapper.appendChild(textOverlay);
+            document.body.appendChild(hoverWrapper);
+          }
+
+          if (imgPopup) {
+            imgPopup.onload = () => {
+              if (!imgPopup || !hoverWrapper) return; // Guard against null references
+              const chipOffset = 5;
+              const rect = link.getBoundingClientRect();
+              const imgHeight = imgPopup.offsetHeight;
+              let topPosition = window.scrollY + rect.top - imgHeight - chipOffset;
+              let leftPosition = window.scrollX + rect.left;
+
+              const rightEdge = leftPosition + imgPopup.offsetWidth;
+              const viewportWidth = window.innerWidth;
+
+              if (rightEdge > viewportWidth) {
+                leftPosition = viewportWidth - imgPopup.offsetWidth - chipOffset;
+              }
+
+              if (topPosition < 0) {
+                topPosition = window.scrollY + rect.bottom + chipOffset;
+              }
+
+              hoverWrapper.style.top = `${topPosition}px`;
+              hoverWrapper.style.left = `${leftPosition}px`;
+            };
+
+            if (imgPopup.complete) {
+              imgPopup.onload();
+            }
+          }
+        });
+
+        link.addEventListener("mouseleave", () => {
+          if (hoverWrapper) {
+            hoverWrapper.remove();
+            hoverWrapper = null;
+            imgPopup = null;
+          }
+        });
+      }
+
+      container.appendChild(link);
+    });
+
+    // Add toggle button if needed
+    if (visibleCount !== null && items.length > visibleCount && toggleContainer) {
+      const toggleClone = document.getElementById('expansions-toggle-template').content.cloneNode(true);
+      const button = toggleClone.querySelector('button');
+      button.dataset.total = items.length;
+      button.textContent = `show all ${items.length}`;
+      // Append button right after the container instead of at the end of the section
+      container.insertAdjacentElement('afterend', button);
+    }
+}
+
+/**
  * Helper function to create hover tooltips for any element.
  * @param {HTMLElement} hoverElement - The element that triggers the tooltip on hover.
  * @param {String} htmlContent - The HTML content that will be displayed in the tooltip.
@@ -2603,7 +2778,8 @@ function renderGameCard(game) {
     mechanicContainer.innerHTML = mechanicChips;
   }
 
-  // Locate the template for chips
+  // Locate the templates for tiles and chips
+  const expansionTileTemplate = document.getElementById("expansion-tile-template");
   const expansionChipTemplate = document.getElementById("expansion-chip-template");
 
   // Check for overall game data
@@ -2615,7 +2791,7 @@ function renderGameCard(game) {
     const poChipsContainer = expansionsSection.querySelector(".po-expansion-chips");
     const wlChipsContainer = expansionsSection.querySelector(".wl-expansion-chips");
 
-    const originalHeading = clone.querySelector("h2");
+    const originalHeading = expansionsSection.querySelector("h2");
     const poHeading = expansionsSection.querySelector(".po-expansion-heading");
     const wlHeading = expansionsSection.querySelector(".wl-expansion-heading");
 
@@ -2625,15 +2801,14 @@ function renderGameCard(game) {
     const regularExpansions = game.expansions.filter(item => !item.promo);
     const promoExpansions = game.expansions.filter(item => item.promo);
 
-    // Render regular expansions
-    renderChips(regularExpansions, originalHeading, originalChipsContainer, expansionChipTemplate, true);
+    // Render regular expansions using renderTiles
+    renderTiles(regularExpansions, originalHeading, originalChipsContainer, expansionTileTemplate, expansionChipTemplate, "", true, VISIBLE_EXPANSIONS, expansionsSection);
 
     // Render promo expansions if any
     if (promoExpansions.length > 0) {
         const promoChipsContainer = expansionsSection.querySelector(".promo-expansion-chips");
         const promoHeading = expansionsSection.querySelector(".promo-expansion-heading");
-        promoHeading.style.display = "block"; // Show promo heading
-        renderChips(promoExpansions, promoHeading, promoChipsContainer, expansionChipTemplate, true, "promo-expansion-chip");
+        renderTiles(promoExpansions, promoHeading, promoChipsContainer, expansionTileTemplate, expansionChipTemplate, "promo-expansion-chip", true);
     }
 
     // Separate preordered expansions into promo and regular
@@ -2641,14 +2816,13 @@ function renderGameCard(game) {
     const promoPoExp = game.po_exp.filter(item => item.promo);
 
     // Render preordered regular expansions
-    renderChips(regularPoExp, poHeading, poChipsContainer, expansionChipTemplate, true, "po-expansion-chip");
+    renderTiles(regularPoExp, poHeading, poChipsContainer, expansionTileTemplate, expansionChipTemplate, "po-expansion-chip", true);
 
     // Render preordered promo expansions if any
     if (promoPoExp.length > 0) {
         const promoPoChipsContainer = expansionsSection.querySelector(".promo-po-expansion-chips");
         const promoPoHeading = expansionsSection.querySelector(".promo-po-expansion-heading");
-        promoPoHeading.style.display = "block"; // Show promo PO heading
-        renderChips(promoPoExp, promoPoHeading, promoPoChipsContainer, expansionChipTemplate, true, "promo-po-expansion-chip");
+        renderTiles(promoPoExp, promoPoHeading, promoPoChipsContainer, expansionTileTemplate, expansionChipTemplate, "promo-po-expansion-chip", true);
     }
 
     // Separate wishlist expansions into promo and regular
@@ -2656,60 +2830,18 @@ function renderGameCard(game) {
     const promoWlExp = game.wl_exp.filter(item => item.promo);
 
     // Render wishlist regular expansions
-    renderChips(regularWlExp, wlHeading, wlChipsContainer, expansionChipTemplate, true, "wl-expansion-chip");
+    renderTiles(regularWlExp, wlHeading, wlChipsContainer, expansionTileTemplate, expansionChipTemplate, "wl-expansion-chip", true);
 
     // Render wishlist promo expansions if any
     if (promoWlExp.length > 0) {
         const promoWlChipsContainer = expansionsSection.querySelector(".promo-wl-expansion-chips");
         const promoWlHeading = expansionsSection.querySelector(".promo-wl-expansion-heading");
-        promoWlHeading.style.display = "block"; // Show promo WL heading
-        renderChips(promoWlExp, promoWlHeading, promoWlChipsContainer, expansionChipTemplate, true, "promo-wl-expansion-chip");
+        renderTiles(promoWlExp, promoWlHeading, promoWlChipsContainer, expansionTileTemplate, expansionChipTemplate, "promo-wl-expansion-chip", true);
     }
   }
 
 
-  // TODO : Work through using this and implementing it for promos and accessories. Also need easy way to differentiate preorders and wishlist items.
-  const expansionsSection = clone.querySelector('.expansions-section');
-  if (1==0 && game.expansions && game.expansions.length > 0) {
-    expansionsSection.style.display = 'block';
-    const container = clone.querySelector('.expansion-chips');
-    const tileTemplate = document.getElementById('expansion-tile-template');
-    const chipTemplate = document.getElementById('expansion-chip-template');
-
-    // Databases indexed before expansion images were added have no image field
-    if (game.expansions.some(exp => exp.thumbnail)) {
-      container.classList.add('expansion-grid');
-    }
-
-    const expansionLinks = game.expansions.map((exp, index) => {
-      const template = exp.thumbnail ? tileTemplate : chipTemplate;
-      const expClone = template.content.cloneNode(true);
-      const link = expClone.querySelector('a');
-      link.href = `https://boardgamegeek.com/boardgame/${exp.id}`;
-      if (exp.thumbnail) {
-        const thumb = link.querySelector('.expansion-thumb');
-        thumb.src = exp.thumbnail;
-        thumb.alt = exp.name;
-        link.querySelector('.expansion-tile-name').textContent = exp.name;
-        link.title = exp.name;
-      } else {
-        link.textContent = exp.name;
-      }
-      if (index >= VISIBLE_EXPANSIONS) {
-        link.classList.add('expansion-overflow');
-      }
-      return link.outerHTML;
-    }).join('');
-    container.innerHTML = expansionLinks;
-
-    if (game.expansions.length > VISIBLE_EXPANSIONS) {
-      const toggleClone = document.getElementById('expansions-toggle-template').content.cloneNode(true);
-      const button = toggleClone.querySelector('button');
-      button.dataset.total = game.expansions.length;
-      button.textContent = `show all ${game.expansions.length}`;
-      expansionsSection.appendChild(toggleClone);
-    }
-  }
+  // This section is now handled by the main expansion rendering above using renderTiles
 
   // Dynamic section rendering for Contains
   if (game.contained.length > 0) {
@@ -2728,7 +2860,7 @@ function renderGameCard(game) {
     const reimplementsChipsContainer = reimplementsSection.querySelector(".reimplements-chips");
 
     reimplementsSection.style.display = "block";
-    renderChips(game.reimplements, reimplementsHeading, reimplementsChipsContainer, expansionChipTemplate, true);
+    renderTiles(game.reimplements, reimplementsHeading, reimplementsChipsContainer, expansionTileTemplate, expansionChipTemplate, "", true);
   }
 
   if (game.reimplementedby.length > 0) {
@@ -2737,7 +2869,7 @@ function renderGameCard(game) {
     const reimplementedbyChipsContainer = reimplementedbySection.querySelector(".reimplementedby-chips");
 
     reimplementedbySection.style.display = "block";
-    renderChips(game.reimplementedby, reimplementedbyHeading, reimplementedbyChipsContainer, expansionChipTemplate, true);
+    renderTiles(game.reimplementedby, reimplementedbyHeading, reimplementedbyChipsContainer, expansionTileTemplate, expansionChipTemplate, "", true);
   }
 
   if (game.integrates.length > 0) {
@@ -2746,7 +2878,7 @@ function renderGameCard(game) {
     const integratesChipContainer = integratesSection.querySelector(".integrates-chips");
 
     integratesSection.style.display = "block";
-    renderChips(game.integrates, integratesHeading, integratesChipContainer, expansionChipTemplate, true, "");
+    renderTiles(game.integrates, integratesHeading, integratesChipContainer, expansionTileTemplate, expansionChipTemplate, "", true);
   }
 
   // Set rating
@@ -2815,14 +2947,51 @@ if (game.accessories.length > 0 || game.po_acc.length > 0 || game.wl_acc.length 
 
   accessoriesSection.style.display = "block"; // Show the section
 
-  // Render expansions with hover functionality
-  renderChips(game.accessories, originalAccHeading, originalChipsContainer, "chip", true);
+  // Get templates for accessories
+  const accessoryTileTemplate = document.getElementById("accessory-tile-template");
+  const accessoryChipTemplate = document.getElementById("accessory-chip-template");
 
-  // Render preordered expansions with hover functionality and specific style
-  renderChips(game.po_acc, poHeading, poChipsContainer, "chip", true, "po-accessory-chip");
+  // Separate accessories into promo and regular
+  const regularAccessories = game.accessories.filter(item => !item.promo);
+  const promoAccessories = game.accessories.filter(item => item.promo);
 
-  // Render wishlist expansions with hover functionality and specific style
-  renderChips(game.wl_acc, wlHeading, wlChipsContainer, "chip", true, "wl-accessory-chip");
+  // Render regular accessories with hover functionality and tiles if they have thumbnails
+  renderTiles(regularAccessories, originalAccHeading, originalChipsContainer, accessoryTileTemplate, accessoryChipTemplate, "", true);
+
+  // Render promo accessories if any
+  if (promoAccessories.length > 0) {
+    const promoChipsContainer = accessoriesSection.querySelector(".promo-accessory-chips");
+    const promoHeading = accessoriesSection.querySelector(".promo-accessory-heading");
+    renderTiles(promoAccessories, promoHeading, promoChipsContainer, accessoryTileTemplate, accessoryChipTemplate, "promo-accessory-chip", true);
+  }
+
+  // Separate preordered accessories into promo and regular
+  const regularPoAcc = game.po_acc.filter(item => !item.promo);
+  const promoPoAcc = game.po_acc.filter(item => item.promo);
+
+  // Render preordered regular accessories
+  renderTiles(regularPoAcc, poHeading, poChipsContainer, accessoryTileTemplate, accessoryChipTemplate, "po-accessory-chip", true);
+
+  // Render preordered promo accessories if any
+  if (promoPoAcc.length > 0) {
+    const promoPoChipsContainer = accessoriesSection.querySelector(".promo-po-accessory-chips");
+    const promoPoHeading = accessoriesSection.querySelector(".promo-po-accessory-heading");
+    renderTiles(promoPoAcc, promoPoHeading, promoPoChipsContainer, accessoryTileTemplate, accessoryChipTemplate, "promo-po-accessory-chip", true);
+  }
+
+  // Separate wishlist accessories into promo and regular
+  const regularWlAcc = game.wl_acc.filter(item => !item.promo);
+  const promoWlAcc = game.wl_acc.filter(item => item.promo);
+
+  // Render wishlist regular accessories
+  renderTiles(regularWlAcc, wlHeading, wlChipsContainer, accessoryTileTemplate, accessoryChipTemplate, "wl-accessory-chip", true);
+
+  // Render wishlist promo accessories if any
+  if (promoWlAcc.length > 0) {
+    const promoWlChipsContainer = accessoriesSection.querySelector(".promo-wl-accessory-chips");
+    const promoWlHeading = accessoriesSection.querySelector(".promo-wl-accessory-heading");
+    renderTiles(promoWlAcc, promoWlHeading, promoWlChipsContainer, accessoryTileTemplate, accessoryChipTemplate, "promo-wl-accessory-chip", true);
+  }
 }
 
   return clone;
