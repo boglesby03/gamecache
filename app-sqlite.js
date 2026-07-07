@@ -2857,7 +2857,7 @@ function renderGameCard(game) {
     const containsChipsContainer = containsSection.querySelector(".contains-chips");
 
     containsSection.style.display = "block";
-    renderChips(game.contained, containsHeading, containsChipsContainer, expansionChipTemplate, true);
+    renderTiles(game.contained, containsHeading, containsChipsContainer, expansionTileTemplate, expansionChipTemplate, "", true);
   }
 
   // Other sections rendered similarly (like Reimplements, Integrates)
