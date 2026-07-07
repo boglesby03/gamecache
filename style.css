@@ -1,3 +1,33 @@
+:root {
+    --accent-red: #b71c1c;
+    --radius-sm: 5px;
+    --radius-md: 10px;
+    --border-light: #ddd;
+    --border-light-strong: #ccc;
+    --border-thumb: rgba(0, 0, 0, 0.3);
+    --shadow-dropdown: 0 4px 8px rgba(0, 0, 0, 0.1);
+    --shadow-tile: 1px 1px 6px rgba(0, 0, 0, 0.2);
+    --shadow-popup: 0 4px 12px rgba(0, 0, 0, 0.1);
+    --chip-text: #333;
+    --chip-text-hover: #000;
+    --chip-border: rgba(0, 0, 0, 0.1);
+    --chip-bg: rgba(0, 0, 0, 0.05);
+    --chip-bg-hover: rgba(0, 0, 0, 0.1);
+    --chip-border-hover: rgba(0, 0, 0, 0.2);
+    --po-bg: rgba(17, 160, 17, 0.1);
+    --po-bg-hover: rgba(0, 128, 0, 0.2);
+    --po-border: rgba(0, 128, 0, 0.5);
+    --po-border-hover: rgba(0, 128, 0, 0.4);
+    --po-text: #085f08;
+    --po-text-hover: #044d04;
+    --wl-bg: rgba(0, 0, 255, 0.1);
+    --wl-bg-hover: rgba(0, 0, 255, 0.2);
+    --wl-border: rgba(0, 0, 255, 0.5);
+    --wl-border-hover: rgba(0, 0, 255, 0.4);
+    --wl-text: #003366;
+    --wl-text-hover: #001a33;
+}
+
 body {
     background: #F8FAFC;
     color: #606c76;
@@ -23,7 +53,7 @@ body {
 }
 
 a {
-    color: #b71c1c;
+    color: var(--accent-red);
 }
 
 h2 {
@@ -91,8 +121,8 @@ body {
 }
 
 .filter-dropdown {
-    border: 1px solid #ddd;
-    border-radius: 5px;
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-sm);
     background-color: #fff;
     position: relative;
     padding: 0;
@@ -103,7 +133,7 @@ body {
 
 /* Active filter indicator - red bottom border */
 .filter-dropdown.filter-active {
-    border-bottom: 3px solid #b71c1c;
+    border-bottom: 3px solid var(--accent-red);
 }
 
 .filter-dropdown>summary {
@@ -133,8 +163,8 @@ body {
     left: 0;
     z-index: 50;
     background-color: #fff;
-    border: 1px solid #ccc;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border: 1px solid var(--border-light-strong);
+    box-shadow: var(--shadow-dropdown);
     min-width: 200px;
     max-width: calc(100vw - 16px);
     box-sizing: border-box;
@@ -147,7 +177,7 @@ body {
 }
 
 .clear-all {
-    border-radius: 5px;
+    border-radius: var(--radius-sm);
     color: white;
     display: flex;
     align-items: center;
@@ -158,10 +188,10 @@ body {
 }
 
 .clear-button {
-    background: #b71c1c;
+    background: var(--accent-red);
     color: white;
     border: none;
-    border-radius: 5px;
+    border-radius: var(--radius-sm);
     cursor: pointer;
     box-sizing: border-box;
     height: 100%;
@@ -181,8 +211,8 @@ body {
 #search-input {
     width: 100%;
     padding: 0.5em;
-    border: 1px solid #ddd;
-    border-radius: 5px;
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-sm);
     font-size: 1em;
     box-sizing: border-box;
 }
@@ -201,8 +231,8 @@ body {
 
 #sort-select {
     padding: 0.5em;
-    border: 1px solid #ddd;
-    border-radius: 5px;
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-sm);
     background: white;
     font-size: 1em;
     box-sizing: border-box;
@@ -402,16 +432,10 @@ body {
     border-bottom: 1px solid #e0e0e0;
 }
 
-.po-expansion-heading,
-.wl-expansion-heading,
-.po-accessory-heading,
-.wl-accessory-heading,
-.promo-expansion-heading,
-.promo-po-expansion-heading,
-.promo-wl-expansion-heading,
-.promo-accessory-heading,
-.promo-po-accessory-heading,
-.promo-wl-accessory-heading {
+.expansions-section h3[class$='-heading'],
+.expansions-section h4[class$='-heading'],
+.accessories-section h3[class$='-heading'],
+.accessories-section h4[class$='-heading'] {
     font-size: 1em;
     font-weight: normal;
     color: #333;
@@ -446,9 +470,9 @@ body {
     padding: 1px 8px;
     border-radius: 10px;
     font-size: 0.8em;
-    border: 1px solid rgba(0, 0, 0, 0.1);
-    background: rgba(0, 0, 0, 0.05);
-    color: #333;
+    border: 1px solid var(--chip-border);
+    background: var(--chip-bg);
+    color: var(--chip-text);
     text-decoration: none;
     transition: all 0.2s ease;
     height: auto;
@@ -464,110 +488,20 @@ body {
 .promo-accessory-chip:hover,
 .promo-po-accessory-chip:hover,
 .promo-wl-accessory-chip:hover {
-    background: rgba(0, 0, 0, 0.1);
-    border-color: rgba(0, 0, 0, 0.2);
-    color: #000;
+    background: var(--chip-bg-hover);
+    border-color: var(--chip-border-hover);
+    color: var(--chip-text-hover);
 }
 
-.expansion-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
-    gap: 5px;
-}
-
-.expansion-grid a.expansion-tile,
-.expansion-grid a.expansion-tile.po-expansion-chip,
-.expansion-grid a.expansion-tile.wl-expansion-chip,
-.expansion-grid a.expansion-tile.promo-expansion-chip,
-.expansion-grid a.expansion-tile.promo-po-expansion-chip,
-.expansion-grid a.expansion-tile.promo-wl-expansion-chip {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 2px;
-    color: #333;
-    text-decoration: none;
-    text-align: center;
-    min-width: 0;
-    border-radius: 10px;
-    padding: 8px;
-}
-
-.expansion-tile:hover .expansion-thumb {
-    border-color: rgba(0, 0, 0, 0.5);
-}
-
-.expansion-thumb {
-    display: block;
-    max-width: 80px;
-    max-height: 80px;
-    width: auto;
-    height: auto;
-    margin: 0 auto;
-    border: 1px solid rgba(0, 0, 0, 0.3);
-    border-radius: 5px;
-    box-shadow: 1px 1px 6px rgba(0, 0, 0, 0.2);
-}
-
-.expansion-tile-name {
-    font-size: 0.85em;
-    display: block;
-    white-space: normal;
-    overflow-wrap: break-word;
-    word-break: normal;
-    text-wrap: balance;
-    width: 100%;
-    max-width: 12ch;
-    margin: 0 auto;
-    line-height: 1.2;
-    text-align: center;
-}
-
-.expansion-grid a.expansion-tile.expansion-overflow {
-    display: none;
-}
-
-.expansions-expanded .expansion-grid a.expansion-tile.expansion-overflow {
-    display: flex;
-}
-
-.accessory-grid a.accessory-tile.accessory-overflow {
-    display: none;
-}
-
-.accessories-expanded .accessory-grid a.accessory-tile.accessory-overflow {
-    display: flex;
-}
-
-.expansion-grid a.contains-overflow {
-    display: none;
-}
-
-.contains-expanded .expansion-grid a.contains-overflow {
-    display: flex;
-}
-
-.expansion-grid a.reimplementedby-overflow {
-    display: none;
-}
-
-.reimplementedby-expanded .expansion-grid a.reimplementedby-overflow {
-    display: flex;
-}
-
+.expansion-grid,
 .accessory-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
     gap: 5px;
 }
 
-.accessory-grid a.accessory-tile,
-.accessory-grid a.accessory-tile.po-accessory-chip,
-.accessory-grid a.accessory-tile.wl-accessory-chip,
-.accessory-grid a.accessory-tile.promo-accessory-chip,
-.accessory-grid a.accessory-tile.promo-po-accessory-chip,
-.accessory-grid a.accessory-tile.promo-wl-accessory-chip {
+.expansion-grid a.expansion-tile,
+.accessory-grid a.accessory-tile {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -577,14 +511,16 @@ body {
     text-decoration: none;
     text-align: center;
     min-width: 0;
-    border-radius: 10px;
+    border-radius: var(--radius-md);
     padding: 8px;
 }
 
+.expansion-tile:hover .expansion-thumb,
 .accessory-tile:hover .accessory-thumb {
     border-color: rgba(0, 0, 0, 0.5);
 }
 
+.expansion-thumb,
 .accessory-thumb {
     display: block;
     max-width: 80px;
@@ -592,11 +528,12 @@ body {
     width: auto;
     height: auto;
     margin: 0 auto;
-    border: 1px solid rgba(0, 0, 0, 0.3);
-    border-radius: 5px;
-    box-shadow: 1px 1px 6px rgba(0, 0, 0, 0.2);
+    border: 1px solid var(--border-thumb);
+    border-radius: var(--radius-sm);
+    box-shadow: var(--shadow-tile);
 }
 
+.expansion-tile-name,
 .accessory-tile-name {
     font-size: 0.85em;
     display: block;
@@ -611,9 +548,24 @@ body {
     text-align: center;
 }
 
+.expansion-grid a.expansion-tile.expansion-overflow,
+.expansion-grid a.contains-overflow,
+.accessory-grid a.accessory-tile.accessory-overflow,
+.expansion-grid a.reimplementedby-overflow {
+    display: none;
+}
+
+.expansions-expanded .expansion-grid a.expansion-tile.expansion-overflow,
+.accessories-expanded .accessory-grid a.accessory-tile.accessory-overflow,
+.contains-expanded .expansion-grid a.contains-overflow,
+.reimplementedby-expanded .expansion-grid a.reimplementedby-overflow {
+    display: flex;
+}
+
+.expansions-toggle,
 .accessories-toggle {
     margin-top: 8px;
-    color: #b71c1c;
+    color: var(--accent-red);
 }
 
 /* Wrap text for chips that do not render as image tiles. */
@@ -635,7 +587,7 @@ a.expansion-tile.promo-expansion-chip,
 a.accessory-tile.promo-accessory-chip {
     background: none;
     border: none;
-    color: #333;
+    color: var(--chip-text);
 }
 
 a.expansion-tile.promo-expansion-chip:hover,
@@ -647,59 +599,54 @@ a.accessory-tile.promo-accessory-chip:hover {
 /* Add backgrounds for preorder and wishlist tiles */
 a.expansion-tile.po-expansion-chip,
 a.accessory-tile.po-accessory-chip {
-    background: rgba(17, 160, 17, 0.1);
-    border: 1px solid rgba(0, 128, 0, 0.5);
-    border-radius: 10px;
-    color: #085f08;
+    background: var(--po-bg);
+    border: 1px solid var(--po-border);
+    border-radius: var(--radius-md);
+    color: var(--po-text);
 }
 
 a.expansion-tile.wl-expansion-chip,
 a.accessory-tile.wl-accessory-chip {
-    background: rgba(0, 0, 255, 0.1);
-    border: 1px solid rgba(0, 0, 255, 0.5);
-    border-radius: 10px;
-    color: #003366;
-}
-
-.expansions-toggle {
-    margin-top: 8px;
-    color: #b71c1c;
+    background: var(--wl-bg);
+    border: 1px solid var(--wl-border);
+    border-radius: var(--radius-md);
+    color: var(--wl-text);
 }
 
 .po-expansion-chip,
 .po-accessory-chip,
 .promo-po-expansion-chip,
 .promo-po-accessory-chip {
-    border: 1px solid rgba(0, 128, 0, 0.5);
-    background: rgba(17, 160, 17, 0.1);
-    color: #085f08;
+    border: 1px solid var(--po-border);
+    background: var(--po-bg);
+    color: var(--po-text);
 }
 
 .po-expansion-chip:hover,
 .po-accessory-chip:hover,
 .promo-po-expansion-chip:hover,
 .promo-po-accessory-chip:hover {
-    background: rgba(0, 128, 0, 0.2);
-    border-color: rgba(0, 128, 0, 0.4);
-    color: #044d04;
+    background: var(--po-bg-hover);
+    border-color: var(--po-border-hover);
+    color: var(--po-text-hover);
 }
 
 .wl-expansion-chip,
 .wl-accessory-chip,
 .promo-wl-expansion-chip,
 .promo-wl-accessory-chip {
-    border: 1px solid rgba(0, 0, 255, 0.5);
-    background: rgba(0, 0, 255, 0.1);
-    color: #003366;
+    border: 1px solid var(--wl-border);
+    background: var(--wl-bg);
+    color: var(--wl-text);
 }
 
 .wl-expansion-chip:hover,
 .wl-accessory-chip:hover,
 .promo-wl-expansion-chip:hover,
 .promo-wl-accessory-chip:hover {
-    background: rgba(0, 0, 255, 0.2);
-    border-color: rgba(0, 0, 255, 0.4);
-    color: #001a33;
+    background: var(--wl-bg-hover);
+    border-color: var(--wl-border-hover);
+    color: var(--wl-text-hover);
     text-decoration: underline;
 }
 
@@ -744,9 +691,9 @@ a.accessory-tile.wl-accessory-chip {
 .hover-popup {
     position: absolute;
     background-color: white;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-sm);
+    box-shadow: var(--shadow-popup);
     padding: 8px;
     font-size: 0.85em;
     z-index: 100;
