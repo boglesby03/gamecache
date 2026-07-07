@@ -2215,9 +2215,12 @@ function updateAllFilterCounts(filters) {
   const gamesForAgeRangeCount = filterGames(allGames, ageRangeFilters);
   const ageCounts = {};
   const sliderValues = getSelectedSlider('facet-age-range');
-  const count = 0;
+  let count = 0;
   if (sliderValues) {
-    const count = gamesForAgeRangeCount.filter(game => game.min_age >= sliderValues.min && game.min_age <= sliderValues.max).length;
+    count = gamesForAgeRangeCount.filter(game => {
+      const ageValue = getAgeValueForFilter(game, filters.selectedUseCommunityAge);
+      return ageValue !== null && ageValue >= sliderValues.min && ageValue <= sliderValues.max;
+    }).length;
   }
   ageCounts['range'] = count;
   updateCountsInDOM('facet-age-range', ageCounts, true);
