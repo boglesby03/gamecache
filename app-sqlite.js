@@ -206,25 +206,47 @@ function parsePlayerCount(countStr) {
 }
 
 function ftsSearch(query) {
-  // For FTS, wrap in double quotes to treat as literal phrase and escape any internal quotes
-  const ftsQuery = `"${query.replace(/"/g, '""')}"`;
+  const rawQuery = String(query || '').trim();
+  if (!rawQuery) return [];
+  if (rawQuery.length < 2) return [];
 
-  const fts_stmt = db.prepare(`
-    SELECT id, name FROM games_fts WHERE games_fts MATCH ?
-    UNION
-    SELECT id, name FROM games_fts WHERE soundex(name) = soundex(?)`);
+  // Keep exact phrase search for precise matches.
+  const exactPhraseQuery = `"${rawQuery.replace(/"/g, '""')}"`;
 
-  fts_stmt.bind([ftsQuery, query]);
+  // Build an FTS prefix query so partial tokens (e.g. "simi") can match "similo".
+  const tokens = rawQuery
+    .split(/\s+/)
+    .map(token => token.replace(/[^\p{L}\p{N}]/gu, ''))
+    .filter(Boolean);
 
-  ftsGames = []
-  while (fts_stmt.step()) {
-    const fts_row = fts_stmt.getAsObject();
-    ftsGames.push(fts_row.id);
+  const prefixQuery = tokens.length > 0
+    ? tokens.map(token => `${token}*`).join(' AND ')
+    : null;
+
+  // Fallback for contains-style matches in the game name.
+  const likeQuery = `%${rawQuery.replace(/[\\%_]/g, '\\$&')}%`;
+
+  const foundIds = new Set();
+
+  function runSearch(sql, params) {
+    const stmt = db.prepare(sql);
+    stmt.bind(params);
+    while (stmt.step()) {
+      foundIds.add(stmt.getAsObject().id);
+    }
+    stmt.free();
   }
 
-  fts_stmt.free();
+  runSearch(`SELECT id FROM games_fts WHERE games_fts MATCH ?`, [exactPhraseQuery]);
 
-  return ftsGames;
+  if (prefixQuery) {
+    runSearch(`SELECT id FROM games_fts WHERE games_fts MATCH ?`, [prefixQuery]);
+  }
+
+  runSearch(`SELECT id FROM games WHERE name LIKE ? ESCAPE '\\' COLLATE NOCASE`, [likeQuery]);
+  runSearch(`SELECT id FROM games_fts WHERE soundex(name) = soundex(?)`, [rawQuery]);
+
+  return Array.from(foundIds);
 }
 
 function loadAllGames() {
