@@ -434,12 +434,15 @@ body {
 .chip,
 .expansion-chip,
 .accessory-chip,
-.original-accessory-chip
+.original-accessory-chip,
 .po-expansion-chip,
 .wl-expansion-chip,
 .promo-expansion-chip,
 .promo-po-expansion-chip,
-.promo-wl-expansion-chip {
+.promo-wl-expansion-chip,
+.promo-accessory-chip,
+.promo-po-accessory-chip,
+.promo-wl-accessory-chip {
     padding: 1px 8px;
     border-radius: 10px;
     font-size: 0.8em;
@@ -457,7 +460,10 @@ body {
 .accessory-chip:hover,
 .promo-expansion-chip:hover,
 .promo-po-expansion-chip:hover,
-.promo-wl-expansion-chip:hover {
+.promo-wl-expansion-chip:hover,
+.promo-accessory-chip:hover,
+.promo-po-accessory-chip:hover,
+.promo-wl-accessory-chip:hover {
     background: rgba(0, 0, 0, 0.1);
     border-color: rgba(0, 0, 0, 0.2);
     color: #000;
@@ -602,6 +608,20 @@ body {
 .accessories-toggle {
     margin-top: 8px;
     color: #b71c1c;
+}
+
+/* Plain promo tiles should look like base tiles (no chip background). */
+a.expansion-tile.promo-expansion-chip,
+a.accessory-tile.promo-accessory-chip {
+    background: none;
+    border: none;
+    color: #333;
+}
+
+a.expansion-tile.promo-expansion-chip:hover,
+a.accessory-tile.promo-accessory-chip:hover {
+    background: none;
+    border: none;
 }
 
 /* Add backgrounds for preorder and wishlist tiles */
