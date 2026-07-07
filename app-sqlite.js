@@ -27,6 +27,9 @@ const GAUGE_RADIUS = CONFIG.GAUGE_RADIUS;
 // Expansions shown in a game's details before the "show all" toggle kicks in
 const VISIBLE_EXPANSIONS = 6;
 
+// Accessories shown in a game's details before the "show all" toggle kicks in
+const VISIBLE_ACCESSORIES = 6;
+
 const NO_IMAGE_AVAILABLE = 'https://cf.geekdo-images.com/zxVVmggfpHJpmnJY9j-k1w__original/img/eBeOyAv08r-qFkQmVKhtBg_netU=/0x0/filters:format(jpeg)/pic1657689.jpg'
 
 // Global state
@@ -2373,8 +2376,9 @@ function renderTiles(items, sectionHeading, container, tileTemplate, chipTemplat
     // Check if any items have thumbnails
     const hasImages = items.some(item => item.thumbnail);
     if (hasImages) {
-      // Use grid class based on container class (expansion-chips or accessory-chips)
-      const gridClass = container.classList.contains('accessory-chips') ? 'accessory-grid' : 'expansion-grid';
+      // Use grid class based on container class (check if 'accessory' is in any class name)
+      const isAccessoryContainer = Array.from(container.classList).some(cls => cls.includes('accessory'));
+      const gridClass = isAccessoryContainer ? 'accessory-grid' : 'expansion-grid';
       container.classList.add(gridClass);
     }
 
@@ -2416,7 +2420,10 @@ function renderTiles(items, sectionHeading, container, tileTemplate, chipTemplat
 
       // Apply overflow class for items beyond visible count
       if (visibleCount !== null && index >= visibleCount) {
-        link.classList.add('expansion-overflow');
+        // Determine overflow class based on whether this is an expansion or accessory container
+        const isAccessoryContainer = Array.from(container.classList).some(cls => cls.includes('accessory'));
+        const overflowClass = isAccessoryContainer ? 'accessory-overflow' : 'expansion-overflow';
+        link.classList.add(overflowClass);
       }
 
       // Add hover functionality for image popup (same as renderChips)
@@ -2808,7 +2815,7 @@ function renderGameCard(game) {
     if (promoExpansions.length > 0) {
         const promoChipsContainer = expansionsSection.querySelector(".promo-expansion-chips");
         const promoHeading = expansionsSection.querySelector(".promo-expansion-heading");
-        renderTiles(promoExpansions, promoHeading, promoChipsContainer, expansionTileTemplate, expansionChipTemplate, "promo-expansion-chip", true);
+        renderTiles(promoExpansions, promoHeading, promoChipsContainer, expansionTileTemplate, expansionChipTemplate, "promo-expansion-chip", true, VISIBLE_EXPANSIONS, expansionsSection);
     }
 
     // Separate preordered expansions into promo and regular
@@ -2822,7 +2829,7 @@ function renderGameCard(game) {
     if (promoPoExp.length > 0) {
         const promoPoChipsContainer = expansionsSection.querySelector(".promo-po-expansion-chips");
         const promoPoHeading = expansionsSection.querySelector(".promo-po-expansion-heading");
-        renderTiles(promoPoExp, promoPoHeading, promoPoChipsContainer, expansionTileTemplate, expansionChipTemplate, "promo-po-expansion-chip", true);
+        renderTiles(promoPoExp, promoPoHeading, promoPoChipsContainer, expansionTileTemplate, expansionChipTemplate, "promo-po-expansion-chip", true, VISIBLE_EXPANSIONS, expansionsSection);
     }
 
     // Separate wishlist expansions into promo and regular
@@ -2836,7 +2843,7 @@ function renderGameCard(game) {
     if (promoWlExp.length > 0) {
         const promoWlChipsContainer = expansionsSection.querySelector(".promo-wl-expansion-chips");
         const promoWlHeading = expansionsSection.querySelector(".promo-wl-expansion-heading");
-        renderTiles(promoWlExp, promoWlHeading, promoWlChipsContainer, expansionTileTemplate, expansionChipTemplate, "promo-wl-expansion-chip", true);
+        renderTiles(promoWlExp, promoWlHeading, promoWlChipsContainer, expansionTileTemplate, expansionChipTemplate, "promo-wl-expansion-chip", true, VISIBLE_EXPANSIONS, expansionsSection);
     }
   }
 
@@ -2956,13 +2963,13 @@ if (game.accessories.length > 0 || game.po_acc.length > 0 || game.wl_acc.length 
   const promoAccessories = game.accessories.filter(item => item.promo);
 
   // Render regular accessories with hover functionality and tiles if they have thumbnails
-  renderTiles(regularAccessories, originalAccHeading, originalChipsContainer, accessoryTileTemplate, accessoryChipTemplate, "", true);
+  renderTiles(regularAccessories, originalAccHeading, originalChipsContainer, accessoryTileTemplate, accessoryChipTemplate, "", true, VISIBLE_ACCESSORIES, accessoriesSection);
 
   // Render promo accessories if any
   if (promoAccessories.length > 0) {
     const promoChipsContainer = accessoriesSection.querySelector(".promo-accessory-chips");
     const promoHeading = accessoriesSection.querySelector(".promo-accessory-heading");
-    renderTiles(promoAccessories, promoHeading, promoChipsContainer, accessoryTileTemplate, accessoryChipTemplate, "promo-accessory-chip", true);
+    renderTiles(promoAccessories, promoHeading, promoChipsContainer, accessoryTileTemplate, accessoryChipTemplate, "promo-accessory-chip", true, VISIBLE_ACCESSORIES, accessoriesSection);
   }
 
   // Separate preordered accessories into promo and regular
@@ -2970,13 +2977,13 @@ if (game.accessories.length > 0 || game.po_acc.length > 0 || game.wl_acc.length 
   const promoPoAcc = game.po_acc.filter(item => item.promo);
 
   // Render preordered regular accessories
-  renderTiles(regularPoAcc, poHeading, poChipsContainer, accessoryTileTemplate, accessoryChipTemplate, "po-accessory-chip", true);
+  renderTiles(regularPoAcc, poHeading, poChipsContainer, accessoryTileTemplate, accessoryChipTemplate, "po-accessory-chip", true, VISIBLE_ACCESSORIES, accessoriesSection);
 
   // Render preordered promo accessories if any
   if (promoPoAcc.length > 0) {
     const promoPoChipsContainer = accessoriesSection.querySelector(".promo-po-accessory-chips");
     const promoPoHeading = accessoriesSection.querySelector(".promo-po-accessory-heading");
-    renderTiles(promoPoAcc, promoPoHeading, promoPoChipsContainer, accessoryTileTemplate, accessoryChipTemplate, "promo-po-accessory-chip", true);
+    renderTiles(promoPoAcc, promoPoHeading, promoPoChipsContainer, accessoryTileTemplate, accessoryChipTemplate, "promo-po-accessory-chip", true, VISIBLE_ACCESSORIES, accessoriesSection);
   }
 
   // Separate wishlist accessories into promo and regular
@@ -2984,13 +2991,13 @@ if (game.accessories.length > 0 || game.po_acc.length > 0 || game.wl_acc.length 
   const promoWlAcc = game.wl_acc.filter(item => item.promo);
 
   // Render wishlist regular accessories
-  renderTiles(regularWlAcc, wlHeading, wlChipsContainer, accessoryTileTemplate, accessoryChipTemplate, "wl-accessory-chip", true);
+  renderTiles(regularWlAcc, wlHeading, wlChipsContainer, accessoryTileTemplate, accessoryChipTemplate, "wl-accessory-chip", true, VISIBLE_ACCESSORIES, accessoriesSection);
 
   // Render wishlist promo accessories if any
   if (promoWlAcc.length > 0) {
     const promoWlChipsContainer = accessoriesSection.querySelector(".promo-wl-accessory-chips");
     const promoWlHeading = accessoriesSection.querySelector(".promo-wl-accessory-heading");
-    renderTiles(promoWlAcc, promoWlHeading, promoWlChipsContainer, accessoryTileTemplate, accessoryChipTemplate, "promo-wl-accessory-chip", true);
+    renderTiles(promoWlAcc, promoWlHeading, promoWlChipsContainer, accessoryTileTemplate, accessoryChipTemplate, "promo-wl-accessory-chip", true, VISIBLE_ACCESSORIES, accessoriesSection);
   }
 }
 
@@ -3268,8 +3275,16 @@ function goToPage(page) {
 }
 
 function handleExpansionsToggle(button) {
-  const section = button.closest('.expansions-section');
-  const expanded = section.classList.toggle('expansions-expanded');
+  // Determine if this is for expansions or accessories
+  let section = button.closest('.expansions-section');
+  let expandedClass = 'expansions-expanded';
+
+  if (!section) {
+    section = button.closest('.accessories-section');
+    expandedClass = 'accessories-expanded';
+  }
+
+  const expanded = section.classList.toggle(expandedClass);
   button.textContent = expanded ? 'show fewer' : `show all ${button.dataset.total}`;
 }
 

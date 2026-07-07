@@ -521,6 +521,14 @@ body {
     display: flex;
 }
 
+.accessory-grid a.accessory-tile.accessory-overflow {
+    display: none;
+}
+
+.accessories-expanded .accessory-grid a.accessory-tile.accessory-overflow {
+    display: flex;
+}
+
 .accessory-grid {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
