@@ -693,11 +693,61 @@ function setupMinAgeFilter() {
 }
 
 function setupAgeRangeFilter() {
-  const maxAge = Math.max(...allGames.map(game => game.min_age));
-  const minAge = Math.min(...allGames.map(game => game.min_age));
+  const { min: minAge, max: maxAge } = getAgeRangeBounds(false);
 
   // Initialize a slider refinement filter
   createSliderRefinementFilter('facet-age-range', 'Min age', minAge, maxAge, 'age');
+}
+
+function getAgeValueForFilter(game, useCommunityAge = false) {
+  if (useCommunityAge) {
+    const suggestedAge = Number(game.suggested_age);
+    if (Number.isFinite(suggestedAge) && suggestedAge > 0) {
+      return Math.round(suggestedAge);
+    }
+  }
+
+  const minAge = Number(game.min_age);
+  if (Number.isFinite(minAge) && minAge > 0) {
+    return minAge;
+  }
+
+  return null;
+}
+
+function getAgeRangeBounds(useCommunityAge = false) {
+  const values = allGames
+    .map(game => getAgeValueForFilter(game, useCommunityAge))
+    .filter(value => value !== null);
+
+  if (values.length === 0) {
+    return { min: 0, max: 0 };
+  }
+
+  return {
+    min: Math.min(...values),
+    max: Math.max(...values)
+  };
+}
+
+function updateAgeRangeSliderBounds(resetToBounds = true) {
+  const sliderDropdown = document.getElementById('facet-age-range');
+  if (!sliderDropdown) return;
+
+  const useCommunityAge = Boolean(document.getElementById('age-community-toggle')?.checked);
+  const { min, max } = getAgeRangeBounds(useCommunityAge);
+
+  sliderDropdown.setAttribute('data-min', String(min));
+  sliderDropdown.setAttribute('data-max', String(max));
+
+  const summaryTitle = sliderDropdown.querySelector('summary .filter-title');
+  if (summaryTitle) {
+    summaryTitle.textContent = useCommunityAge ? 'Min age (Community)' : 'Min age';
+  }
+
+  if (resetToBounds) {
+    resetSlider('facet-age-range', false);
+  }
 }
 
 function setupPreviousPlayersFilter() {
@@ -953,6 +1003,47 @@ function createSliderRefinementFilter(facetId, title, min, max) {
 
   const dropdownTitle = sliderDropdown.querySelector('.filter-title');
   dropdownTitle.textContent = title;
+
+  if (facetId === 'facet-age-range') {
+    const dropdownContent = sliderDropdown.querySelector('.filter-dropdown-content');
+    const sliderContainer = sliderDropdown.querySelector('.slider-container');
+
+    const toggleWrapper = document.createElement('label');
+    toggleWrapper.style.display = 'flex';
+    toggleWrapper.style.alignItems = 'center';
+    toggleWrapper.style.gap = '6px';
+    toggleWrapper.style.fontSize = '12px';
+    toggleWrapper.style.margin = '8px 0 4px';
+
+    const toggleInput = document.createElement('input');
+    toggleInput.type = 'checkbox';
+    toggleInput.id = 'age-community-toggle';
+    toggleInput.name = 'age-community-toggle';
+
+    const toggleText = document.createElement('span');
+    toggleText.textContent = 'Use community age';
+
+    toggleWrapper.appendChild(toggleInput);
+    toggleWrapper.appendChild(toggleText);
+
+    dropdownContent.appendChild(toggleWrapper);
+
+    toggleInput.addEventListener('change', () => {
+      const currentRange = getSelectedSlider('facet-age-range');
+      const sliderDropdown = document.getElementById('facet-age-range');
+      const currentMin = currentRange ? currentRange.min : parseInt(sliderDropdown?.querySelector('.slider-min-label')?.textContent, 10);
+      const currentMax = currentRange ? currentRange.max : parseInt(sliderDropdown?.querySelector('.slider-max-label')?.textContent, 10);
+
+      updateAgeRangeSliderBounds(false);
+
+      const nextBounds = getAgeRangeBounds(toggleInput.checked);
+      const targetMin = Math.max(nextBounds.min, Math.min(nextBounds.max, Number.isFinite(currentMin) ? currentMin : nextBounds.min));
+      const targetMax = Math.max(targetMin, Math.min(nextBounds.max, Number.isFinite(currentMax) ? currentMax : nextBounds.max));
+      setSliderRange('facet-age-range', targetMin, targetMax, false);
+
+      onFilterChange();
+    });
+  }
 
   const minLabel = sliderDropdown.querySelector('.slider-min-label');
   const maxLabel = sliderDropdown.querySelector('.slider-max-label');
@@ -1277,7 +1368,8 @@ function updateClearButtonVisibility(filters) {
     selectedYears,
     selectedStatus,
     selectedWishlist,
-    selectedAgeRange
+    selectedAgeRange,
+    selectedUseCommunityAge
   } = filters;
 
   const ageSlider = getSelectedSlider('facet-age-range');
@@ -1298,6 +1390,7 @@ function updateClearButtonVisibility(filters) {
     (selectedYears && selectedYears.length > 0) ||
     (selectedStatus && selectedStatus.length > 0) ||
     (selectedWishlist && selectedWishlist.length > 0) ||
+    selectedUseCommunityAge ||
     (selectedAgeRange && selectedAgeRange.min > ageSlider.min_init) ||
     (selectedAgeRange && selectedAgeRange.max < ageSlider.max_init);
 
@@ -1450,7 +1543,7 @@ function updateFilterActiveStates(filters) {
     const ageSlider = getSelectedSlider('facet-age-range');
 
     if (ageRangeFilters) {
-      if (filters.selectedAgeRange && (filters.selectedAgeRange.min > ageSlider.min_init || filters.selectedAgeRange.max < ageSlider.max_init)) {
+      if (filters.selectedUseCommunityAge || (filters.selectedAgeRange && (filters.selectedAgeRange.min > ageSlider.min_init || filters.selectedAgeRange.max < ageSlider.max_init))) {
         ageRangeFilters.classList.add('filter-active');
       } else {
         ageRangeFilters.classList.remove('filter-active');
@@ -1480,7 +1573,8 @@ function getFiltersFromURL() {
     selectedYears: params.get('years')?.split(',').filter(Boolean) || [],
     selectedStatus: params.get('status')?.split(',').filter(Boolean) || [],
     selectedWishlist: params.get('wishlist')?.split(',').filter(Boolean) || [],
-    selectedAge: [], // ageRangeParam ? { min: Number(minAgeParam.split('-')[0]), max: Number(minAgeParam.split('-')[1]) } : null,
+    selectedAgeRange: ageRangeParam ? { min: Number(ageRangeParam.split('-')[0]), max: Number(ageRangeParam.split('-')[1]) } : null,
+    selectedUseCommunityAge: params.get('age_source') === 'community',
     sortBy: params.get('sort') || 'name',
     page: Number(params.get('page')) || 1
   };
@@ -1503,6 +1597,7 @@ function getFiltersFromUI() {
   const selectedStatus = getSelectedValues('status');
   const selectedWishlist = getSelectedValues('wishlist');
   const selectedAgeRange = getSelectedSlider('facet-age-range');
+  const selectedUseCommunityAge = Boolean(document.getElementById('age-community-toggle')?.checked);
   const sortBy = document.getElementById('sort-select')?.value || 'name';
 
   return {
@@ -1522,6 +1617,7 @@ function getFiltersFromUI() {
     selectedStatus,
     selectedWishlist,
     selectedAgeRange,
+    selectedUseCommunityAge,
     sortBy,
     page: currentPage
   };
@@ -1546,6 +1642,7 @@ function updateURLWithFilters(filters) {
   if (filters.selectedStatus?.length) params.set('status', filters.selectedStatus.join(','));
   if (filters.selectedWishlist?.length) params.set('wishlist', filters.selectedWishlist.join(','));
   if (filters.selectedAgeRange) params.set('age', `${filters.selectedAgeRange.min}-${filters.selectedAgeRange.max}`);
+  if (filters.selectedUseCommunityAge) params.set('age_source', 'community');
   if (filters.sortBy && filters.sortBy !== 'name') params.set('sort', filters.sortBy);
   if (filters.page && filters.page > 1) params.set('page', filters.page);
 
@@ -1631,7 +1728,22 @@ function updateUIFromState(state) {
   const numPlaysRadio = document.querySelector(`input[name="numplays"][value="${numPlaysValue}"]`);
   if (numPlaysRadio) numPlaysRadio.checked = true;
 
-  resetSlider('facet-age-range');
+  const ageToggle = document.getElementById('age-community-toggle');
+  if (ageToggle) {
+    ageToggle.checked = Boolean(state.selectedUseCommunityAge);
+  }
+  updateAgeRangeSliderBounds(false);
+
+  if (state.selectedAgeRange) {
+    const sliderDropdown = document.getElementById('facet-age-range');
+    const sliderMin = parseInt(sliderDropdown.getAttribute('data-min'), 10);
+    const sliderMax = parseInt(sliderDropdown.getAttribute('data-max'), 10);
+    const clampedMin = Math.max(sliderMin, Math.min(sliderMax, state.selectedAgeRange.min));
+    const clampedMax = Math.max(clampedMin, Math.min(sliderMax, state.selectedAgeRange.max));
+    setSliderRange('facet-age-range', clampedMin, clampedMax, false);
+  } else {
+    resetSlider('facet-age-range', false);
+  }
 
   document.getElementById('sort-select').value = state.sortBy;
   currentPage = state.page;
@@ -1678,7 +1790,8 @@ function filterGames(gamesToFilter, filters) {
     selectedYears,
     selectedStatus,
     selectedWishlist,
-    selectedAgeRange
+    selectedAgeRange,
+    selectedUseCommunityAge
   } = filters;
 
   var ftsQueryResults = [];
@@ -1816,7 +1929,8 @@ function filterGames(gamesToFilter, filters) {
       return false;
     }
 
-    if (selectedAgeRange && (game.min_age < selectedAgeRange.min || game.min_age > selectedAgeRange.max)) {
+    const selectedAgeValue = getAgeValueForFilter(game, selectedUseCommunityAge);
+    if (selectedAgeRange && (selectedAgeValue === null || selectedAgeValue < selectedAgeRange.min || selectedAgeValue > selectedAgeRange.max)) {
       return false;
     }
 
@@ -2185,6 +2299,39 @@ function clearAllFilters() {
   applyFiltersAndSort(state);
   updateResults();
   updateStats();
+}
+
+function setSliderRange(sliderId, minValue, maxValue, triggerFilterChange = true) {
+  const sliderDropdown = document.getElementById(sliderId);
+  if (!sliderDropdown) return;
+
+  const minData = parseInt(sliderDropdown.getAttribute('data-min'), 10);
+  const maxData = parseInt(sliderDropdown.getAttribute('data-max'), 10);
+  const range = maxData - minData;
+  const minHandle = sliderDropdown.querySelector('.slider-min');
+  const maxHandle = sliderDropdown.querySelector('.slider-max');
+  const minLabel = sliderDropdown.querySelector('.slider-min-label');
+  const maxLabel = sliderDropdown.querySelector('.slider-max-label');
+  const rangeHighlight = sliderDropdown.querySelector('.slider-range-highlight');
+
+  const minPct = range === 0 ? 0 : ((minValue - minData) / range) * 100;
+  const maxPct = range === 0 ? 100 : ((maxValue - minData) / range) * 100;
+
+  minHandle.style.left = `${minPct}%`;
+  maxHandle.style.left = `${maxPct}%`;
+  minLabel.style.left = `${minPct}%`;
+  maxLabel.style.left = `${maxPct}%`;
+  minLabel.textContent = String(minValue);
+  maxLabel.textContent = String(maxValue);
+
+  if (rangeHighlight) {
+    rangeHighlight.style.left = `${minPct}%`;
+    rangeHighlight.style.width = `${maxPct - minPct}%`;
+  }
+
+  if (triggerFilterChange) {
+    onFilterChange();
+  }
 }
 
 function updateResults() {
@@ -3569,7 +3716,7 @@ loadINI('./config.ini', function (settings) {
   init(settings);
 });
 
-function resetSlider(sliderId) {
+function resetSlider(sliderId, triggerFilterChange = true) {
   const sliderDropdown = document.getElementById(sliderId);
   if (!sliderDropdown) {
       console.error('Slider not found!');
@@ -3585,14 +3732,5 @@ function resetSlider(sliderId) {
   const minLabel = sliderDropdown.querySelector('.slider-min-label');
   const maxLabel = sliderDropdown.querySelector('.slider-max-label');
 
-  minHandle.style.left = '0%';
-  maxHandle.style.left = '100%';
-
-  minLabel.style.left = '0%';
-  maxLabel.style.left = '100%';
-
-  minLabel.textContent = min;
-  maxLabel.textContent = max;
-
-  onFilterChange();
+  setSliderRange(sliderId, min, max, triggerFilterChange);
 }

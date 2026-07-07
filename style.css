@@ -1025,6 +1025,7 @@ a.accessory-tile.wl-accessory-chip {
     position: relative;
     width: 90%;
     /* Fit slider snugly inside dropdown content */
+    padding-top: 20px;
     margin-top: 0;
     /* Remove spacing above the slider */
     margin-bottom: 0;
@@ -1068,10 +1069,9 @@ a.accessory-tile.wl-accessory-chip {
 
 .slider-value {
     position: absolute;
-    bottom: 100%;
-    /* Place labels directly above the slider handles */
-    transform: translate(-50%, -10px);
-    /* Adjust position relative to handles */
+    top: 0;
+    /* Keep labels inside the dropdown above the slider track */
+    transform: translate(-50%, 0);
     font-size: 10px;
     /* Label font size */
     background-color: #fff;
