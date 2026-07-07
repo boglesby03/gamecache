@@ -2420,9 +2420,19 @@ function renderTiles(items, sectionHeading, container, tileTemplate, chipTemplat
 
       // Apply overflow class for items beyond visible count
       if (visibleCount !== null && index >= visibleCount) {
-        // Determine overflow class based on whether this is an expansion or accessory container
-        const isAccessoryContainer = Array.from(container.classList).some(cls => cls.includes('accessory'));
-        const overflowClass = isAccessoryContainer ? 'accessory-overflow' : 'expansion-overflow';
+        // Determine overflow class based on container type
+        const classNames = Array.from(container.classList);
+        const isAccessoryContainer = classNames.some(cls => cls.includes('accessory'));
+        const isContainsContainer = classNames.some(cls => cls.includes('contains'));
+        const isReimplementedbyContainer = classNames.some(cls => cls.includes('reimplementedby'));
+        let overflowClass = 'expansion-overflow';
+        if (isAccessoryContainer) {
+          overflowClass = 'accessory-overflow';
+        } else if (isContainsContainer) {
+          overflowClass = 'contains-overflow';
+        } else if (isReimplementedbyContainer) {
+          overflowClass = 'reimplementedby-overflow';
+        }
         link.classList.add(overflowClass);
       }
 
@@ -2857,7 +2867,7 @@ function renderGameCard(game) {
     const containsChipsContainer = containsSection.querySelector(".contains-chips");
 
     containsSection.style.display = "block";
-    renderTiles(game.contained, containsHeading, containsChipsContainer, expansionTileTemplate, expansionChipTemplate, "", true);
+    renderTiles(game.contained, containsHeading, containsChipsContainer, expansionTileTemplate, expansionChipTemplate, "", true, VISIBLE_EXPANSIONS, containsSection);
   }
 
   // Other sections rendered similarly (like Reimplements, Integrates)
@@ -2876,7 +2886,7 @@ function renderGameCard(game) {
     const reimplementedbyChipsContainer = reimplementedbySection.querySelector(".reimplementedby-chips");
 
     reimplementedbySection.style.display = "block";
-    renderTiles(game.reimplementedby, reimplementedbyHeading, reimplementedbyChipsContainer, expansionTileTemplate, expansionChipTemplate, "", true);
+    renderTiles(game.reimplementedby, reimplementedbyHeading, reimplementedbyChipsContainer, expansionTileTemplate, expansionChipTemplate, "", true, VISIBLE_EXPANSIONS, reimplementedbySection);
   }
 
   if (game.integrates.length > 0) {
@@ -3275,13 +3285,23 @@ function goToPage(page) {
 }
 
 function handleExpansionsToggle(button) {
-  // Determine if this is for expansions or accessories
+  // Determine if this is for expansions, accessories, contains, or reimplementedby
   let section = button.closest('.expansions-section');
   let expandedClass = 'expansions-expanded';
 
   if (!section) {
     section = button.closest('.accessories-section');
     expandedClass = 'accessories-expanded';
+  }
+
+  if (!section) {
+    section = button.closest('.contains-section');
+    expandedClass = 'contains-expanded';
+  }
+
+  if (!section) {
+    section = button.closest('.reimplementedby-section');
+    expandedClass = 'reimplementedby-expanded';
   }
 
   const expanded = section.classList.toggle(expandedClass);

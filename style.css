@@ -484,6 +484,7 @@ body {
     text-decoration: none;
     text-align: center;
     min-width: 0;
+    border-radius: 10px;
 }
 
 .expansion-tile:hover .expansion-thumb {
@@ -492,8 +493,8 @@ body {
 
 .expansion-thumb {
     display: block;
-    max-width: 60px;
-    max-height: 60px;
+    max-width: 80px;
+    max-height: 80px;
     width: auto;
     height: auto;
     margin: 0 auto;
@@ -529,6 +530,22 @@ body {
     display: flex;
 }
 
+.expansion-grid a.contains-overflow {
+    display: none;
+}
+
+.contains-expanded .expansion-grid a.contains-overflow {
+    display: flex;
+}
+
+.expansion-grid a.reimplementedby-overflow {
+    display: none;
+}
+
+.reimplementedby-expanded .expansion-grid a.reimplementedby-overflow {
+    display: flex;
+}
+
 .accessory-grid {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -550,6 +567,7 @@ body {
     text-decoration: none;
     text-align: center;
     min-width: 0;
+    border-radius: 10px;
 }
 
 .accessory-tile:hover .accessory-thumb {
@@ -558,8 +576,8 @@ body {
 
 .accessory-thumb {
     display: block;
-    max-width: 60px;
-    max-height: 60px;
+    max-width: 80px;
+    max-height: 80px;
     width: auto;
     height: auto;
     margin: 0 auto;
@@ -588,16 +606,29 @@ body {
 a.expansion-tile.promo-expansion-chip,
 a.expansion-tile.promo-po-expansion-chip,
 a.expansion-tile.promo-wl-expansion-chip,
-a.expansion-tile.po-expansion-chip,
-a.expansion-tile.wl-expansion-chip,
 a.accessory-tile.promo-accessory-chip,
 a.accessory-tile.promo-po-accessory-chip,
-a.accessory-tile.promo-wl-accessory-chip,
-a.accessory-tile.po-accessory-chip,
-a.accessory-tile.wl-accessory-chip {
+a.accessory-tile.promo-wl-accessory-chip {
     border: none;
     background: none;
     color: #333;
+}
+
+/* Add backgrounds for preorder and wishlist tiles */
+a.expansion-tile.po-expansion-chip,
+a.accessory-tile.po-accessory-chip {
+    background: rgba(17, 160, 17, 0.1);
+    border: 1px solid rgba(0, 128, 0, 0.5);
+    border-radius: 10px;
+    color: #085f08;
+}
+
+a.expansion-tile.wl-expansion-chip,
+a.accessory-tile.wl-accessory-chip {
+    background: rgba(0, 0, 255, 0.1);
+    border: 1px solid rgba(0, 0, 255, 0.5);
+    border-radius: 10px;
+    color: #003366;
 }
 
 .expansions-toggle {
