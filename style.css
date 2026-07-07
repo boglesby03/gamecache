@@ -471,7 +471,7 @@ body {
 
 .expansion-grid {
     display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
     gap: 5px;
 }
 
@@ -512,12 +512,15 @@ body {
 
 .expansion-tile-name {
     font-size: 0.85em;
-    overflow: hidden;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    line-clamp: 2;
-    -webkit-box-orient: vertical;
+    display: block;
+    white-space: normal;
+    overflow-wrap: break-word;
+    word-break: normal;
+    text-wrap: balance;
     width: 100%;
+    max-width: 12ch;
+    margin: 0 auto;
+    line-height: 1.2;
     text-align: center;
 }
 
@@ -555,7 +558,7 @@ body {
 
 .accessory-grid {
     display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
     gap: 5px;
 }
 
@@ -596,18 +599,35 @@ body {
 
 .accessory-tile-name {
     font-size: 0.85em;
-    overflow: hidden;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    line-clamp: 2;
-    -webkit-box-orient: vertical;
+    display: block;
+    white-space: normal;
+    overflow-wrap: break-word;
+    word-break: normal;
+    text-wrap: balance;
     width: 100%;
+    max-width: 12ch;
+    margin: 0 auto;
+    line-height: 1.2;
     text-align: center;
 }
 
 .accessories-toggle {
     margin-top: 8px;
     color: #b71c1c;
+}
+
+/* Wrap text for chips that do not render as image tiles. */
+a.expansion-chip,
+a.accessory-chip {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    white-space: normal;
+    overflow-wrap: break-word;
+    word-break: normal;
+    line-height: 1.2;
+    max-width: 16ch;
 }
 
 /* Plain promo tiles should look like base tiles (no chip background). */

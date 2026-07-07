@@ -25,7 +25,7 @@ const MAX_DESCRIPTION_LENGTH = CONFIG.MAX_DESCRIPTION_LENGTH;
 const GAUGE_RADIUS = CONFIG.GAUGE_RADIUS;
 
 // Expansions shown in a game's details before the "show all" toggle kicks in
-const VISIBLE_EXPANSIONS = 7;
+const VISIBLE_EXPANSIONS = 9;
 
 const NO_IMAGE_AVAILABLE = 'https://cf.geekdo-images.com/zxVVmggfpHJpmnJY9j-k1w__original/img/eBeOyAv08r-qFkQmVKhtBg_netU=/0x0/filters:format(jpeg)/pic1657689.jpg'
 
