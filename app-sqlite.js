@@ -2594,6 +2594,7 @@ function renderTiles(items, sectionHeading, container, tileTemplate, chipTemplat
         const isAccessoryContainer = classNames.some(cls => cls.includes('accessory'));
         const isContainsContainer = classNames.some(cls => cls.includes('contains'));
         const isReimplementedbyContainer = classNames.some(cls => cls.includes('reimplementedby'));
+        const isIntegratesContainer = classNames.some(cls => cls.includes('integrates'));
         let overflowClass = 'expansion-overflow';
         if (isAccessoryContainer) {
           overflowClass = 'accessory-overflow';
@@ -2601,8 +2602,12 @@ function renderTiles(items, sectionHeading, container, tileTemplate, chipTemplat
           overflowClass = 'contains-overflow';
         } else if (isReimplementedbyContainer) {
           overflowClass = 'reimplementedby-overflow';
+        } else if (isIntegratesContainer) {
+          overflowClass = 'integrates-overflow';
         }
         link.classList.add(overflowClass);
+        link.dataset.overflowDisplay = isTile ? 'flex' : 'inline-flex';
+        link.style.display = 'none';
       }
 
       // Add hover functionality for image popup (same as renderChips)
@@ -3080,7 +3085,7 @@ function renderGameCard(game) {
     const promoWlExp = game.wl_exp.filter(item => item.promo);
 
     // Render wishlist regular expansions
-    renderTiles(regularWlExp, wlHeading, wlChipsContainer, expansionTileTemplate, expansionChipTemplate, "wl-expansion-chip", true);
+    renderTiles(regularWlExp, wlHeading, wlChipsContainer, expansionTileTemplate, expansionChipTemplate, "wl-expansion-chip", true, VISIBLE_EXPANSIONS, expansionsSection);
 
     // Render wishlist promo expansions if any
     if (promoWlExp.length > 0) {
@@ -3128,7 +3133,7 @@ function renderGameCard(game) {
     const integratesChipContainer = integratesSection.querySelector(".integrates-chips");
 
     integratesSection.style.display = "block";
-    renderTiles(game.integrates, integratesHeading, integratesChipContainer, expansionTileTemplate, expansionChipTemplate, "", true);
+    renderTiles(game.integrates, integratesHeading, integratesChipContainer, expansionTileTemplate, expansionChipTemplate, "", true, VISIBLE_EXPANSIONS, integratesSection);
   }
 
   // Set rating
@@ -3537,7 +3542,21 @@ function handleExpansionsToggle(button) {
     expandedClass = 'reimplementedby-expanded';
   }
 
+  if (!section) {
+    section = button.closest('.integrates-section');
+    expandedClass = 'integrates-expanded';
+  }
+
+  if (!section) return;
+
   const expanded = section.classList.toggle(expandedClass);
+  const overflowElements = section.querySelectorAll(
+    '.expansion-overflow, .accessory-overflow, .contains-overflow, .reimplementedby-overflow, .integrates-overflow'
+  );
+  overflowElements.forEach(element => {
+    element.style.display = expanded ? (element.dataset.overflowDisplay || 'inline-flex') : 'none';
+  });
+
   button.textContent = expanded ? 'show fewer' : `show all ${button.dataset.total}`;
 }
 
