@@ -604,18 +604,6 @@ body {
     color: #b71c1c;
 }
 
-/* Remove borders/backgrounds from tiles with promo classes */
-a.expansion-tile.promo-expansion-chip,
-a.expansion-tile.promo-po-expansion-chip,
-a.expansion-tile.promo-wl-expansion-chip,
-a.accessory-tile.promo-accessory-chip,
-a.accessory-tile.promo-po-accessory-chip,
-a.accessory-tile.promo-wl-accessory-chip {
-    border: none;
-    background: none;
-    color: #333;
-}
-
 /* Add backgrounds for preorder and wishlist tiles */
 a.expansion-tile.po-expansion-chip,
 a.accessory-tile.po-accessory-chip {
