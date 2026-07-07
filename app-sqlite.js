@@ -20,9 +20,12 @@ const CONFIG = (() => {
 })();
 
 // Legacy constants for compatibility
-const GAMES_PER_PAGE = CONFIG.GAMES_PER_PAGE;
+let GAMES_PER_PAGE = CONFIG.GAMES_PER_PAGE;
 const MAX_DESCRIPTION_LENGTH = CONFIG.MAX_DESCRIPTION_LENGTH;
 const GAUGE_RADIUS = CONFIG.GAUGE_RADIUS;
+
+// Expansions shown in a game's details before the "show all" toggle kicks in
+const VISIBLE_EXPANSIONS = 6;
 
 const NO_IMAGE_AVAILABLE = 'https://cf.geekdo-images.com/zxVVmggfpHJpmnJY9j-k1w__original/img/eBeOyAv08r-qFkQmVKhtBg_netU=/0x0/filters:format(jpeg)/pic1657689.jpg'
 
@@ -99,6 +102,7 @@ function loadINI(path, callback) {
       // Transform flat config into nested structure expected by the app
       const settings = {
         title: config.title || "GameCache",
+        games_per_page: config.games_per_page,
         bgg: {
           username: config.bgg_username
         },
@@ -1164,6 +1168,67 @@ function createRefinementFilter(facetId, title, items, attributeName, isRadio = 
 
     // Initial setup for visible items
     refreshVisibleItems();
+
+    newContainer.addEventListener('toggle', function (event) {
+      const dropdownContent = this.querySelector('.filter-dropdown-content');
+      const summaryElement = this.querySelector('summary');
+      if (!dropdownContent || !summaryElement) return;
+
+      if (this.open) {
+        this.style.position = 'relative';
+        dropdownContent.style.position = 'absolute';
+        dropdownContent.style.top = `${summaryElement.offsetHeight}px`;
+        dropdownContent.style.left = '0';
+        dropdownContent.style.zIndex = '1050';
+        dropdownContent.style.minWidth = `${summaryElement.offsetWidth}px`;
+        dropdownContent.style.display = 'flex';
+        dropdownContent.style.overflowY = 'auto';
+
+        // clientWidth, not innerWidth: mobile viewports expand to fit
+        // overflowing content, which would hide the very overflow we measure
+        const viewportMargin = 8;
+        const viewportWidth = document.documentElement.clientWidth;
+        const contentRect = dropdownContent.getBoundingClientRect();
+        const overflowRight = contentRect.right - (viewportWidth - viewportMargin);
+        if (overflowRight > 0) {
+          const maxShift = Math.max(contentRect.left - viewportMargin, 0);
+          dropdownContent.style.left = `${-Math.min(overflowRight, maxShift)}px`;
+        }
+
+        scrollHandler();
+        window.addEventListener('scroll', scrollHandler, {
+          passive: true
+        });
+        window.addEventListener('resize', scrollHandler, {
+          passive: true
+        });
+
+      } else {
+        this.style.position = '';
+        dropdownContent.style.position = '';
+        dropdownContent.style.top = '';
+        dropdownContent.style.left = '';
+        dropdownContent.style.zIndex = '';
+        dropdownContent.style.minWidth = '';
+        dropdownContent.style.display = '';
+        dropdownContent.style.maxHeight = '';
+        dropdownContent.style.overflowY = '';
+
+        window.removeEventListener('scroll', scrollHandler);
+        window.removeEventListener('resize', scrollHandler);
+      }
+    });
+
+    const summary = newContainer.querySelector('summary');
+    if (summary) {
+      summary.addEventListener('click', function (e) {
+        const details = this.parentElement;
+        if (details.open) {
+          e.preventDefault();
+          details.open = false;
+        }
+      });
+    }
   }
 }
 
@@ -2602,6 +2667,50 @@ function renderGameCard(game) {
     }
   }
 
+
+  // TODO : Work through using this and implementing it for promos and accessories. Also need easy way to differentiate preorders and wishlist items.
+  const expansionsSection = clone.querySelector('.expansions-section');
+  if (1==0 && game.expansions && game.expansions.length > 0) {
+    expansionsSection.style.display = 'block';
+    const container = clone.querySelector('.expansion-chips');
+    const tileTemplate = document.getElementById('expansion-tile-template');
+    const chipTemplate = document.getElementById('expansion-chip-template');
+
+    // Databases indexed before expansion images were added have no image field
+    if (game.expansions.some(exp => exp.thumbnail)) {
+      container.classList.add('expansion-grid');
+    }
+
+    const expansionLinks = game.expansions.map((exp, index) => {
+      const template = exp.thumbnail ? tileTemplate : chipTemplate;
+      const expClone = template.content.cloneNode(true);
+      const link = expClone.querySelector('a');
+      link.href = `https://boardgamegeek.com/boardgame/${exp.id}`;
+      if (exp.thumbnail) {
+        const thumb = link.querySelector('.expansion-thumb');
+        thumb.src = exp.thumbnail;
+        thumb.alt = exp.name;
+        link.querySelector('.expansion-tile-name').textContent = exp.name;
+        link.title = exp.name;
+      } else {
+        link.textContent = exp.name;
+      }
+      if (index >= VISIBLE_EXPANSIONS) {
+        link.classList.add('expansion-overflow');
+      }
+      return link.outerHTML;
+    }).join('');
+    container.innerHTML = expansionLinks;
+
+    if (game.expansions.length > VISIBLE_EXPANSIONS) {
+      const toggleClone = document.getElementById('expansions-toggle-template').content.cloneNode(true);
+      const button = toggleClone.querySelector('button');
+      button.dataset.total = game.expansions.length;
+      button.textContent = `show all ${game.expansions.length}`;
+      expansionsSection.appendChild(toggleClone);
+    }
+  }
+
   // Dynamic section rendering for Contains
   if (game.contained.length > 0) {
     const containsSection = clone.querySelector('.contains-section');
@@ -2989,6 +3098,12 @@ function goToPage(page) {
   });
 }
 
+function handleExpansionsToggle(button) {
+  const section = button.closest('.expansions-section');
+  const expanded = section.classList.toggle('expansions-expanded');
+  button.textContent = expanded ? 'show fewer' : `show all ${button.dataset.total}`;
+}
+
 function debounce(func, wait) {
   let timeout;
   return function executedFunction(...args) {
@@ -3009,19 +3124,21 @@ function getTextColorForBg(rgbColor) {
 
 function positionPopupInViewport(popup, trigger, clickEvent = null) {
   const triggerRect = trigger.getBoundingClientRect();
-  const viewportWidth = window.innerWidth;
+  const viewportWidth = document.documentElement.clientWidth;
   const viewportHeight = window.innerHeight;
   const margin = 8;
 
   popup.style.height = '';
   popup.style.overflowY = '';
+  // Measure from a known baseline: left/top offset the popup from its offset
+  // parent (the card), not from the trigger, so zero them before measuring and
+  // apply the viewport-space delta afterwards.
+  popup.style.left = '0px';
+  popup.style.top = '0px';
   const popupRect = popup.getBoundingClientRect();
 
-  let desiredAbsoluteLeft = triggerRect.left + (triggerRect.width - popupRect.width) / 2;
-  let desiredAbsoluteTop = triggerRect.top + (triggerRect.height - popupRect.height) / 2;
-
-  let currentAbsoluteLeft = desiredAbsoluteLeft;
-  let currentAbsoluteTop = desiredAbsoluteTop;
+  let currentAbsoluteLeft = triggerRect.left + (triggerRect.width - popupRect.width) / 2;
+  let currentAbsoluteTop = triggerRect.top + (triggerRect.height - popupRect.height) / 2;
 
   if (currentAbsoluteLeft < margin) {
     currentAbsoluteLeft = margin;
@@ -3048,11 +3165,8 @@ function positionPopupInViewport(popup, trigger, clickEvent = null) {
     currentAbsoluteTop = margin;
   }
 
-  const finalLeftStyle = currentAbsoluteLeft - triggerRect.left;
-  const finalTopStyle = currentAbsoluteTop - triggerRect.top;
-
-  popup.style.left = finalLeftStyle + 'px';
-  popup.style.top = finalTopStyle + 'px';
+  popup.style.left = (currentAbsoluteLeft - popupRect.left) + 'px';
+  popup.style.top = (currentAbsoluteTop - popupRect.top) + 'px';
 }
 
 function on_render() {
@@ -3153,6 +3267,10 @@ document.addEventListener("click", closeAll);
 
 function init(settings) {
   console.log('Initializing GameCache SQLite app...');
+  const gamesPerPage = parseInt(settings.games_per_page, 10);
+  if (gamesPerPage > 0) {
+    GAMES_PER_PAGE = gamesPerPage;
+  }
   initializeDatabase(settings);
 }
 
