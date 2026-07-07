@@ -25,10 +25,7 @@ const MAX_DESCRIPTION_LENGTH = CONFIG.MAX_DESCRIPTION_LENGTH;
 const GAUGE_RADIUS = CONFIG.GAUGE_RADIUS;
 
 // Expansions shown in a game's details before the "show all" toggle kicks in
-const VISIBLE_EXPANSIONS = 6;
-
-// Accessories shown in a game's details before the "show all" toggle kicks in
-const VISIBLE_ACCESSORIES = 6;
+const VISIBLE_EXPANSIONS = 7;
 
 const NO_IMAGE_AVAILABLE = 'https://cf.geekdo-images.com/zxVVmggfpHJpmnJY9j-k1w__original/img/eBeOyAv08r-qFkQmVKhtBg_netU=/0x0/filters:format(jpeg)/pic1657689.jpg'
 
@@ -3209,13 +3206,13 @@ if (game.accessories.length > 0 || game.po_acc.length > 0 || game.wl_acc.length 
   const promoAccessories = game.accessories.filter(item => item.promo);
 
   // Render regular accessories with hover functionality and tiles if they have thumbnails
-  renderTiles(regularAccessories, originalAccHeading, originalChipsContainer, accessoryTileTemplate, accessoryChipTemplate, "", true, VISIBLE_ACCESSORIES, accessoriesSection);
+  renderTiles(regularAccessories, originalAccHeading, originalChipsContainer, accessoryTileTemplate, accessoryChipTemplate, "", true, VISIBLE_EXPANSIONS, accessoriesSection);
 
   // Render promo accessories if any
   if (promoAccessories.length > 0) {
     const promoChipsContainer = accessoriesSection.querySelector(".promo-accessory-chips");
     const promoHeading = accessoriesSection.querySelector(".promo-accessory-heading");
-    renderTiles(promoAccessories, promoHeading, promoChipsContainer, accessoryTileTemplate, accessoryChipTemplate, "promo-accessory-chip", true, VISIBLE_ACCESSORIES, accessoriesSection);
+    renderTiles(promoAccessories, promoHeading, promoChipsContainer, accessoryTileTemplate, accessoryChipTemplate, "promo-accessory-chip", true, VISIBLE_EXPANSIONS, accessoriesSection);
   }
 
   // Separate preordered accessories into promo and regular
@@ -3223,13 +3220,13 @@ if (game.accessories.length > 0 || game.po_acc.length > 0 || game.wl_acc.length 
   const promoPoAcc = game.po_acc.filter(item => item.promo);
 
   // Render preordered regular accessories
-  renderTiles(regularPoAcc, poHeading, poChipsContainer, accessoryTileTemplate, accessoryChipTemplate, "po-accessory-chip", true, VISIBLE_ACCESSORIES, accessoriesSection);
+  renderTiles(regularPoAcc, poHeading, poChipsContainer, accessoryTileTemplate, accessoryChipTemplate, "po-accessory-chip", true, VISIBLE_EXPANSIONS, accessoriesSection);
 
   // Render preordered promo accessories if any
   if (promoPoAcc.length > 0) {
     const promoPoChipsContainer = accessoriesSection.querySelector(".promo-po-accessory-chips");
     const promoPoHeading = accessoriesSection.querySelector(".promo-po-accessory-heading");
-    renderTiles(promoPoAcc, promoPoHeading, promoPoChipsContainer, accessoryTileTemplate, accessoryChipTemplate, "promo-po-accessory-chip", true, VISIBLE_ACCESSORIES, accessoriesSection);
+    renderTiles(promoPoAcc, promoPoHeading, promoPoChipsContainer, accessoryTileTemplate, accessoryChipTemplate, "promo-po-accessory-chip", true, VISIBLE_EXPANSIONS, accessoriesSection);
   }
 
   // Separate wishlist accessories into promo and regular
@@ -3237,13 +3234,13 @@ if (game.accessories.length > 0 || game.po_acc.length > 0 || game.wl_acc.length 
   const promoWlAcc = game.wl_acc.filter(item => item.promo);
 
   // Render wishlist regular accessories
-  renderTiles(regularWlAcc, wlHeading, wlChipsContainer, accessoryTileTemplate, accessoryChipTemplate, "wl-accessory-chip", true, VISIBLE_ACCESSORIES, accessoriesSection);
+  renderTiles(regularWlAcc, wlHeading, wlChipsContainer, accessoryTileTemplate, accessoryChipTemplate, "wl-accessory-chip", true, VISIBLE_EXPANSIONS, accessoriesSection);
 
   // Render wishlist promo accessories if any
   if (promoWlAcc.length > 0) {
     const promoWlChipsContainer = accessoriesSection.querySelector(".promo-wl-accessory-chips");
     const promoWlHeading = accessoriesSection.querySelector(".promo-wl-accessory-heading");
-    renderTiles(promoWlAcc, promoWlHeading, promoWlChipsContainer, accessoryTileTemplate, accessoryChipTemplate, "promo-wl-accessory-chip", true, VISIBLE_ACCESSORIES, accessoriesSection);
+    renderTiles(promoWlAcc, promoWlHeading, promoWlChipsContainer, accessoryTileTemplate, accessoryChipTemplate, "promo-wl-accessory-chip", true, VISIBLE_EXPANSIONS, accessoriesSection);
   }
 }
 
