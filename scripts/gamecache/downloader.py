@@ -84,9 +84,11 @@ class Downloader():
         game_list_data = self.client.game_list([game_in_collection["id"] for game_in_collection in collection_data])
 
         collection_by_id = MultiDict();
+        collection_by_copy_id = {}
         for item in collection_data:
             item["players"] = []
             collection_by_id.add(str(item["id"]), item)
+            collection_by_copy_id[(str(item["id"]), item.get("collection_id"))] = item
 
         for play in plays_data:
             play_id = str(play["game"]["gameid"])
@@ -226,12 +228,8 @@ class Downloader():
                 if id in collection_by_id:
                     integrate_collection_id = integrate.get("collection_id")
                     if integrate_collection_id is not None:
-                        source_collections = [
-                            candidate for candidate in collection_by_id.getall(id)
-                            if candidate.get("collection_id") == integrate_collection_id
-                        ]
-                        if not source_collections:
-                            source_collections = [collection_by_id[id]]
+                        matched_collection = collection_by_copy_id.get((id, integrate_collection_id))
+                        source_collections = [matched_collection] if matched_collection else [collection_by_id[id]]
                     else:
                         # No copy specified: expand to all owned copies so tags and
                         # wishlist/preorder status are preserved per copy.

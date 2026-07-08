@@ -4,7 +4,6 @@ import logging
 from typing import List, Dict, Any
 from .models import BoardGame
 import io
-import sys
 import time  # Added for fetch_image retry
 from .vendor import colorgram
 from PIL import Image, ImageFile
@@ -19,9 +18,10 @@ logger = logging.getLogger(__name__)
 class SqliteIndexer:
     """SQLite-based indexer to replace Algolia indexer."""
 
-    def __init__(self, db_path: str = "gamecache.sqlite"):
+    def __init__(self, db_path: str = "gamecache.sqlite", extract_colors: bool = True):
         self.db_path = db_path
         self.db_path_gz = f"{db_path}.gz"
+        self.extract_colors = extract_colors
         self._init_database()
 
     def _init_database(self):
@@ -119,7 +119,27 @@ class SqliteIndexer:
             )
         ''')
 
-        # Create indexes for better search performance
+        # Create metadata table for storing database metadata
+        cursor.execute('''
+            CREATE TABLE IF NOT EXISTS metadata (
+                key TEXT PRIMARY KEY,
+                value TEXT NOT NULL
+            )
+        ''')
+
+        cursor.execute('''
+            CREATE TABLE IF NOT EXISTS color_cache (
+                thumbnail TEXT PRIMARY KEY,
+                color TEXT NOT NULL
+            )
+        ''')
+
+        conn.commit()
+        conn.close()
+        logger.info(f"Initialized SQLite database: {self.db_path}")
+
+    def _create_indexes(self, cursor):
+        """Create secondary indexes after bulk loading rows."""
         cursor.execute('CREATE INDEX idx_name ON games(name)')
         cursor.execute('CREATE INDEX idx_categories ON games(categories)')
         cursor.execute('CREATE INDEX idx_mechanics ON games(mechanics)')
@@ -135,17 +155,69 @@ class SqliteIndexer:
         cursor.execute('CREATE INDEX idx_year on games(year)')
         cursor.execute('CREATE INDEX idx_priority on games(wishlist_priority)')
 
-        # Create metadata table for storing database metadata
-        cursor.execute('''
-            CREATE TABLE IF NOT EXISTS metadata (
-                key TEXT PRIMARY KEY,
-                value TEXT NOT NULL
-            )
-        ''')
+    def _get_cached_color(self, cursor, thumbnail):
+        if not thumbnail:
+            return None
 
-        conn.commit()
-        conn.close()
-        logger.info(f"Initialized SQLite database: {self.db_path}")
+        cursor.execute('SELECT color FROM color_cache WHERE thumbnail = ?', (thumbnail,))
+        row = cursor.fetchone()
+        return row[0] if row else None
+
+    def _set_cached_color(self, cursor, thumbnail, color):
+        if not thumbnail or not color:
+            return
+
+        cursor.execute(
+            'INSERT OR REPLACE INTO color_cache (thumbnail, color) VALUES (?, ?)',
+            (thumbnail, color),
+        )
+
+    def _extract_dominant_color(self, game, cursor):
+        default_color = "211, 211, 211"
+        thumbnail = game.get("thumbnail")
+
+        if not thumbnail or not self.extract_colors:
+            return default_color
+
+        cached_color = self._get_cached_color(cursor, thumbnail)
+        if cached_color:
+            return cached_color
+
+        color_str = None
+        image_data = self.fetch_image(thumbnail)
+        if image_data:
+            try:
+                pil_image = Image.open(io.BytesIO(image_data)).convert('RGBA')
+                num_colors_to_try = 10
+                extracted_colors = colorgram.extract(pil_image, num_colors_to_try)
+
+                if extracted_colors:
+                    selected_color_rgb = None
+                    for i in range(min(num_colors_to_try, len(extracted_colors))):
+                        c = extracted_colors[i].rgb
+                        luma = (
+                            0.2126 * c.r / 255.0 +
+                            0.7152 * c.g / 255.0 +
+                            0.0722 * c.b / 255.0
+                        )
+                        if 0.2 < luma < 0.8:
+                            selected_color_rgb = c
+                            break
+
+                    if not selected_color_rgb:
+                        selected_color_rgb = extracted_colors[0].rgb
+
+                    color_str = f"{selected_color_rgb.r}, {selected_color_rgb.g}, {selected_color_rgb.b}"
+                else:
+                    logger.warning(f"Colorgram could not extract colors for image: {game['image']}")
+            except Exception as e:
+                logger.error(f"Error processing image for color extraction {game['image']}: {e}")
+
+        if not color_str:
+            color_str = default_color
+
+        self._set_cached_color(cursor, thumbnail, color_str)
+        return color_str
 
     def fetch_image(self, url, tries=0):  # Copied from indexer.py
         try:
@@ -168,8 +240,8 @@ class SqliteIndexer:
         cursor.execute("PRAGMA journal_mode = WAL")
         cursor.execute("PRAGMA cache_size = -20000")
 
-        # Clear existing data
-        cursor.execute('DELETE FROM games')
+        game_rows = []
+        fts_rows = []
 
         for game_obj in tqdm(collection, desc="Processing games", total=len(collection)):
             game = game_obj.todict()  # Convert BoardGame object to dictionary
@@ -242,51 +314,9 @@ class SqliteIndexer:
             other_ranks_name_list = ' '.join(item.get("friendlyname", "") for item in game.get('other_ranks', []))
             other_ranks_json = json.dumps(game.get('other_ranks', []))
 
-            color_str = None
-            if game.get("thumbnail"):
-                image_data = self.fetch_image(game["thumbnail"])
-                if image_data:
-                    try:
-                        pil_image = Image.open(io.BytesIO(image_data)).convert('RGBA')
-                        num_colors_to_try = 10
-                        extracted_colors = colorgram.extract(pil_image, num_colors_to_try)
+            color_str = self._extract_dominant_color(game, cursor)
 
-                        if extracted_colors:
-                            selected_color_rgb = None
-                            for i in range(min(num_colors_to_try, len(extracted_colors))):
-                                c = extracted_colors[i].rgb
-                                luma = (
-                                    0.2126 * c.r / 255.0 +
-                                    0.7152 * c.g / 255.0 +
-                                    0.0722 * c.b / 255.0
-                                )
-                                if 0.2 < luma < 0.8:  # Not too dark, not too light
-                                    selected_color_rgb = c
-                                    break
-
-                            if not selected_color_rgb:  # Fallback to the first color
-                                selected_color_rgb = extracted_colors[0].rgb
-
-                            color_str = f"{selected_color_rgb.r}, {selected_color_rgb.g}, {selected_color_rgb.b}"
-                        else:
-                            logger.warning(f"Colorgram could not extract colors for image: {game['image']}")
-                    except Exception as e:
-                        logger.error(f"Error processing image for color extraction {game['image']}: {e}")
-
-            if not color_str:  # Default color if extraction fails or no image
-                color_str = "211, 211, 211"  # Light Grey
-
-            cursor.execute('''
-                INSERT INTO games (
-                    id, name, description, categories, mechanics, players,
-                    weight, playing_time, min_age, rank, usersrated, numowned,
-                    rating, numplays, image, thumbnail, tags, previous_players, expansions, color,
-                    alternate_names, comment, wishlist_comment, wishlist_priority,
-                    artists, designers, publishers, year, accessories, families, reimplements, reimplementedby,
-                    integrates, wl_exp, wl_acc, po_exp, po_acc, contained, weightRating, other_ranks,
-                    average, suggested_age, last_modified, version_name, version_year, collection_id, first_played, last_played
-                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-            ''', (
+            game_rows.append((
                 game.get('id'), game.get('name'), game.get('description'), categories_json, mechanics_json,
                 players_json,
                 float(game.get('weight')) if game.get('weight') is not None else None,
@@ -317,20 +347,7 @@ class SqliteIndexer:
                 game.get('first_played'), game.get('last_played')
             ))
 
-            cursor.execute('''
-                INSERT INTO games_fts (
-                    collection_id, id, name, description, categories, mechanics, tags, expansions,
-                    alternate_names, comment, wishlist_comment, artists, designers, publishers, year,
-                    accessories, families, reimplements, reimplementedby, integrates, wl_exp, wl_acc,
-                    po_exp, po_acc, contained, other_ranks, version_name
-                )
-                VALUES (
-                    ?, ?, ?, ?, ?, ?, ?, ?,
-                    ?, ?, ?, ?, ?, ?, ?,
-                    ?, ?, ?, ?, ?, ?, ?,
-                    ?, ?, ?, ?, ?
-                )
-            ''', (
+            fts_rows.append((
                 game.get('collection_id'),
                 game.get('id'),
                 game.get('name'),
@@ -349,6 +366,35 @@ class SqliteIndexer:
                 other_ranks_name_list,
                 game.get('version_name')
             ))
+
+        cursor.executemany('''
+                INSERT INTO games (
+                    id, name, description, categories, mechanics, players,
+                    weight, playing_time, min_age, rank, usersrated, numowned,
+                    rating, numplays, image, thumbnail, tags, previous_players, expansions, color,
+                    alternate_names, comment, wishlist_comment, wishlist_priority,
+                    artists, designers, publishers, year, accessories, families, reimplements, reimplementedby,
+                    integrates, wl_exp, wl_acc, po_exp, po_acc, contained, weightRating, other_ranks,
+                    average, suggested_age, last_modified, version_name, version_year, collection_id, first_played, last_played
+                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            ''', game_rows)
+
+        cursor.executemany('''
+                INSERT INTO games_fts (
+                    collection_id, id, name, description, categories, mechanics, tags, expansions,
+                    alternate_names, comment, wishlist_comment, artists, designers, publishers, year,
+                    accessories, families, reimplements, reimplementedby, integrates, wl_exp, wl_acc,
+                    po_exp, po_acc, contained, other_ranks, version_name
+                )
+                VALUES (
+                    ?, ?, ?, ?, ?, ?, ?, ?,
+                    ?, ?, ?, ?, ?, ?, ?,
+                    ?, ?, ?, ?, ?, ?, ?,
+                    ?, ?, ?, ?, ?
+                )
+            ''', fts_rows)
+
+        self._create_indexes(cursor)
 
         conn.commit()
         conn.close()

@@ -168,7 +168,7 @@ def main(args):
         assert False, "No games imported, is the boardgamegeek part of config.ini correctly set?"
 
     # Create SQLite database
-    indexer = SqliteIndexer(sqlite_path)
+    indexer = SqliteIndexer(sqlite_path, extract_colors=not args.skip_colors)
     indexer.add_objects(collection)
     print(f"Created SQLite database with {num_games} games and {num_expansions} expansions.")
 
@@ -250,6 +250,13 @@ if __name__ == '__main__':
         action='store_true',
         help=(
             "Bypass cache for BGG collection endpoint calls only (main and accessory collection)."
+        )
+    )
+    parser.add_argument(
+        '--skip_colors',
+        action='store_true',
+        help=(
+            "Skip thumbnail color extraction to speed up SQLite generation."
         )
     )
 
