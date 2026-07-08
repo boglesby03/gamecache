@@ -1228,8 +1228,9 @@ function createRefinementFilter(facetId, title, items, attributeName, isRadio = 
         const labelText = item.querySelector('.filter-label').textContent.toLowerCase();
         const count = item.querySelector('.facet-count').textContent;
 
-        // Exclude items with count === 0 dynamically
-        if (count === '0') {
+        // Hide zero-count options only when they are not currently selected.
+        // Selected zero-count options remain visible so they can be unselected.
+        if (count === '0' && !input.checked) {
           item.style.display = 'none';
           return;
         }
