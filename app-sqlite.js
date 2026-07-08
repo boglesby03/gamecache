@@ -1220,10 +1220,15 @@ function createRefinementFilter(facetId, title, items, attributeName, isRadio = 
     // Function to refresh visible items
     const refreshVisibleItems = () => {
       const filterItems = Array.from(newContainer.querySelectorAll('.filter-item'));
+      const dropdownContent = newContainer.querySelector('.filter-dropdown-content');
       const searchBox = enableSearch ? document.getElementById(searchBoxId) : null;
       const searchText = searchBox ? searchBox.value.toLowerCase() : '';
 
-      filterItems.forEach(item => {
+      filterItems.forEach((item, index) => {
+        if (!item.dataset.orderIndex) {
+          item.dataset.orderIndex = String(index);
+        }
+
         const input = item.querySelector('input');
         const labelText = item.querySelector('.filter-label').textContent.toLowerCase();
         const count = item.querySelector('.facet-count').textContent;
@@ -1241,6 +1246,19 @@ function createRefinementFilter(facetId, title, items, attributeName, isRadio = 
         } else {
           item.style.display = 'none';
         }
+      });
+
+      // Keep selected options grouped at the top while preserving original order.
+      const sortedFilterItems = [...filterItems].sort((a, b) => {
+        const aChecked = a.querySelector('input')?.checked ? 0 : 1;
+        const bChecked = b.querySelector('input')?.checked ? 0 : 1;
+        if (aChecked !== bChecked) return aChecked - bChecked;
+
+        return Number(a.dataset.orderIndex) - Number(b.dataset.orderIndex);
+      });
+
+      sortedFilterItems.forEach(item => {
+        dropdownContent.appendChild(item);
       });
 
       // Reapply event listeners to all visible inputs
