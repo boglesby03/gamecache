@@ -2589,6 +2589,23 @@ function renderTiles(items, sectionHeading, container, tileTemplate, chipTemplat
         link.classList.add(tileClass);
       }
 
+      if (
+        (Array.isArray(item.tags) && item.tags.includes("wishlist")) ||
+        item.tags === "wishlist"
+      ) {
+        link.classList.add("wl-expansion-chip");
+      } else if (
+        (Array.isArray(item.tags) && item.tags.includes("preordered")) ||
+        item.tags === "preordered"
+      ) {
+        link.classList.add("po-expansion-chip");
+      } else if (
+        (Array.isArray(item.tags) && item.tags.includes("unowned")) ||
+        item.tags === "unowned"
+      ) {
+        link.classList.add("un-expansion-chip");
+      }
+
       // Handle tile-specific elements (image, name)
       if (isTile) {
         const thumb = clone.querySelector('img');

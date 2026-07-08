@@ -24,6 +24,40 @@ promos = [
     372783,   # Iron Maiden Pack #3
 ]
 
+# Add custom integrate mapping entries here.
+# Each mapping links `id` (source game) to `baseId` (target integrate game).
+# Optional target fields can be provided either as direct keys (`name`, `year`, ...)
+# or as `base_` keys (`base_name`, `base_year`, ...).
+DEFAULT_CUSTOM_INTEGRATES_MAPPINGS = [
+    # Example:
+    # {"id": 12345, "baseId": 67890, "inbound": False, "base_name": "Target Name"},
+]
+
+# Add custom integrate copy rules here.
+# Each rule links source game ID -> target game ID, and the downloader will add
+# target integrations for owned copies of that target ID.
+# Supported formats:
+# - {"id": SOURCE_ID, "baseId": TARGET_ID}
+# - {"searchId": SOURCE_ID, "integrateId": TARGET_ID}
+DEFAULT_CUSTOM_INTEGRATES_COPY_MAPPINGS = [
+    # Similo: each owned copy integrates with other owned Similo copies.
+    {"id": 268620, "baseId": 268620, "inbound": False},
+    # Example:
+    # {"id": 11111, "baseId": 22222, "inbound": False},
+]
+
+CUSTOM_INTEGRATE_OPTIONAL_FIELDS = (
+    "name",
+    "year",
+    "image",
+    "thumbnail",
+    "rating",
+    "average",
+    "rank",
+    "usersrated",
+    "numowned",
+)
+
 PUBLIC_DOMAIN_PUBLISHER=171
 class BoardGame:
     def __init__(self, game_data, collection_data, expansions=[], accessories=[]):
@@ -64,7 +98,12 @@ class BoardGame:
         self.publishers = self.publisher_filter(game_data["publishers"], collection_data)
         self.reimplements = self.process_external_game_list(list(filter(lambda g: g["inbound"], game_data["reimplements"])))
         self.reimplementedby = self.process_external_game_list(list(filter(lambda g: not g["inbound"], game_data["reimplements"])))
-        self.integrates = self.process_external_game_list(game_data["integrates"])
+        self.integrates = self.process_external_game_list(
+            game_data["integrates"],
+            relationship="integrates",
+            current_game_data=game_data,
+            current_collection_data=collection_data,
+        )
         self.players = self.calc_num_players(game_data, self.expansions)
         self.weight = self.calc_weight(game_data)
         self.weightRating = float(game_data["weight"]) if game_data["weight"].strip() else -1
@@ -137,13 +176,70 @@ class BoardGame:
 
         return publisher_list
 
-    def process_external_game_list(self, games):
+    @classmethod
+    def get_custom_integrates_mappings(cls):
+        return DEFAULT_CUSTOM_INTEGRATES_MAPPINGS
 
-        return games
-        # for now just update the wishlist for other items
-        for game in games:
-            None
-            # game["wishlist"] = self.calc_wishlist_priority(game)
+    @classmethod
+    def get_custom_integrates_copy_mappings(cls):
+        return DEFAULT_CUSTOM_INTEGRATES_COPY_MAPPINGS
+
+    def process_external_game_list(self, games, relationship=None, current_game_data=None, current_collection_data=None):
+        processed_games = copy.deepcopy(games) if games else []
+
+        if relationship != "integrates":
+            return processed_games
+
+        existing_ids = {
+            game.get("id")
+            for game in processed_games
+            if isinstance(game, dict) and game.get("id") is not None
+        }
+
+        for mapping in self.get_custom_integrates_mappings():
+            if mapping.get("id") != self.id:
+                continue
+
+            target_id = mapping.get("baseId")
+            if target_id is None or target_id in existing_ids:
+                continue
+
+            mapped_integrate = {
+                "id": target_id,
+                "inbound": mapping.get("inbound", False),
+            }
+
+            for field in CUSTOM_INTEGRATE_OPTIONAL_FIELDS:
+                value = mapping.get(field)
+                if value is None:
+                    value = mapping.get(f"base_{field}")
+                if value is not None:
+                    mapped_integrate[field] = value
+
+            # When mapping a game to itself, populate missing fields so custom
+            # mappings resemble standard integrate payloads.
+            if target_id == self.id:
+                if current_game_data:
+                    mapped_integrate.setdefault("name", current_game_data.get("name"))
+                    mapped_integrate.setdefault("year", current_game_data.get("year"))
+                    mapped_integrate.setdefault("rating", current_game_data.get("rating"))
+                    mapped_integrate.setdefault("average", current_game_data.get("average"))
+                    mapped_integrate.setdefault("rank", current_game_data.get("rank"))
+                    mapped_integrate.setdefault("usersrated", current_game_data.get("usersrated"))
+                    mapped_integrate.setdefault("numowned", current_game_data.get("numowned"))
+                    mapped_integrate.setdefault("image", current_game_data.get("image"))
+                    mapped_integrate.setdefault("thumbnail", current_game_data.get("thumbnail"))
+
+                if current_collection_data:
+                    mapped_integrate["image"] = mapped_integrate.get("image") or current_collection_data.get("image_version") or current_collection_data.get("image")
+                    mapped_integrate["thumbnail"] = mapped_integrate.get("thumbnail") or current_collection_data.get("thumbnail_version") or current_collection_data.get("thumbnail")
+
+                mapped_integrate.setdefault("name", self.name)
+
+            processed_games.append(mapped_integrate)
+            existing_ids.add(target_id)
+
+        return processed_games
 
     def is_promo(self):
         # NOTE: This could also potentially look for 'Magazine', which is normally a promo as well

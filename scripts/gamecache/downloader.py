@@ -1,6 +1,7 @@
 import copy
 import itertools
 import re
+from decimal import Decimal
 
 from gamecache.bgg_client import BGGClient
 from gamecache.bgg_client import CacheBackendSqlite
@@ -191,6 +192,8 @@ class Downloader():
 
         games = filter_games_by_collection_id(games)
 
+        games = apply_integrates_copy_rules(games)
+
         # Cleanup the game
         for game in games:
 
@@ -216,14 +219,47 @@ class Downloader():
             game.contained = sorted(contained_list, key=lambda x: x["name"])
 
             integrates_list = []
+            seen_integrates = set()
             for integrate in game.integrates:
                 # Filter integrates to owned games
                 id = str(integrate["id"])
                 if id in collection_by_id:
-                    integrate["name"] = remove_prefix(integrate["name"], game)
-                    integrate["tags"] = collection_by_id[id]["tags"]
-                    integrate["wishlist"] = game.calc_wishlist_priority(collection_by_id[id]) # ["wishlist_priority"]
-                    integrates_list.append(integrate)
+                    integrate_collection_id = integrate.get("collection_id")
+                    if integrate_collection_id is not None:
+                        source_collections = [
+                            candidate for candidate in collection_by_id.getall(id)
+                            if candidate.get("collection_id") == integrate_collection_id
+                        ]
+                        if not source_collections:
+                            source_collections = [collection_by_id[id]]
+                    else:
+                        # No copy specified: expand to all owned copies so tags and
+                        # wishlist/preorder status are preserved per copy.
+                        source_collections = collection_by_id.getall(id)
+
+                    for source_collection in source_collections:
+                        integrate_copy = copy.deepcopy(integrate)
+                        integrate_copy["collection_id"] = source_collection.get("collection_id")
+
+                        integrate_key = (integrate_copy.get("id"), integrate_copy.get("collection_id"))
+                        if integrate_key in seen_integrates:
+                            continue
+
+                        source_game = game_data_by_id.get(source_collection["id"])
+
+                        integrate_name = integrate_copy.get("name") or source_collection.get("name") or (source_game and source_game.get("name"))
+                        if not integrate_name:
+                            continue
+
+                        integrate_copy["name"] = remove_prefix(integrate_name, game)
+                        integrate_copy["tags"] = source_collection["tags"]
+                        integrate_copy["wishlist"] = game.calc_wishlist_priority(source_collection)
+                        integrate_copy["year"] = integrate_copy.get("year") or (source_game and source_game.get("year"))
+                        integrate_copy["rating"] = integrate_copy.get("rating") or (source_game and source_game.get("rating"))
+                        integrate_copy["image"] = integrate_copy.get("image") or source_collection.get("image_version") or source_collection.get("image") or (source_game and source_game.get("image"))
+                        integrate_copy["thumbnail"] = integrate_copy.get("thumbnail") or source_collection.get("thumbnail_version") or source_collection.get("thumbnail") or (source_game and source_game.get("thumbnail"))
+                        integrates_list.append(integrate_copy)
+                        seen_integrates.add(integrate_key)
             game.integrates = sorted(integrates_list, key=lambda x: x["name"])
 
             for reimps in game.reimplements:
@@ -262,6 +298,7 @@ class Downloader():
             game.wl_acc = sorted(game.wl_acc, key=sort_key)
             game.contained = sorted(game.contained, key=sort_key)
             game.families = sorted(game.families, key=sort_key)
+            game.integrates = sorted(game.integrates, key=sort_key)
             game.reimplements = sorted(game.reimplements, key=sort_key)
             game.reimplementedby = sorted(game.reimplementedby, key=sort_key)
 
@@ -322,6 +359,70 @@ def _uniq(lst):
     lst = sorted(lst, key=lambda x: x['id'])
     for _, grp in itertools.groupby(lst, lambda d: (d['id'])):
         yield list(grp)[0]
+
+def _json_safe_value(value):
+    if isinstance(value, Decimal):
+        return float(value)
+    return value
+
+def apply_integrates_copy_rules(games):
+    """
+    Apply custom integrate rules by ID.
+
+    Each rule links source games to owned copies of a target game ID.
+    Rule formats supported:
+    - {"id": SOURCE_ID, "baseId": TARGET_ID}
+    - {"searchId": SOURCE_ID, "integrateId": TARGET_ID}
+    """
+
+    rules = BoardGame.get_custom_integrates_copy_mappings()
+    if not rules:
+        return games
+
+    games_by_id = {}
+    for game in games:
+        games_by_id.setdefault(game.id, []).append(game)
+
+    for rule in rules:
+        source_id = rule.get("id", rule.get("searchId"))
+        target_id = rule.get("baseId", rule.get("integrateId"))
+
+        if source_id is None or target_id is None:
+            continue
+
+        source_games = games_by_id.get(source_id, [])
+        target_games = games_by_id.get(target_id, [])
+        if not source_games or not target_games:
+            continue
+
+        for source_game in source_games:
+            existing_ids = {
+                (item.get("id"), item.get("collection_id"))
+                for item in source_game.integrates
+                if isinstance(item, dict) and item.get("id") is not None
+            }
+
+            for target_game in target_games:
+                # Never add a game as an integration of itself (same collection copy).
+                if target_game.collection_id == source_game.collection_id:
+                    continue
+                target_key = (target_game.id, target_game.collection_id)
+                if target_key in existing_ids:
+                    continue
+
+                source_game.integrates.append({
+                    "id": target_game.id,
+                    "collection_id": target_game.collection_id,
+                    "inbound": rule.get("inbound", False),
+                    "name": target_game.name,
+                    "year": _json_safe_value(target_game.year),
+                    "rating": _json_safe_value(target_game.rating),
+                    "image": target_game.image,
+                    "thumbnail": target_game.thumbnail,
+                })
+                existing_ids.add(target_key)
+
+    return games
 
 def custom_accessories_mapping(accessories):
 
