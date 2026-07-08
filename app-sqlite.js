@@ -2835,6 +2835,26 @@ function escapeHtmlChars(unsafe) {
     .replace(/'/g, "&#039;");
 }
 
+function getWishlistCardBackground(priority, hasWishlistTag = false) {
+  const wishlistShades = {
+    'Must Have': 'rgba(0, 76, 255, 0.46)',
+    'Love to Have': 'rgba(0, 76, 255, 0.34)',
+    'Like to Have': 'rgba(0, 76, 255, 0.24)',
+    'Thinking About It': 'rgba(0, 76, 255, 0.14)',
+    'Don\'t Buy': 'rgba(0, 76, 255, 0.10)',
+  };
+
+  if (priority && wishlistShades[priority]) {
+    return wishlistShades[priority];
+  }
+
+  if (hasWishlistTag) {
+    return 'rgba(0, 76, 255, 0.20)';
+  }
+
+  return 'rgba(255, 255, 255, 1)';
+}
+
 function renderGameCard(game) {
   const template = document.getElementById('game-card-template');
   const clone = template.content.cloneNode(true);
@@ -2843,10 +2863,8 @@ function renderGameCard(game) {
   // Apply background color based on game status
   if (game.tags.includes("preordered")) {
     card.style.backgroundColor = "rgba(25, 217, 25, 0.15)"; // Light green background for preordered
-  } else if (game.tags.includes("wishlist")) {
-    card.style.backgroundColor = "rgba(30, 30, 195, 0.15)"; // Light blue background for wishlist
   } else {
-    card.style.backgroundColor = "rgba(255, 255, 255, 1)"; // Default white background
+    card.style.backgroundColor = getWishlistCardBackground(game.wishlist_priority, game.tags.includes("wishlist"));
   }
 
   // Additional logic for rendering game cards
