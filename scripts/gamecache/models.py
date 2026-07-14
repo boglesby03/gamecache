@@ -21,6 +21,8 @@ promos = [
     372781,   # Iron Maiden Pack #1
     372782,   # Iron Maiden Pack #2
     372783,   # Iron Maiden Pack #3
+    375371,   # Cthulhu: Death May Die - Bonus Relic Cards
+    416819,   # Dominion: Farming - Really an alt artwork accessory
 ]
 
 # Add custom integrate mapping entries here.
