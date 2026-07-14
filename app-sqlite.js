@@ -2391,8 +2391,9 @@ function updateResults() {
  * @param {HTMLTemplateElement | String} template - Either a `<template>` element to clone or `chip` for simple links
  * @param {Boolean} [hover=false] - Whether the chips should show images on hover
  * @param {String} [chipClass=""] - Additional class for custom styling (e.g., "wl-accessory-chip")
+ * @param {Boolean} [isAccessory=false] - Whether items should link to BGG accessory pages
  */
-function renderChips(items, sectionHeading, container, template, hover = false, chipClass = "") {
+function renderChips(items, sectionHeading, container, template, hover = false, chipClass = "", isAccessory = false) {
   if (items && items.length > 0) {
     sectionHeading.style.display = "block"; // Make subsection heading visible if items exist
 
@@ -2410,7 +2411,7 @@ function renderChips(items, sectionHeading, container, template, hover = false, 
       }
 
       // Set chip properties dynamically
-      chip.href = item.image
+      chip.href = isAccessory
         ? `https://boardgamegeek.com/boardgameaccessory/${item.id}`
         : `https://boardgamegeek.com/boardgame/${item.id}`;
       chip.textContent = item.name;
@@ -2549,8 +2550,9 @@ function renderChips(items, sectionHeading, container, template, hover = false, 
  * @param {Boolean} [hover=false] - Whether to show hover popups
  * @param {Number} [visibleCount=null] - If set, items beyond this index get 'overflow' class and are hidden initially
  * @param {HTMLElement} [toggleContainer=null] - Container to append toggle button if visibleCount is specified
+ * @param {Boolean} [isAccessory=false] - Whether items should link to BGG accessory pages
  */
-function renderTiles(items, sectionHeading, container, tileTemplate, chipTemplate, tileClass = "", hover = false, visibleCount = null, toggleContainer = null) {
+function renderTiles(items, sectionHeading, container, tileTemplate, chipTemplate, tileClass = "", hover = false, visibleCount = null, toggleContainer = null, isAccessory = false) {
   // Return early if sectionHeading is null or items is empty
   if (!sectionHeading || !items || items.length === 0) {
     if (sectionHeading) {
@@ -2580,7 +2582,7 @@ function renderTiles(items, sectionHeading, container, tileTemplate, chipTemplat
       const isTile = item.thumbnail && clone.querySelector('img') !== null;
 
       // Set href based on item type
-      link.href = item.image || item.thumbnail
+      link.href = isAccessory
         ? `https://boardgamegeek.com/boardgameaccessory/${item.id}`
         : `https://boardgamegeek.com/boardgame/${item.id}`;
 
@@ -3265,13 +3267,13 @@ if (game.accessories.length > 0 || game.po_acc.length > 0 || game.wl_acc.length 
   const promoAccessories = game.accessories.filter(item => item.promo);
 
   // Render regular accessories with hover functionality and tiles if they have thumbnails
-  renderTiles(regularAccessories, originalAccHeading, originalChipsContainer, accessoryTileTemplate, accessoryChipTemplate, "", true, VISIBLE_EXPANSIONS, accessoriesSection);
+  renderTiles(regularAccessories, originalAccHeading, originalChipsContainer, accessoryTileTemplate, accessoryChipTemplate, "", true, VISIBLE_EXPANSIONS, accessoriesSection, true);
 
   // Render promo accessories if any
   if (promoAccessories.length > 0) {
     const promoChipsContainer = accessoriesSection.querySelector(".promo-accessory-chips");
     const promoHeading = accessoriesSection.querySelector(".promo-accessory-heading");
-    renderTiles(promoAccessories, promoHeading, promoChipsContainer, accessoryTileTemplate, accessoryChipTemplate, "promo-accessory-chip", true, VISIBLE_EXPANSIONS, accessoriesSection);
+    renderTiles(promoAccessories, promoHeading, promoChipsContainer, accessoryTileTemplate, accessoryChipTemplate, "promo-accessory-chip", true, VISIBLE_EXPANSIONS, accessoriesSection, true);
   }
 
   // Separate preordered accessories into promo and regular
@@ -3279,13 +3281,13 @@ if (game.accessories.length > 0 || game.po_acc.length > 0 || game.wl_acc.length 
   const promoPoAcc = game.po_acc.filter(item => item.promo);
 
   // Render preordered regular accessories
-  renderTiles(regularPoAcc, poHeading, poChipsContainer, accessoryTileTemplate, accessoryChipTemplate, "po-accessory-chip", true, VISIBLE_EXPANSIONS, accessoriesSection);
+  renderTiles(regularPoAcc, poHeading, poChipsContainer, accessoryTileTemplate, accessoryChipTemplate, "po-accessory-chip", true, VISIBLE_EXPANSIONS, accessoriesSection, true);
 
   // Render preordered promo accessories if any
   if (promoPoAcc.length > 0) {
     const promoPoChipsContainer = accessoriesSection.querySelector(".promo-po-accessory-chips");
     const promoPoHeading = accessoriesSection.querySelector(".promo-po-accessory-heading");
-    renderTiles(promoPoAcc, promoPoHeading, promoPoChipsContainer, accessoryTileTemplate, accessoryChipTemplate, "promo-po-accessory-chip", true, VISIBLE_EXPANSIONS, accessoriesSection);
+    renderTiles(promoPoAcc, promoPoHeading, promoPoChipsContainer, accessoryTileTemplate, accessoryChipTemplate, "promo-po-accessory-chip", true, VISIBLE_EXPANSIONS, accessoriesSection, true);
   }
 
   // Separate wishlist accessories into promo and regular
@@ -3293,13 +3295,13 @@ if (game.accessories.length > 0 || game.po_acc.length > 0 || game.wl_acc.length 
   const promoWlAcc = game.wl_acc.filter(item => item.promo);
 
   // Render wishlist regular accessories
-  renderTiles(regularWlAcc, wlHeading, wlChipsContainer, accessoryTileTemplate, accessoryChipTemplate, "wl-accessory-chip", true, VISIBLE_EXPANSIONS, accessoriesSection);
+  renderTiles(regularWlAcc, wlHeading, wlChipsContainer, accessoryTileTemplate, accessoryChipTemplate, "wl-accessory-chip", true, VISIBLE_EXPANSIONS, accessoriesSection, true);
 
   // Render wishlist promo accessories if any
   if (promoWlAcc.length > 0) {
     const promoWlChipsContainer = accessoriesSection.querySelector(".promo-wl-accessory-chips");
     const promoWlHeading = accessoriesSection.querySelector(".promo-wl-accessory-heading");
-    renderTiles(promoWlAcc, promoWlHeading, promoWlChipsContainer, accessoryTileTemplate, accessoryChipTemplate, "promo-wl-accessory-chip", true, VISIBLE_EXPANSIONS, accessoriesSection);
+    renderTiles(promoWlAcc, promoWlHeading, promoWlChipsContainer, accessoryTileTemplate, accessoryChipTemplate, "promo-wl-accessory-chip", true, VISIBLE_EXPANSIONS, accessoriesSection, true);
   }
 }
 
