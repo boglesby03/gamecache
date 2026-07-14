@@ -15,6 +15,7 @@ CACHE_TTL_SECONDS = 60 * 60 * 24 * 7
 EXTRA_EXPANSIONS_GAME_ID=81913
 UNPUBLISHED_PROTOTYPE=18291
 BOX_OF_PROMOS=39378
+BASE_GAME_OVERRIDES = {155192}
 
 class Downloader():
     def __init__(self, cache_bgg, debug=False, token=None):
@@ -131,7 +132,7 @@ class Downloader():
 
         for expansion_data in expansion_data_by_id.values():
 
-            if is_promo_box(expansion_data):
+            if is_promo_box(expansion_data) or is_base_game_override(expansion_data):
                 game_data_by_id[expansion_data["id"]] = expansion_data
             for expansion in expansion_data["expansions"]:
                 id = expansion["id"]
@@ -573,10 +574,6 @@ def family_filter(family):
 def is_promo_box(game):
     """Ignore the Deutscher Spielepreile Goodie Boxes and Brettspiel Adventskalender as expansions and treat them like base games"""
 
-    # Treat Knightmare Chess like a base game
-    if game["id"] == 155192:
-        return True
-
     # This is fixed. Mislabeled Marvel Zombies Promo Box, and Marvel/DC Unit Promo boxes - these shouldn't be labeled this way
     if game["id"] in (356731, 339182, 386892, 425907):
         return False
@@ -584,6 +581,10 @@ def is_promo_box(game):
     # return game["id"] in (178656, 191779, 204573, 231506, 256951, 205611, 232298, 257590, 286086)
     # Change this to look for board game family 39378 (Box of Promos)
     return any(BOX_OF_PROMOS == family["id"] for family in game["families"])
+
+def is_base_game_override(game):
+    """Treat selected expansions like base games without changing expansion linkage behavior."""
+    return game["id"] in BASE_GAME_OVERRIDES
 
 articles = ['A', 'An', 'The']
 def move_article_to_end(orig):
