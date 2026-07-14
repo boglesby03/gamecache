@@ -681,11 +681,10 @@ a.accessory-tile.wl-accessory-chip {
 }
 
 .un-expansion-chip {
-    background: rgba(143, 143, 143, 0.93);
-    /* dark grey, subtle transparency */
-    color: #fff;
-    border: 1px solid rgba(40, 40, 40, 0.95);
-    /* even darker border */
+    background: rgba(205, 205, 205, 0.9);
+    /* lighter grey for unowned items */
+    color: #1f1f1f;
+    border: 1px solid rgba(145, 145, 145, 0.9);
 }
 
 .hover-popup {
