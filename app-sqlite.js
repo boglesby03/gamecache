@@ -2871,12 +2871,30 @@ function createHoverTooltip(hoverElement, htmlContent, offset = 8) {
  * @returns {String} - Escaped string.
  */
 function escapeHtmlChars(unsafe) {
-  return unsafe
+  return String(unsafe || '')
     .replace(/&/g, "&amp;")
     .replace(/</g, "&lt;")
     .replace(/>/g, "&gt;")
     .replace(/"/g, "&quot;")
     .replace(/'/g, "&#039;");
+}
+
+function linkifyCommentText(text) {
+  const escapedText = escapeHtmlChars(text).replace(/\r?\n/g, '<br>');
+  const urlPattern = /\b((?:https?:\/\/|www\.)[^\s<]+)/gi;
+
+  return escapedText.replace(urlPattern, (match) => {
+    let url = match;
+    let trailing = '';
+
+    while (/[.,!?;:)\]]$/.test(url)) {
+      trailing = url.slice(-1) + trailing;
+      url = url.slice(0, -1);
+    }
+
+    const href = /^www\./i.test(url) ? `https://${url}` : url;
+    return `<a href="${href}" target="_blank" rel="noopener noreferrer">${url}</a>${trailing}`;
+  });
 }
 
 function getWishlistCardBackground(priority, hasWishlistTag = false) {
@@ -2982,8 +3000,14 @@ function renderGameCard(game) {
     const commentSection = clone.querySelector('.comment-section');
     if (commentSection) {
       const commentText = commentSection.querySelector('.comment-text');
-      commentText.innerHTML = escapeHtmlChars(game.comment);
-      commentText.innerHTML += escapeHtmlChars(game.wishlist_comment);
+      const gameComment = linkifyCommentText(game.comment);
+      const wishlistComment = linkifyCommentText(game.wishlist_comment);
+
+      commentText.innerHTML = gameComment;
+      if (gameComment && wishlistComment) {
+        commentText.innerHTML += '<br>';
+      }
+      commentText.innerHTML += wishlistComment;
       commentSection.style.display = "block";
     }
   } else {
