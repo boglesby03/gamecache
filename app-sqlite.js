@@ -37,6 +37,7 @@ let currentPage = 1;
 let hoverWrapper;
 let imgPopup;
 let lastRunDate = null;
+let overflowGroupCounter = 0;
 
 // Utility functions
 function showError(message) {
@@ -2572,6 +2573,8 @@ function renderTiles(items, sectionHeading, container, tileTemplate, chipTemplat
       container.classList.add(gridClass);
     }
 
+    const overflowGroup = `overflow-group-${++overflowGroupCounter}`;
+
     items.forEach((item, index) => {
       let element;
       const template = item.thumbnail ? tileTemplate : chipTemplate;
@@ -2645,6 +2648,7 @@ function renderTiles(items, sectionHeading, container, tileTemplate, chipTemplat
         }
         link.classList.add(overflowClass);
         link.dataset.overflowDisplay = isTile ? 'flex' : 'inline-flex';
+        link.dataset.overflowGroup = overflowGroup;
         link.style.display = 'none';
       }
 
@@ -2809,6 +2813,8 @@ function renderTiles(items, sectionHeading, container, tileTemplate, chipTemplat
       const toggleClone = document.getElementById('expansions-toggle-template').content.cloneNode(true);
       const button = toggleClone.querySelector('button');
       button.dataset.total = items.length;
+      button.dataset.overflowGroup = overflowGroup;
+      button.dataset.expanded = 'false';
       button.textContent = `show all ${items.length}`;
       // Append button right after the container instead of at the end of the section
       container.insertAdjacentElement('afterend', button);
@@ -3579,36 +3585,15 @@ function goToPage(page) {
 }
 
 function handleExpansionsToggle(button) {
-  // Determine if this is for expansions, accessories, contains, or reimplementedby
-  let section = button.closest('.expansions-section');
-  let expandedClass = 'expansions-expanded';
+  const overflowGroup = button.dataset.overflowGroup;
+  if (!overflowGroup) return;
 
-  if (!section) {
-    section = button.closest('.accessories-section');
-    expandedClass = 'accessories-expanded';
-  }
+  const expanded = button.dataset.expanded !== 'true';
+  button.dataset.expanded = expanded ? 'true' : 'false';
 
-  if (!section) {
-    section = button.closest('.contains-section');
-    expandedClass = 'contains-expanded';
-  }
+  const cardRoot = button.closest('.game-details') || document;
+  const overflowElements = cardRoot.querySelectorAll(`[data-overflow-group="${overflowGroup}"]`);
 
-  if (!section) {
-    section = button.closest('.reimplementedby-section');
-    expandedClass = 'reimplementedby-expanded';
-  }
-
-  if (!section) {
-    section = button.closest('.integrates-section');
-    expandedClass = 'integrates-expanded';
-  }
-
-  if (!section) return;
-
-  const expanded = section.classList.toggle(expandedClass);
-  const overflowElements = section.querySelectorAll(
-    '.expansion-overflow, .accessory-overflow, .contains-overflow, .reimplementedby-overflow, .integrates-overflow'
-  );
   overflowElements.forEach(element => {
     element.style.display = expanded ? (element.dataset.overflowDisplay || 'inline-flex') : 'none';
   });
