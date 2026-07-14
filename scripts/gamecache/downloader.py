@@ -1,4 +1,3 @@
-import copy
 import itertools
 import re
 from decimal import Decimal
@@ -70,7 +69,6 @@ class Downloader():
         )
         accessory_collection = list(filter(lambda item: any(tag in filtered_tags for tag in item.get("tags", [])), accessory_collection))
 
-        accessory_list_data = self.client.game_list([game_in_collection["id"] for game_in_collection in accessory_collection])
         accessory_collection_by_id = MultiDict()
         for acc in accessory_collection:
             accessory_collection_by_id.add(str(acc["id"]), acc)
@@ -81,7 +79,13 @@ class Downloader():
         )
 
         print("Begin retrieving game details")
-        game_list_data = self.client.game_list([game_in_collection["id"] for game_in_collection in collection_data])
+        detail_ids = list(dict.fromkeys(
+            [game_in_collection["id"] for game_in_collection in collection_data] +
+            [game_in_collection["id"] for game_in_collection in accessory_collection]
+        ))
+        all_detail_data = self.client.game_list(detail_ids)
+        game_list_data = [item for item in all_detail_data if item["type"] != "boardgameaccessory"]
+        accessory_list_data = [item for item in all_detail_data if item["type"] == "boardgameaccessory"]
 
         collection_by_id = MultiDict();
         collection_by_copy_id = {}
@@ -236,7 +240,7 @@ class Downloader():
                         source_collections = collection_by_id.getall(id)
 
                     for source_collection in source_collections:
-                        integrate_copy = copy.deepcopy(integrate)
+                        integrate_copy = dict(integrate)
                         integrate_copy["collection_id"] = source_collection.get("collection_id")
 
                         integrate_key = (integrate_copy.get("id"), integrate_copy.get("collection_id"))

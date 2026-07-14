@@ -1,6 +1,5 @@
 from decimal import Decimal
 # from datetime import datetime
-import copy
 import html
 import unicodedata
 import re
@@ -160,7 +159,8 @@ class BoardGame:
 
     def publisher_filter(self, publishers, game):
         publisher_list = []
-        for pub in copy.deepcopy(publishers):
+        for publisher in publishers:
+            pub = dict(publisher)
 
             if pub["id"] == PUBLIC_DOMAIN_PUBLISHER:  # (Public Domain)
                 pub["flag"] = "own"
@@ -185,7 +185,7 @@ class BoardGame:
         return DEFAULT_CUSTOM_INTEGRATES_COPY_MAPPINGS
 
     def process_external_game_list(self, games, relationship=None, current_game_data=None, current_collection_data=None):
-        processed_games = copy.deepcopy(games) if games else []
+        processed_games = [dict(game) for game in games] if games else []
 
         if relationship != "integrates":
             return processed_games
