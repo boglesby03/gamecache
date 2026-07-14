@@ -3584,7 +3584,7 @@ function goToPage(page) {
   });
 }
 
-function handleExpansionsToggle(button) {
+function handleOverflowListToggle(button) {
   const overflowGroup = button.dataset.overflowGroup;
   if (!overflowGroup) return;
 
