@@ -30,10 +30,16 @@
     addSupplemental: document.getElementById("add-supplemental"),
     deleteGame: document.getElementById("delete-game"),
     docRowTemplate: document.getElementById("doc-row-template"),
+    platformRowTemplate: document.getElementById("platform-row-template"),
   };
 
   const PLATFORM_KEYS = ["android", "ios", "pc"];
   const PLATFORM_FLAGS = ["owned", "wishlisted", "preordered"];
+  const PLATFORM_STORE_OPTIONS = {
+    android: ["Play Store", "Humble", "Amazon Appstore", "Samsung Galaxy Store", "itch.io"],
+    ios: ["App Store", "TestFlight", "Humble", "itch.io"],
+    pc: ["Steam", "Epic", "EA app", "Ubisoft Connect", "GOG", "Microsoft Store", "itch.io", "Humble", "Amazon"],
+  };
 
   function ensureGamesContainer(data) {
     if (!data || typeof data !== "object") {
@@ -71,11 +77,14 @@
     return docs;
   }
 
-  function normalizePlatform(raw) {
-    if (!raw || typeof raw !== "object") return {};
+  function normalizePlatformEntry(raw) {
+    if (!raw || typeof raw !== "object") return null;
 
     const out = {};
+    const store = String(raw.store || raw.service || raw.name || raw.label || "").trim();
     const url = String(raw.url || "").trim();
+
+    if (store) out.store = store;
     if (url) out.url = url;
 
     for (const flag of PLATFORM_FLAGS) {
@@ -84,7 +93,53 @@
       }
     }
 
-    return out;
+    if (raw.state === "wishlisted") {
+      out.wishlisted = true;
+    } else if (raw.state === "preordered") {
+      out.preordered = true;
+    } else if (raw.state === "owned") {
+      out.owned = true;
+    }
+
+    return Object.keys(out).length > 0 ? out : null;
+  }
+
+  function normalizePlatformEntries(raw) {
+    const items = Array.isArray(raw) ? raw : (raw && typeof raw === "object" ? [raw] : []);
+    return items.map(normalizePlatformEntry).filter(Boolean);
+  }
+
+  function getStoreOptions(platform) {
+    return PLATFORM_STORE_OPTIONS[platform] || [];
+  }
+
+  function populateStoreSelect(select, platform, currentValue = "") {
+    if (!select) return;
+
+    const normalizedCurrentValue = String(currentValue || "").trim();
+    const options = getStoreOptions(platform);
+    select.innerHTML = "";
+
+    const placeholder = document.createElement("option");
+    placeholder.value = "";
+    placeholder.textContent = "Select store...";
+    select.appendChild(placeholder);
+
+    options.forEach((optionValue) => {
+      const option = document.createElement("option");
+      option.value = optionValue;
+      option.textContent = optionValue;
+      select.appendChild(option);
+    });
+
+    if (normalizedCurrentValue && !options.includes(normalizedCurrentValue)) {
+      const custom = document.createElement("option");
+      custom.value = normalizedCurrentValue;
+      custom.textContent = normalizedCurrentValue;
+      select.appendChild(custom);
+    }
+
+    select.value = normalizedCurrentValue || options[0] || "";
   }
 
   function normalizeEntry(raw, fallbackName) {
@@ -103,8 +158,8 @@
     };
 
     for (const platform of PLATFORM_KEYS) {
-      const p = normalizePlatform(entry[platform]);
-      if (Object.keys(p).length > 0) {
+      const p = normalizePlatformEntries(entry[platform]);
+      if (p.length > 0) {
         normalized[platform] = p;
       }
     }
@@ -136,7 +191,9 @@
     let count = 0;
     for (const platform of PLATFORM_KEYS) {
       const p = entry[platform];
-      if (p && typeof p === "object" && Object.keys(p).length > 0) {
+      if (Array.isArray(p)) {
+        count += p.length;
+      } else if (p && typeof p === "object" && Object.keys(p).length > 0) {
         count += 1;
       }
     }
@@ -208,6 +265,30 @@
     }
   }
 
+  function renderPlatformList(platform, entries) {
+    const target = document.querySelector(`[data-platform-list="${platform}"]`);
+    if (!target || !els.platformRowTemplate) return;
+
+    target.innerHTML = "";
+    const list = Array.isArray(entries) ? entries : [];
+
+    if (list.length === 0) {
+      addPlatformRow(platform, {});
+      return;
+    }
+
+    for (const entry of list) {
+      addPlatformRow(platform, entry);
+    }
+  }
+
+  function getPlatformState(entry) {
+    if (!entry || typeof entry !== "object") return "";
+    if (entry.preordered === true) return "preordered";
+    if (entry.wishlisted === true) return "wishlisted";
+    return "";
+  }
+
   function readDocList(target) {
     const docs = [];
     const rows = target.querySelectorAll(".doc-row");
@@ -222,6 +303,35 @@
     }
 
     return docs;
+  }
+
+  function readPlatformList(platform) {
+    const target = document.querySelector(`[data-platform-list="${platform}"]`);
+    if (!target) return [];
+
+    const entries = [];
+    target.querySelectorAll('.platform-row').forEach((row) => {
+      const store = String(row.querySelector('[data-key="store"]').value || "").trim();
+      const url = String(row.querySelector('[data-key="url"]').value || "").trim();
+      const state = String(row.querySelector('[data-key="state"]').value || "").trim();
+
+      const entry = {};
+      if (store) entry.store = store;
+      if (url) entry.url = url;
+      if (state === "wishlisted") {
+        entry.wishlisted = true;
+      } else if (state === "preordered") {
+        entry.preordered = true;
+      } else {
+        entry.owned = true;
+      }
+
+      if (Object.keys(entry).length > 0) {
+        entries.push(entry);
+      }
+    });
+
+    return entries;
   }
 
   function getSelectedEntry() {
@@ -246,12 +356,7 @@
     renderDocList(els.supplementalList, entry.supplemental_files || []);
 
     for (const platform of PLATFORM_KEYS) {
-      const card = document.querySelector(`.platform-card[data-platform="${platform}"]`);
-      const p = normalizePlatform(entry[platform]);
-      card.querySelector('[data-role="url"]').value = p.url || "";
-      for (const flag of PLATFORM_FLAGS) {
-        card.querySelector(`[data-role="${flag}"]`).checked = p[flag] === true;
-      }
+      renderPlatformList(platform, normalizePlatformEntries(entry[platform]));
     }
 
     showEditor(true);
@@ -266,17 +371,9 @@
     };
 
     for (const platform of PLATFORM_KEYS) {
-      const card = document.querySelector(`.platform-card[data-platform="${platform}"]`);
-      const url = String(card.querySelector('[data-role="url"]').value || "").trim();
-      const out = {};
-      if (url) out.url = url;
-      for (const flag of PLATFORM_FLAGS) {
-        if (card.querySelector(`[data-role="${flag}"]`).checked) {
-          out[flag] = true;
-        }
-      }
-      if (Object.keys(out).length > 0) {
-        entry[platform] = out;
+      const platformEntries = readPlatformList(platform);
+      if (platformEntries.length > 0) {
+        entry[platform] = platformEntries;
       }
     }
 
@@ -313,7 +410,8 @@
     els.newId.value = "";
   }
 
-  async function loadFromDefaultFile() {
+  async function loadFromDefaultFile(options = {}) {
+    const silent = !!options.silent;
     try {
       const resp = await fetch("game_metadata_overrides.json", { cache: "no-store" });
       if (!resp.ok) {
@@ -327,7 +425,9 @@
       showEditor(false);
       renderGameList();
     } catch (err) {
-      alert("Could not load game_metadata_overrides.json automatically. Use Import JSON instead.");
+      if (!silent) {
+        alert("Could not load game_metadata_overrides.json. Use Import JSON instead.");
+      }
       console.error(err);
     }
   }
@@ -351,20 +451,7 @@
   }
 
   function downloadJson() {
-    const sorted = exportSortedData();
-    const payload = JSON.stringify(sorted, null, 2) + "\n";
-    const blob = new Blob([payload], { type: "application/json" });
-    const url = URL.createObjectURL(blob);
-
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = "game_metadata_overrides.json";
-    document.body.appendChild(a);
-    a.click();
-    a.remove();
-
-    URL.revokeObjectURL(url);
-    setDirty(false);
+    triggerJsonDownload();
   }
 
   function exportSortedData() {
@@ -377,8 +464,32 @@
   }
 
   async function saveToPickedFile() {
+    return saveJsonToFile();
+  }
+
+  function buildJsonPayload() {
+    return JSON.stringify(exportSortedData(), null, 2) + "\n";
+  }
+
+  function triggerJsonDownload() {
+    const payload = buildJsonPayload();
+    const blob = new Blob([payload], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
+
+    const anchor = document.createElement("a");
+    anchor.href = url;
+    anchor.download = "game_metadata_overrides.json";
+    document.body.appendChild(anchor);
+    anchor.click();
+    anchor.remove();
+
+    URL.revokeObjectURL(url);
+    setDirty(false);
+  }
+
+  async function saveJsonToFile() {
     if (!window.showSaveFilePicker) {
-      alert("Save to File is not supported in this browser. Use Download JSON instead.");
+      triggerJsonDownload();
       return;
     }
 
@@ -394,19 +505,31 @@
       }
 
       const writable = await state.handle.createWritable();
-      const payload = JSON.stringify(exportSortedData(), null, 2) + "\n";
+      const payload = buildJsonPayload();
       await writable.write(payload);
       await writable.close();
       setDirty(false);
     } catch (err) {
       if (err && err.name === "AbortError") return;
-      alert("Could not write file. Try Download JSON instead.");
       console.error(err);
+      triggerJsonDownload();
     }
   }
 
   function addDocRow(target) {
     const row = els.docRowTemplate.content.firstElementChild.cloneNode(true);
+    target.appendChild(row);
+  }
+
+  function addPlatformRow(platform, entry = {}) {
+    const target = document.querySelector(`[data-platform-list="${platform}"]`);
+    if (!target || !els.platformRowTemplate) return;
+
+    const row = els.platformRowTemplate.content.firstElementChild.cloneNode(true);
+    row.dataset.platform = platform;
+    populateStoreSelect(row.querySelector('[data-key="store"]'), platform, entry.store || "");
+    row.querySelector('[data-key="url"]').value = entry.url || "";
+    row.querySelector('[data-key="state"]').value = getPlatformState(entry);
     target.appendChild(row);
   }
 
@@ -417,11 +540,18 @@
     commitEditorToState();
   }
 
+  function onPlatformListClick(event) {
+    const btn = event.target.closest("button[data-action='remove']");
+    if (!btn) return;
+    btn.closest(".platform-row").remove();
+    commitEditorToState();
+  }
+
   function onFormInput(event) {
     if (!state.selectedId) return;
 
     const target = event.target;
-    if (!(target instanceof HTMLInputElement || target instanceof HTMLTextAreaElement)) {
+    if (!(target instanceof HTMLInputElement || target instanceof HTMLTextAreaElement || target instanceof HTMLSelectElement)) {
       return;
     }
 
@@ -447,7 +577,7 @@
   }
 
   function bindEvents() {
-    els.loadDefault.addEventListener("click", loadFromDefaultFile);
+    els.loadDefault.addEventListener("click", () => loadFromDefaultFile());
 
     els.fileInput.addEventListener("change", async (event) => {
       const file = event.target.files && event.target.files[0];
@@ -473,9 +603,20 @@
       commitEditorToState();
     });
 
+    document.querySelectorAll('button[data-action="add-platform-entry"]').forEach((button) => {
+      button.addEventListener('click', () => {
+        addPlatformRow(button.dataset.platform);
+        commitEditorToState();
+      });
+    });
+
     els.rulebooksList.addEventListener("click", onDocListClick);
     els.supplementalList.addEventListener("click", onDocListClick);
+    document.querySelectorAll('[data-platform-list]').forEach((target) => {
+      target.addEventListener('click', onPlatformListClick);
+    });
     els.editorForm.addEventListener("input", onFormInput);
+    els.editorForm.addEventListener("change", onFormInput);
 
     window.addEventListener("beforeunload", (event) => {
       if (!state.dirty) return;
@@ -484,12 +625,13 @@
     });
   }
 
-  function init() {
+  async function init() {
     state.data = { games: {} };
     setDirty(false);
-    renderGameList();
-    showEditor(false);
     bindEvents();
+    showEditor(false);
+    renderGameList();
+    await loadFromDefaultFile({ silent: true });
   }
 
   init();

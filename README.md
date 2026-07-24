@@ -188,7 +188,7 @@ Create a beautiful, searchable website for your BoardGameGeek collection! This p
    4. Edit entries and use **Download JSON** or **Save to File**
    5. Place the updated file at `game_metadata_overrides.json`
 
-   Terminal editor is still available if you want it:
+   The terminal editor still exists for simple one-off edits, but the web editor is the supported path for the multi-store layout:
    ```bash
    python scripts/edit_game_sidecar.py
    ```
@@ -196,6 +196,7 @@ Create a beautiful, searchable website for your BoardGameGeek collection! This p
    You can also edit `game_metadata_overrides.json` directly and add entries keyed by BGG game ID.
    `name` and `short_description` describe the **base game**.
    `rulebooks` and `supplemental_files` support multiple document links.
+   Each OS entry (`android`, `ios`, `pc`) is a list of store/service rows.
    Platform status keys are optional (`owned`, `wishlisted`, `preordered`) and are treated as `false` when omitted.
 
     Example:
@@ -221,18 +222,35 @@ Create a beautiful, searchable website for your BoardGameGeek collection! This p
                    "url": "https://cdn.example.com/root-player-aid.pdf"
                 }
              ],
-             "android": {
-                "owned": true,
-                "url": "https://play.google.com/store/apps/details?id=example"
-             },
-             "ios": {
-                "wishlisted": true,
-                "url": "https://apps.apple.com/us/app/example/id123456789"
-             },
-             "pc": {
-                "preordered": true,
-                "url": "https://store.steampowered.com/app/000000/Example/"
-             }
+             "android": [
+                {
+                   "store": "Play Store",
+                   "owned": true,
+                   "url": "https://play.google.com/store/apps/details?id=example"
+                },
+                {
+                   "store": "Humble",
+                   "wishlisted": true
+                }
+             ],
+             "ios": [
+                {
+                   "store": "App Store",
+                   "wishlisted": true,
+                   "url": "https://apps.apple.com/us/app/example/id123456789"
+                }
+             ],
+             "pc": [
+                {
+                   "store": "Steam",
+                   "preordered": true,
+                   "url": "https://store.steampowered.com/app/000000/Example/"
+                },
+                {
+                   "store": "Epic",
+                   "owned": true
+                }
+             ]
           }
        }
     }

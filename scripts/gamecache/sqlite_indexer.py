@@ -220,6 +220,50 @@ class SqliteIndexer:
 
         return normalized
 
+    def _normalize_digital_platform_entry(self, entry: Any) -> Dict[str, Any]:
+        """Normalize a single digital platform/service entry."""
+        if not isinstance(entry, dict):
+            return {}
+
+        normalized: Dict[str, Any] = {}
+
+        store = str(
+            entry.get('store', '')
+            or entry.get('service', '')
+            or entry.get('name', '')
+            or entry.get('label', '')
+            or ''
+        ).strip()
+        url = str(entry.get('url', '') or '').strip()
+
+        if store:
+            normalized['store'] = store
+        if url:
+            normalized['url'] = url
+
+        for flag in ('owned', 'wishlisted', 'preordered'):
+            if bool(entry.get(flag, False)):
+                normalized[flag] = True
+
+        return normalized
+
+    def _normalize_digital_platform_list(self, raw_value: Any) -> List[Dict[str, Any]]:
+        """Normalize a platform into a list of service entries."""
+        if isinstance(raw_value, list):
+            items = raw_value
+        elif isinstance(raw_value, dict):
+            items = [raw_value]
+        else:
+            return []
+
+        normalized: List[Dict[str, Any]] = []
+        for item in items:
+            platform_entry = self._normalize_digital_platform_entry(item)
+            if platform_entry:
+                normalized.append(platform_entry)
+
+        return normalized
+
     def _normalize_digital_entry(self, entry: Any) -> Dict[str, Any]:
         """Normalize digital metadata and platform status fields for storage in SQLite."""
         if not isinstance(entry, dict):
@@ -243,27 +287,9 @@ class SqliteIndexer:
             normalized['supplemental_files'] = supplemental_files
 
         for platform in ('android', 'ios', 'pc'):
-            platform_data = entry.get(platform)
-            if not isinstance(platform_data, dict):
-                continue
-
-            url = str(platform_data.get('url', '') or '').strip()
-            owned = bool(platform_data.get('owned', False))
-            wishlisted = bool(platform_data.get('wishlisted', False))
-            preordered = bool(platform_data.get('preordered', False))
-
-            platform_normalized: Dict[str, Any] = {}
-            if owned:
-                platform_normalized['owned'] = True
-            if wishlisted:
-                platform_normalized['wishlisted'] = True
-            if preordered:
-                platform_normalized['preordered'] = True
-            if url:
-                platform_normalized['url'] = url
-
-            if platform_normalized:
-                normalized[platform] = platform_normalized
+            platform_data = self._normalize_digital_platform_list(entry.get(platform))
+            if platform_data:
+                normalized[platform] = platform_data
 
         return normalized
 

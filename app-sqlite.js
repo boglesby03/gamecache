@@ -88,6 +88,38 @@ function normalizeDigitalUrl(url) {
   return trimmed;
 }
 
+function normalizeDigitalPlatformEntry(entry) {
+  if (!entry || typeof entry !== 'object') return null;
+
+  const store = String(
+    entry.store ||
+    entry.service ||
+    entry.name ||
+    entry.label ||
+    ''
+  ).trim();
+  const url = normalizeDigitalUrl(entry.url || '');
+
+  const normalized = {};
+  if (store) normalized.store = store;
+  if (url) normalized.url = url;
+
+  ['owned', 'wishlisted', 'preordered'].forEach((flag) => {
+    if (Boolean(entry[flag])) {
+      normalized[flag] = true;
+    }
+  });
+
+  return Object.keys(normalized).length > 0 ? normalized : null;
+}
+
+function normalizeDigitalPlatformEntries(rawValue) {
+  const items = Array.isArray(rawValue) ? rawValue : (rawValue && typeof rawValue === 'object' ? [rawValue] : []);
+  return items
+    .map(normalizeDigitalPlatformEntry)
+    .filter(Boolean);
+}
+
 function readDigitalEntry(game) {
   const saved = game && game.digital_versions && typeof game.digital_versions === 'object'
     ? game.digital_versions
@@ -99,14 +131,7 @@ function readDigitalEntry(game) {
   };
 
   DIGITAL_PLATFORMS.forEach((platform) => {
-    const platformData = saved[platform] || {};
-    const url = normalizeDigitalUrl(platformData.url || '');
-    entry.platforms[platform] = {
-      owned: Boolean(platformData.owned),
-      wishlisted: Boolean(platformData.wishlisted),
-      preordered: Boolean(platformData.preordered),
-      url
-    };
+    entry.platforms[platform] = normalizeDigitalPlatformEntries(saved[platform]);
   });
 
   return entry;
@@ -126,20 +151,20 @@ function renderDigitalVersionsSection(clone, game) {
     pc: { label: 'PC', icon: 'desktop_windows' },
   };
 
-  const items = DIGITAL_PLATFORMS
-    .map((platform) => {
-      const data = entry.platforms[platform] || {};
-      return {
-        platform,
-        label: platformMeta[platform].label,
-        icon: platformMeta[platform].icon,
-        owned: Boolean(data.owned),
-        wishlisted: Boolean(data.wishlisted),
-        preordered: Boolean(data.preordered),
-        url: normalizeDigitalUrl(data.url || ''),
-      };
-    })
-    .filter((item) => item.owned || item.wishlisted || item.preordered || item.url);
+  const items = DIGITAL_PLATFORMS.flatMap((platform) => {
+    const entries = entry.platforms[platform] || [];
+    return entries.map((service) => ({
+      platform,
+      label: platformMeta[platform].label,
+      icon: platformMeta[platform].icon,
+      store: String(service.store || '').trim(),
+      owned: Boolean(service.owned),
+      wishlisted: Boolean(service.wishlisted),
+      preordered: Boolean(service.preordered),
+      url: normalizeDigitalUrl(service.url || ''),
+    }));
+  })
+    .filter((item) => item.owned || item.wishlisted || item.preordered || item.url || item.store);
 
   if (items.length === 0) {
     digitalSection.style.display = 'none';
@@ -160,8 +185,8 @@ function renderDigitalVersionsSection(clone, game) {
 
     const attrs = {
       className: `digital-version-item ${statusClass}${item.url ? '' : ' no-link'}`,
-      title: `${item.label}${item.preordered ? ' (Preordered)' : item.wishlisted ? ' (Wishlisted)' : item.owned ? ' (Owned)' : ''}`,
-      'aria-label': `${item.label}${item.preordered ? ' Preordered' : item.wishlisted ? ' Wishlisted' : item.owned ? ' Owned' : ''}`
+      title: `${item.label}${item.store ? ` • ${item.store}` : ''}${item.preordered ? ' • Preordered' : item.wishlisted ? ' • Wishlisted' : item.owned ? ' • Owned' : ''}`,
+      'aria-label': `${item.label}${item.store ? ` ${item.store}` : ''}${item.preordered ? ' Preordered' : item.wishlisted ? ' Wishlisted' : item.owned ? ' Owned' : ''}`
     };
     if (item.url) {
       attrs.href = item.url;
@@ -1108,49 +1133,67 @@ function setupWishlistFilter() {
 function gameDigitalFlags(game) {
   const entry = readDigitalEntry(game);
 
-  const hasOwned = DIGITAL_PLATFORMS.some(platform => Boolean(entry.platforms[platform]?.owned));
-  const hasWishlisted = DIGITAL_PLATFORMS.some(platform => Boolean(entry.platforms[platform]?.wishlisted));
-  const hasPreordered = DIGITAL_PLATFORMS.some(platform => Boolean(entry.platforms[platform]?.preordered));
-  const hasLink = DIGITAL_PLATFORMS.some(platform => Boolean(entry.platforms[platform]?.url));
+  const platforms = {};
+  DIGITAL_PLATFORMS.forEach((platform) => {
+    const platformEntries = entry.platforms[platform] || [];
+    platforms[platform] = {
+      any: platformEntries.length > 0,
+      owned: platformEntries.some(item => Boolean(item.owned)),
+      wishlisted: platformEntries.some(item => Boolean(item.wishlisted)),
+      preordered: platformEntries.some(item => Boolean(item.preordered)),
+      link: platformEntries.some(item => Boolean(item.url)),
+    };
+  });
+
+  const hasAnyPlatform = DIGITAL_PLATFORMS.some(platform => platforms[platform].any);
+  const hasOwned = DIGITAL_PLATFORMS.some(platform => platforms[platform].owned);
+  const hasWishlisted = DIGITAL_PLATFORMS.some(platform => platforms[platform].wishlisted);
+  const hasPreordered = DIGITAL_PLATFORMS.some(platform => platforms[platform].preordered);
+  const hasLink = DIGITAL_PLATFORMS.some(platform => platforms[platform].link);
 
   return {
+    platforms,
     hasOwned,
     hasWishlisted,
     hasPreordered,
     hasLink,
-    hasAny: hasOwned || hasWishlisted || hasPreordered || hasLink,
+    hasAny: hasAnyPlatform,
   };
 }
 
 function setupDigitalFilter() {
-  const counts = {
-    any: 0,
-    owned: 0,
-    wishlisted: 0,
-    preordered: 0,
-    link: 0,
-  };
+  const counts = { any: 0 };
+  DIGITAL_PLATFORMS.forEach((platform) => {
+    counts[platform] = 0;
+    counts[`${platform}-owned`] = 0;
+    counts[`${platform}-wishlisted`] = 0;
+    counts[`${platform}-preordered`] = 0;
+  });
 
   allGames.forEach(game => {
     const flags = gameDigitalFlags(game);
     if (flags.hasAny) counts.any += 1;
-    if (flags.hasOwned) counts.owned += 1;
-    if (flags.hasWishlisted) counts.wishlisted += 1;
-    if (flags.hasPreordered) counts.preordered += 1;
-    if (flags.hasLink) counts.link += 1;
+    DIGITAL_PLATFORMS.forEach((platform) => {
+      const platformFlags = flags.platforms[platform];
+      if (platformFlags.any) counts[platform] += 1;
+      if (platformFlags.owned) counts[`${platform}-owned`] += 1;
+      if (platformFlags.wishlisted) counts[`${platform}-wishlisted`] += 1;
+      if (platformFlags.preordered) counts[`${platform}-preordered`] += 1;
+    });
   });
 
-  const items = [
-    { label: 'Any Digital', value: 'any', count: counts.any },
-    { label: 'Owned', value: 'owned', count: counts.owned },
-    { label: 'Wishlisted', value: 'wishlisted', count: counts.wishlisted },
-    { label: 'Preordered', value: 'preordered', count: counts.preordered },
-    { label: 'Has Link', value: 'link', count: counts.link },
-  ];
+  const platformLabels = { pc: 'PC', android: 'Android', ios: 'iOS' };
+  const items = [{ label: 'All Digital Games', value: 'any', count: counts.any }];
+  DIGITAL_PLATFORMS.forEach((platform) => {
+    items.push({ label: platformLabels[platform], value: platform, count: counts[platform] });
+    items.push({ label: `${platformLabels[platform]} Owned`, value: `${platform}-owned`, count: counts[`${platform}-owned`] });
+    items.push({ label: `${platformLabels[platform]} Wishlisted`, value: `${platform}-wishlisted`, count: counts[`${platform}-wishlisted`] });
+    items.push({ label: `${platformLabels[platform]} Preordered`, value: `${platform}-preordered`, count: counts[`${platform}-preordered`] });
+  });
 
   const hasAnyItems = items.some(item => item.count > 0);
   if (hasAnyItems) {
-    createRefinementFilter('facet-digital', 'Digital', items, 'digital');
+    createRefinementFilter('facet-digital', 'Digital', items, 'digital', true);
   } else {
     const container = document.getElementById('facet-digital');
     if (container) {
@@ -1883,7 +1926,6 @@ function updateUIFromState(state) {
     'years': state.selectedYears,
     'status': state.selectedStatus,
     'wishlist': state.selectedWishlist,
-    'digital': state.selectedDigital
   };
 
   for (const name in checkboxFilters) {
@@ -1894,6 +1936,11 @@ function updateUIFromState(state) {
         if (cb) cb.checked = true;
       });
     }
+  }
+
+  if (state.selectedDigital?.length) {
+    const digitalRadio = document.querySelector(`input[type="radio"][name="digital"][value="${CSS.escape(state.selectedDigital[0])}"]`);
+    if (digitalRadio) digitalRadio.checked = true;
   }
 
   const playerRadio = document.querySelector(`input[name="players"][value="${state.selectedPlayerFilter}"]`);
@@ -2148,14 +2195,30 @@ function filterGames(gamesToFilter, filters) {
         switch (sel) {
           case 'any':
             return flags.hasAny;
-          case 'owned':
-            return flags.hasOwned;
-          case 'wishlisted':
-            return flags.hasWishlisted;
-          case 'preordered':
-            return flags.hasPreordered;
-          case 'link':
-            return flags.hasLink;
+          case 'android':
+            return flags.platforms.android.any;
+          case 'ios':
+            return flags.platforms.ios.any;
+          case 'pc':
+            return flags.platforms.pc.any;
+          case 'android-owned':
+            return flags.platforms.android.owned;
+          case 'android-wishlisted':
+            return flags.platforms.android.wishlisted;
+          case 'android-preordered':
+            return flags.platforms.android.preordered;
+          case 'ios-owned':
+            return flags.platforms.ios.owned;
+          case 'ios-wishlisted':
+            return flags.platforms.ios.wishlisted;
+          case 'ios-preordered':
+            return flags.platforms.ios.preordered;
+          case 'pc-owned':
+            return flags.platforms.pc.owned;
+          case 'pc-wishlisted':
+            return flags.platforms.pc.wishlisted;
+          case 'pc-preordered':
+            return flags.platforms.pc.preordered;
           default:
             return false;
         }
@@ -2450,14 +2513,23 @@ function updateAllFilterCounts(filters) {
     selectedDigital: []
   };
   const gamesForDigitalCount = filterGames(allGames, digitalFilters);
-  const digitalCounts = { any: 0, owned: 0, wishlisted: 0, preordered: 0, link: 0 };
+  const digitalCounts = { any: 0 };
+  DIGITAL_PLATFORMS.forEach((platform) => {
+    digitalCounts[platform] = 0;
+    digitalCounts[`${platform}-owned`] = 0;
+    digitalCounts[`${platform}-wishlisted`] = 0;
+    digitalCounts[`${platform}-preordered`] = 0;
+  });
   gamesForDigitalCount.forEach(game => {
     const flags = gameDigitalFlags(game);
     if (flags.hasAny) digitalCounts.any += 1;
-    if (flags.hasOwned) digitalCounts.owned += 1;
-    if (flags.hasWishlisted) digitalCounts.wishlisted += 1;
-    if (flags.hasPreordered) digitalCounts.preordered += 1;
-    if (flags.hasLink) digitalCounts.link += 1;
+    DIGITAL_PLATFORMS.forEach((platform) => {
+      const platformFlags = flags.platforms[platform];
+      if (platformFlags.any) digitalCounts[platform] += 1;
+      if (platformFlags.owned) digitalCounts[`${platform}-owned`] += 1;
+      if (platformFlags.wishlisted) digitalCounts[`${platform}-wishlisted`] += 1;
+      if (platformFlags.preordered) digitalCounts[`${platform}-preordered`] += 1;
+    });
   });
   updateCountsInDOM('facet-digital', digitalCounts);
 

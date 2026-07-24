@@ -284,7 +284,7 @@ label span {
 .platform-grid {
   display: grid;
   gap: 0.7rem;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: 1fr;
 }
 
 .platform-card {
@@ -292,6 +292,7 @@ label span {
   border-radius: 12px;
   padding: 0.6rem;
   background: rgba(255, 255, 255, 0.85);
+  min-width: 0;
 }
 
 .platform-card h3 {
@@ -299,9 +300,66 @@ label span {
   font-size: 0.95rem;
 }
 
+.platform-card .section-head {
+  margin-bottom: 0.5rem;
+}
+
+.platform-entry-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.platform-row {
+  display: grid;
+  grid-template-columns: minmax(115px, 0.95fr) minmax(0, 2.35fr) minmax(105px, 135px) max-content;
+  gap: 0.45rem;
+  align-items: center;
+}
+
 .platform-card label {
   display: block;
   margin-bottom: 0.4rem;
+}
+
+.platform-row > label,
+.platform-row > input,
+.platform-row > button {
+  margin-bottom: 0;
+}
+
+.platform-row .state-select-wrap {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  white-space: nowrap;
+  margin-bottom: 0;
+}
+
+.platform-row .state-select-wrap span {
+  margin-bottom: 0;
+  font-size: 0.82rem;
+}
+
+.platform-row .state-select-wrap select {
+  width: 100%;
+  min-width: 0;
+  padding: 0.45rem 0.5rem;
+}
+
+.platform-row input[data-key="url"] {
+  width: 100%;
+  min-width: 0;
+}
+
+.platform-row button[data-action="remove"] {
+  justify-self: end;
+  white-space: nowrap;
+}
+
+.platform-row select[data-key="store"] {
+  width: 100%;
+  min-width: 0;
 }
 
 .check {
@@ -314,6 +372,16 @@ label span {
 
 .check input {
   width: auto;
+}
+
+@media (max-width: 900px) {
+  .platform-row {
+    grid-template-columns: 1fr;
+  }
+
+  .platform-row .check {
+    justify-self: start;
+  }
 }
 
 .actions {
@@ -333,10 +401,6 @@ label span {
 }
 
 @media (max-width: 800px) {
-  .platform-grid {
-    grid-template-columns: 1fr;
-  }
-
   .grid.two {
     grid-template-columns: 1fr;
   }

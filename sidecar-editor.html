@@ -24,14 +24,14 @@
   <main class="layout">
     <aside class="panel left">
       <section class="toolbar">
-        <button id="load-default" class="btn">Load game_metadata_overrides.json</button>
+        <button id="load-default" class="btn">Reload</button>
         <label class="btn ghost" for="file-input">Import JSON</label>
         <input id="file-input" type="file" accept="application/json,.json" hidden />
       </section>
 
       <section class="toolbar">
-        <button id="download-json" class="btn">Download JSON</button>
-        <button id="save-picked-file" class="btn ghost" title="Uses browser file save when supported">Save to File</button>
+        <button id="download-json" class="btn">Save JSON As...</button>
+        <button id="save-picked-file" class="btn ghost" title="Download the current JSON file immediately">Download JSON</button>
       </section>
 
       <section class="toolbar">
@@ -87,28 +87,28 @@
         </section>
 
         <section class="platform-grid">
+          <article class="platform-card" data-platform="pc">
+            <div class="section-head">
+              <h3>PC</h3>
+              <button type="button" class="btn mini" data-action="add-platform-entry" data-platform="pc">Add</button>
+            </div>
+            <div class="platform-entry-list" data-platform-list="pc"></div>
+          </article>
+
           <article class="platform-card" data-platform="android">
-            <h3>Android</h3>
-            <label><span>URL</span><input type="url" data-role="url" placeholder="https://..." /></label>
-            <label class="check"><input type="checkbox" data-role="owned" /> Owned</label>
-            <label class="check"><input type="checkbox" data-role="wishlisted" /> Wishlisted</label>
-            <label class="check"><input type="checkbox" data-role="preordered" /> Preordered</label>
+            <div class="section-head">
+              <h3>Android</h3>
+              <button type="button" class="btn mini" data-action="add-platform-entry" data-platform="android">Add</button>
+            </div>
+            <div class="platform-entry-list" data-platform-list="android"></div>
           </article>
 
           <article class="platform-card" data-platform="ios">
-            <h3>iOS</h3>
-            <label><span>URL</span><input type="url" data-role="url" placeholder="https://..." /></label>
-            <label class="check"><input type="checkbox" data-role="owned" /> Owned</label>
-            <label class="check"><input type="checkbox" data-role="wishlisted" /> Wishlisted</label>
-            <label class="check"><input type="checkbox" data-role="preordered" /> Preordered</label>
-          </article>
-
-          <article class="platform-card" data-platform="pc">
-            <h3>PC</h3>
-            <label><span>URL</span><input type="url" data-role="url" placeholder="https://..." /></label>
-            <label class="check"><input type="checkbox" data-role="owned" /> Owned</label>
-            <label class="check"><input type="checkbox" data-role="wishlisted" /> Wishlisted</label>
-            <label class="check"><input type="checkbox" data-role="preordered" /> Preordered</label>
+            <div class="section-head">
+              <h3>iOS</h3>
+              <button type="button" class="btn mini" data-action="add-platform-entry" data-platform="ios">Add</button>
+            </div>
+            <div class="platform-entry-list" data-platform-list="ios"></div>
           </article>
         </section>
 
@@ -123,6 +123,22 @@
     <div class="doc-row">
       <input type="text" data-key="name" placeholder="Label (optional)" />
       <input type="url" data-key="url" placeholder="https://..." />
+      <button type="button" class="btn mini danger" data-action="remove">Remove</button>
+    </div>
+  </template>
+
+  <template id="platform-row-template">
+    <div class="platform-row">
+      <select data-key="store"></select>
+      <input type="url" data-key="url" placeholder="https://..." />
+      <label class="state-select-wrap">
+        <span>Status</span>
+        <select data-key="state">
+          <option value="">Owned</option>
+          <option value="wishlisted">Wishlisted</option>
+          <option value="preordered">Preordered</option>
+        </select>
+      </label>
       <button type="button" class="btn mini danger" data-action="remove">Remove</button>
     </div>
   </template>

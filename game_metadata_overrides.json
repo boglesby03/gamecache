@@ -1187,14 +1187,18 @@
       "short_description": "Operational level wargame well-suited for team play in the War of 1812.",
       "rulebooks": [],
       "supplemental_files": [],
-      "android": {
-        "url": "https://play.google.com/store/apps/details?id=com.hexwar.canada1812",
-        "wishlisted": true
-      },
-      "pc": {
-        "url": "https://store.steampowered.com/app/555370/1812_The_Invasion_of_Canada/",
-        "owned": true
-      }
+      "android": [
+        {
+          "url": "https://play.google.com/store/apps/details?id=com.hexwar.canada1812",
+          "wishlisted": true
+        }
+      ],
+      "pc": [
+        {
+          "url": "https://store.steampowered.com/app/555370/1812_The_Invasion_of_Canada/",
+          "owned": true
+        }
+      ]
     },
     "97207": {
       "name": "Dungeon Petz",
@@ -1524,14 +1528,18 @@
         }
       ],
       "supplemental_files": [],
-      "android": {
-        "url": "https://play.google.com/store/apps/details?id=com.hexwar.rebellion1775",
-        "wishlisted": true
-      },
-      "pc": {
-        "url": "https://store.steampowered.com/app/422610/1775_Rebellion/",
-        "owned": true
-      }
+      "android": [
+        {
+          "url": "https://play.google.com/store/apps/details?id=com.hexwar.rebellion1775",
+          "wishlisted": true
+        }
+      ],
+      "pc": [
+        {
+          "url": "https://store.steampowered.com/app/422610/1775_Rebellion/",
+          "owned": true
+        }
+      ]
     },
     "129051": {
       "name": "Le Havre: The Inland Port",
@@ -2755,10 +2763,12 @@
       "short_description": "Give your team clever one-word clues to help them spot their agents in the field.",
       "rulebooks": [],
       "supplemental_files": [],
-      "android": {
-        "url": "https://play.google.com/store/apps/details?id=com.czechgames.codenamesdigital",
-        "owned": true
-      }
+      "android": [
+        {
+          "url": "https://play.google.com/store/apps/details?id=com.czechgames.codenamesdigital",
+          "owned": true
+        }
+      ]
     },
     "179719": {
       "name": "Risk: Game of Thrones",
