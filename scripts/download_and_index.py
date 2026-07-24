@@ -168,7 +168,11 @@ def main(args):
         assert False, "No games imported, is the boardgamegeek part of config.ini correctly set?"
 
     # Create SQLite database
-    indexer = SqliteIndexer(sqlite_path, extract_colors=not args.skip_colors)
+    indexer = SqliteIndexer(
+        sqlite_path,
+        extract_colors=not args.skip_colors,
+        digital_versions_path=args.digital_versions_file,
+    )
     indexer.add_objects(collection)
     print(f"Created SQLite database with {num_games} games and {num_expansions} expansions.")
 
@@ -258,6 +262,13 @@ if __name__ == '__main__':
         help=(
             "Skip thumbnail color extraction to speed up SQLite generation."
         )
+    )
+    parser.add_argument(
+        '--digital_versions_file',
+        type=str,
+        required=False,
+        default='game_metadata_overrides.json',
+        help='Path to JSON file containing per-game digital ownership metadata keyed by BGG id.'
     )
 
     args = parser.parse_args()

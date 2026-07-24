@@ -1,6 +1,7 @@
 import sqlite3
 import json
 import logging
+from pathlib import Path
 from typing import List, Dict, Any
 from .models import BoardGame
 import io
@@ -18,11 +19,35 @@ logger = logging.getLogger(__name__)
 class SqliteIndexer:
     """SQLite-based indexer to replace Algolia indexer."""
 
-    def __init__(self, db_path: str = "gamecache.sqlite", extract_colors: bool = True):
+    def __init__(self, db_path: str = "gamecache.sqlite", extract_colors: bool = True, digital_versions_path: str = "game_metadata_overrides.json"):
         self.db_path = db_path
         self.db_path_gz = f"{db_path}.gz"
         self.extract_colors = extract_colors
+        self.digital_versions = self._load_digital_versions(digital_versions_path)
         self._init_database()
+
+    def _load_digital_versions(self, digital_versions_path: str) -> Dict[str, Any]:
+        """Load optional per-game digital ownership metadata from JSON file."""
+        path = Path(digital_versions_path)
+        if not path.exists():
+            logger.info(f"Digital versions file not found ({digital_versions_path}); continuing without digital metadata")
+            return {}
+
+        try:
+            with open(path, 'r', encoding='utf-8') as f:
+                payload = json.load(f)
+
+            if isinstance(payload, dict) and isinstance(payload.get('games'), dict):
+                payload = payload['games']
+
+            if not isinstance(payload, dict):
+                logger.warning(f"Digital versions file {digital_versions_path} must be a JSON object keyed by BGG id")
+                return {}
+
+            return payload
+        except Exception as e:
+            logger.warning(f"Failed to parse digital versions file {digital_versions_path}: {e}")
+            return {}
 
     def _init_database(self):
         """Initialize the SQLite database with required tables."""
@@ -82,7 +107,8 @@ class SqliteIndexer:
                 version_year INTEGER,
                 first_played TEXT,
                 last_played TEXT,
-                rulebook_urls TEXT DEFAULT '[]'
+                rulebook_urls TEXT DEFAULT '[]',
+                digital_versions TEXT DEFAULT '{}'
             )
         ''')
 
@@ -146,6 +172,8 @@ class SqliteIndexer:
 
         if 'rulebook_urls' not in existing_columns:
             cursor.execute("ALTER TABLE games ADD COLUMN rulebook_urls TEXT DEFAULT '[]'")
+        if 'digital_versions' not in existing_columns:
+            cursor.execute("ALTER TABLE games ADD COLUMN digital_versions TEXT DEFAULT '{}'")
 
     def _create_indexes(self, cursor):
         """Create secondary indexes after bulk loading rows."""
@@ -163,6 +191,49 @@ class SqliteIndexer:
         cursor.execute('CREATE INDEX IF NOT EXISTS idx_artists on games(artists)')
         cursor.execute('CREATE INDEX IF NOT EXISTS idx_year on games(year)')
         cursor.execute('CREATE INDEX IF NOT EXISTS idx_priority on games(wishlist_priority)')
+
+    def _normalize_digital_entry(self, entry: Any) -> Dict[str, Any]:
+        """Normalize digital metadata and platform status fields for storage in SQLite."""
+        if not isinstance(entry, dict):
+            return {}
+
+        normalized: Dict[str, Any] = {}
+
+        name = str(entry.get('name', '') or '').strip()
+        short_description = str(entry.get('short_description', '') or '').strip()
+        rulebook_url = str(entry.get('rulebook_url', '') or '').strip()
+
+        if name:
+            normalized['name'] = name
+        if short_description:
+            normalized['short_description'] = short_description
+        if rulebook_url:
+            normalized['rulebook_url'] = rulebook_url
+
+        for platform in ('android', 'ios', 'pc'):
+            platform_data = entry.get(platform)
+            if not isinstance(platform_data, dict):
+                continue
+
+            url = str(platform_data.get('url', '') or '').strip()
+            owned = bool(platform_data.get('owned', False))
+            wishlisted = bool(platform_data.get('wishlisted', False))
+            preordered = bool(platform_data.get('preordered', False))
+
+            platform_normalized: Dict[str, Any] = {}
+            if owned:
+                platform_normalized['owned'] = True
+            if wishlisted:
+                platform_normalized['wishlisted'] = True
+            if preordered:
+                platform_normalized['preordered'] = True
+            if url:
+                platform_normalized['url'] = url
+
+            if platform_normalized:
+                normalized[platform] = platform_normalized
+
+        return normalized
 
     def _get_cached_color(self, cursor, thumbnail):
         if not thumbnail:
@@ -324,6 +395,9 @@ class SqliteIndexer:
             other_ranks_json = json.dumps(game.get('other_ranks', []))
 
             color_str = self._extract_dominant_color(game, cursor)
+            digital_versions_json = json.dumps(
+                self._normalize_digital_entry(self.digital_versions.get(str(game.get('id')), {}))
+            )
 
             game_rows.append((
                 game.get('id'), game.get('name'), game.get('description'), categories_json, mechanics_json,
@@ -353,7 +427,8 @@ class SqliteIndexer:
                 game.get('version_name'),
                 int(game.get('version_year')) if game.get('version_year') is not None else None,
                 int(game.get('collection_id')) if game.get('collection_id') is not None else None,
-                game.get('first_played'), game.get('last_played')
+                game.get('first_played'), game.get('last_played'),
+                digital_versions_json,
             ))
 
             fts_rows.append((
@@ -384,8 +459,9 @@ class SqliteIndexer:
                     alternate_names, comment, wishlist_comment, wishlist_priority,
                     artists, designers, publishers, year, accessories, families, reimplements, reimplementedby,
                     integrates, wl_exp, wl_acc, po_exp, po_acc, contained, weightRating, other_ranks,
-                    average, suggested_age, last_modified, version_name, version_year, collection_id, first_played, last_played
-                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                    average, suggested_age, last_modified, version_name, version_year, collection_id, first_played, last_played,
+                    digital_versions
+                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                 ON CONFLICT(collection_id) DO UPDATE SET
                     id = excluded.id,
                     name = excluded.name,
@@ -433,7 +509,8 @@ class SqliteIndexer:
                     version_name = excluded.version_name,
                     version_year = excluded.version_year,
                     first_played = excluded.first_played,
-                    last_played = excluded.last_played
+                    last_played = excluded.last_played,
+                    digital_versions = excluded.digital_versions
             ''', game_rows)
 
         active_collection_ids = [

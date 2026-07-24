@@ -39,6 +39,8 @@ let imgPopup;
 let lastRunDate = null;
 let overflowGroupCounter = 0;
 
+const DIGITAL_PLATFORMS = ['android', 'ios', 'pc'];
+
 // Utility functions
 function showError(message) {
   const container = document.getElementById('hits');
@@ -69,6 +71,112 @@ function createTagChipsContainer(chips) {
   const container = clone.querySelector('.tag-chips');
   container.innerHTML = chips;
   return container.outerHTML;
+}
+
+function normalizeDigitalUrl(url) {
+  const trimmed = String(url || '').trim();
+  if (!trimmed) return '';
+
+  if (/^https?:\/\//i.test(trimmed)) {
+    return trimmed;
+  }
+
+  if (/^www\./i.test(trimmed)) {
+    return `https://${trimmed}`;
+  }
+
+  return trimmed;
+}
+
+function readDigitalEntry(game) {
+  const saved = game && game.digital_versions && typeof game.digital_versions === 'object'
+    ? game.digital_versions
+    : {};
+  const entry = {
+    name: String(saved.name || '').trim(),
+    short_description: String(saved.short_description || '').trim(),
+    rulebook_url: normalizeDigitalUrl(saved.rulebook_url || ''),
+    platforms: {}
+  };
+
+  DIGITAL_PLATFORMS.forEach((platform) => {
+    const platformData = saved[platform] || {};
+    const url = normalizeDigitalUrl(platformData.url || '');
+    entry.platforms[platform] = {
+      owned: Boolean(platformData.owned),
+      wishlisted: Boolean(platformData.wishlisted),
+      preordered: Boolean(platformData.preordered),
+      url
+    };
+  });
+
+  return entry;
+}
+
+function renderDigitalVersionsSection(clone, game) {
+  const digitalSection = clone.querySelector('.digital-versions-section');
+  if (!digitalSection) return;
+
+  const list = digitalSection.querySelector('.digital-version-list');
+  if (!list) return;
+
+  const entry = readDigitalEntry(game);
+  const platformMeta = {
+    android: { label: 'Android', icon: 'android' },
+    ios: { label: 'iOS', icon: 'phone_iphone' },
+    pc: { label: 'PC', icon: 'desktop_windows' },
+  };
+
+  const items = DIGITAL_PLATFORMS
+    .map((platform) => {
+      const data = entry.platforms[platform] || {};
+      return {
+        platform,
+        label: platformMeta[platform].label,
+        icon: platformMeta[platform].icon,
+        owned: Boolean(data.owned),
+        wishlisted: Boolean(data.wishlisted),
+        preordered: Boolean(data.preordered),
+        url: normalizeDigitalUrl(data.url || ''),
+      };
+    })
+    .filter((item) => item.owned || item.wishlisted || item.preordered || item.url);
+
+  if (items.length === 0) {
+    digitalSection.style.display = 'none';
+    return;
+  }
+
+  digitalSection.style.display = 'block';
+  list.innerHTML = '';
+
+  items.forEach((item) => {
+    const tag = item.url ? 'a' : 'span';
+    const attrs = { className: `digital-version-item${item.url ? '' : ' no-link'}` };
+    if (item.url) {
+      attrs.href = item.url;
+      attrs.target = '_blank';
+      attrs.rel = 'noopener noreferrer';
+    }
+
+    const el = createElement(tag, attrs);
+    const icon = createElement('span', { className: 'material-symbols-rounded icon-small' }, item.icon);
+    const text = createElement('span', {}, item.label);
+    el.appendChild(icon);
+    el.appendChild(text);
+
+    if (item.preordered) {
+      el.appendChild(createElement('span', { className: 'digital-status preordered' }, 'Preordered'));
+    }
+    if (item.wishlisted) {
+      el.appendChild(createElement('span', { className: 'digital-status wishlisted' }, 'Wishlisted'));
+    }
+    if (!item.preordered && !item.wishlisted && item.owned) {
+      el.appendChild(createElement('span', { className: 'digital-status owned' }, 'Owned'));
+    }
+
+    list.appendChild(el);
+  });
 }
 
 // Core application functions
@@ -248,6 +356,21 @@ function ftsSearch(query) {
 }
 
 function loadAllGames() {
+  let hasDigitalVersionsColumn = false;
+  const schemaStmt = db.prepare(`PRAGMA table_info(games)`);
+  while (schemaStmt.step()) {
+    const col = schemaStmt.getAsObject();
+    if (col.name === 'digital_versions') {
+      hasDigitalVersionsColumn = true;
+      break;
+    }
+  }
+  schemaStmt.free();
+
+  const digitalColumnSelect = hasDigitalVersionsColumn
+    ? 'digital_versions'
+    : "'{}' as digital_versions";
+
   const stmt = db.prepare(`
     SELECT id, name, description, categories, mechanics, players, weight,
            playing_time, min_age, rank, usersrated, numowned, rating,
@@ -255,7 +378,7 @@ function loadAllGames() {
            publishers, designers, artists, year, wishlist_priority, accessories, po_exp, po_acc, wl_exp, wl_acc,
            alternate_names, comment, wishlist_comment, families, reimplements, reimplementedby, integrates, contained,
            weightRating, other_ranks, average, suggested_age, first_played, last_played, version_name, version_year,
-           rulebook_urls
+           rulebook_urls, ${digitalColumnSelect}
     FROM games
     ORDER BY name
   `);
@@ -289,6 +412,7 @@ function loadAllGames() {
       row.contained = JSON.parse(row.contained || '[]');
       row.other_ranks = JSON.parse(row.other_ranks, '[]');
       row.rulebook_urls = JSON.parse(row.rulebook_urls || '[]');
+      row.digital_versions = JSON.parse(row.digital_versions || '{}');
     } catch (e) {
       console.warn('Error parsing JSON for game:', row.id, e);
     }
@@ -424,6 +548,7 @@ function setupFilters() {
   setupYearFilter();
   setupStatusFilter();
   setupWishlistFilter();
+  setupDigitalFilter();
   setupAgeRangeFilter();
   setupClearAllButton();
 
@@ -982,6 +1107,60 @@ function setupWishlistFilter() {
   }
 }
 
+function gameDigitalFlags(game) {
+  const entry = readDigitalEntry(game);
+
+  const hasOwned = DIGITAL_PLATFORMS.some(platform => Boolean(entry.platforms[platform]?.owned));
+  const hasWishlisted = DIGITAL_PLATFORMS.some(platform => Boolean(entry.platforms[platform]?.wishlisted));
+  const hasPreordered = DIGITAL_PLATFORMS.some(platform => Boolean(entry.platforms[platform]?.preordered));
+  const hasLink = DIGITAL_PLATFORMS.some(platform => Boolean(entry.platforms[platform]?.url));
+
+  return {
+    hasOwned,
+    hasWishlisted,
+    hasPreordered,
+    hasLink,
+    hasAny: hasOwned || hasWishlisted || hasPreordered || hasLink,
+  };
+}
+
+function setupDigitalFilter() {
+  const counts = {
+    any: 0,
+    owned: 0,
+    wishlisted: 0,
+    preordered: 0,
+    link: 0,
+  };
+
+  allGames.forEach(game => {
+    const flags = gameDigitalFlags(game);
+    if (flags.hasAny) counts.any += 1;
+    if (flags.hasOwned) counts.owned += 1;
+    if (flags.hasWishlisted) counts.wishlisted += 1;
+    if (flags.hasPreordered) counts.preordered += 1;
+    if (flags.hasLink) counts.link += 1;
+  });
+
+  const items = [
+    { label: 'Any Digital', value: 'any', count: counts.any },
+    { label: 'Owned', value: 'owned', count: counts.owned },
+    { label: 'Wishlisted', value: 'wishlisted', count: counts.wishlisted },
+    { label: 'Preordered', value: 'preordered', count: counts.preordered },
+    { label: 'Has Link', value: 'link', count: counts.link },
+  ];
+
+  const hasAnyItems = items.some(item => item.count > 0);
+  if (hasAnyItems) {
+    createRefinementFilter('facet-digital', 'Digital', items, 'digital');
+  } else {
+    const container = document.getElementById('facet-digital');
+    if (container) {
+      container.style.display = 'none';
+    }
+  }
+}
+
 function createSliderRefinementFilter(facetId, title, min, max) {
   const container = document.getElementById(facetId);
   if (!container) return;
@@ -1387,6 +1566,7 @@ function updateClearButtonVisibility(filters) {
     selectedYears,
     selectedStatus,
     selectedWishlist,
+    selectedDigital,
     selectedAgeRange,
     selectedUseCommunityAge
   } = filters;
@@ -1409,6 +1589,7 @@ function updateClearButtonVisibility(filters) {
     (selectedYears && selectedYears.length > 0) ||
     (selectedStatus && selectedStatus.length > 0) ||
     (selectedWishlist && selectedWishlist.length > 0) ||
+    (selectedDigital && selectedDigital.length > 0) ||
     selectedUseCommunityAge ||
     (selectedAgeRange && selectedAgeRange.min > ageSlider.min_init) ||
     (selectedAgeRange && selectedAgeRange.max < ageSlider.max_init);
@@ -1557,6 +1738,15 @@ function updateFilterActiveStates(filters) {
       }
     }
 
+    const digitalFilters = document.getElementById('facet-digital');
+    if (digitalFilters) {
+      if (filters.selectedDigital && filters.selectedDigital.length > 0) {
+        digitalFilters.classList.add('filter-active');
+      } else {
+        digitalFilters.classList.remove('filter-active');
+      }
+    }
+
     // Update age range priority filter
     const ageRangeFilters = document.getElementById('facet-age-range');
     const ageSlider = getSelectedSlider('facet-age-range');
@@ -1592,6 +1782,7 @@ function getFiltersFromURL() {
     selectedYears: params.get('years')?.split(',').filter(Boolean) || [],
     selectedStatus: params.get('status')?.split(',').filter(Boolean) || [],
     selectedWishlist: params.get('wishlist')?.split(',').filter(Boolean) || [],
+    selectedDigital: params.get('digital')?.split(',').filter(Boolean) || [],
     selectedAgeRange: ageRangeParam ? { min: Number(ageRangeParam.split('-')[0]), max: Number(ageRangeParam.split('-')[1]) } : null,
     selectedUseCommunityAge: params.get('age_source') === 'community',
     sortBy: params.get('sort') || 'name',
@@ -1615,6 +1806,7 @@ function getFiltersFromUI() {
   const selectedYears = getSelectedValues('years');
   const selectedStatus = getSelectedValues('status');
   const selectedWishlist = getSelectedValues('wishlist');
+  const selectedDigital = getSelectedValues('digital');
   const selectedAgeRange = getSelectedSlider('facet-age-range');
   const selectedUseCommunityAge = Boolean(document.getElementById('age-community-toggle')?.checked);
   const sortBy = document.getElementById('sort-select')?.value || 'name';
@@ -1635,6 +1827,7 @@ function getFiltersFromUI() {
     selectedYears,
     selectedStatus,
     selectedWishlist,
+    selectedDigital,
     selectedAgeRange,
     selectedUseCommunityAge,
     sortBy,
@@ -1660,6 +1853,7 @@ function updateURLWithFilters(filters) {
   if (filters.selectedYears?.length) params.set('year', filters.selectedYears.join(','));
   if (filters.selectedStatus?.length) params.set('status', filters.selectedStatus.join(','));
   if (filters.selectedWishlist?.length) params.set('wishlist', filters.selectedWishlist.join(','));
+  if (filters.selectedDigital?.length) params.set('digital', filters.selectedDigital.join(','));
   if (filters.selectedAgeRange) params.set('age', `${filters.selectedAgeRange.min}-${filters.selectedAgeRange.max}`);
   if (filters.selectedUseCommunityAge) params.set('age_source', 'community');
   if (filters.sortBy && filters.sortBy !== 'name') params.set('sort', filters.sortBy);
@@ -1690,7 +1884,8 @@ function updateUIFromState(state) {
     'designers': state.selectedDesigners,
     'years': state.selectedYears,
     'status': state.selectedStatus,
-    'wishlist': state.selectedWishlist
+    'wishlist': state.selectedWishlist,
+    'digital': state.selectedDigital
   };
 
   for (const name in checkboxFilters) {
@@ -1809,6 +2004,7 @@ function filterGames(gamesToFilter, filters) {
     selectedYears,
     selectedStatus,
     selectedWishlist,
+    selectedDigital,
     selectedAgeRange,
     selectedUseCommunityAge
   } = filters;
@@ -1946,6 +2142,30 @@ function filterGames(gamesToFilter, filters) {
     if (selectedWishlist.length > 0 &&
       !selectedWishlist.some(wl => game.wishlist_priority === wl)) {
       return false;
+    }
+
+    if (selectedDigital.length > 0) {
+      const flags = gameDigitalFlags(game);
+      const digitalMatches = selectedDigital.some(sel => {
+        switch (sel) {
+          case 'any':
+            return flags.hasAny;
+          case 'owned':
+            return flags.hasOwned;
+          case 'wishlisted':
+            return flags.hasWishlisted;
+          case 'preordered':
+            return flags.hasPreordered;
+          case 'link':
+            return flags.hasLink;
+          default:
+            return false;
+        }
+      });
+
+      if (!digitalMatches) {
+        return false;
+      }
     }
 
     const selectedAgeValue = getAgeValueForFilter(game, selectedUseCommunityAge);
@@ -2226,6 +2446,22 @@ function updateAllFilterCounts(filters) {
     }
   });
   updateCountsInDOM('facet-wishlist', wishlistCounts);
+
+  const digitalFilters = {
+    ...filters,
+    selectedDigital: []
+  };
+  const gamesForDigitalCount = filterGames(allGames, digitalFilters);
+  const digitalCounts = { any: 0, owned: 0, wishlisted: 0, preordered: 0, link: 0 };
+  gamesForDigitalCount.forEach(game => {
+    const flags = gameDigitalFlags(game);
+    if (flags.hasAny) digitalCounts.any += 1;
+    if (flags.hasOwned) digitalCounts.owned += 1;
+    if (flags.hasWishlisted) digitalCounts.wishlisted += 1;
+    if (flags.hasPreordered) digitalCounts.preordered += 1;
+    if (flags.hasLink) digitalCounts.link += 1;
+  });
+  updateCountsInDOM('facet-digital', digitalCounts);
 
   const ageRangeFilters = {
     ...filters,
@@ -3336,6 +3572,8 @@ if (game.accessories.length > 0 || game.po_acc.length > 0 || game.wl_acc.length 
     renderTiles(promoWlAcc, promoWlHeading, promoWlChipsContainer, accessoryTileTemplate, accessoryChipTemplate, "promo-wl-accessory-chip", true, VISIBLE_EXPANSIONS, accessoriesSection, true);
   }
 }
+
+  renderDigitalVersionsSection(clone, game);
 
   return clone;
 }

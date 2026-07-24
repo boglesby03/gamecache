@@ -433,6 +433,123 @@ body {
     border-bottom: 1px solid #e0e0e0;
 }
 
+.digital-versions-section {
+    display: block;
+}
+
+.digital-note {
+    margin: 0 0 8px 0;
+    font-size: 0.9em;
+    color: #666;
+}
+
+.digital-meta {
+    margin-bottom: 8px;
+}
+
+.digital-meta-name {
+    font-weight: 600;
+    color: #222;
+}
+
+.digital-meta-description {
+    color: #555;
+    margin-top: 2px;
+    margin-bottom: 6px;
+}
+
+.digital-meta-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    color: var(--accent-red);
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.digital-meta-link:hover {
+    text-decoration: underline;
+}
+
+
+.digital-version-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.digital-version-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 3px 8px;
+    border-radius: 999px;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    background: rgba(0, 0, 0, 0.04);
+    color: #333;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.digital-version-item:hover {
+    border-color: rgba(0, 0, 0, 0.3);
+    background: rgba(0, 0, 0, 0.08);
+}
+
+.digital-version-item.no-link {
+    cursor: default;
+}
+
+.digital-status {
+    font-size: 0.8em;
+    border-radius: 10px;
+    padding: 1px 6px;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    background: rgba(0, 0, 0, 0.06);
+}
+
+.digital-status.owned {
+    border-color: rgba(0, 128, 0, 0.4);
+    background: rgba(0, 128, 0, 0.12);
+    color: #145214;
+}
+
+.digital-status.preordered {
+    border-color: rgba(0, 128, 0, 0.35);
+    background: rgba(0, 128, 0, 0.1);
+    color: #085f08;
+}
+
+.digital-status.wishlisted {
+    border-color: rgba(0, 0, 255, 0.35);
+    background: rgba(0, 0, 255, 0.1);
+    color: #003366;
+}
+
+.digital-open-link {
+    color: var(--accent-red);
+    font-weight: 500;
+    text-decoration: none;
+    white-space: nowrap;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.digital-open-link:hover {
+    text-decoration: underline;
+}
+
+.digital-owned-active .digital-platform-label {
+    color: #111;
+}
+
+@media (max-width: 640px) {
+    .digital-open-link {
+        justify-self: start;
+    }
+}
+
 .expansions-section h3[class$='-heading'],
 .expansions-section h4[class$='-heading'],
 .accessories-section h3[class$='-heading'],
