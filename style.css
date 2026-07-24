@@ -305,11 +305,12 @@ body {
     border-radius: 5px;
     box-shadow: 3px 3px 15px rgba(0, 0, 0, 0.3);
     image-rendering: smooth;
+    transition: transform 0.2s ease-in-out, border-color 0.2s ease-in-out;
 }
 
+.game-card:hover .game-image,
 .game-image:hover {
     transform: scale(1.05);
-    transition: all 0.2s ease-in-out;
     border: 1px solid rgba(0, 0, 0, 0.5);
 }
 
@@ -515,11 +516,6 @@ body {
     padding: 8px;
 }
 
-.expansion-tile:hover .expansion-thumb,
-.accessory-tile:hover .accessory-thumb {
-    border-color: rgba(0, 0, 0, 0.5);
-}
-
 .expansion-thumb,
 .accessory-thumb {
     display: block;
@@ -531,6 +527,25 @@ body {
     border: 1px solid var(--border-thumb);
     border-radius: var(--radius-sm);
     box-shadow: var(--shadow-tile);
+    transition: transform 0.2s ease-in-out, border-color 0.2s ease-in-out;
+    transform-origin: center center;
+    will-change: transform;
+}
+
+.game-details a.expansion-tile:hover .expansion-thumb,
+.game-details a.accessory-tile:hover .accessory-thumb,
+.game-details .expansion-thumb:hover,
+.game-details .accessory-thumb:hover {
+    transform: scale(1.05);
+    border-color: rgba(0, 0, 0, 0.5);
+}
+
+.game-details a.expansion-tile:hover > img,
+.game-details a.accessory-tile:hover > img,
+.game-details a.expansion-tile:focus-visible > img,
+.game-details a.accessory-tile:focus-visible > img {
+    transform: scale(1.1) !important;
+    border-color: rgba(0, 0, 0, 0.5);
 }
 
 .expansion-tile-name,
