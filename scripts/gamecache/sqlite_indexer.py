@@ -192,6 +192,34 @@ class SqliteIndexer:
         cursor.execute('CREATE INDEX IF NOT EXISTS idx_year on games(year)')
         cursor.execute('CREATE INDEX IF NOT EXISTS idx_priority on games(wishlist_priority)')
 
+    def _normalize_document_list(self, raw_value: Any) -> List[Dict[str, str]]:
+        """Normalize document lists to [{"url": ..., "name": ...?}] shape."""
+        if not isinstance(raw_value, list):
+            return []
+
+        normalized: List[Dict[str, str]] = []
+        for item in raw_value:
+            url = ""
+            name = ""
+
+            if isinstance(item, str):
+                url = item.strip()
+            elif isinstance(item, dict):
+                url = str(item.get('url', '') or '').strip()
+                name = str(item.get('name', '') or '').strip()
+            else:
+                continue
+
+            if not url:
+                continue
+
+            doc: Dict[str, str] = {'url': url}
+            if name:
+                doc['name'] = name
+            normalized.append(doc)
+
+        return normalized
+
     def _normalize_digital_entry(self, entry: Any) -> Dict[str, Any]:
         """Normalize digital metadata and platform status fields for storage in SQLite."""
         if not isinstance(entry, dict):
@@ -201,14 +229,18 @@ class SqliteIndexer:
 
         name = str(entry.get('name', '') or '').strip()
         short_description = str(entry.get('short_description', '') or '').strip()
-        rulebook_url = str(entry.get('rulebook_url', '') or '').strip()
+        rulebooks = self._normalize_document_list(entry.get('rulebooks', []))
+        supplemental_files = self._normalize_document_list(entry.get('supplemental_files', []))
 
         if name:
             normalized['name'] = name
         if short_description:
             normalized['short_description'] = short_description
-        if rulebook_url:
-            normalized['rulebook_url'] = rulebook_url
+
+        if rulebooks:
+            normalized['rulebooks'] = rulebooks
+        if supplemental_files:
+            normalized['supplemental_files'] = supplemental_files
 
         for platform in ('android', 'ios', 'pc'):
             platform_data = entry.get(platform)

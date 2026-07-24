@@ -176,6 +176,81 @@ Create a beautiful, searchable website for your BoardGameGeek collection! This p
    python scripts/download_and_index.py
    ```
 
+7.5 **(Optional) Add digital ownership metadata and game overrides**:
+
+   Use the web editor:
+   1. Start a local static server from the project root:
+      ```bash
+      python -m http.server 8000
+      ```
+   2. Open `http://localhost:8000/sidecar-editor.html`
+   3. Click **Load game_metadata_overrides.json** (or **Import JSON**)
+   4. Edit entries and use **Download JSON** or **Save to File**
+   5. Place the updated file at `game_metadata_overrides.json`
+
+   Terminal editor is still available if you want it:
+   ```bash
+   python scripts/edit_game_sidecar.py
+   ```
+
+   You can also edit `game_metadata_overrides.json` directly and add entries keyed by BGG game ID.
+   `name` and `short_description` describe the **base game**.
+   `rulebooks` and `supplemental_files` support multiple document links.
+   Platform status keys are optional (`owned`, `wishlisted`, `preordered`) and are treated as `false` when omitted.
+
+    Example:
+    ```json
+    {
+       "games": {
+          "12345": {
+             "name": "Root Digital",
+             "short_description": "Official async implementation with scripted tutorials.",
+             "rulebooks": [
+                {
+                   "name": "Core Rulebook",
+                   "url": "https://cdn.example.com/root-core-rulebook.pdf"
+                },
+                {
+                   "name": "Law of Root",
+                   "url": "https://cdn.example.com/root-law-of-root.pdf"
+                }
+             ],
+             "supplemental_files": [
+                {
+                   "name": "Player Aid",
+                   "url": "https://cdn.example.com/root-player-aid.pdf"
+                }
+             ],
+             "android": {
+                "owned": true,
+                "url": "https://play.google.com/store/apps/details?id=example"
+             },
+             "ios": {
+                "wishlisted": true,
+                "url": "https://apps.apple.com/us/app/example/id123456789"
+             },
+             "pc": {
+                "preordered": true,
+                "url": "https://store.steampowered.com/app/000000/Example/"
+             }
+          }
+       }
+    }
+    ```
+
+    Then run `python scripts/download_and_index.py` again to bake that data into SQLite.
+    The site reads digital metadata from SQLite only (single pipeline).
+
+   To auto-create missing stubs for game ids found in SQLite:
+   ```bash
+   python scripts/sync_game_sidecar.py
+   ```
+
+   Preview only (no file changes):
+   ```bash
+   python scripts/sync_game_sidecar.py --dry-run
+   ```
+
 8. **(Optional) Discover rulebook URLs**:
    ```bash
    python scripts/discover_rulebooks.py --only-missing

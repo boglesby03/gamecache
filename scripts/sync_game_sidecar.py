@@ -5,7 +5,8 @@ This script ensures every game id present in the SQLite `games` table has an
 entry in the sidecar file under `games` with at least:
 - name
 - short_description
-- rulebook_url
+- rulebooks
+- supplemental_files
 
 Existing entries are preserved and only missing keys are added.
 """
@@ -87,7 +88,8 @@ def sync_sidecar(data: Dict, rows: List[Tuple[int, str]]) -> Tuple[Dict, int, in
             games[key] = {
                 "name": name,
                 "short_description": "",
-                "rulebook_url": "",
+                "rulebooks": [],
+                "supplemental_files": [],
             }
             added += 1
             continue
@@ -97,7 +99,8 @@ def sync_sidecar(data: Dict, rows: List[Tuple[int, str]]) -> Tuple[Dict, int, in
             games[key] = {
                 "name": name,
                 "short_description": "",
-                "rulebook_url": "",
+                "rulebooks": [],
+                "supplemental_files": [],
             }
             updated_existing += 1
             continue
@@ -105,7 +108,8 @@ def sync_sidecar(data: Dict, rows: List[Tuple[int, str]]) -> Tuple[Dict, int, in
         before = dict(entry)
         entry.setdefault("name", name)
         entry.setdefault("short_description", "")
-        entry.setdefault("rulebook_url", "")
+        entry.setdefault("rulebooks", [])
+        entry.setdefault("supplemental_files", [])
         if entry != before:
             updated_existing += 1
 

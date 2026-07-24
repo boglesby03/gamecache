@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Game Metadata Sidecar Editor</title>
+  <link rel="stylesheet" href="sidecar-editor.css" />
+</head>
+<body>
+  <div class="bg-shape shape-a"></div>
+  <div class="bg-shape shape-b"></div>
+
+  <header class="topbar">
+    <div>
+      <h1>Game Metadata Sidecar Editor</h1>
+      <p>Edit game overrides before running the indexer.</p>
+    </div>
+    <div class="status-wrap">
+      <span id="dirty-status" class="chip clean">Saved</span>
+      <span id="count-status" class="chip">0 games</span>
+    </div>
+  </header>
+
+  <main class="layout">
+    <aside class="panel left">
+      <section class="toolbar">
+        <button id="load-default" class="btn">Load game_metadata_overrides.json</button>
+        <label class="btn ghost" for="file-input">Import JSON</label>
+        <input id="file-input" type="file" accept="application/json,.json" hidden />
+      </section>
+
+      <section class="toolbar">
+        <button id="download-json" class="btn">Download JSON</button>
+        <button id="save-picked-file" class="btn ghost" title="Uses browser file save when supported">Save to File</button>
+      </section>
+
+      <section class="toolbar">
+        <input id="new-id" type="text" placeholder="BGG id (numeric)" />
+        <button id="create-game" class="btn">Create / Open</button>
+      </section>
+
+      <section class="search-wrap">
+        <input id="search" type="search" placeholder="Search by id or name..." />
+      </section>
+
+      <section>
+        <ul id="game-list" class="game-list"></ul>
+      </section>
+    </aside>
+
+    <section class="panel right">
+      <div id="empty-state" class="empty-state">
+        Select a game on the left, or create one by BGG id.
+      </div>
+
+      <form id="editor-form" class="editor hidden" autocomplete="off">
+        <div class="grid two">
+          <label>
+            <span>BGG id</span>
+            <input id="field-id" type="text" disabled />
+          </label>
+          <label>
+            <span>Name</span>
+            <input id="field-name" type="text" />
+          </label>
+        </div>
+
+        <label>
+          <span>Short Description</span>
+          <textarea id="field-short-description" rows="3"></textarea>
+        </label>
+
+        <section class="doc-section">
+          <div class="section-head">
+            <h3>Rulebooks</h3>
+            <button type="button" id="add-rulebook" class="btn mini">Add</button>
+          </div>
+          <div id="rulebooks-list" class="doc-list"></div>
+        </section>
+
+        <section class="doc-section">
+          <div class="section-head">
+            <h3>Supplemental Files</h3>
+            <button type="button" id="add-supplemental" class="btn mini">Add</button>
+          </div>
+          <div id="supplemental-list" class="doc-list"></div>
+        </section>
+
+        <section class="platform-grid">
+          <article class="platform-card" data-platform="android">
+            <h3>Android</h3>
+            <label><span>URL</span><input type="url" data-role="url" placeholder="https://..." /></label>
+            <label class="check"><input type="checkbox" data-role="owned" /> Owned</label>
+            <label class="check"><input type="checkbox" data-role="wishlisted" /> Wishlisted</label>
+            <label class="check"><input type="checkbox" data-role="preordered" /> Preordered</label>
+          </article>
+
+          <article class="platform-card" data-platform="ios">
+            <h3>iOS</h3>
+            <label><span>URL</span><input type="url" data-role="url" placeholder="https://..." /></label>
+            <label class="check"><input type="checkbox" data-role="owned" /> Owned</label>
+            <label class="check"><input type="checkbox" data-role="wishlisted" /> Wishlisted</label>
+            <label class="check"><input type="checkbox" data-role="preordered" /> Preordered</label>
+          </article>
+
+          <article class="platform-card" data-platform="pc">
+            <h3>PC</h3>
+            <label><span>URL</span><input type="url" data-role="url" placeholder="https://..." /></label>
+            <label class="check"><input type="checkbox" data-role="owned" /> Owned</label>
+            <label class="check"><input type="checkbox" data-role="wishlisted" /> Wishlisted</label>
+            <label class="check"><input type="checkbox" data-role="preordered" /> Preordered</label>
+          </article>
+        </section>
+
+        <div class="actions">
+          <button type="button" id="delete-game" class="btn danger">Delete Game Entry</button>
+        </div>
+      </form>
+    </section>
+  </main>
+
+  <template id="doc-row-template">
+    <div class="doc-row">
+      <input type="text" data-key="name" placeholder="Label (optional)" />
+      <input type="url" data-key="url" placeholder="https://..." />
+      <button type="button" class="btn mini danger" data-action="remove">Remove</button>
+    </div>
+  </template>
+
+  <script src="sidecar-editor.js"></script>
+</body>
+</html>

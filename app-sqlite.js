@@ -95,7 +95,6 @@ function readDigitalEntry(game) {
   const entry = {
     name: String(saved.name || '').trim(),
     short_description: String(saved.short_description || '').trim(),
-    rulebook_url: normalizeDigitalUrl(saved.rulebook_url || ''),
     platforms: {}
   };
 
