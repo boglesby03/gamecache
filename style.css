@@ -481,14 +481,15 @@ body {
 .digital-version-item {
     display: inline-flex;
     align-items: center;
-    gap: 6px;
-    padding: 3px 8px;
-    border-radius: 999px;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    padding: 0;
+    border-radius: 50%;
     border: 1px solid rgba(0, 0, 0, 0.15);
     background: rgba(0, 0, 0, 0.04);
     color: #333;
     text-decoration: none;
-    font-weight: 500;
 }
 
 .digital-version-item:hover {
@@ -500,30 +501,26 @@ body {
     cursor: default;
 }
 
-.digital-status {
-    font-size: 0.8em;
-    border-radius: 10px;
-    padding: 1px 6px;
-    border: 1px solid rgba(0, 0, 0, 0.2);
+.digital-version-item .material-symbols-rounded {
+    font-size: 16px;
+}
+
+.digital-version-item.status-owned {
+    border-color: rgba(0, 0, 0, 0.18);
     background: rgba(0, 0, 0, 0.06);
+    color: #333;
 }
 
-.digital-status.owned {
-    border-color: rgba(0, 128, 0, 0.4);
-    background: rgba(0, 128, 0, 0.12);
-    color: #145214;
+.digital-version-item.status-preordered {
+    border-color: var(--po-border);
+    background: var(--po-bg);
+    color: var(--po-text);
 }
 
-.digital-status.preordered {
-    border-color: rgba(0, 128, 0, 0.35);
-    background: rgba(0, 128, 0, 0.1);
-    color: #085f08;
-}
-
-.digital-status.wishlisted {
-    border-color: rgba(0, 0, 255, 0.35);
-    background: rgba(0, 0, 255, 0.1);
-    color: #003366;
+.digital-version-item.status-wishlisted {
+    border-color: var(--wl-border);
+    background: var(--wl-bg);
+    color: var(--wl-text);
 }
 
 .digital-open-link {

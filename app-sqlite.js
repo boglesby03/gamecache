@@ -151,7 +151,18 @@ function renderDigitalVersionsSection(clone, game) {
 
   items.forEach((item) => {
     const tag = item.url ? 'a' : 'span';
-    const attrs = { className: `digital-version-item${item.url ? '' : ' no-link'}` };
+    let statusClass = 'status-owned';
+    if (item.preordered) {
+      statusClass = 'status-preordered';
+    } else if (item.wishlisted) {
+      statusClass = 'status-wishlisted';
+    }
+
+    const attrs = {
+      className: `digital-version-item ${statusClass}${item.url ? '' : ' no-link'}`,
+      title: `${item.label}${item.preordered ? ' (Preordered)' : item.wishlisted ? ' (Wishlisted)' : item.owned ? ' (Owned)' : ''}`,
+      'aria-label': `${item.label}${item.preordered ? ' Preordered' : item.wishlisted ? ' Wishlisted' : item.owned ? ' Owned' : ''}`
+    };
     if (item.url) {
       attrs.href = item.url;
       attrs.target = '_blank';
@@ -160,19 +171,7 @@ function renderDigitalVersionsSection(clone, game) {
 
     const el = createElement(tag, attrs);
     const icon = createElement('span', { className: 'material-symbols-rounded icon-small' }, item.icon);
-    const text = createElement('span', {}, item.label);
     el.appendChild(icon);
-    el.appendChild(text);
-
-    if (item.preordered) {
-      el.appendChild(createElement('span', { className: 'digital-status preordered' }, 'Preordered'));
-    }
-    if (item.wishlisted) {
-      el.appendChild(createElement('span', { className: 'digital-status wishlisted' }, 'Wishlisted'));
-    }
-    if (!item.preordered && !item.wishlisted && item.owned) {
-      el.appendChild(createElement('span', { className: 'digital-status owned' }, 'Owned'));
-    }
 
     list.appendChild(el);
   });
