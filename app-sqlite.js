@@ -254,7 +254,8 @@ function loadAllGames() {
            numplays, image, thumbnail, tags, previous_players, expansions, color, unixepoch(last_modified) as last_modified,
            publishers, designers, artists, year, wishlist_priority, accessories, po_exp, po_acc, wl_exp, wl_acc,
            alternate_names, comment, wishlist_comment, families, reimplements, reimplementedby, integrates, contained,
-           weightRating, other_ranks, average, suggested_age, first_played, last_played, version_name, version_year
+           weightRating, other_ranks, average, suggested_age, first_played, last_played, version_name, version_year,
+           rulebook_urls
     FROM games
     ORDER BY name
   `);
@@ -287,6 +288,7 @@ function loadAllGames() {
       row.integrates = JSON.parse(row.integrates || '[]');
       row.contained = JSON.parse(row.contained || '[]');
       row.other_ranks = JSON.parse(row.other_ranks, '[]');
+      row.rulebook_urls = JSON.parse(row.rulebook_urls || '[]');
     } catch (e) {
       console.warn('Error parsing JSON for game:', row.id, e);
     }

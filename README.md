@@ -27,6 +27,7 @@ Create a beautiful, searchable website for your BoardGameGeek collection! This p
 - [ ] **Install Python dependencies**: `pip install -r scripts/requirements.txt`
 - [ ] **Validate setup**: `python scripts/validate_setup.py`
 - [ ] **Generate database**: `python scripts/download_and_index.py --cache_bgg`
+- [ ] **Discover rulebook URLs** (optional): `python scripts/discover_rulebooks.py --only-missing`
 - [ ] **Visit your site**: `https://YOUR_USERNAME.github.io/gamecache`
 - [ ] **Enable hourly updates** (optional): `python scripts/enable_hourly_updates.py`
 
@@ -173,6 +174,31 @@ Create a beautiful, searchable website for your BoardGameGeek collection! This p
 7. **Generate your database**:
    ```bash
    python scripts/download_and_index.py
+   ```
+
+8. **(Optional) Discover rulebook URLs**:
+   ```bash
+   python scripts/discover_rulebooks.py --only-missing
+   ```
+
+   This runs as a separate enrichment step and stores discovered rulebook URL
+   candidates directly on each game record in SQLite.
+
+9. **(Optional) Download rulebooks and upload to Backblaze B2**:
+   ```bash
+   export B2_KEY_ID="your-key-id"
+   export B2_APPLICATION_KEY="your-application-key"
+   export B2_BUCKET_ID="your-bucket-id"
+   python scripts/upload_rulebooks.py --only-missing-assets --verbose
+   ```
+
+   This step attempts to download each discovered rulebook and stores upload
+   metadata in `games.rulebook_assets` for downstream indexing.
+
+   By default, it prioritizes non-BGG links and skips BGG filepage URLs.
+   To allow BGG links as fallback:
+   ```bash
+   python scripts/upload_rulebooks.py --only-missing-assets --allow-bgg-fallback --verbose
    ```
 
    <details>

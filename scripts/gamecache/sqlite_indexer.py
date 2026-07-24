@@ -29,13 +29,11 @@ class SqliteIndexer:
         conn = sqlite3.connect(self.db_path)
         cursor = conn.cursor()
 
-        # Drop existing table if it exists
-        cursor.execute('DROP TABLE IF EXISTS games')
-        cursor.execute('DROP TABLE IF EXISTS games_fts')
-
-        # Create games table with all necessary fields
+        # Create games table with all necessary fields.
+        # Keep existing data so enrichment data (for example rulebook URLs)
+        # survives future ingestion runs.
         cursor.execute('''
-            CREATE TABLE games (
+            CREATE TABLE IF NOT EXISTS games (
                 collection_id INTEGER PRIMARY KEY,
                 id INTEGER,
                 name TEXT NOT NULL,
@@ -83,12 +81,15 @@ class SqliteIndexer:
                 version_name TEXT,
                 version_year INTEGER,
                 first_played TEXT,
-                last_played TEXT
+                last_played TEXT,
+                rulebook_urls TEXT DEFAULT '[]'
             )
         ''')
 
+        self._ensure_games_schema_migrations(cursor)
+
         cursor.execute('''
-            CREATE VIRTUAL TABLE games_fts USING fts5 (
+            CREATE VIRTUAL TABLE IF NOT EXISTS games_fts USING fts5 (
                 collection_id,
                 id,
                 name,
@@ -138,22 +139,30 @@ class SqliteIndexer:
         conn.close()
         logger.info(f"Initialized SQLite database: {self.db_path}")
 
+    def _ensure_games_schema_migrations(self, cursor):
+        """Apply additive schema migrations for existing gamecache databases."""
+        cursor.execute("PRAGMA table_info(games)")
+        existing_columns = {row[1] for row in cursor.fetchall()}
+
+        if 'rulebook_urls' not in existing_columns:
+            cursor.execute("ALTER TABLE games ADD COLUMN rulebook_urls TEXT DEFAULT '[]'")
+
     def _create_indexes(self, cursor):
         """Create secondary indexes after bulk loading rows."""
-        cursor.execute('CREATE INDEX idx_name ON games(name)')
-        cursor.execute('CREATE INDEX idx_categories ON games(categories)')
-        cursor.execute('CREATE INDEX idx_mechanics ON games(mechanics)')
-        cursor.execute('CREATE INDEX idx_weight ON games(weight)')
-        cursor.execute('CREATE INDEX idx_playing_time ON games(playing_time)')
-        cursor.execute('CREATE INDEX idx_min_age ON games(min_age)')
-        cursor.execute('CREATE INDEX idx_rank ON games(rank)')
-        cursor.execute('CREATE INDEX idx_rating ON games(rating)')
-        cursor.execute('CREATE INDEX idx_numplays ON games(numplays)')
-        cursor.execute('CREATE INDEX idx_publisher on games(publishers)')
-        cursor.execute('CREATE INDEX idx_designer on games(designers)')
-        cursor.execute('CREATE INDEX idx_artists on games(artists)')
-        cursor.execute('CREATE INDEX idx_year on games(year)')
-        cursor.execute('CREATE INDEX idx_priority on games(wishlist_priority)')
+        cursor.execute('CREATE INDEX IF NOT EXISTS idx_name ON games(name)')
+        cursor.execute('CREATE INDEX IF NOT EXISTS idx_categories ON games(categories)')
+        cursor.execute('CREATE INDEX IF NOT EXISTS idx_mechanics ON games(mechanics)')
+        cursor.execute('CREATE INDEX IF NOT EXISTS idx_weight ON games(weight)')
+        cursor.execute('CREATE INDEX IF NOT EXISTS idx_playing_time ON games(playing_time)')
+        cursor.execute('CREATE INDEX IF NOT EXISTS idx_min_age ON games(min_age)')
+        cursor.execute('CREATE INDEX IF NOT EXISTS idx_rank ON games(rank)')
+        cursor.execute('CREATE INDEX IF NOT EXISTS idx_rating ON games(rating)')
+        cursor.execute('CREATE INDEX IF NOT EXISTS idx_numplays ON games(numplays)')
+        cursor.execute('CREATE INDEX IF NOT EXISTS idx_publisher on games(publishers)')
+        cursor.execute('CREATE INDEX IF NOT EXISTS idx_designer on games(designers)')
+        cursor.execute('CREATE INDEX IF NOT EXISTS idx_artists on games(artists)')
+        cursor.execute('CREATE INDEX IF NOT EXISTS idx_year on games(year)')
+        cursor.execute('CREATE INDEX IF NOT EXISTS idx_priority on games(wishlist_priority)')
 
     def _get_cached_color(self, cursor, thumbnail):
         if not thumbnail:
@@ -377,7 +386,80 @@ class SqliteIndexer:
                     integrates, wl_exp, wl_acc, po_exp, po_acc, contained, weightRating, other_ranks,
                     average, suggested_age, last_modified, version_name, version_year, collection_id, first_played, last_played
                 ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                ON CONFLICT(collection_id) DO UPDATE SET
+                    id = excluded.id,
+                    name = excluded.name,
+                    description = excluded.description,
+                    categories = excluded.categories,
+                    mechanics = excluded.mechanics,
+                    players = excluded.players,
+                    weight = excluded.weight,
+                    playing_time = excluded.playing_time,
+                    min_age = excluded.min_age,
+                    rank = excluded.rank,
+                    usersrated = excluded.usersrated,
+                    numowned = excluded.numowned,
+                    rating = excluded.rating,
+                    numplays = excluded.numplays,
+                    image = excluded.image,
+                    thumbnail = excluded.thumbnail,
+                    tags = excluded.tags,
+                    previous_players = excluded.previous_players,
+                    expansions = excluded.expansions,
+                    color = excluded.color,
+                    alternate_names = excluded.alternate_names,
+                    comment = excluded.comment,
+                    wishlist_comment = excluded.wishlist_comment,
+                    wishlist_priority = excluded.wishlist_priority,
+                    artists = excluded.artists,
+                    designers = excluded.designers,
+                    publishers = excluded.publishers,
+                    year = excluded.year,
+                    accessories = excluded.accessories,
+                    families = excluded.families,
+                    reimplements = excluded.reimplements,
+                    reimplementedby = excluded.reimplementedby,
+                    integrates = excluded.integrates,
+                    wl_exp = excluded.wl_exp,
+                    wl_acc = excluded.wl_acc,
+                    po_exp = excluded.po_exp,
+                    po_acc = excluded.po_acc,
+                    contained = excluded.contained,
+                    weightRating = excluded.weightRating,
+                    other_ranks = excluded.other_ranks,
+                    average = excluded.average,
+                    suggested_age = excluded.suggested_age,
+                    last_modified = excluded.last_modified,
+                    version_name = excluded.version_name,
+                    version_year = excluded.version_year,
+                    first_played = excluded.first_played,
+                    last_played = excluded.last_played
             ''', game_rows)
+
+        active_collection_ids = [
+            row[45]
+            for row in game_rows
+            if row[45] is not None
+        ]
+        if active_collection_ids:
+            cursor.execute('DROP TABLE IF EXISTS active_collection_ids')
+            cursor.execute('CREATE TEMP TABLE active_collection_ids (collection_id INTEGER PRIMARY KEY)')
+            cursor.executemany(
+                'INSERT OR IGNORE INTO active_collection_ids (collection_id) VALUES (?)',
+                [(collection_id,) for collection_id in active_collection_ids],
+            )
+            cursor.execute('''
+                DELETE FROM games
+                WHERE collection_id NOT IN (
+                    SELECT collection_id FROM active_collection_ids
+                )
+            ''')
+            cursor.execute('DROP TABLE active_collection_ids')
+        else:
+            cursor.execute('DELETE FROM games')
+
+        # Rebuild FTS contents from the current run to keep the search index in sync.
+        cursor.execute('DELETE FROM games_fts')
 
         cursor.executemany('''
                 INSERT INTO games_fts (
