@@ -52,6 +52,56 @@
           "store": "Humble",
           "url": "https://www.humblebundle.com/home/library",
           "owned": true
+        },
+        {
+          "store": "Play Store",
+          "url": "https://play.google.com/store/apps/details?id=com.nut.bettersettlers",
+          "note": "Better Settlers",
+          "support_app": true
+        }
+      ],
+      "ios": [
+        {
+          "store": "App Store",
+          "url": "https://apps.apple.com/us/app/catanous-catan-map-generator/id943092940",
+          "note": "Catanous:Map Generator",
+          "support_app": true
+        },
+        {
+          "store": "App Store",
+          "url": "https://apps.apple.com/us/app/catan-assistant/id1269632153",
+          "note": "Catan Assistant",
+          "support_app": true
+        },
+        {
+          "store": "App Store",
+          "url": "https://apps.apple.com/us/app/board-generator-for-catan/id1182842397",
+          "note": "Board Generator",
+          "support_app": true
+        },
+        {
+          "store": "App Store",
+          "url": "https://apps.apple.com/us/app/catan-dice-timer-app/id6599844901",
+          "note": "Dice & Timer",
+          "support_app": true
+        },
+        {
+          "store": "App Store",
+          "url": "https://apps.apple.com/us/app/catanerator-map-generator/id439248947",
+          "note": "Catanerator: Map Generator",
+          "support_app": true
+        },
+        {
+          "store": "App Store",
+          "url": "https://apps.apple.com/us/app/catan-universe/id1220346113",
+          "note": "Catan Universe",
+          "owned": true
+        },
+        {
+          "store": "App Store",
+          "url": "https://apps.apple.com/us/app/catan-classic/id335029050",
+          "note": "Catan Classic",
+          "wishlisted": true
         }
       ],
       "pc": [
@@ -86,6 +136,14 @@
       "short_description": "Set out on expeditions, but will your findings outweigh the cost of each adventure?",
       "rulebooks": [],
       "supplemental_files": [],
+      "android": [
+        {
+          "store": "Play Store",
+          "url": "https://play.google.com/store/apps/details?id=com.valloo.lostcities.scorer",
+          "note": "Scorer [Deprecated]",
+          "support_app": true
+        }
+      ],
       "pc": [
         {
           "store": "Steam",
@@ -428,6 +486,14 @@
           "owned": true
         }
       ],
+      "ios": [
+        {
+          "store": "App Store",
+          "url": "https://apps.apple.com/us/app/hunters-and-gatherers/id1595663121",
+          "note": "Hunters and Gatherers",
+          "wishlisted": true
+        }
+      ],
       "pc": [
         {
           "store": "Steam",
@@ -615,10 +681,45 @@
       "short_description": "Attack and loot in this humorous, card-based dungeon crawler.",
       "rulebooks": [],
       "supplemental_files": [],
+      "android": [
+        {
+          "store": "Play Store",
+          "url": "https://play.google.com/store/apps/details?id=com.direwolfdigital.munchkin",
+          "note": "Munchkin",
+          "wishlisted": true
+        },
+        {
+          "store": "Play Store",
+          "url": "https://play.google.com/store/apps/details?id=com.izorg.munchkin",
+          "note": "Level Counter",
+          "support_app": true
+        },
+        {
+          "store": "Play Store",
+          "url": "https://play.google.com/store/apps/details?id=com.appybuilder.ExxusLee.Manchkin",
+          "note": "Level Counter",
+          "support_app": true
+        }
+      ],
+      "ios": [
+        {
+          "store": "App Store",
+          "url": "https://apps.apple.com/us/app/munchkin-digital/id1580629479?platform=ipad",
+          "note": "Munchkin",
+          "wishlisted": true
+        },
+        {
+          "store": "App Store",
+          "url": "https://apps.apple.com/us/app/level-counter-yours/id1438045408?platform=ipad",
+          "note": "Level Counter",
+          "support_app": true
+        }
+      ],
       "pc": [
         {
           "store": "Steam",
           "url": "https://store.steampowered.com/app/1722860/Munchkin_Digital/",
+          "note": "Munchkin",
           "owned": true
         }
       ]
@@ -695,10 +796,27 @@
       "short_description": "Bid, network, and manage resources in a race to supply the most cities with power.",
       "rulebooks": [],
       "supplemental_files": [],
+      "android": [
+        {
+          "store": "Play Store",
+          "url": "https://play.google.com/store/apps/details?id=de.brettspielwelt.funkenschlag",
+          "note": "Power Grid",
+          "wishlisted": true
+        }
+      ],
+      "ios": [
+        {
+          "store": "App Store",
+          "url": "https://apps.apple.com/us/app/power-grid-boardgame/id1434690170",
+          "note": "Power Grid",
+          "wishlisted": true
+        }
+      ],
       "pc": [
         {
           "store": "Steam",
           "url": "https://store.steampowered.com/app/2983910/Power_Grid/",
+          "note": "Power Grid",
           "wishlisted": true
         }
       ]
@@ -807,10 +925,19 @@
       "short_description": "The original asymetrical sci-fi wargame pits the mega-tank Ogre against lesser units.",
       "rulebooks": [],
       "supplemental_files": [],
+      "ios": [
+        {
+          "store": "App Store",
+          "url": "https://apps.apple.com/us/app/ogre-war-room/id550343539",
+          "note": "Ogre",
+          "wishlisted": true
+        }
+      ],
       "pc": [
         {
           "store": "Steam",
           "url": "https://store.steampowered.com/app/517780/Ogre/",
+          "note": "Ogre",
           "owned": true
         }
       ]
@@ -873,6 +1000,7 @@
         {
           "store": "Play Store",
           "url": "https://play.google.com/store/apps/details?id=com.marmalade.tickettoride",
+          "note": "Ticket to Ride",
           "owned": true
         },
         {
@@ -884,6 +1012,69 @@
         {
           "store": "Humble",
           "url": "https://www.humblebundle.com/home/library",
+          "note": "Ticket to Ride",
+          "owned": true
+        },
+        {
+          "store": "Play Store",
+          "url": "https://play.google.com/store/apps/details?id=com.ttr.zero",
+          "note": "Train Ride On",
+          "owned": true
+        },
+        {
+          "store": "Play Store",
+          "url": "https://play.google.com/store/apps/details?id=com.timetocount",
+          "note": "Time to Count: Score Card",
+          "support_app": true
+        }
+      ],
+      "ios": [
+        {
+          "store": "App Store",
+          "url": "https://apps.apple.com/us/app/ticket-to-ride/id6463616555",
+          "note": "Ticket to Ride",
+          "wishlisted": true
+        },
+        {
+          "store": "App Store",
+          "url": "https://apps.apple.com/us/app/train-counter/id564463386",
+          "note": "Train Counter",
+          "support_app": true
+        },
+        {
+          "store": "App Store",
+          "url": "https://apps.apple.com/us/app/score-tickets/id698149175",
+          "note": "Score Tickets",
+          "support_app": true
+        },
+        {
+          "store": "App Store",
+          "url": "https://apps.apple.com/us/app/ticket-to-ride-companion/id6717596033",
+          "note": "Companion",
+          "owned": true
+        },
+        {
+          "store": "App Store",
+          "url": "https://apps.apple.com/us/app/train-ride-on-usa-train-pass/id6443542566",
+          "note": "Train Ride On",
+          "owned": true
+        },
+        {
+          "store": "App Store",
+          "url": "https://apps.apple.com/us/app/pointsman/id1447780441",
+          "note": "Pointsman: Camera Scoring",
+          "support_app": true
+        },
+        {
+          "store": "App Store",
+          "url": "https://apps.apple.com/us/app/time-to-count-ticket-to-ride/id1584186845",
+          "note": "Time to Count",
+          "support_app": true
+        },
+        {
+          "store": "App Store",
+          "url": "https://apps.apple.com/us/app/tickettoride-points/id1619612188",
+          "note": "Points",
           "owned": true
         }
       ],
@@ -931,7 +1122,41 @@
       "name": "Betrayal at House on the Hill",
       "short_description": "Explore a haunted house as a team ... until one of you turns against the rest.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "android": [
+        {
+          "store": "Play Store",
+          "url": "https://play.google.com/store/apps/details?id=com.hasbro.Betrayal",
+          "note": "Companion App",
+          "support_app": true
+        }
+      ],
+      "ios": [
+        {
+          "store": "App Store",
+          "url": "https://apps.apple.com/ca/app/bhoth-stat-tracker/id1585074626",
+          "note": "Stat Tracker",
+          "support_app": true
+        },
+        {
+          "store": "App Store",
+          "url": "https://apps.apple.com/ca/app/betrayal-official-app/id1488518257",
+          "note": "Official Companion App",
+          "support_app": true
+        },
+        {
+          "store": "App Store",
+          "url": "https://apps.apple.com/ca/app/betrayal-companion/id1447651302",
+          "note": "Companion App",
+          "support_app": true
+        },
+        {
+          "store": "App Store",
+          "url": "https://apps.apple.com/ca/app/betrayal-at-house-soundboard/id850054574",
+          "note": "Soundboard",
+          "owned": true
+        }
+      ]
     },
     "10630": {
       "name": "Memoir '44",
@@ -1045,6 +1270,14 @@
       "short_description": "Build train routes across Europe in this sequel to the hit family board game.",
       "rulebooks": [],
       "supplemental_files": [],
+      "ios": [
+        {
+          "store": "App Store",
+          "url": "https://apps.apple.com/us/app/ride-on-europe-buy-your-pass/id6748742875",
+          "note": "Ride on Europe",
+          "owned": true
+        }
+      ],
       "pc": [
         {
           "store": "Steam",
@@ -1069,7 +1302,15 @@
       "name": "Diamant",
       "short_description": "How deep into a dangerous temple dare you explore before leaving with your riches?",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "android": [
+        {
+          "store": "BGG",
+          "url": "https://boardgamegeek.com/filepage/121796/dungeon-gold-android-game",
+          "note": "Dungeon Gold",
+          "owned": true
+        }
+      ]
     },
     "16747": {
       "name": "Tumblin' Dice",
@@ -1296,6 +1537,15 @@
         {
           "store": "Play Store",
           "url": "https://play.google.com/store/apps/details?id=com.acram.steam",
+          "note": "Steam",
+          "wishlisted": true
+        }
+      ],
+      "ios": [
+        {
+          "store": "App Store",
+          "url": "https://apps.apple.com/us/app/steam-rails-to-riches/id1016459121",
+          "note": "Steam",
           "wishlisted": true
         }
       ],
@@ -1303,7 +1553,7 @@
         {
           "store": "Steam",
           "url": "https://store.steampowered.com/app/595930/Steam_Rails_to_Riches/",
-          "note": "with USA-Canada Map, Carcassonne Map, Southwestern Map, Northern England Map, Belgium & Luxenberg Map",
+          "note": "Steam with USA-Canada Map, Carcassonne Map, Southwestern Map, Northern England Map, Belgium & Luxenberg Map",
           "owned": true
         }
       ]
@@ -1329,6 +1579,15 @@
         {
           "store": "Play Store",
           "url": "https://play.google.com/store/apps/details?id=com.templegatesgames.RaceAndroid",
+          "note": "Race for the Galaxy",
+          "wishlisted": true
+        }
+      ],
+      "ios": [
+        {
+          "store": "App Store",
+          "url": "https://apps.apple.com/us/app/race-for-the-galaxy/id1190675052?platform=ipad",
+          "note": "Race for the Galaxy",
           "wishlisted": true
         }
       ],
@@ -1336,6 +1595,7 @@
         {
           "store": "Steam",
           "url": "https://store.steampowered.com/app/579940/Race_for_the_Galaxy/",
+          "note": "Race for the Galaxy",
           "wishlisted": true
         }
       ]
@@ -1382,11 +1642,33 @@
       "short_description": "Your team of experts must prevent the world from succumbing to a viral pandemic.",
       "rulebooks": [],
       "supplemental_files": [],
+      "android": [
+        {
+          "store": "Play Store",
+          "url": "https://play.google.com/store/apps/details?id=com.blisher.PandemicRole",
+          "note": "Roles",
+          "support_app": true
+        }
+      ],
+      "ios": [
+        {
+          "store": "App Store",
+          "url": "https://apps.apple.com/us/app/pandemic-roles/id1548505270",
+          "note": "Roles",
+          "support_app": true
+        }
+      ],
       "pc": [
         {
           "store": "Steam",
           "url": "https://store.steampowered.com/app/622440/Pandemic_The_Board_Game/",
           "owned": true
+        },
+        {
+          "store": "Web",
+          "url": "https://boardgamehelpers.com/Pandemic/Default.aspx",
+          "note": "Setup Helper",
+          "support_app": true
         }
       ]
     },
@@ -1407,11 +1689,26 @@
       "short_description": "Help your farm to prosper in this updated, streamlined edition of the acclaimed game.",
       "rulebooks": [],
       "supplemental_files": [],
+      "android": [
+        {
+          "store": "Play Store",
+          "url": "https://play.google.com/store/apps/details?id=com.geeksong.agricolascorer",
+          "note": "Scorer",
+          "wishlisted": true
+        }
+      ],
       "pc": [
         {
           "store": "Steam",
           "url": "https://store.steampowered.com/app/1005580/Agricola_Revised_Edition/",
+          "note": "Agricola",
           "owned": true
+        },
+        {
+          "store": "Web",
+          "url": "https://boardgamehelpers.com/Agricola/Default.aspx",
+          "note": "Turn Order",
+          "support_app": true
         }
       ]
     },
@@ -1424,11 +1721,27 @@
         {
           "store": "Humble",
           "url": "https://www.humblebundle.com/home/library",
+          "note": "Galaxy Trucker",
           "owned": true
         },
         {
           "store": "Play Store",
           "url": "https://play.google.com/store/apps/details?id=com.czechgames.galaxytrucker",
+          "note": "Galaxy Trucker",
+          "wishlisted": true
+        }
+      ],
+      "ios": [
+        {
+          "store": "App Store",
+          "url": "https://apps.apple.com/us/app/galaxy-trucker/id904013027",
+          "note": "Galaxy Trucker",
+          "wishlisted": true
+        },
+        {
+          "store": "App Store",
+          "url": "https://apps.apple.com/us/app/galaxy-trucker-pocket/id947402822?platform=ipad",
+          "note": "Galaxy Trucker Pocket",
           "wishlisted": true
         }
       ],
@@ -1436,6 +1749,7 @@
         {
           "store": "Steam",
           "url": "https://store.steampowered.com/app/870690/Galaxy_Trucker_Extended_Edition/",
+          "note": "Galaxy Trucker",
           "wishlisted": true
         }
       ]
@@ -1480,6 +1794,15 @@
         {
           "store": "Play Store",
           "url": "https://play.google.com/store/apps/details?id=com.acram.StoneAge",
+          "note": "Stone Age",
+          "wishlisted": true
+        }
+      ],
+      "ios": [
+        {
+          "store": "App Store",
+          "url": "https://apps.apple.com/us/app/stone-age-digital-edition/id6445834434",
+          "note": "Stone Age",
           "wishlisted": true
         }
       ],
@@ -1487,6 +1810,7 @@
         {
           "store": "Steam",
           "url": "https://store.steampowered.com/app/2177570/Stone_Age_Digital_Edition/",
+          "note": "Stone Age",
           "wishlisted": true
         }
       ]
@@ -1503,6 +1827,20 @@
       "rulebooks": [],
       "supplemental_files": []
     },
+    "35677": {
+      "name": "Le Havre",
+      "short_description": "Establish a supply chain by collecting resources, building industries, and shipping.",
+      "rulebooks": [],
+      "supplemental_files": [],
+      "ios": [
+        {
+          "store": "App Store",
+          "url": "https://apps.apple.com/us/app/le-havre-the-harbor/id517685886",
+          "note": "Le Havre",
+          "owned": true
+        }
+      ]
+    },
     "36218": {
       "name": "Dominion",
       "short_description": "Acquire the most valuable lands by building your deck with treasure and power cards.",
@@ -1512,6 +1850,7 @@
         {
           "store": "Play Store",
           "url": "https://play.google.com/store/apps/details?id=com.templegatesgames.DominionAndroid",
+          "note": "Dominion",
           "owned": true
         },
         {
@@ -1519,12 +1858,57 @@
           "url": "https://play.google.com/store/apps/details?id=com.makingfun.dominion",
           "note": "Original Version (Deprecated)",
           "owned": true
+        },
+        {
+          "store": "Play Store",
+          "url": "Dominion Shuffle",
+          "note": "Shuffle",
+          "owned": true
+        }
+      ],
+      "ios": [
+        {
+          "store": "App Store",
+          "url": "https://apps.apple.com/us/app/dominion/id1476461085",
+          "note": "Dominion",
+          "owned": true
+        },
+        {
+          "store": "App Store",
+          "url": "https://apps.apple.com/us/app/domingen/id1265646082",
+          "note": "DominGen: Randomizer",
+          "support_app": true
+        },
+        {
+          "store": "App Store",
+          "url": "https://apps.apple.com/us/app/dominion-card-randomiser/id806865530",
+          "note": "Card Randomiser",
+          "support_app": true
+        },
+        {
+          "store": "App Store",
+          "url": "https://apps.apple.com/us/app/randominion/id505136439",
+          "note": "Randominion",
+          "support_app": true
+        },
+        {
+          "store": "App Store",
+          "url": "https://apps.apple.com/us/app/dominioncompanion/id1493154264",
+          "note": "DominionCompanion",
+          "support_app": true
+        },
+        {
+          "store": "App Store",
+          "url": "https://apps.apple.com/us/app/dominion-minion/id339042584",
+          "note": "Dominion Minion",
+          "support_app": true
         }
       ],
       "pc": [
         {
           "store": "Steam",
           "url": "https://store.steampowered.com/app/1131620/Dominion/",
+          "note": "Dominion",
           "owned": true
         }
       ]
@@ -1637,7 +2021,29 @@
       "name": "Dixit",
       "short_description": "Give the perfect clue so most (not all) players guess the right surreal image card.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "android": [
+        {
+          "store": "Play Store",
+          "url": "https://play.google.com/store/apps/details?id=com.libelluddigital.dixit",
+          "note": "Dixit World",
+          "owned": true
+        }
+      ],
+      "ios": [
+        {
+          "store": "App Store",
+          "url": "https://apps.apple.com/us/app/dixit-score/id1458236590",
+          "note": "Score",
+          "support_app": true
+        },
+        {
+          "store": "App Store",
+          "url": "https://apps.apple.com/us/app/dixit-world/id1340833766?platform=ipad",
+          "note": "Dixit World",
+          "owned": true
+        }
+      ]
     },
     "40354": {
       "name": "Maria",
@@ -1672,6 +2078,12 @@
           "store": "Humble",
           "url": "https://www.humblebundle.com/home/library",
           "owned": true
+        },
+        {
+          "store": "Play Store",
+          "url": "https://play.google.com/store/apps/details?id=com.squd.smallworldpedia",
+          "note": "Small World Pedia",
+          "support_app": true
         }
       ],
       "pc": [
@@ -1742,6 +2154,15 @@
         {
           "store": "Play Store",
           "url": "https://play.google.com/store/apps/details?id=de.brettspielwelt.freitag",
+          "note": "Friday",
+          "wishlisted": true
+        }
+      ],
+      "ios": [
+        {
+          "store": "App Store",
+          "url": "https://apps.apple.com/us/app/friday-by-friedemann-friese/id1222916942?platform=ipad",
+          "note": "Friday",
           "wishlisted": true
         }
       ]
@@ -1849,11 +2270,26 @@
       "short_description": "Jihad is no longer a world away. Can the West react in time to win the war on terror?",
       "rulebooks": [],
       "supplemental_files": [],
+      "android": [
+        {
+          "store": "Play Store",
+          "url": "https://play.google.com/store/apps/details?id=com.playdekgames.labyrinth",
+          "note": "Labyrinth",
+          "wishlisted": true
+        }
+      ],
       "pc": [
         {
           "store": "Steam",
           "url": "https://store.steampowered.com/app/931950/Labyrinth_The_War_on_Terror/",
+          "note": "Labyrinth",
           "owned": true
+        },
+        {
+          "store": "Web",
+          "url": "https://softec.hu/labyrinth/",
+          "note": "Companion",
+          "support_app": true
         }
       ]
     },
@@ -1929,6 +2365,27 @@
           "url": "https://play.google.com/store/apps/details?id=com.rprod.sevenwonders&hl=en_US",
           "wishlisted": true
         }
+      ],
+      "ios": [
+        {
+          "store": "App Store",
+          "url": "https://apps.apple.com/us/app/7-wonders-companion/id504797218",
+          "note": "Companion",
+          "support_app": true
+        },
+        {
+          "store": "App Store",
+          "url": "https://apps.apple.com/us/app/7-wonders/id530090434",
+          "wishlisted": true
+        }
+      ],
+      "pc": [
+        {
+          "store": "Steam",
+          "url": "https://boardgamehelpers.com/SevenWonders/Default.aspx",
+          "note": "Setup Helper",
+          "support_app": true
+        }
       ]
     },
     "69292": {
@@ -1987,10 +2444,27 @@
       "short_description": "Build an interstellar civilization by exploration, research, conquest, and diplomacy.",
       "rulebooks": [],
       "supplemental_files": [],
+      "android": [
+        {
+          "store": "Play Store",
+          "url": "https://play.google.com/store/apps/details?id=air.de.brettspielwelt.eclipseapp",
+          "note": "Eclipse",
+          "wishlisted": true
+        }
+      ],
+      "ios": [
+        {
+          "store": "App Store",
+          "url": "https://apps.apple.com/us/app/eclipse-boardgame/id620439479",
+          "note": "Eclipse",
+          "wishlisted": true
+        }
+      ],
       "pc": [
         {
           "store": "Steam",
           "url": "https://store.steampowered.com/app/522030/Eclipse_New_Dawn_for_the_Galaxy/",
+          "note": "Eclipse",
           "wishlisted": true
         }
       ]
@@ -2084,6 +2558,15 @@
         {
           "store": "Play Store",
           "url": "https://play.google.com/store/apps/details?id=com.digidiced.bvbrelease",
+          "note": "Castles of Burgundy",
+          "wishlisted": true
+        }
+      ],
+      "ios": [
+        {
+          "store": "App Store",
+          "url": "https://apps.apple.com/us/app/the-castles-of-burgundy/id1410742242",
+          "note": "Castles of Burgundy",
           "wishlisted": true
         }
       ],
@@ -2145,12 +2628,14 @@
       "supplemental_files": [],
       "android": [
         {
+          "store": "Play Store",
           "url": "https://play.google.com/store/apps/details?id=com.hexwar.canada1812",
           "wishlisted": true
         }
       ],
       "pc": [
         {
+          "store": "Steam",
           "url": "https://store.steampowered.com/app/555370/1812_The_Invasion_of_Canada/",
           "owned": true
         }
@@ -2184,7 +2669,23 @@
       "name": "Hanabi",
       "short_description": "Give hints to create sets of fireworks and try to avoid a pyrotechnical disaster.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "android": [
+        {
+          "store": "Play Store",
+          "url": "https://play.google.com/store/apps/details?id=com.Boardible.Boardible",
+          "note": "Boardabile",
+          "owned": true
+        }
+      ],
+      "ios": [
+        {
+          "store": "App Store",
+          "url": "https://apps.apple.com/us/app/boardible-mobile-board-games/id1610585922",
+          "note": "Boardabile",
+          "owned": true
+        }
+      ]
     },
     "100423": {
       "name": "Elder Sign",
@@ -2195,7 +2696,16 @@
         {
           "store": "Play Store",
           "url": "https://play.google.com/store/apps/details?id=com.fantasyflightgames.ESAndroid",
+          "note": "Elder Sign: Omens",
           "owned": true
+        }
+      ],
+      "ios": [
+        {
+          "store": "App Store",
+          "url": "https://apps.apple.com/us/app/elder-sign-omens-for-iphone/id475404533",
+          "note": "Elder Sign: Omens",
+          "wishlisted": true
         }
       ],
       "pc": [
@@ -2246,6 +2756,15 @@
         {
           "store": "Play Store",
           "url": "https://play.google.com/store/apps/details?id=com.digidiced.cavrelease",
+          "note": "Caverna",
+          "wishlisted": true
+        }
+      ],
+      "ios": [
+        {
+          "store": "App Store",
+          "url": "https://apps.apple.com/us/app/caverna/id6480056103",
+          "note": "Caverna",
           "wishlisted": true
         }
       ],
@@ -2253,6 +2772,7 @@
         {
           "store": "Steam",
           "url": "https://store.steampowered.com/app/3216750/Caverna/",
+          "note": "Caverna",
           "wishlisted": true
         }
       ]
@@ -2296,10 +2816,19 @@
       "short_description": "Fight the Overlord and level up your heroes in this fantasy dungeon campaign.",
       "rulebooks": [],
       "supplemental_files": [],
+      "android": [
+        {
+          "store": "Play Store",
+          "url": "https://play.google.com/store/apps/details?id=com.fantasyflightgames.rtl",
+          "note": "Road to Legend",
+          "support_app": true
+        }
+      ],
       "pc": [
         {
           "store": "Steam",
           "url": "https://store.steampowered.com/app/477200/Descent_Road_to_Legend/",
+          "note": "Road to Legend",
           "support_app": true
         }
       ]
@@ -2383,7 +2912,35 @@
       "name": "Escape: The Curse of the Temple",
       "short_description": "Run as fast as you can to return the cursed gems before the temple traps you forever.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "android": [
+        {
+          "store": "BGG",
+          "url": "https://boardgamegeek.com/filepage/86458/android-timer-app-for-escape",
+          "note": "Timer App",
+          "support_app": true
+        }
+      ],
+      "pc": [
+        {
+          "store": "Web",
+          "url": "https://www.youtube.com/watch?v=D4dOTK4JYH0",
+          "note": "YouTube Timer",
+          "support_app": true
+        },
+        {
+          "store": "Web",
+          "url": "https://www.youtube.com/watch?v=w-cIk5k5sso",
+          "note": "Indiana Jones Timer",
+          "support_app": true
+        },
+        {
+          "store": "Tabletop Simulator",
+          "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=478737539",
+          "note": "Tabletop Simulator",
+          "owned": true
+        }
+      ]
     },
     "113401": {
       "name": "Timeline: Events",
@@ -2462,6 +3019,15 @@
         {
           "store": "Play Store",
           "url": "https://play.google.com/store/apps/details?id=com.digidiced.abvrelease",
+          "note": "Agricola: All Creatures",
+          "wishlisted": true
+        }
+      ],
+      "ios": [
+        {
+          "store": "App Store",
+          "url": "https://apps.apple.com/us/app/agricola-all-creatures-2p/id1118398079",
+          "note": "Agricola: All Creatures",
           "wishlisted": true
         }
       ],
@@ -2469,6 +3035,7 @@
         {
           "store": "Steam",
           "url": "https://store.steampowered.com/app/528180/Agricola_All_Creatures_Big_and_Small/",
+          "note": "Agricola: All Creatures",
           "owned": true
         }
       ]
@@ -2482,6 +3049,15 @@
         {
           "store": "Play Store",
           "url": "https://play.google.com/store/apps/details?id=com.digidiced.txmrelease",
+          "note": "Terra Mystica",
+          "wishlisted": true
+        }
+      ],
+      "ios": [
+        {
+          "store": "App Store",
+          "url": "https://apps.apple.com/us/app/terra-mystica/id1162168455",
+          "note": "Terra Mystica",
           "wishlisted": true
         }
       ],
@@ -2489,6 +3065,7 @@
         {
           "store": "Steam",
           "url": "https://store.steampowered.com/app/628900/Terra_Mystica/",
+          "note": "Terra Mystica",
           "owned": true
         }
       ]
@@ -2504,6 +3081,22 @@
           "url": "https://play.google.com/store/apps/details?id=com.PortalGames.RobinsonApp",
           "note": "Companion",
           "support_app": true
+        }
+      ],
+      "ios": [
+        {
+          "store": "App Store",
+          "url": "https://apps.apple.com/us/app/robinson-crusoe-companion-app/id6468989240",
+          "note": "Companion",
+          "support_app": true
+        }
+      ],
+      "pc": [
+        {
+          "store": "Web",
+          "url": "https://boardgamehelpers.com/RobinsonCrusoe/Default.aspx",
+          "note": "Scenario Selector",
+          "owned": true
         }
       ]
     },
@@ -2634,6 +3227,15 @@
         {
           "store": "Play Store",
           "url": "https://play.google.com/store/apps/details?id=com.acram.Concordia",
+          "note": "Concordia",
+          "wishlisted": true
+        }
+      ],
+      "ios": [
+        {
+          "store": "App Store",
+          "url": "https://apps.apple.com/us/app/concordia-digital-edition/id1536417255",
+          "note": "Concordia",
           "wishlisted": true
         }
       ],
@@ -2641,7 +3243,7 @@
         {
           "store": "Steam",
           "url": "https://store.steampowered.com/app/1450330/Concordia_Digital_Edition/",
-          "note": "with Salsa, Fish Market, Venus, Corsica & Gallia, Aegyptus & Creta, Britannia & Germania",
+          "note": "Concordia with Salsa, Fish Market, Venus, Corsica & Gallia, Aegyptus & Creta, Britannia & Germania",
           "owned": true
         }
       ]
@@ -2650,7 +3252,15 @@
       "name": "Mice and Mystics",
       "short_description": "After being turned into mice, a prince and his allies experience giant-sized stories.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "android": [
+        {
+          "store": "Play Store",
+          "url": "https://play.google.com/store/apps/details?id=com.eyecreate.miceandmystics.miceandmystics",
+          "note": "Tracker",
+          "support_app": true
+        }
+      ]
     },
     "125153": {
       "name": "Gallerist, The",
@@ -2722,7 +3332,15 @@
       "name": "Resistance: Avalon, The",
       "short_description": "Who can you trust? A game of social deduction set in King Arthur’s legendary realm.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "android": [
+        {
+          "store": "Play Store",
+          "url": "https://play.google.com/store/apps/details?id=com.twocups.rolecast.adv",
+          "note": "Role Cast",
+          "wishlisted": true
+        }
+      ]
     },
     "128996": {
       "name": "1775: Rebellion",
@@ -2736,12 +3354,14 @@
       "supplemental_files": [],
       "android": [
         {
+          "store": "Play Store",
           "url": "https://play.google.com/store/apps/details?id=com.hexwar.rebellion1775",
           "wishlisted": true
         }
       ],
       "pc": [
         {
+          "store": "Steam",
           "url": "https://store.steampowered.com/app/422610/1775_Rebellion/",
           "owned": true
         }
@@ -2756,6 +3376,15 @@
         {
           "store": "Play Store",
           "url": "https://play.google.com/store/apps/details?id=com.digidiced.lhbrelease",
+          "note": "Le Havre: The Inland Port",
+          "wishlisted": true
+        }
+      ],
+      "ios": [
+        {
+          "store": "App Store",
+          "url": "https://apps.apple.com/us/app/le-havre-the-inland-port/id1044671796",
+          "note": "Le Havre: The Inland Port",
           "wishlisted": true
         }
       ],
@@ -2763,6 +3392,7 @@
         {
           "store": "Steam",
           "url": "https://store.steampowered.com/app/511820/Le_Havre_The_Inland_Port/",
+          "note": "Le Havre: The Inland Port",
           "owned": true
         }
       ]
@@ -2797,7 +3427,15 @@
       "name": "Legendary: Marvel",
       "short_description": "Assemble Marvel's finest Heroes to combat Masterminds and thwart their Schemes!",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "android": [
+        {
+          "store": "Play Store",
+          "url": "https://play.google.com/store/apps/details?id=com.ctgilley.marvellegendaryrandomizer",
+          "note": "Randomizer",
+          "support_app": true
+        }
+      ]
     },
     "129622": {
       "name": "Love Letter",
@@ -2865,6 +3503,15 @@
         {
           "store": "Play Store",
           "url": "https://play.google.com/store/apps/details?id=com.templegatesgames.RollAndroid",
+          "note": "Roll for the Galaxy",
+          "wishlisted": true
+        }
+      ],
+      "ios": [
+        {
+          "store": "App Store",
+          "url": "https://apps.apple.com/us/app/roll-for-the-galaxy/id1324815218",
+          "note": "Roll for the Galaxy",
           "wishlisted": true
         }
       ],
@@ -2872,6 +3519,7 @@
         {
           "store": "Steam",
           "url": "https://store.steampowered.com/app/893840/Roll_for_the_Galaxy/",
+          "note": "Roll for the Galaxy",
           "wishlisted": true
         }
       ]
@@ -2886,7 +3534,23 @@
       "name": "Sushi Go!",
       "short_description": "Pass the sushi around, but keep the best for yourself. Save room for dessert!",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "android": [
+        {
+          "store": "Play Store",
+          "url": "https://play.google.com/store/apps/details?id=com.Boardible.Boardible",
+          "note": "Boardabile",
+          "owned": true
+        }
+      ],
+      "ios": [
+        {
+          "store": "App Store",
+          "url": "https://apps.apple.com/us/app/boardible-mobile-board-games/id1610585922",
+          "note": "Boardible",
+          "owned": true
+        }
+      ]
     },
     "133632": {
       "name": "Mythotopia",
@@ -3078,7 +3742,23 @@
       "name": "Russian Railroads",
       "short_description": "Acquire locomotives & industry, build track, and hire the best engineers in Russia.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "android": [
+        {
+          "store": "Play Store",
+          "url": "https://play.google.com/store/apps/details?id=com.geeksong.russianrailroadsscorer",
+          "note": "Scorer",
+          "support_app": true
+        }
+      ],
+      "pc": [
+        {
+          "store": "Web",
+          "url": "https://boardgamehelpers.com/RussianRailroads/",
+          "note": "Setup Helper",
+          "support_app": true
+        }
+      ]
     },
     "145371": {
       "name": "Three Kingdoms Redux",
@@ -3139,7 +3819,14 @@
         {
           "store": "Steam",
           "url": "https://store.steampowered.com/app/4089610/Eldritch_Horror_Digital_Edition/",
+          "note": "Eldritch Horror",
           "wishlisted": true
+        },
+        {
+          "store": "Web",
+          "url": "https://metapone.github.io/eldritch-horror-card-clerk-plus/",
+          "note": "Card Clerk+",
+          "support_app": true
         }
       ]
     },
@@ -3283,6 +3970,15 @@
         {
           "store": "Play Store",
           "url": "https://play.google.com/store/apps/details?id=com.acram.Istanbul",
+          "note": "Istanbul",
+          "wishlisted": true
+        }
+      ],
+      "ios": [
+        {
+          "store": "App Store",
+          "url": "https://apps.apple.com/us/app/istanbul-digital-edition/id1296756606?platform=ipad",
+          "note": "Istanbul",
           "wishlisted": true
         }
       ],
@@ -3290,6 +3986,7 @@
         {
           "store": "Steam",
           "url": "https://store.steampowered.com/app/943410/Istanbul_Digital_Edition/",
+          "note": "Istanbul",
           "owned": true
         }
       ]
@@ -3324,7 +4021,15 @@
       "name": "Dead of Winter: A Crossroads Game",
       "short_description": "As you struggle to keep survivors alive, how will you value group vs. personal needs?",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "android": [
+        {
+          "store": "Play Store",
+          "url": "https://play.google.com/store/apps/details?id=com.jtlie.dead_of_winter_crossroads",
+          "note": "Crossroads",
+          "support_app": true
+        }
+      ]
     },
     "150658": {
       "name": "Pandemic: The Cure",
@@ -3471,6 +4176,13 @@
       "short_description": "Adapt in an ever-changing ecosystem where food is scarce and predators lurk.",
       "rulebooks": [],
       "supplemental_files": [],
+      "android": [
+        {
+          "store": "Play Store",
+          "url": "https://play.google.com/store/apps/details?id=com.northstargames.evolutiongame",
+          "wishlisted": true
+        }
+      ],
       "pc": [
         {
           "store": "Steam",
@@ -3489,7 +4201,21 @@
       "name": "Power Grid Deluxe: Europe/North America",
       "short_description": "Manage resources, build networks and supply the most cities with power.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "Web",
+          "url": "http://tabi.org/helpers/power_grid_deluxe.html",
+          "note": "Region Selector",
+          "support_app": true
+        },
+        {
+          "store": "Web",
+          "url": "https://boardgamehelpers.com/PowerGridDeluxe/",
+          "note": "Setup Helper",
+          "owned": true
+        }
+      ]
     },
     "155969": {
       "name": "Harbour",
@@ -3724,7 +4450,23 @@
       "name": "Lanterns: The Harvest Festival",
       "short_description": "Decorate the lake with floating lanterns and dedicate your cards to gain honour!",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "android": [
+        {
+          "store": "Play Store",
+          "url": "https://play.google.com/store/apps/details?id=com.direwolfdigital.Renegade&hl=en",
+          "note": "Renegade Games Companion",
+          "support_app": true
+        }
+      ],
+      "ios": [
+        {
+          "store": "App Store",
+          "url": "https://apps.apple.com/ca/app/renegade-games-companion/id1046548265",
+          "note": "Renegade Games Companion",
+          "support_app": true
+        }
+      ]
     },
     "160958": {
       "name": "DC Deck-Building Game: Rivals – Batman vs The Joker",
@@ -3736,12 +4478,33 @@
       "name": "Red7",
       "short_description": "Art is so subjective! Don't like the color? Change the rules so you can win!",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "android": [
+        {
+          "store": "Play Store",
+          "url": "https://play.google.com/store/apps/details?id=com.Boardible.Boardible",
+          "note": "Boardible",
+          "owned": true
+        }
+      ],
+      "ios": [
+        {
+          "store": "App Store",
+          "url": "https://apps.apple.com/us/app/boardible-mobile-board-games/id1610585922",
+          "note": "Boardible",
+          "owned": true
+        }
+      ]
     },
     "161533": {
       "name": "Lisboa",
       "short_description": "Compete to reconstruct the city of Lisboa after the great earthquake of 1755.",
-      "rulebooks": [],
+      "rulebooks": [
+        {
+          "url": "https://boardgamehelpers.com/Lisboa/Default.aspx",
+          "name": "Rules and Clarifications"
+        }
+      ],
       "supplemental_files": []
     },
     "161546": {
@@ -3765,6 +4528,15 @@
         {
           "store": "Play Store",
           "url": "https://play.google.com/store/apps/details?id=com.digidiced.sxprelease",
+          "note": "Stockpile",
+          "wishlisted": true
+        }
+      ],
+      "ios": [
+        {
+          "store": "App Store",
+          "url": "https://apps.apple.com/us/app/stockpile-game/id1410674432",
+          "note": "Stockpile",
           "wishlisted": true
         }
       ],
@@ -3772,6 +4544,7 @@
         {
           "store": "Steam",
           "url": "https://store.steampowered.com/app/900370/Stockpile/",
+          "note": "Stockpile",
           "owned": true
         }
       ]
@@ -3794,6 +4567,14 @@
           "note": "Lab Equipment",
           "support_app": true
         }
+      ],
+      "ios": [
+        {
+          "store": "App Store",
+          "url": "https://apps.apple.com/us/app/alchemists-lab-equipment/id921595239",
+          "note": "Lab Equipment",
+          "owned": true
+        }
       ]
     },
     "162082": {
@@ -3811,6 +4592,15 @@
         {
           "store": "Play Store",
           "url": "https://play.google.com/store/apps/details?id=com.handelabra.SpiritIsland",
+          "note": "Spirit Island",
+          "owned": true
+        }
+      ],
+      "ios": [
+        {
+          "store": "App Store",
+          "url": "https://apps.apple.com/us/app/spirit-island/id1501321205",
+          "note": "Spirit Island",
           "owned": true
         }
       ],
@@ -3818,6 +4608,7 @@
         {
           "store": "Steam",
           "url": "https://store.steampowered.com/app/1236720/Spirit_Island/?curator_clanid=33121510",
+          "note": "Spirit Island",
           "owned": true
         }
       ]
@@ -3845,6 +4636,15 @@
         {
           "store": "Play Store",
           "url": "https://play.google.com/store/apps/details?id=com.digidiced.pxwrelease",
+          "note": "Patchwork",
+          "wishlisted": true
+        }
+      ],
+      "ios": [
+        {
+          "store": "App Store",
+          "url": "https://apps.apple.com/us/app/patchwork-the-game/id1075851197",
+          "note": "Patchwork",
           "wishlisted": true
         }
       ],
@@ -3852,6 +4652,7 @@
         {
           "store": "Steam",
           "url": "https://store.steampowered.com/app/528250/Patchwork/",
+          "note": "Patchwork",
           "owned": true
         }
       ]
@@ -3866,7 +4667,15 @@
       "name": "Star Wars: Armada",
       "short_description": "Form your fleet, plan a strategy, and execute it with your commands.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "android": [
+        {
+          "store": "Play Store",
+          "url": "https://play.google.com/store/apps/details?id=com.fantasyflightgames.swdice",
+          "note": "Star Wars Dice",
+          "support_app": true
+        }
+      ]
     },
     "163805": {
       "name": "Transatlantic",
@@ -3901,6 +4710,13 @@
         {
           "store": "Play Store",
           "url": "https://play.google.com/store/apps/details?id=com.fantasyflightgames.iaca",
+          "note": "Imperial Assault Campaign",
+          "support_app": true
+        },
+        {
+          "store": "Play Store",
+          "url": "https://play.google.com/store/apps/details?id=com.fantasyflightgames.swdice",
+          "note": "Star Wars Dice",
           "support_app": true
         }
       ],
@@ -3923,10 +4739,27 @@
       "short_description": "Acquire gold and collect resources to create the most prestigious abbey.",
       "rulebooks": [],
       "supplemental_files": [],
+      "android": [
+        {
+          "store": "Play Store",
+          "url": "https://play.google.com/store/apps/details?id=com.offbitstudios.bibliosdice",
+          "note": "Biblios Dice",
+          "owned": true
+        }
+      ],
+      "ios": [
+        {
+          "store": "App Store",
+          "url": "https://apps.apple.com/us/app/biblios-dice/id1448045757",
+          "note": "Biblios Dice",
+          "wishlisted": true
+        }
+      ],
       "pc": [
         {
           "store": "Steam",
           "url": "https://store.steampowered.com/app/1837550/Biblios_Dice/",
+          "note": "Biblios Dice",
           "wishlisted": true
         }
       ]
@@ -4031,7 +4864,23 @@
       "name": "Ashes Reborn: Rise of the Phoenixborn",
       "short_description": "Only one Phoenixborn may stand. Absorb the Ashes of the fallen and rise to power.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "android": [
+        {
+          "store": "Play Store",
+          "url": "https://play.google.com/store/apps/details?id=com.plaidhatgames.ashesdiceroller",
+          "note": "Dice Roller",
+          "support_app": true
+        }
+      ],
+      "ios": [
+        {
+          "store": "App Store",
+          "url": "https://apps.apple.com/us/app/ashes-dice-roller/id6752876422",
+          "note": "Dice Roller",
+          "support_app": true
+        }
+      ]
     },
     "167763": {
       "name": "DC Deck-Building Game: Teen Titans",
@@ -4104,6 +4953,15 @@
         {
           "store": "Play Store",
           "url": "https://play.google.com/store/apps/details?id=hr.mipmap.rollplayer",
+          "note": "Roll Player",
+          "wishlisted": true
+        }
+      ],
+      "ios": [
+        {
+          "store": "App Store",
+          "url": "https://apps.apple.com/us/app/roll-player-the-board-game/id1575755196",
+          "note": "Roll Player",
           "wishlisted": true
         }
       ],
@@ -4111,6 +4969,7 @@
         {
           "store": "Steam",
           "url": "https://store.steampowered.com/app/1939940/Roll_Player__The_Board_Game/",
+          "note": "Roll Player",
           "wishlisted": true
         }
       ]
@@ -4124,6 +4983,7 @@
         {
           "store": "Play Store",
           "url": "https://play.google.com/store/apps/details?id=com.asmodeedigital.scythe",
+          "note": "Scythe",
           "wishlisted": true
         },
         {
@@ -4133,15 +4993,35 @@
           "support_app": true
         }
       ],
+      "ios": [
+        {
+          "store": "App Store",
+          "url": "https://apps.apple.com/us/app/scythe-digital-edition/id1482645966?platform=ipad",
+          "note": "Scythe",
+          "wishlisted": true
+        },
+        {
+          "store": "App Store",
+          "url": "https://apps.apple.com/us/app/scythekick/id1190324458",
+          "note": "ScytheKick",
+          "support_app": true
+        },
+        {
+          "store": "App Store",
+          "url": "https://apps.apple.com/us/app/scythe-hepler/id6464310377",
+          "note": "Helper",
+          "support_app": true
+        }
+      ],
       "pc": [
         {
           "store": "Steam",
           "url": "https://store.steampowered.com/app/718560/Scythe_Digital_Edition/",
-          "note": "with Invaders from Afar",
+          "note": "Scythe with Invaders from Afar",
           "owned": true
         },
         {
-          "store": "Steam",
+          "store": "Tabletop Simulator",
           "url": "https://store.steampowered.com/app/286160/Tabletop_Simulator/",
           "note": "Tabletop Simulator DLC",
           "owned": true
@@ -4157,6 +5037,7 @@
         {
           "store": "Play Store",
           "url": "https://play.google.com/store/apps/details?id=com.direwolfdigital.raiders",
+          "note": "Raiders of the North Sea",
           "wishlisted": true
         },
         {
@@ -4166,10 +5047,19 @@
           "support_app": true
         }
       ],
+      "ios": [
+        {
+          "store": "App Store",
+          "url": "https://apps.apple.com/us/app/raiders-of-the-north-sea/id1439244088",
+          "note": "Raiders of the North Sea",
+          "owned": true
+        }
+      ],
       "pc": [
         {
           "store": "Steam",
           "url": "https://store.steampowered.com/app/965600/Raiders_of_the_North_Sea/?curator_clanid=5557305",
+          "note": "Raiders of the North Sea",
           "owned": true
         }
       ]
@@ -4203,7 +5093,16 @@
         {
           "store": "Play Store",
           "url": "https://play.google.com/store/apps/details?id=com.beziergames.favorofthepharaoh",
-          "wishlisted": true
+          "note": "Companion",
+          "support_app": true
+        }
+      ],
+      "ios": [
+        {
+          "store": "App Store",
+          "url": "https://apps.apple.com/us/app/favor-of-the-pharaoh/id1033563036",
+          "note": "Companion",
+          "support_app": true
         }
       ]
     },
@@ -4224,10 +5123,39 @@
       "short_description": "Hunt fauna and learn culture as early humans, to survive the European Ice Age.",
       "rulebooks": [],
       "supplemental_files": [],
+      "android": [
+        {
+          "store": "Play Store",
+          "url": "https://play.google.com/store/apps/details?id=com.Ion.Neanderthal",
+          "note": "Neanderthal Premium",
+          "wishlisted": true
+        },
+        {
+          "store": "Play Store",
+          "url": "https://play.google.com/store/apps/details?id=com.Ion.NeanderthalF2P",
+          "note": "Neanderthal",
+          "owned": true
+        }
+      ],
+      "ios": [
+        {
+          "store": "App Store",
+          "url": "https://apps.apple.com/us/app/neanderthal-board-game-premium/id1531784748",
+          "note": "Neanderthal Premium",
+          "wishlisted": true
+        },
+        {
+          "store": "App Store",
+          "url": "https://apps.apple.com/us/app/neanderthal-board-game-f2p/id6756067349",
+          "note": "Neanderthal",
+          "owned": true
+        }
+      ],
       "pc": [
         {
           "store": "Steam",
           "url": "store.steampowered.com/app/2267790/Neanderthal/",
+          "note": "Neanderthal",
           "wishlisted": true
         }
       ]
@@ -4469,7 +5397,15 @@
       "name": "Vinhos: Deluxe Edition",
       "short_description": "The strategic craft of fine winemaking.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "Web",
+          "url": "https://boardgamehelpers.com/Vinhos/Default.aspx",
+          "note": "Region Randomizer",
+          "owned": true
+        }
+      ]
     },
     "176103": {
       "name": "Shogun Big Box",
@@ -4571,13 +5507,29 @@
         {
           "store": "Play Store",
           "url": "https://play.google.com/store/apps/details?id=com.czechgames.codenamesdigital",
+          "note": "Codenames",
           "owned": true
+        },
+        {
+          "store": "Play Store",
+          "url": "https://play.google.com/store/apps/details?id=com.czechgames.codenames",
+          "note": "Companion",
+          "support_app": true
+        }
+      ],
+      "ios": [
+        {
+          "store": "App Store",
+          "url": "https://apps.apple.com/ca/app/codenames-companion/id1032754439",
+          "note": "Companion",
+          "support_app": true
         }
       ],
       "pc": [
         {
           "store": "Steam",
           "url": "https://store.steampowered.com/app/884670/Codenames",
+          "note": "Codenames",
           "wishlisted": true
         }
       ]
@@ -4701,11 +5653,19 @@
       "short_description": "Collect and combine ingredients to mix potions and try to become Student of The Year.",
       "rulebooks": [],
       "supplemental_files": [],
+      "ios": [
+        {
+          "store": "App Store",
+          "url": "https://apps.apple.com/us/app/potion-explosion/id1162628471",
+          "note": "Potion Explosion",
+          "wishlisted": true
+        }
+      ],
       "pc": [
         {
           "store": "Steam",
           "url": "https://store.steampowered.com/app/788420/Potion_Explosion/",
-          "note": "with The Fifth Ingredient",
+          "note": "Potion Explosion with The Fifth Ingredient",
           "owned": true
         }
       ]
@@ -4782,6 +5742,15 @@
         {
           "store": "Play Store",
           "url": "https://play.google.com/store/apps/details?id=com.czechgames.tta",
+          "note": "Through the Ages",
+          "wishlisted": true
+        }
+      ],
+      "ios": [
+        {
+          "store": "App Store",
+          "url": "https://apps.apple.com/us/app/through-the-ages/id966245474",
+          "note": "Through the Ages",
           "wishlisted": true
         }
       ],
@@ -4789,7 +5758,7 @@
         {
           "store": "Steam",
           "url": "https://store.steampowered.com/app/758370/Through_the_Ages/",
-          "note": "with New Leaders & Wonders",
+          "note": "Through the Ages with New Leaders & Wonders",
           "owned": true
         }
       ]
@@ -4823,7 +5792,15 @@
       "name": "Star Trek: Frontiers",
       "short_description": "Starship Captains compete to explore and conquer an unknown part of the universe.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "Web",
+          "url": "https://www.hoho.cz/app/frontiers/",
+          "note": "Dummy Player",
+          "support_app": true
+        }
+      ]
     },
     "182694": {
       "name": "Watson & Holmes",
@@ -4841,7 +5818,15 @@
       "name": "Grand Austria Hotel",
       "short_description": "Serve guests and prepare rooms to be the best hotelier in the Viennese modern age.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "Web",
+          "url": "https://boardgamehelpers.com/GrandAustriaHotel/Default.aspx",
+          "note": "Setup Helper",
+          "support_app": true
+        }
+      ]
     },
     "183284": {
       "name": "Factory Funner",
@@ -4858,6 +5843,15 @@
         {
           "store": "Play Store",
           "url": "https://play.google.com/store/apps/details?id=com.digidiced.vxcrelease",
+          "note": "Viticulture",
+          "wishlisted": true
+        }
+      ],
+      "ios": [
+        {
+          "store": "App Store",
+          "url": "https://apps.apple.com/us/app/viticulture/id1467248737",
+          "note": "Viticulture",
           "wishlisted": true
         }
       ],
@@ -4967,7 +5961,37 @@
       "name": "Star Wars: Rebellion",
       "short_description": "Strike from your hidden base as the Rebels—or find and destroy it as the Empire.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "android": [
+        {
+          "store": "Play Store",
+          "url": "https://play.google.com/store/apps/details?id=com.fantasyflightgames.swdice",
+          "note": "Star Wars Dice",
+          "support_app": true
+        }
+      ],
+      "ios": [
+        {
+          "store": "App Store",
+          "url": "https://apps.apple.com/us/app/star-wars-dice/id549973398",
+          "note": "Star Wars Dice",
+          "support_app": true
+        }
+      ],
+      "pc": [
+        {
+          "store": "Web",
+          "url": "https://boardgamehelpers.com/StarWarsRebellion/",
+          "note": "Map Generator",
+          "support_app": true
+        },
+        {
+          "store": "Steam",
+          "url": "https://rebellionhelper.app/",
+          "note": "Rebellion Helper",
+          "support_app": true
+        }
+      ]
     },
     "188181": {
       "name": "Avignon: A Clash of Popes",
@@ -5015,6 +6039,15 @@
         {
           "store": "Play Store",
           "url": "https://play.google.com/store/apps/details?id=com.handelabra.AeonsEnd",
+          "note": "Aeon's End",
+          "wishlisted": true
+        }
+      ],
+      "ios": [
+        {
+          "store": "App Store",
+          "url": "https://apps.apple.com/us/app/aeons-end/id1476090287?platform=ipad",
+          "note": "Aeon's End",
           "wishlisted": true
         }
       ],
@@ -5022,6 +6055,7 @@
         {
           "store": "Steam",
           "url": "https://store.steampowered.com/app/1063580/Aeons_End/",
+          "note": "Aeon's End",
           "owned": true
         }
       ]
@@ -5108,7 +6142,14 @@
       "name": "Dead of Winter: The Long Night",
       "short_description": "A new group stands alone against the undead, bandits, and the horrors of Raxxon.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "android": [
+        {
+          "store": "Play Store",
+          "url": "https://play.google.com/store/apps/details?id=com.jtlie.dead_of_winter_crossroads",
+          "wishlisted": true
+        }
+      ]
     },
     "193042": {
       "name": "Junk Art",
@@ -5247,7 +6288,23 @@
       "name": "Coffee Roaster",
       "short_description": "Brew the richest blends and score high in this solo puzzle.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "android": [
+        {
+          "store": "Play Store",
+          "url": "https://play.google.com/store/apps/details?id=de.brettspielwelt.coffee_roaster",
+          "note": "Coffee Roaster",
+          "wishlisted": true
+        }
+      ],
+      "ios": [
+        {
+          "store": "App Store",
+          "url": "https://apps.apple.com/us/app/coffee-roaster/id1475660279",
+          "note": "Coffee Roaster",
+          "wishlisted": true
+        }
+      ]
     },
     "197065": {
       "name": "Valley of the Kings: Last Rites",
@@ -5284,13 +6341,23 @@
         {
           "store": "Play Store",
           "url": "https://play.google.com/store/apps/details?id=com.direwolfdigital.cascadia",
+          "note": "Charterstone",
           "wishlisted": true
+        }
+      ],
+      "ios": [
+        {
+          "store": "App Store",
+          "url": "https://apps.apple.com/us/app/charterstone-digital-edition/id1457338857",
+          "note": "Charterstone",
+          "owned": true
         }
       ],
       "pc": [
         {
           "store": "Steam",
           "url": "https://store.steampowered.com/app/1046660/Charterstone_Digital_Edition/",
+          "note": "Charterstone",
           "owned": true
         }
       ]
@@ -5341,7 +6408,23 @@
       "name": "Codenames: Pictures",
       "short_description": "Give your team one-word coded clues, trying to identify specific image cards.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "android": [
+        {
+          "store": "Play Store",
+          "url": "https://play.google.com/store/apps/details?id=com.czechgames.codenames",
+          "note": "Companion",
+          "support_app": true
+        }
+      ],
+      "ios": [
+        {
+          "store": "App Store",
+          "url": "https://apps.apple.com/ca/app/codenames-companion/id1032754439",
+          "note": "Companion",
+          "support_app": true
+        }
+      ]
     },
     "198928": {
       "name": "Pandemic: Iberia",
@@ -5380,7 +6463,15 @@
       "name": "Harry Potter: Hogwarts Battle",
       "short_description": "Battle for the fate of the Wizarding World over your 7 years at Hogwarts.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "Web",
+          "url": "https://boardgamehelpers.com/HogwartsBattle/Default.aspx",
+          "note": "Setup Helper",
+          "support_app": true
+        }
+      ]
     },
     "199561": {
       "name": "Sagrada",
@@ -5390,13 +6481,24 @@
       "android": [
         {
           "store": "Play Store",
-          "url": "https://play.google.com/store/apps/details?id=com.direwolfdigital.sagrada"
+          "url": "https://play.google.com/store/apps/details?id=com.direwolfdigital.sagrada",
+          "note": "Sagrada",
+          "wishlisted": true
+        }
+      ],
+      "ios": [
+        {
+          "store": "App Store",
+          "url": "https://apps.apple.com/us/app/sagrada/id1439244077",
+          "note": "Sagrada",
+          "wishlisted": true
         }
       ],
       "pc": [
         {
           "store": "Steam",
           "url": "https://store.steampowered.com/app/965590/Sagrada/?curator_clanid=5557305",
+          "note": "Sagrada",
           "owned": true
         }
       ]
@@ -5410,6 +6512,7 @@
         {
           "store": "Play Store",
           "url": "https://play.google.com/store/apps/details?id=com.direwolfdigital.everdell",
+          "note": "Everdell",
           "wishlisted": true
         },
         {
@@ -5419,10 +6522,19 @@
           "support_app": true
         }
       ],
+      "ios": [
+        {
+          "store": "App Store",
+          "url": "https://apps.apple.com/us/app/everdell/id1580626436",
+          "note": "Everdell",
+          "owned": true
+        }
+      ],
       "pc": [
         {
           "store": "Steam",
           "url": "https://store.steampowered.com/app/1722840/Everdell/",
+          "note": "Everdell",
           "owned": true
         }
       ]
@@ -5486,12 +6598,24 @@
           "store": "Play Store",
           "url": "https://play.google.com/store/apps/details?id=com.direwolfdigital.clank",
           "wishlisted": true
+        },
+        {
+          "store": "Play Store",
+          "url": "https://play.google.com/store/apps/details?id=com.direwolfdigital.gameroom&hl=en",
+          "note": "Dire Wolf Game Room",
+          "support_app": true
         }
       ],
       "pc": [
         {
           "store": "Steam",
           "url": "https://store.steampowered.com/app/1722870/Clank/",
+          "owned": true
+        },
+        {
+          "store": "Steam",
+          "url": "https://store.steampowered.com/app/1406720/Dire_Wolf_Game_Room/",
+          "note": "Dire Wolf Game Room",
           "owned": true
         }
       ]
@@ -5560,13 +6684,23 @@
         {
           "store": "Play Store",
           "url": "https://play.google.com/store/apps/details?id=com.digidiced.cxgrelease",
+          "note": "Cottage Garden",
           "wishlisted": true
+        }
+      ],
+      "ios": [
+        {
+          "store": "App Store",
+          "url": "https://apps.apple.com/us/app/cottage-garden/id1267856477",
+          "note": "Cottage Garden",
+          "owned": true
         }
       ],
       "pc": [
         {
           "store": "Steam",
           "url": "https://store.steampowered.com/app/716090/Cottage_Garden/",
+          "note": "Cottage Garden",
           "owned": true
         }
       ]
@@ -5575,7 +6709,15 @@
       "name": "Risk: Europe",
       "short_description": "Dominate Europe like never before in this Euro-Conflict hybrid of epic proportions!",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "Web",
+          "url": "http://tabi.org/helpers/risk_europe.html",
+          "note": "Combat Resolver",
+          "support_app": true
+        }
+      ]
     },
     "204305": {
       "name": "Sherlock Holmes Consulting Detective: Jack the Ripper & West End Adventures",
@@ -5656,7 +6798,16 @@
         {
           "store": "Play Store",
           "url": "https://play.google.com/store/apps/details?id=com.fantasyflightgames.mom",
-          "owned": true
+          "note": "Mansions of Madness",
+          "support_app": true
+        }
+      ],
+      "ios": [
+        {
+          "store": "App Store",
+          "url": "https://apps.apple.com/us/app/mansions-of-madness/id1120754903",
+          "note": "Mansions of Madness",
+          "support_app": true
         }
       ],
       "pc": [
@@ -5692,7 +6843,23 @@
       "name": "Codenames: Deep Undercover",
       "short_description": "Codenames for Adults!",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "android": [
+        {
+          "store": "Play Store",
+          "url": "https://play.google.com/store/apps/details?id=com.czechgames.codenames",
+          "note": "Companion",
+          "support_app": true
+        }
+      ],
+      "ios": [
+        {
+          "store": "App Store",
+          "url": "https://apps.apple.com/ca/app/codenames-companion/id1032754439",
+          "note": "Companion",
+          "support_app": true
+        }
+      ]
     },
     "205185": {
       "name": "Einstein: His Amazing Life and Incomparable Science",
@@ -5728,7 +6895,53 @@
       "name": "Arkham Horror: The Card Game",
       "short_description": "Investigate the horrors of Arkham while courting cosmic doom.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "android": [
+        {
+          "store": "Play Store",
+          "url": "https://play.google.com/store/apps/details?id=com.arkhamcards",
+          "note": "Arkham Cards",
+          "support_app": true
+        },
+        {
+          "store": "Play Store",
+          "url": "https://play.google.com/store/apps/details?id=com.arkhaminvestigator&hl=en&gl=US",
+          "note": "Arkham INvestigator",
+          "support_app": true
+        }
+      ],
+      "ios": [
+        {
+          "store": "App Store",
+          "url": "https://apps.apple.com/us/app/arkham-cards/id1424000351",
+          "note": "Arkham Cards",
+          "support_app": true
+        },
+        {
+          "store": "App Store",
+          "url": "https://apps.apple.com/us/app/arkham-deckbuilder/id6446255632",
+          "note": "Arkham Deckbuilder",
+          "support_app": true
+        },
+        {
+          "store": "App Store",
+          "url": "https://apps.apple.com/us/app/arkham-chaos-bag/id1529312169",
+          "note": "Chaos Bag",
+          "support_app": true
+        },
+        {
+          "store": "App Store",
+          "url": "https://apps.apple.com/us/app/a-h-tracker/id1537326818",
+          "note": "Tracker",
+          "support_app": true
+        },
+        {
+          "store": "App Store",
+          "url": "https://apps.apple.com/us/app/arkham-investigator-dashboard/id6753330970",
+          "note": "Investigator Dashboard",
+          "support_app": true
+        }
+      ]
     },
     "205716": {
       "name": "New Angeles",
@@ -5745,13 +6958,23 @@
         {
           "store": "Play Store",
           "url": "https://play.google.com/store/apps/details?id=com.digidiced.bddrelease",
+          "note": "Bohnanza: The Duel",
           "wishlisted": true
+        }
+      ],
+      "ios": [
+        {
+          "store": "App Store",
+          "url": "https://apps.apple.com/us/app/bohnanza-the-duel/id1280919052",
+          "note": "Bohnanza: The Duel",
+          "owned": true
         }
       ],
       "pc": [
         {
           "store": "Steam",
           "url": "https://store.steampowered.com/app/716100/Bohnanza_The_Duel/",
+          "note": "Bohnanza: The Duel",
           "owned": true
         }
       ]
@@ -6001,7 +7224,15 @@
       "name": "Quest for El Dorado, The",
       "short_description": "Race through a dense South American jungle in pursuit of the legendary city of gold.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "Web",
+          "url": "https://boardgamehelpers.com/QuestforElDorado/Default.aspx",
+          "note": "Map Builder",
+          "owned": true
+        }
+      ]
     },
     "217609": {
       "name": "Wars of Marcus Aurelius, The",
@@ -6086,6 +7317,15 @@
         {
           "store": "Play Store",
           "url": "https://play.google.com/store/apps/dev?id=7642513241968800472",
+          "note": "Gaia Project",
+          "wishlisted": true
+        }
+      ],
+      "ios": [
+        {
+          "store": "App Store",
+          "url": "https://apps.apple.com/us/app/gaia-project/id1572302140",
+          "note": "Gaia Project",
           "wishlisted": true
         }
       ],
@@ -6093,7 +7333,14 @@
         {
           "store": "Steam",
           "url": "https://store.steampowered.com/app/1516400/Gaia_Project/",
+          "note": "Gaia Project",
           "wishlisted": true
+        },
+        {
+          "store": "Web",
+          "url": "https://boardgamehelpers.com/GaiaProject/Default.aspx",
+          "note": "Map Generator",
+          "support_app": true
         }
       ]
     },
@@ -6119,7 +7366,23 @@
       "name": "Codenames: Disney – Family Edition",
       "short_description": "Use a one word clue that magically points your team to the right Disney character(s).",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "android": [
+        {
+          "store": "Play Store",
+          "url": "https://play.google.com/store/apps/details?id=com.czechgames.codenames",
+          "note": "Companion",
+          "support_app": true
+        }
+      ],
+      "ios": [
+        {
+          "store": "App Store",
+          "url": "https://apps.apple.com/ca/app/codenames-companion/id1032754439",
+          "note": "Companion",
+          "support_app": true
+        }
+      ]
     },
     "220792": {
       "name": "Expanse , The",
@@ -6198,7 +7461,37 @@
       "name": "Fantasy Realms",
       "short_description": "Build the greatest fantasy kingdom by constructing the best hand.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "android": [
+        {
+          "store": "Play Store",
+          "url": "https://play.google.com/store/apps/details?id=com.klamerek.fantasyrealms&hl=en",
+          "note": "Scoring",
+          "support_app": true
+        },
+        {
+          "store": "Play Store",
+          "url": "https://play.google.com/store/apps/details?id=de.brettspielwelt.fantasyrealms",
+          "note": "Fantasy Realms",
+          "wishlisted": true
+        }
+      ],
+      "ios": [
+        {
+          "store": "App Store",
+          "url": "https://apps.apple.com/us/app/fantasy-realms-by-wizkids/id1616457596",
+          "note": "Fantasy Realms",
+          "wishlisted": true
+        }
+      ],
+      "pc": [
+        {
+          "store": "Web",
+          "url": "https://fantasy-realms.github.io/index.html",
+          "note": "Scoring",
+          "support_app": true
+        }
+      ]
     },
     "223278": {
       "name": "Palace of Mad King Ludwig",
@@ -6240,7 +7533,23 @@
       "name": "Codenames: Duet",
       "short_description": "Swap one-word coded clues with your partner, trying to identify specific word cards.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "android": [
+        {
+          "store": "Play Store",
+          "url": "https://play.google.com/store/apps/details?id=com.czechgames.codenames",
+          "note": "Companion",
+          "support_app": true
+        }
+      ],
+      "ios": [
+        {
+          "store": "App Store",
+          "url": "https://apps.apple.com/ca/app/codenames-companion/id1032754439",
+          "note": "Companion",
+          "support_app": true
+        }
+      ]
     },
     "224316": {
       "name": "Unlock!: Escape Adventures – The Elite",
@@ -6377,7 +7686,15 @@
       "name": "Betrayal at Baldur's Gate",
       "short_description": "Explore the city, discover its mystery, and face the traitor amongst yourselves....",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "ios": [
+        {
+          "store": "App Store",
+          "url": "https://apps.apple.com/ca/app/betrayal-companion/id1447651302",
+          "note": "Companion App",
+          "owned": true
+        }
+      ]
     },
     "228668": {
       "name": "Dungeons & Dragons: Tomb of Annihilation",
@@ -6401,6 +7718,15 @@
         {
           "store": "Play Store",
           "url": "https://play.google.com/store/apps/details?id=com.acram.SetAWatch",
+          "note": "Set a Watch",
+          "wishlisted": true
+        }
+      ],
+      "ios": [
+        {
+          "store": "App Store",
+          "url": "https://apps.apple.com/us/app/set-a-watch-digital-edition/id6483861915",
+          "note": "Set a Watch",
           "wishlisted": true
         }
       ],
@@ -6408,6 +7734,7 @@
         {
           "store": "Steam",
           "url": "https://store.steampowered.com/app/3493430/Set_a_Watch_Digital_Edition/",
+          "note": "Set a Watch",
           "wishlisted": true
         }
       ]
@@ -6460,7 +7787,23 @@
       "name": "Teotihuacan: City of Gods",
       "short_description": "Use your worker dice to raise the legendary and breathtaking Pyramid of the Sun.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "android": [
+        {
+          "store": "Play Store",
+          "url": "https://play.google.com/store/apps/details?id=com.ycyclopgames.Teotihuacan",
+          "note": "Teotihuacan",
+          "wishlisted": true
+        }
+      ],
+      "ios": [
+        {
+          "store": "App Store",
+          "url": "https://apps.apple.com/us/app/teotihuacan-the-board-game/id6743720874",
+          "note": "Teotihuacan",
+          "wishlisted": true
+        }
+      ]
     },
     "229956": {
       "name": "Fort Sumter: The Secession Crisis, 1860-61",
@@ -6591,7 +7934,31 @@
       "name": "Obsession",
       "short_description": "Renovate an estate, manage servants, and pursue romance in Victorian England.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "android": [
+        {
+          "store": "Play Store",
+          "url": "https://play.google.com/store/apps/details?id=com.mmonkey.obsessionmarketbutler",
+          "note": "Market Butler",
+          "support_app": true
+        }
+      ],
+      "ios": [
+        {
+          "store": "App Store",
+          "url": "https://apps.apple.com/us/app/obsession-market-butler/id1662063941",
+          "note": "Market Butler",
+          "support_app": true
+        }
+      ],
+      "pc": [
+        {
+          "store": "Web",
+          "url": "https://christianliljeberg.se/obsession-score-sheet/",
+          "note": "Score Sheet",
+          "support_app": true
+        }
+      ]
     },
     "231819": {
       "name": "Sonar",
@@ -6616,10 +7983,27 @@
       "short_description": "Draft Mahjong-like tiles and place them carefully to create the best castle.",
       "rulebooks": [],
       "supplemental_files": [],
+      "android": [
+        {
+          "store": "Play Store",
+          "url": "https://play.google.com/store/apps/details?id=com.horriblegames.dragoncastle",
+          "note": "Dragon Castle",
+          "wishlisted": true
+        }
+      ],
+      "ios": [
+        {
+          "store": "App Store",
+          "url": "https://apps.apple.com/us/app/dragon-castle-the-board-game/id1460296044",
+          "note": "Dragon Castle",
+          "owned": true
+        }
+      ],
       "pc": [
         {
           "store": "Steam",
           "url": "https://store.steampowered.com/app/1074300/Dragon_Castle_The_Board_Game/",
+          "note": "Dragon Castle",
           "wishlisted": true
         }
       ]
@@ -6634,7 +8018,15 @@
       "name": "Fallout",
       "short_description": "Gather allies, equipment and influence in the aftermath of the apocalypse.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "Web",
+          "url": "https://falloutbgcompanion.onrender.com/",
+          "note": "Companion",
+          "support_app": true
+        }
+      ]
     },
     "232988": {
       "name": "Castles of Burgundy: The Dice Game, The",
@@ -6687,6 +8079,15 @@
         {
           "store": "Play Store",
           "url": "https://play.google.com/store/apps/details?id=com.digidiced.insrelease",
+          "note": "Indian Summer",
+          "wishlisted": true
+        }
+      ],
+      "ios": [
+        {
+          "store": "App Store",
+          "url": "https://apps.apple.com/us/app/indian-summer-game/id1410742147",
+          "note": "Indian Summer",
           "wishlisted": true
         }
       ],
@@ -6694,6 +8095,7 @@
         {
           "store": "Steam",
           "url": "https://store.steampowered.com/app/900380/Indian_Summer/",
+          "note": "Indian Summer",
           "owned": true
         }
       ]
@@ -6953,6 +8355,15 @@
         {
           "store": "Play Store",
           "url": "https://play.google.com/store/apps/details?id=com.direwolfdigital.yellow",
+          "note": "Yellow & Yangtze",
+          "wishlisted": true
+        }
+      ],
+      "ios": [
+        {
+          "store": "App Store",
+          "url": "https://apps.apple.com/us/app/reiner-knizia-yellow-yangtze/id1439244350",
+          "note": "Yellow & Yangtze",
           "wishlisted": true
         }
       ],
@@ -6960,6 +8371,7 @@
         {
           "store": "Steam",
           "url": "https://store.steampowered.com/app/965610/Reiner_Knizia_Yellow__Yangtze/",
+          "note": "Yellow & Yangtze",
           "owned": true
         }
       ]
@@ -7017,6 +8429,15 @@
         {
           "store": "Play Store",
           "url": "https://play.google.com/store/apps/details?id=de.brettspielwelt.ganzschoenclever&hl=en_US",
+          "note": "Ganz Schön Clever",
+          "wishlisted": true
+        }
+      ],
+      "ios": [
+        {
+          "store": "App Store",
+          "url": "https://apps.apple.com/us/app/thats-pretty-clever/id1411348057",
+          "note": "Ganz Schön Clever",
           "wishlisted": true
         }
       ],
@@ -7024,6 +8445,7 @@
         {
           "store": "Web",
           "url": "https://www.schmidtspiele.de/static/onlinespiele/ganz-schoen-clever/",
+          "note": "Ganz Schön Clever",
           "owned": true
         }
       ]
@@ -7099,7 +8521,23 @@
       "name": "Fleet: The Dice Game",
       "short_description": "Deploy your fleet of fishing boats while developing your bustling harbor.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "android": [
+        {
+          "store": "Play Store",
+          "url": "https://play.google.com/store/search?q=fleet+the+dice+game&c=apps",
+          "note": "Fleet the Dice Game",
+          "owned": true
+        }
+      ],
+      "ios": [
+        {
+          "store": "App Store",
+          "url": "https://apps.apple.com/us/app/fleet-the-dice-game/id1465017246",
+          "note": "Fleet the Dice Game",
+          "wishlisted": true
+        }
+      ]
     },
     "246192": {
       "name": "Gizmos",
@@ -7136,10 +8574,27 @@
       "short_description": "Build an interstellar civilization by exploration, research, conquest, and diplomacy.",
       "rulebooks": [],
       "supplemental_files": [],
+      "android": [
+        {
+          "store": "Play Store",
+          "url": "https://play.google.com/store/apps/details?id=de.brettspielwelt.eclipseapp2nd",
+          "note": "Eclipse",
+          "wishlisted": true
+        }
+      ],
+      "ios": [
+        {
+          "store": "App Store",
+          "url": "https://apps.apple.com/us/app/eclipse-2nd-dawn/id1472324985",
+          "note": "Eclipse",
+          "wishlisted": true
+        }
+      ],
       "pc": [
         {
           "store": "Steam",
           "url": "https://store.steampowered.com/app/3290350/Eclipse__2nd_Dawn_for_the_Galaxy/",
+          "note": "Eclipse",
           "wishlisted": true
         }
       ]
@@ -7221,7 +8676,15 @@
       "name": "Gùgōng: Deluxe",
       "short_description": "Exchange gifts, send servants, and visit the Emperor in a luscious 1570 China.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "ios": [
+        {
+          "store": "App Store",
+          "url": "https://apps.apple.com/us/app/gugong/id6476454775",
+          "note": "Gugong",
+          "wishlisted": true
+        }
+      ]
     },
     "250481": {
       "name": "Meltwater: A Game of Tactical Starvation",
@@ -7326,6 +8789,14 @@
           "store": "Play Store",
           "url": "https://play.google.com/store/apps/details?id=com.clintghosn.cdmdcodex",
           "note": "Codex+",
+          "support_app": true
+        }
+      ],
+      "ios": [
+        {
+          "store": "App Store",
+          "url": "https://apps.apple.com/us/app/cthulhu-dmd-random/id6741718874?platform=ipad",
+          "note": "Randomizer",
           "support_app": true
         }
       ]
@@ -7453,6 +8924,29 @@
         {
           "store": "Play Store",
           "url": "https://play.google.com/store/apps/details?id=com.restorationgames.returntodarktower",
+          "note": "Return to Dark Tower",
+          "support_app": true
+        }
+      ],
+      "ios": [
+        {
+          "store": "App Store",
+          "url": "https://apps.apple.com/us/app/return-to-dark-tower/id1570832677",
+          "note": "Return to Dark Tower",
+          "support_app": true
+        },
+        {
+          "store": "App Store",
+          "url": "https://apps.apple.com/us/app/return-to-dark-tower-assistant/id1659406816",
+          "note": "Assistant",
+          "support_app": true
+        }
+      ],
+      "pc": [
+        {
+          "store": "Web",
+          "url": "https://boardgamehelpers.com/ReturnToDarkTower/Default.aspx",
+          "note": "Balancer",
           "support_app": true
         }
       ]
@@ -7484,6 +8978,14 @@
         {
           "store": "Play Store",
           "url": "https://play.google.com/store/apps/details?id=com.cmon.elite",
+          "note": "Timer",
+          "support_app": true
+        }
+      ],
+      "ios": [
+        {
+          "store": "App Store",
+          "url": "https://apps.apple.com/us/app/project-elite-timer/id1503565195",
           "note": "Timer",
           "support_app": true
         }
@@ -7660,10 +9162,27 @@
       "short_description": "Explore lands on behalf of the queen and draw the most proficient maps to earn favor.",
       "rulebooks": [],
       "supplemental_files": [],
+      "android": [
+        {
+          "store": "Play Store",
+          "url": "https://play.google.com/store/apps/details?id=de.brettspielwelt.cartographers",
+          "note": "Cartographers",
+          "wishlisted": true
+        }
+      ],
+      "ios": [
+        {
+          "store": "App Store",
+          "url": "https://apps.apple.com/us/app/cartographers/id1515991485?platform=ipad",
+          "note": "Cartographers",
+          "wishlisted": true
+        }
+      ],
       "pc": [
         {
           "store": "Steam",
           "url": "https://store.steampowered.com/app/2977360/Cartographers/",
+          "note": "Cartographers",
           "wishlisted": true
         }
       ]
@@ -7685,6 +9204,22 @@
       "short_description": "Embark on a fantastic adventure set in dark Arthurian lore and legends.",
       "rulebooks": [],
       "supplemental_files": [],
+      "android": [
+        {
+          "store": "Play Store",
+          "url": "https://play.google.com/store/apps/details?id=com.AwakenRealms.TaintedGrail",
+          "note": "Companion",
+          "support_app": true
+        }
+      ],
+      "ios": [
+        {
+          "store": "App Store",
+          "url": "https://apps.apple.com/us/app/tainted-grail-companion/id1514558549",
+          "note": "Companion",
+          "support_app": true
+        }
+      ],
       "pc": [
         {
           "store": "Steam",
@@ -7779,10 +9314,39 @@
       "short_description": "Face hardship hunting the frozen wastes of Greenland, vying for survival.",
       "rulebooks": [],
       "supplemental_files": [],
+      "android": [
+        {
+          "store": "Play Store",
+          "url": "https://play.google.com/store/apps/details?id=com.Ion.GreenlandF2P",
+          "note": "Greenland",
+          "owned": true
+        },
+        {
+          "store": "Play Store",
+          "url": "https://play.google.com/store/apps/details?id=com.Ion.Greenland",
+          "note": "Greenland Premium",
+          "wishlisted": true
+        }
+      ],
+      "ios": [
+        {
+          "store": "App Store",
+          "url": "https://apps.apple.com/us/app/greenland-board-game-f2p/id6756067233",
+          "note": "Greenland",
+          "owned": true
+        },
+        {
+          "store": "App Store",
+          "url": "https://apps.apple.com/us/app/greenland-board-game-premium/id1438044251",
+          "note": "Greenland Premium",
+          "wishlisted": true
+        }
+      ],
       "pc": [
         {
           "store": "Steam",
           "url": "https://store.steampowered.com/app/2243220/Greenland/",
+          "note": "Greenland",
           "wishlisted": true
         }
       ]
@@ -8046,7 +9610,23 @@
       "name": "Watergate",
       "short_description": "Will Nixon triumph in his tug of war with the Press or will the truth be exposed?",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "android": [
+        {
+          "store": "Play Store",
+          "url": "https://play.google.com/store/search?q=watergate&c=apps",
+          "note": "https://play.google.com/store/search?q=watergate&c=apps",
+          "wishlisted": true
+        }
+      ],
+      "ios": [
+        {
+          "store": "App Store",
+          "url": "https://apps.apple.com/us/app/watergate-the-board-game/id6476921577",
+          "note": "Watergate",
+          "wishlisted": true
+        }
+      ]
     },
     "274466": {
       "name": "Valley of the Kings: Premium Edition",
@@ -8075,13 +9655,23 @@
         {
           "store": "Play Store",
           "url": "https://play.google.com/store/apps/details?id=hr.mipmap.pointsalad",
+          "note": "Point Salad",
           "wishlisted": true
+        }
+      ],
+      "ios": [
+        {
+          "store": "App Store",
+          "url": "https://apps.apple.com/us/app/point-salad-combine-recipes/id6452678658",
+          "note": "Point Salad",
+          "owned": true
         }
       ],
       "pc": [
         {
           "store": "Steam",
           "url": "https://store.steampowered.com/app/2532360/Point_Salad__The_Board_Game/",
+          "note": "Point Salad",
           "owned": true
         }
       ]
@@ -8119,6 +9709,15 @@
         {
           "store": "Play Store",
           "url": "https://play.google.com/store/apps/details?id=com.scatterbrainstudios.maracaibo",
+          "note": "Maracaibo",
+          "wishlisted": true
+        }
+      ],
+      "ios": [
+        {
+          "store": "App Store",
+          "url": "https://apps.apple.com/us/app/maracaibo-digital/id1518834089",
+          "note": "Maracaibo",
           "wishlisted": true
         }
       ]
@@ -8163,7 +9762,23 @@
       "name": "Final Girl",
       "short_description": "You alone must survive and defeat the horror movie killer.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "android": [
+        {
+          "store": "Play Store",
+          "url": "https://play.google.com/store/apps/details?id=com.vanrydergames.FinalGirlApp",
+          "note": "Companion",
+          "support_app": true
+        }
+      ],
+      "ios": [
+        {
+          "store": "App Store",
+          "url": "https://apps.apple.com/us/app/final-girl-companion/id6477756843",
+          "note": "Companion",
+          "owned": true
+        }
+      ]
     },
     "278553": {
       "name": "Silver",
@@ -8260,6 +9875,15 @@
         {
           "store": "Play Store",
           "url": "https://store.steampowered.com/app/965610/Reiner_Knizia_Yellow__Yangtze/",
+          "note": "Isle of Cats",
+          "wishlisted": true
+        }
+      ],
+      "ios": [
+        {
+          "store": "App Store",
+          "url": "https://apps.apple.com/us/app/the-isle-of-cats/id6449233575",
+          "note": "Isle of Cats",
           "wishlisted": true
         }
       ],
@@ -8267,6 +9891,7 @@
         {
           "store": "Steam",
           "url": "https://store.steampowered.com/app/2438980/The_Isle_of_Cats/",
+          "note": "Isle of Cats",
           "owned": true
         }
       ]
@@ -8336,6 +9961,13 @@
       "short_description": "Sew a quilt, collect buttons, attract cats!",
       "rulebooks": [],
       "supplemental_files": [],
+      "android": [
+        {
+          "store": "Play Store",
+          "url": "https://play.google.com/store/apps/details?id=com.MonsterCouch.Calico",
+          "wishlisted": true
+        }
+      ],
       "pc": [
         {
           "store": "Steam",
@@ -8355,7 +9987,15 @@
       "name": "Dune",
       "short_description": "Wildly different factions vie for control of Arrakis through alliance and treachery.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "android": [
+        {
+          "store": "Play Store",
+          "url": "https://play.google.com/store/apps/details?id=com.jbokman.unofficialduneboardgamecompanion&hl=en&gl=US",
+          "note": "Companion [Discontinued]",
+          "owned": true
+        }
+      ]
     },
     "283393": {
       "name": "Aquatica",
@@ -8422,6 +10062,14 @@
           "url": "https://play.google.com/store/apps/details?id=com.OffthePageGames.MINDMGMTAssistant",
           "note": "Assistant",
           "support_app": true
+        }
+      ],
+      "ios": [
+        {
+          "store": "App Store",
+          "url": "https://apps.apple.com/us/app/mind-mgmt-assistant/id1579210331",
+          "note": "Assistant",
+          "owned": true
         }
       ]
     },
@@ -8764,10 +10412,19 @@
       "short_description": "Legends of folklore and fiction go head to head in the greatest battle of all time.",
       "rulebooks": [],
       "supplemental_files": [],
+      "ios": [
+        {
+          "store": "App Store",
+          "url": "https://apps.apple.com/us/app/unmatched-digital-edition/id1573747138?platform=ipad",
+          "note": "Unmatched",
+          "wishlisted": true
+        }
+      ],
       "pc": [
         {
           "store": "Steam",
           "url": "https://store.steampowered.com/app/1677980/Unmatched_Digital_Edition/",
+          "note": "Unmatched",
           "wishlisted": true
         }
       ]
@@ -8813,6 +10470,20 @@
           "store": "Play Store",
           "url": "play.google.com/store/apps/details?id=com.direwolfdigital.cascadia",
           "wishlisted": true
+        },
+        {
+          "store": "Play Store",
+          "url": "https://play.google.com/store/apps/details?id=com.TablescopeGmbH.BGPhotoScoring",
+          "note": "Tablescape - Photo Scoring",
+          "support_app": true
+        }
+      ],
+      "ios": [
+        {
+          "store": "TestFlight",
+          "url": "https://testflight.apple.com/join/Kr4EkbBk",
+          "note": "Tablescape - Photo Scoring",
+          "support_app": true
         }
       ],
       "pc": [
@@ -8956,6 +10627,13 @@
       "short_description": "The USA and USSR vie for control of the Red Sea during the Cold War.",
       "rulebooks": [],
       "supplemental_files": [],
+      "android": [
+        {
+          "store": "Play Store",
+          "url": "https://play.google.com/store/apps/details?id=com.playdekgames.redsea",
+          "wishlisted": true
+        }
+      ],
       "pc": [
         {
           "store": "Steam",
@@ -9093,7 +10771,15 @@
       "name": "Scooby-Doo!: Betrayal at Mystery Mansion",
       "short_description": "Zoinks! Help the Scooby Gang explore the mansion and foil the villain's evil plans.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "ios": [
+        {
+          "store": "App Store",
+          "url": "https://apps.apple.com/ca/app/betrayal-companion/id1447651302",
+          "note": "Companion App",
+          "owned": true
+        }
+      ]
     },
     "303057": {
       "name": "Pan Am",
@@ -9160,7 +10846,23 @@
       "name": "Regicide",
       "short_description": "Work together as brave adventurers to defeat the corrupted monarchy.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "android": [
+        {
+          "store": "Play Store",
+          "url": "https://play.google.com/store/apps/details?id=com.bfm.regicidecompanion",
+          "note": "Companion",
+          "support_app": true
+        }
+      ],
+      "ios": [
+        {
+          "store": "App Store",
+          "url": "https://apps.apple.com/us/app/regicide-companion/id1565706782",
+          "note": "Companion",
+          "support_app": true
+        }
+      ]
     },
     "307044": {
       "name": "Trailblazer: The John Muir Trail",
@@ -9277,7 +10979,15 @@
       "name": "Carnegie",
       "short_description": "Become the most influential entrepreneur and benefactor of your era!",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "ios": [
+        {
+          "store": "App Store",
+          "url": "https://apps.apple.com/us/app/carnegie-the-board-game/id6741925650",
+          "note": "Carnegie: Solo",
+          "wishlisted": true
+        }
+      ]
     },
     "311193": {
       "name": "Anno 1800:",
@@ -9442,6 +11152,12 @@
           "url": "https://play.google.com/store/apps/details?id=com.direwolfdigital.dune",
           "note": "Companion App",
           "support_app": true
+        },
+        {
+          "store": "Play Store",
+          "url": "https://play.google.com/store/apps/details?id=com.direwolfdigital.gameroom&hl=en",
+          "note": "Dire Wolf Game Room",
+          "support_app": true
         }
       ],
       "pc": [
@@ -9449,6 +11165,12 @@
           "store": "Steam",
           "url": "https://store.steampowered.com/app/1689500/Dune_Imperium/",
           "owned": true
+        },
+        {
+          "store": "Steam",
+          "url": "https://store.steampowered.com/app/1406720/Dire_Wolf_Game_Room/",
+          "note": "Dire Wolf Game Room",
+          "support_app": true
         }
       ]
     },
@@ -9774,7 +11496,15 @@
       "name": "Ultimate Railroads",
       "short_description": "Build railroads in Russia, Germany, the U.S., and more in this big box collection.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "Web",
+          "url": "https://boardgamehelpers.com/RussianRailroads/",
+          "note": "Setup Helper",
+          "support_app": true
+        }
+      ]
     },
     "329669": {
       "name": "Moving Pictures",
@@ -9817,6 +11547,13 @@
       "short_description": "Grow your population while evolving in a constantly changing ecosystem.",
       "rulebooks": [],
       "supplemental_files": [],
+      "android": [
+        {
+          "store": "Play Store",
+          "url": "https://play.google.com/store/apps/details?id=com.northstargames.nature",
+          "wishlisted": true
+        }
+      ],
       "pc": [
         {
           "store": "Steam",
@@ -9884,7 +11621,31 @@
       "name": "Summoner Wars (Second Edition)",
       "short_description": "The fight for Itharia is on! Defeat the enemy summoner before they cut yours down.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "android": [
+        {
+          "store": "Play Store",
+          "url": "https://play.google.com/store/apps/details?id=com.plaidhatgames.summonerwars",
+          "note": "Summoner Wars",
+          "owned": true
+        }
+      ],
+      "ios": [
+        {
+          "store": "App Store",
+          "url": "https://apps.apple.com/us/app/summoner-wars-online/id6460980567",
+          "note": "Summoner Wars",
+          "owned": true
+        }
+      ],
+      "pc": [
+        {
+          "store": "Web",
+          "url": "https://summonerwars.plaidhatgames.com/",
+          "note": "Summoner Wars",
+          "owned": true
+        }
+      ]
     },
     "332944": {
       "name": "Sobek: 2 Players",
@@ -9946,6 +11707,32 @@
           "store": "Play Store",
           "url": "https://play.google.com/store/apps/details?id=com.handelabra.Sentinels",
           "owned": true
+        },
+        {
+          "store": "Play Store",
+          "url": "https://play.google.com/store/apps/details?id=com.handelabra.SentinelsLearnToPlay",
+          "note": "Learn to Play",
+          "support_app": true
+        }
+      ],
+      "ios": [
+        {
+          "store": "App Store",
+          "url": "https://apps.apple.com/us/app/sentinels-of-the-multiverse/id923772792",
+          "note": "Sentinels",
+          "wishlisted": true
+        },
+        {
+          "store": "App Store",
+          "url": "https://apps.apple.com/us/app/sentinels-sidekick/id525436193",
+          "note": "Sidekick",
+          "support_app": true
+        },
+        {
+          "store": "App Store",
+          "url": "https://apps.apple.com/us/app/sentinels-learn-to-play/id1046099847",
+          "note": "Learn to Play",
+          "support_app": true
         }
       ],
       "pc": [
@@ -10245,7 +12032,23 @@
       "name": "Mythic Mischief",
       "short_description": "Mythical high school factions compete to avoid the Tomekeeper in the school library.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "android": [
+        {
+          "store": "Play Store",
+          "url": "https://play.google.com/store/apps/details?id=com.ivstudio.mythicmischiefonline",
+          "note": "Mythic Mischief",
+          "owned": true
+        }
+      ],
+      "ios": [
+        {
+          "store": "App Store",
+          "url": "https://apps.apple.com/us/app/mythic-mischief/id6636515334",
+          "note": "Mythic Mischief",
+          "owned": true
+        }
+      ]
     },
     "342921": {
       "name": "British Way: Counterinsurgency at the End of Empire, The",
@@ -10262,13 +12065,35 @@
         {
           "store": "Play Store",
           "url": "https://play.google.com/store/apps/details?id=com.direwolfdigital.arknova",
+          "note": "Ark Nova",
           "wishlisted": true
+        }
+      ],
+      "ios": [
+        {
+          "store": "App Store",
+          "url": "https://apps.apple.com/us/app/ark-nova/id6449233549",
+          "note": "Ark Nova",
+          "owned": true
+        },
+        {
+          "store": "App Store",
+          "url": "https://apps.apple.com/us/app/soundsfun-ark-nova/id6670484278",
+          "note": "Soundtrack",
+          "support_app": true
         }
       ],
       "pc": [
         {
           "store": "Steam",
           "url": "https://store.steampowered.com/app/2438990/Ark_Nova/",
+          "note": "Ark Nova",
+          "owned": true
+        },
+        {
+          "store": "Web",
+          "url": "https://boardgamehelpers.com/ArkNova/Default.aspx",
+          "note": "Map Randomizer",
           "owned": true
         }
       ]
@@ -10609,6 +12434,28 @@
       "rulebooks": [],
       "supplemental_files": []
     },
+    "355433": {
+      "name": "boop.",
+      "short_description": "\"boop\" cats off the bed before they boop yours. Adorable & challenging!",
+      "rulebooks": [],
+      "supplemental_files": [],
+      "android": [
+        {
+          "store": "Play Store",
+          "url": "https://play.google.com/store/apps/details?id=com.hashbytestudio.smirkdagger.boop",
+          "note": "Boop: World",
+          "wishlisted": true
+        }
+      ],
+      "ios": [
+        {
+          "store": "App Store",
+          "url": "https://apps.apple.com/us/app/boop-world/id6754099491",
+          "note": "Boop: World",
+          "wishlisted": true
+        }
+      ]
+    },
     "355444": {
       "name": "Hold Your Horses",
       "short_description": "A party game about horses and unicorns.",
@@ -10637,7 +12484,15 @@
       "name": "Libertalia: Winds of Galecrest",
       "short_description": "Diverse pirate-animal crews take to the skies, dividing up powerful loot.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "Web",
+          "url": "http://tabi.org/helpers/libertalia.html",
+          "note": "Randomizer",
+          "support_app": true
+        }
+      ]
     },
     "356123": {
       "name": "Turing Machine",
@@ -10679,7 +12534,15 @@
       "name": "Betrayal at House on the Hill: 3rd Edition",
       "short_description": "Explore a haunted house as a team ... until one of you turns against the rest.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "ios": [
+        {
+          "store": "App Store",
+          "url": "https://apps.apple.com/ca/app/betrayal-official-app/id1488518257",
+          "note": "Official Companion App",
+          "support_app": true
+        }
+      ]
     },
     "358557": {
       "name": "Search for Lost Species, The",
@@ -10746,7 +12609,29 @@
       "name": "Tainted Grail: Kings of Ruin",
       "short_description": "Three ruinous kings conspire against you as you try to escape Avalon.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "android": [
+        {
+          "store": "Play Store",
+          "url": "https://play.google.com/store/apps/details?id=com.AwakenRealms.TaintedGrail",
+          "note": "Companion",
+          "support_app": true
+        }
+      ],
+      "ios": [
+        {
+          "store": "App Store",
+          "url": "https://apps.apple.com/us/app/tainted-grail-companion/id1514558549",
+          "note": "Companion",
+          "support_app": true
+        },
+        {
+          "store": "App Store",
+          "url": "https://apps.apple.com/us/app/tainted-grail-journal-tracker/id1495906501",
+          "note": "Journal Tracker",
+          "support_app": true
+        }
+      ]
     },
     "360676": {
       "name": "Star Realms: Rise of Empire",
@@ -10867,17 +12752,50 @@
       "name": "Fantasy Realms: Deluxe Edition",
       "short_description": "Monarchs compete to construct the most prosperous kingdom in the realm!",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "android": [
+        {
+          "store": "Play Store",
+          "url": "https://play.google.com/store/apps/details?id=com.klamerek.fantasyrealms&hl=en",
+          "note": "Scoring",
+          "support_app": true
+        }
+      ],
+      "pc": [
+        {
+          "store": "Web",
+          "url": "https://fantasy-realms.github.io/index.html",
+          "note": "Scoring",
+          "support_app": true
+        }
+      ]
     },
     "363307": {
       "name": "Evergreen",
       "short_description": "Make your planet as verdant as possible, especially in valuable biomes.",
       "rulebooks": [],
       "supplemental_files": [],
+      "android": [
+        {
+          "store": "Play Store",
+          "url": "https://play.google.com/store/apps/details?id=com.horriblegames.evergreen",
+          "note": "Evergreen",
+          "wishlisted": true
+        }
+      ],
+      "ios": [
+        {
+          "store": "App Store",
+          "url": "https://apps.apple.com/us/app/evergreen-the-board-game/id6444831273",
+          "note": "Evergreen",
+          "wishlisted": true
+        }
+      ],
       "pc": [
         {
           "store": "Steam",
           "url": "https://store.steampowered.com/app/2238070/Evergreen_The_Board_Game/",
+          "note": "Evergreen",
           "wishlisted": true
         }
       ]
@@ -10970,7 +12888,23 @@
       "name": "Clank!: Catacombs",
       "short_description": "Deck-building adventure meets tile-laying in the newest incarnation of Clank!",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "android": [
+        {
+          "store": "Play Store",
+          "url": "https://play.google.com/store/apps/details?id=com.direwolfdigital.gameroom&hl=en",
+          "note": "Dire Wolf Game Room",
+          "support_app": true
+        }
+      ],
+      "pc": [
+        {
+          "store": "Steam",
+          "url": "https://store.steampowered.com/app/1406720/Dire_Wolf_Game_Room/",
+          "note": "Dire Wolf Game Room",
+          "owned": true
+        }
+      ]
     },
     "365873": {
       "name": "AdvanceQuest: An Abduction in Darkhill",
@@ -11050,10 +12984,27 @@
       "short_description": "Island Spirits join forces using elemental powers to defend their home from invaders.",
       "rulebooks": [],
       "supplemental_files": [],
+      "android": [
+        {
+          "store": "Play Store",
+          "url": "https://play.google.com/store/apps/details?id=com.handelabra.SpiritIsland",
+          "note": "Horizons of Spirit Island",
+          "wishlisted": true
+        }
+      ],
+      "ios": [
+        {
+          "store": "App Store",
+          "url": "https://apps.apple.com/us/app/spirit-island/id1501321205",
+          "note": "Horizons of Spirit Island",
+          "wishlisted": true
+        }
+      ],
       "pc": [
         {
           "store": "Steam",
           "url": "https://store.steampowered.com/app/2419041/Spirit_Island__Jagged_Earth/",
+          "note": "Horizons of Spirit Island",
           "owned": true
         }
       ]
@@ -11139,6 +13090,15 @@
         {
           "store": "Play Store",
           "url": "https://play.google.com/store/apps/details?id=com.digidiced.ixsrelease",
+          "note": "Isle of Skye",
+          "wishlisted": true
+        }
+      ],
+      "ios": [
+        {
+          "store": "App Store",
+          "url": "https://apps.apple.com/us/app/isle-of-skye/id1326879265",
+          "note": "Isle of Skye",
           "wishlisted": true
         }
       ],
@@ -11146,6 +13106,7 @@
         {
           "store": "Steam",
           "url": "https://store.steampowered.com/app/873980/Isle_of_Skye/",
+          "note": "Isle of Skye",
           "owned": true
         }
       ]
@@ -11161,6 +13122,28 @@
       "short_description": "Work together to complete two matching panoramas.",
       "rulebooks": [],
       "supplemental_files": []
+    },
+    "369635": {
+      "name": "Between Two Cities: Essential Edition",
+      "short_description": "Build a thriving city with each of your neighbors.",
+      "rulebooks": [],
+      "supplemental_files": [],
+      "android": [
+        {
+          "store": "Play Store",
+          "url": "https://play.google.com/store/apps/details?id=com.dtda.b2c",
+          "note": "Between Two Cities",
+          "owned": true
+        }
+      ],
+      "ios": [
+        {
+          "store": "App Store",
+          "url": "https://apps.apple.com/us/app/between-two-cities-stonemaier/id1566544458",
+          "note": "Between Two Cities",
+          "wishlisted": true
+        }
+      ]
     },
     "369646": {
       "name": "Disney Lorcana",
@@ -11227,7 +13210,23 @@
       "name": "Tainted Grail: Kings of Ruin (Gamefound Edition)",
       "short_description": "Three ruinous kings conspire against you as you try to escape Avalon.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "android": [
+        {
+          "store": "Play Store",
+          "url": "https://play.google.com/store/apps/details?id=com.AwakenRealms.TaintedGrail",
+          "note": "Companion",
+          "support_app": true
+        }
+      ],
+      "ios": [
+        {
+          "store": "App Store",
+          "url": "https://apps.apple.com/us/app/tainted-grail-companion/id1514558549",
+          "note": "Companion",
+          "support_app": true
+        }
+      ]
     },
     "371636": {
       "name": "Wildtails: A Pirate Legacy",
@@ -11317,7 +13316,15 @@
       "name": "Speakeasy",
       "short_description": "Earn money running a Manhattan speakeasy business during Prohibition.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "Web",
+          "url": "https://boardgamehelpers.com/Speakeasy/Default.aspx",
+          "note": "Setup Helper",
+          "owned": true
+        }
+      ]
     },
     "375769": {
       "name": "Lords of Vegas",
@@ -11432,6 +13439,15 @@
         {
           "store": "Play Store",
           "url": "https://play.google.com/store/apps/details?id=pl.com.ix.ImperialMiners",
+          "note": "Imperial Miners",
+          "wishlisted": true
+        }
+      ],
+      "ios": [
+        {
+          "store": "App Store",
+          "url": "https://apps.apple.com/us/app/imperial-miners/id6608972539",
+          "note": "Imperial Miners",
           "wishlisted": true
         }
       ],
@@ -11439,6 +13455,7 @@
         {
           "store": "Steam",
           "url": "https://store.steampowered.com/app/3144000/Imperial_Settlers_Imperial_Miners/",
+          "note": "Imperial Miners",
           "wishlisted": true
         }
       ]
@@ -11500,6 +13517,15 @@
         {
           "store": "Play Store",
           "url": "https://play.google.com/store/apps/details?id=com.AwakenRealms.DragonEclipseCompanion",
+          "note": "Dragon Eclipse",
+          "owned": true
+        }
+      ],
+      "ios": [
+        {
+          "store": "App Store",
+          "url": "https://apps.apple.com/us/app/dragon-eclipse/id6741118717",
+          "note": "Dragon Eclipse",
           "owned": true
         }
       ],
@@ -11507,6 +13533,7 @@
         {
           "store": "Steam",
           "url": "https://store.steampowered.com/app/2626860/Dragon_Eclipse/",
+          "note": "Dragon Eclipse",
           "owned": true
         }
       ]
@@ -11575,7 +13602,23 @@
       "name": "Clank! Legacy 2: Acquisitions Incorporated – Darkest Magic",
       "short_description": "Fight bosses, avoid the dragon, and collect loot with or against fellow employees!",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "android": [
+        {
+          "store": "Play Store",
+          "url": "https://play.google.com/store/apps/details?id=com.direwolfdigital.gameroom&hl=en",
+          "note": "Dire Wolf Game Room",
+          "support_app": true
+        }
+      ],
+      "pc": [
+        {
+          "store": "Steam",
+          "url": "https://store.steampowered.com/app/1406720/Dire_Wolf_Game_Room/",
+          "note": "Dire Wolf Game Room",
+          "support_app": true
+        }
+      ]
     },
     "383179": {
       "name": "Age of Innovation",
@@ -11773,7 +13816,15 @@
       "name": "Galactic Cruise",
       "short_description": "Build and launch ships to send guests on luxurious space vacations.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "Web",
+          "url": "https://boardgamehelpers.com/GalacticCruise/Default.aspx",
+          "note": "Setup Helper",
+          "support_app": true
+        }
+      ]
     },
     "391163": {
       "name": "Forest Shuffle",
@@ -11784,6 +13835,14 @@
         {
           "store": "Play Store",
           "url": "https://play.google.com/store/apps/details?id=com.digidiced.sxarelease",
+          "note": "Smart Counter",
+          "support_app": true
+        }
+      ],
+      "ios": [
+        {
+          "store": "App Store",
+          "url": "https://apps.apple.com/us/app/forest-shuffle-smart-counter/id6544800532",
           "note": "Smart Counter",
           "support_app": true
         }
@@ -11883,7 +13942,23 @@
       "name": "Invincible: The Hero-Building Game",
       "short_description": "Build superheroes together in the Invincible universe.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "android": [
+        {
+          "store": "Play Store",
+          "url": "https://play.google.com/store/apps/details?id=com.direwolfdigital.gameroom&hl=en",
+          "note": "Dire Wolf Game Room",
+          "support_app": true
+        }
+      ],
+      "pc": [
+        {
+          "store": "Steam",
+          "url": "https://store.steampowered.com/app/1406720/Dire_Wolf_Game_Room/",
+          "note": "Dire Wolf Game Room",
+          "support_app": true
+        }
+      ]
     },
     "396332": {
       "name": "WIN",
@@ -12450,6 +14525,14 @@
           "note": "Little Alchemists Companion",
           "support_app": true
         }
+      ],
+      "ios": [
+        {
+          "store": "App Store",
+          "url": "https://apps.apple.com/us/app/little-alchemists-companion/id6475880741",
+          "note": "Little Alchemists Companion",
+          "support_app": true
+        }
       ]
     },
     "419572": {
@@ -12486,7 +14569,15 @@
       "name": "Flip 7",
       "short_description": "Score the cards in front of you, or take another card, risking everything you hold?",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "Web",
+          "url": "https://boardgamehelpers.com/Flip7/Default.aspx",
+          "note": "Score Calc",
+          "support_app": true
+        }
+      ]
     },
     "420361": {
       "name": "Trekking the World: Second Edition",
@@ -13031,7 +15122,15 @@
         {
           "store": "Play Store",
           "url": "https://play.google.com/store/apps/details?id=com.digidiced.fsdrelease",
-          "note": "Dartmoor Smart Counter",
+          "note": "Smart Counter",
+          "support_app": true
+        }
+      ],
+      "ios": [
+        {
+          "store": "App Store",
+          "url": "https://apps.apple.com/us/app/dartmoor-smart-counter/id6761472246",
+          "note": "Smart Counter",
           "support_app": true
         }
       ]
