@@ -311,8 +311,14 @@ label span {
 }
 
 .platform-row {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+.platform-row-main {
   display: grid;
-  grid-template-columns: minmax(115px, 0.95fr) minmax(0, 2.35fr) minmax(105px, 135px) max-content;
+  grid-template-columns: minmax(115px, 0.9fr) minmax(0, 2.4fr) minmax(110px, 145px) max-content;
   gap: 0.45rem;
   align-items: center;
 }
@@ -362,6 +368,18 @@ label span {
   min-width: 0;
 }
 
+.platform-note-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.platform-note-wrap textarea {
+  width: 100%;
+  min-height: 3.2rem;
+  resize: vertical;
+}
+
 .check {
   display: flex;
   align-items: center;
@@ -375,7 +393,7 @@ label span {
 }
 
 @media (max-width: 900px) {
-  .platform-row {
+  .platform-row-main {
     grid-template-columns: 1fr;
   }
 

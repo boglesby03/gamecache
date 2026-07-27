@@ -236,14 +236,24 @@ class SqliteIndexer:
         ).strip()
         url = str(entry.get('url', '') or '').strip()
 
+        # URL is required for digital implementations.
+        if not url:
+            return {}
+
         if store:
             normalized['store'] = store
-        if url:
-            normalized['url'] = url
+        normalized['url'] = url
+
+        note = str(entry.get('note', '') or entry.get('description', '') or '').strip()
+        if note:
+            normalized['note'] = note
 
         for flag in ('owned', 'wishlisted', 'preordered'):
             if bool(entry.get(flag, False)):
                 normalized[flag] = True
+
+        if bool(entry.get('support_app', False)) or entry.get('state') == 'support_app':
+            normalized['support_app'] = True
 
         return normalized
 

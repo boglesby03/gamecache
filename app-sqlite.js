@@ -100,15 +100,25 @@ function normalizeDigitalPlatformEntry(entry) {
   ).trim();
   const url = normalizeDigitalUrl(entry.url || '');
 
+  // URL is required for digital implementations.
+  if (!url) return null;
+
   const normalized = {};
   if (store) normalized.store = store;
   if (url) normalized.url = url;
+
+  const note = String(entry.note || entry.description || '').trim();
+  if (note) normalized.note = note;
 
   ['owned', 'wishlisted', 'preordered'].forEach((flag) => {
     if (Boolean(entry[flag])) {
       normalized[flag] = true;
     }
   });
+
+  if (Boolean(entry.support_app) || entry.state === 'support_app') {
+    normalized.support_app = true;
+  }
 
   return Object.keys(normalized).length > 0 ? normalized : null;
 }
@@ -158,13 +168,15 @@ function renderDigitalVersionsSection(clone, game) {
       label: platformMeta[platform].label,
       icon: platformMeta[platform].icon,
       store: String(service.store || '').trim(),
+      note: String(service.note || '').trim(),
       owned: Boolean(service.owned),
       wishlisted: Boolean(service.wishlisted),
       preordered: Boolean(service.preordered),
+      supportApp: Boolean(service.support_app),
       url: normalizeDigitalUrl(service.url || ''),
     }));
   })
-    .filter((item) => item.owned || item.wishlisted || item.preordered || item.url || item.store);
+    .filter((item) => item.owned || item.wishlisted || item.preordered || item.supportApp || item.url || item.store || item.note);
 
   if (items.length === 0) {
     digitalSection.style.display = 'none';
@@ -177,16 +189,19 @@ function renderDigitalVersionsSection(clone, game) {
   items.forEach((item) => {
     const tag = item.url ? 'a' : 'span';
     let statusClass = 'status-owned';
-    if (item.preordered) {
+    if (item.supportApp) {
+      statusClass = 'status-support-app';
+    } else if (item.preordered) {
       statusClass = 'status-preordered';
     } else if (item.wishlisted) {
       statusClass = 'status-wishlisted';
     }
 
+    const statusText = item.supportApp ? 'Support App' : item.preordered ? 'Preordered' : item.wishlisted ? 'Wishlisted' : item.owned ? 'Owned' : '';
     const attrs = {
       className: `digital-version-item ${statusClass}${item.url ? '' : ' no-link'}`,
-      title: `${item.label}${item.store ? ` • ${item.store}` : ''}${item.preordered ? ' • Preordered' : item.wishlisted ? ' • Wishlisted' : item.owned ? ' • Owned' : ''}`,
-      'aria-label': `${item.label}${item.store ? ` ${item.store}` : ''}${item.preordered ? ' Preordered' : item.wishlisted ? ' Wishlisted' : item.owned ? ' Owned' : ''}`
+      title: `${item.label}${item.store ? ` • ${item.store}` : ''}${statusText ? ` • ${statusText}` : ''}${item.note ? ` • ${item.note}` : ''}`,
+      'aria-label': `${item.label}${item.store ? ` ${item.store}` : ''}${statusText ? ` ${statusText}` : ''}${item.note ? ` ${item.note}` : ''}`
     };
     if (item.url) {
       attrs.href = item.url;
@@ -195,7 +210,7 @@ function renderDigitalVersionsSection(clone, game) {
     }
 
     const el = createElement(tag, attrs);
-    const icon = createElement('span', { className: 'material-symbols-rounded icon-small' }, item.icon);
+    const icon = createElement('span', { className: 'material-symbols-rounded icon-small' }, item.supportApp ? 'extension' : item.icon);
     el.appendChild(icon);
 
     list.appendChild(el);
@@ -1141,6 +1156,7 @@ function gameDigitalFlags(game) {
       owned: platformEntries.some(item => Boolean(item.owned)),
       wishlisted: platformEntries.some(item => Boolean(item.wishlisted)),
       preordered: platformEntries.some(item => Boolean(item.preordered)),
+      supportApp: platformEntries.some(item => Boolean(item.support_app)),
       link: platformEntries.some(item => Boolean(item.url)),
     };
   });
@@ -1149,6 +1165,7 @@ function gameDigitalFlags(game) {
   const hasOwned = DIGITAL_PLATFORMS.some(platform => platforms[platform].owned);
   const hasWishlisted = DIGITAL_PLATFORMS.some(platform => platforms[platform].wishlisted);
   const hasPreordered = DIGITAL_PLATFORMS.some(platform => platforms[platform].preordered);
+  const hasSupportApp = DIGITAL_PLATFORMS.some(platform => platforms[platform].supportApp);
   const hasLink = DIGITAL_PLATFORMS.some(platform => platforms[platform].link);
 
   return {
@@ -1156,6 +1173,7 @@ function gameDigitalFlags(game) {
     hasOwned,
     hasWishlisted,
     hasPreordered,
+    hasSupportApp,
     hasLink,
     hasAny: hasAnyPlatform,
   };
@@ -1168,6 +1186,7 @@ function setupDigitalFilter() {
     counts[`${platform}-owned`] = 0;
     counts[`${platform}-wishlisted`] = 0;
     counts[`${platform}-preordered`] = 0;
+    counts[`${platform}-support-app`] = 0;
   });
 
   allGames.forEach(game => {
@@ -1179,6 +1198,7 @@ function setupDigitalFilter() {
       if (platformFlags.owned) counts[`${platform}-owned`] += 1;
       if (platformFlags.wishlisted) counts[`${platform}-wishlisted`] += 1;
       if (platformFlags.preordered) counts[`${platform}-preordered`] += 1;
+      if (platformFlags.supportApp) counts[`${platform}-support-app`] += 1;
     });
   });
 
@@ -1189,6 +1209,7 @@ function setupDigitalFilter() {
     items.push({ label: `${platformLabels[platform]} Owned`, value: `${platform}-owned`, count: counts[`${platform}-owned`] });
     items.push({ label: `${platformLabels[platform]} Wishlisted`, value: `${platform}-wishlisted`, count: counts[`${platform}-wishlisted`] });
     items.push({ label: `${platformLabels[platform]} Preordered`, value: `${platform}-preordered`, count: counts[`${platform}-preordered`] });
+    items.push({ label: `${platformLabels[platform]} Support App`, value: `${platform}-support-app`, count: counts[`${platform}-support-app`] });
   });
 
   const hasAnyItems = items.some(item => item.count > 0);
@@ -2207,18 +2228,24 @@ function filterGames(gamesToFilter, filters) {
             return flags.platforms.android.wishlisted;
           case 'android-preordered':
             return flags.platforms.android.preordered;
+          case 'android-support-app':
+            return flags.platforms.android.supportApp;
           case 'ios-owned':
             return flags.platforms.ios.owned;
           case 'ios-wishlisted':
             return flags.platforms.ios.wishlisted;
           case 'ios-preordered':
             return flags.platforms.ios.preordered;
+          case 'ios-support-app':
+            return flags.platforms.ios.supportApp;
           case 'pc-owned':
             return flags.platforms.pc.owned;
           case 'pc-wishlisted':
             return flags.platforms.pc.wishlisted;
           case 'pc-preordered':
             return flags.platforms.pc.preordered;
+          case 'pc-support-app':
+            return flags.platforms.pc.supportApp;
           default:
             return false;
         }

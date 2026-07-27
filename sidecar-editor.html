@@ -129,17 +129,24 @@
 
   <template id="platform-row-template">
     <div class="platform-row">
-      <select data-key="store"></select>
-      <input type="url" data-key="url" placeholder="https://..." />
-      <label class="state-select-wrap">
-        <span>Status</span>
-        <select data-key="state">
-          <option value="">Owned</option>
-          <option value="wishlisted">Wishlisted</option>
-          <option value="preordered">Preordered</option>
-        </select>
+      <div class="platform-row-main">
+        <select data-key="store"></select>
+        <input type="url" data-key="url" placeholder="https://..." />
+        <label class="state-select-wrap">
+          <span>Status</span>
+          <select data-key="state">
+            <option value="">Owned</option>
+            <option value="wishlisted">Wishlisted</option>
+            <option value="preordered">Preordered</option>
+            <option value="support_app">Support App</option>
+          </select>
+        </label>
+        <button type="button" class="btn mini danger" data-action="remove">Remove</button>
+      </div>
+      <label class="platform-note-wrap">
+        <span>Note</span>
+        <textarea data-key="note" rows="2" placeholder="What the app does..."></textarea>
       </label>
-      <button type="button" class="btn mini danger" data-action="remove">Remove</button>
     </div>
   </template>
 

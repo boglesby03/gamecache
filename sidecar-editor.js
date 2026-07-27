@@ -38,7 +38,7 @@
   const PLATFORM_STORE_OPTIONS = {
     android: ["Play Store", "Humble", "Amazon Appstore", "Samsung Galaxy Store", "itch.io"],
     ios: ["App Store", "TestFlight", "Humble", "itch.io"],
-    pc: ["Steam", "Epic", "EA app", "Ubisoft Connect", "GOG", "Microsoft Store", "itch.io", "Humble", "Amazon"],
+    pc: ["Steam", "Epic", "Web", "EA app", "Ubisoft Connect", "GOG", "Microsoft Store", "itch.io", "Humble", "Amazon"],
   };
 
   function ensureGamesContainer(data) {
@@ -84,13 +84,23 @@
     const store = String(raw.store || raw.service || raw.name || raw.label || "").trim();
     const url = String(raw.url || "").trim();
 
+    // URL is required for digital implementations.
+    if (!url) return null;
+
     if (store) out.store = store;
     if (url) out.url = url;
+
+    const note = String(raw.note || raw.description || "").trim();
+    if (note) out.note = note;
 
     for (const flag of PLATFORM_FLAGS) {
       if (raw[flag] === true) {
         out[flag] = true;
       }
+    }
+
+    if (raw.support_app === true || raw.state === "support_app") {
+      out.support_app = true;
     }
 
     if (raw.state === "wishlisted") {
@@ -139,7 +149,7 @@
       select.appendChild(custom);
     }
 
-    select.value = normalizedCurrentValue || options[0] || "";
+    select.value = normalizedCurrentValue || "";
   }
 
   function normalizeEntry(raw, fallbackName) {
@@ -272,10 +282,7 @@
     target.innerHTML = "";
     const list = Array.isArray(entries) ? entries : [];
 
-    if (list.length === 0) {
-      addPlatformRow(platform, {});
-      return;
-    }
+    if (list.length === 0) return;
 
     for (const entry of list) {
       addPlatformRow(platform, entry);
@@ -284,6 +291,7 @@
 
   function getPlatformState(entry) {
     if (!entry || typeof entry !== "object") return "";
+    if (entry.support_app === true) return "support_app";
     if (entry.preordered === true) return "preordered";
     if (entry.wishlisted === true) return "wishlisted";
     return "";
@@ -314,11 +322,18 @@
       const store = String(row.querySelector('[data-key="store"]').value || "").trim();
       const url = String(row.querySelector('[data-key="url"]').value || "").trim();
       const state = String(row.querySelector('[data-key="state"]').value || "").trim();
+      const note = String(row.querySelector('[data-key="note"]').value || "").trim();
+
+      // Ignore rows without a URL.
+      if (!url) return;
 
       const entry = {};
       if (store) entry.store = store;
-      if (url) entry.url = url;
-      if (state === "wishlisted") {
+      entry.url = url;
+      if (note) entry.note = note;
+      if (state === "support_app") {
+        entry.support_app = true;
+      } else if (state === "wishlisted") {
         entry.wishlisted = true;
       } else if (state === "preordered") {
         entry.preordered = true;
@@ -530,6 +545,7 @@
     populateStoreSelect(row.querySelector('[data-key="store"]'), platform, entry.store || "");
     row.querySelector('[data-key="url"]').value = entry.url || "";
     row.querySelector('[data-key="state"]').value = getPlatformState(entry);
+    row.querySelector('[data-key="note"]').value = entry.note || "";
     target.appendChild(row);
   }
 

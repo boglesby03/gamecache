@@ -517,6 +517,12 @@ body {
     color: var(--po-text);
 }
 
+.digital-version-item.status-support-app {
+    border-color: rgba(184, 104, 0, 0.45);
+    background: rgba(255, 177, 66, 0.14);
+    color: #8a5200;
+}
+
 .digital-version-item.status-wishlisted {
     border-color: var(--wl-border);
     background: var(--wl-bg);
