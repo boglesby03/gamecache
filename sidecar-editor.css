@@ -384,10 +384,9 @@ label span {
   gap: 0.25rem;
 }
 
-.platform-note-wrap textarea {
+.platform-note-wrap input[data-key="note"] {
   width: 100%;
-  min-height: 3.2rem;
-  resize: vertical;
+  min-height: 0;
 }
 
 .check {
