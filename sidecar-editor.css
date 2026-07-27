@@ -310,6 +310,17 @@ label span {
   font-size: 0.95rem;
 }
 
+.platform-title {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.platform-title .material-symbols-rounded {
+  font-size: 1rem;
+  line-height: 1;
+}
+
 .platform-card .section-head {
   margin-bottom: 0.5rem;
 }
@@ -328,7 +339,7 @@ label span {
 
 .platform-row-main {
   display: grid;
-  grid-template-columns: minmax(115px, 0.9fr) minmax(0, 2.4fr) minmax(110px, 145px) max-content;
+  grid-template-columns: minmax(95px, 130px) minmax(0, 2.7fr) minmax(105px, 130px) max-content;
   gap: 0.45rem;
   align-items: center;
 }

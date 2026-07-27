@@ -36,9 +36,9 @@
   const PLATFORM_KEYS = ["android", "ios", "pc"];
   const PLATFORM_FLAGS = ["owned", "wishlisted", "preordered"];
   const PLATFORM_STORE_OPTIONS = {
-    android: ["Play Store", "Humble", "Amazon Appstore", "Samsung Galaxy Store", "itch.io"],
-    ios: ["App Store", "TestFlight", "Humble", "itch.io"],
-    pc: ["Steam", "Epic", "Web", "EA app", "Ubisoft Connect", "GOG", "Microsoft Store", "itch.io", "Humble", "Amazon"],
+    android: ["Play Store", "BGG", "Humble", "Amazon Appstore", "Samsung Galaxy Store", "itch.io"],
+    ios: ["App Store", "TestFlight", "itch.io"],
+    pc: ["Steam", "Web", "Tabletop Simulator", "BGA", "Epic", "EA app", "Ubisoft Connect", "GOG", "Microsoft Store", "itch.io", "Humble", "Amazon"],
   };
 
   function ensureGamesContainer(data) {
@@ -149,7 +149,7 @@
       select.appendChild(custom);
     }
 
-    select.value = normalizedCurrentValue || "";
+    select.value = normalizedCurrentValue || options[0] || "";
   }
 
   function normalizeEntry(raw, fallbackName) {
