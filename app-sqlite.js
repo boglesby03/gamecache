@@ -110,7 +110,7 @@ function normalizeDigitalPlatformEntry(entry) {
   const note = String(entry.note || entry.description || '').trim();
   if (note) normalized.note = note;
 
-  ['owned', 'wishlisted', 'preordered'].forEach((flag) => {
+  ['owned', 'wishlisted', 'preordered', 'monthly_subscription'].forEach((flag) => {
     if (Boolean(entry[flag])) {
       normalized[flag] = true;
     }
@@ -118,6 +118,9 @@ function normalizeDigitalPlatformEntry(entry) {
 
   if (Boolean(entry.support_app) || entry.state === 'support_app') {
     normalized.support_app = true;
+  }
+  if (Boolean(entry.monthly_subscription) || entry.state === 'monthly_subscription' || entry.state === 'subscription') {
+    normalized.monthly_subscription = true;
   }
 
   return Object.keys(normalized).length > 0 ? normalized : null;
@@ -172,11 +175,12 @@ function renderDigitalVersionsSection(clone, game) {
       owned: Boolean(service.owned),
       wishlisted: Boolean(service.wishlisted),
       preordered: Boolean(service.preordered),
+      monthlySubscription: Boolean(service.monthly_subscription),
       supportApp: Boolean(service.support_app),
       url: normalizeDigitalUrl(service.url || ''),
     }));
   })
-    .filter((item) => item.owned || item.wishlisted || item.preordered || item.supportApp || item.url || item.store || item.note);
+    .filter((item) => item.owned || item.wishlisted || item.preordered || item.monthlySubscription || item.supportApp || item.url || item.store || item.note);
 
   if (items.length === 0) {
     digitalSection.style.display = 'none';
@@ -189,7 +193,9 @@ function renderDigitalVersionsSection(clone, game) {
   items.forEach((item) => {
     const tag = item.url ? 'a' : 'span';
     let statusClass = 'status-owned';
-    if (item.supportApp) {
+    if (item.monthlySubscription) {
+      statusClass = 'status-monthly-subscription';
+    } else if (item.supportApp) {
       statusClass = 'status-support-app';
     } else if (item.preordered) {
       statusClass = 'status-preordered';
@@ -197,7 +203,17 @@ function renderDigitalVersionsSection(clone, game) {
       statusClass = 'status-wishlisted';
     }
 
-    const statusText = item.supportApp ? 'Support App' : item.preordered ? 'Preordered' : item.wishlisted ? 'Wishlisted' : item.owned ? 'Owned' : '';
+    const statusText = item.monthlySubscription
+      ? 'Monthly Subscription'
+      : item.supportApp
+        ? 'Support App'
+        : item.preordered
+          ? 'Preordered'
+          : item.wishlisted
+            ? 'Wishlisted'
+            : item.owned
+              ? 'Owned'
+              : '';
     const attrs = {
       className: `digital-version-item ${statusClass}${item.url ? '' : ' no-link'}`,
       title: `${item.label}${item.store ? ` • ${item.store}` : ''}${statusText ? ` • ${statusText}` : ''}${item.note ? ` • ${item.note}` : ''}`,
@@ -210,7 +226,7 @@ function renderDigitalVersionsSection(clone, game) {
     }
 
     const el = createElement(tag, attrs);
-    const icon = createElement('span', { className: 'material-symbols-rounded icon-small' }, item.supportApp ? 'extension' : item.icon);
+    const icon = createElement('span', { className: 'material-symbols-rounded icon-small' }, item.monthlySubscription ? 'subscriptions' : item.supportApp ? 'extension' : item.icon);
     el.appendChild(icon);
 
     list.appendChild(el);
@@ -1156,6 +1172,7 @@ function gameDigitalFlags(game) {
       owned: platformEntries.some(item => Boolean(item.owned)),
       wishlisted: platformEntries.some(item => Boolean(item.wishlisted)),
       preordered: platformEntries.some(item => Boolean(item.preordered)),
+      monthlySubscription: platformEntries.some(item => Boolean(item.monthly_subscription)),
       supportApp: platformEntries.some(item => Boolean(item.support_app)),
       link: platformEntries.some(item => Boolean(item.url)),
     };
@@ -1165,6 +1182,7 @@ function gameDigitalFlags(game) {
   const hasOwned = DIGITAL_PLATFORMS.some(platform => platforms[platform].owned);
   const hasWishlisted = DIGITAL_PLATFORMS.some(platform => platforms[platform].wishlisted);
   const hasPreordered = DIGITAL_PLATFORMS.some(platform => platforms[platform].preordered);
+  const hasMonthlySubscription = DIGITAL_PLATFORMS.some(platform => platforms[platform].monthlySubscription);
   const hasSupportApp = DIGITAL_PLATFORMS.some(platform => platforms[platform].supportApp);
   const hasLink = DIGITAL_PLATFORMS.some(platform => platforms[platform].link);
 
@@ -1173,6 +1191,7 @@ function gameDigitalFlags(game) {
     hasOwned,
     hasWishlisted,
     hasPreordered,
+    hasMonthlySubscription,
     hasSupportApp,
     hasLink,
     hasAny: hasAnyPlatform,
@@ -1186,6 +1205,7 @@ function setupDigitalFilter() {
     counts[`${platform}-owned`] = 0;
     counts[`${platform}-wishlisted`] = 0;
     counts[`${platform}-preordered`] = 0;
+    counts[`${platform}-monthly-subscription`] = 0;
     counts[`${platform}-support-app`] = 0;
   });
 
@@ -1198,6 +1218,7 @@ function setupDigitalFilter() {
       if (platformFlags.owned) counts[`${platform}-owned`] += 1;
       if (platformFlags.wishlisted) counts[`${platform}-wishlisted`] += 1;
       if (platformFlags.preordered) counts[`${platform}-preordered`] += 1;
+      if (platformFlags.monthlySubscription) counts[`${platform}-monthly-subscription`] += 1;
       if (platformFlags.supportApp) counts[`${platform}-support-app`] += 1;
     });
   });
@@ -1209,6 +1230,7 @@ function setupDigitalFilter() {
     items.push({ label: `${platformLabels[platform]} Owned`, value: `${platform}-owned`, count: counts[`${platform}-owned`] });
     items.push({ label: `${platformLabels[platform]} Wishlisted`, value: `${platform}-wishlisted`, count: counts[`${platform}-wishlisted`] });
     items.push({ label: `${platformLabels[platform]} Preordered`, value: `${platform}-preordered`, count: counts[`${platform}-preordered`] });
+    items.push({ label: `${platformLabels[platform]} Monthly Subscription`, value: `${platform}-monthly-subscription`, count: counts[`${platform}-monthly-subscription`] });
     items.push({ label: `${platformLabels[platform]} Support App`, value: `${platform}-support-app`, count: counts[`${platform}-support-app`] });
   });
 
@@ -2228,6 +2250,8 @@ function filterGames(gamesToFilter, filters) {
             return flags.platforms.android.wishlisted;
           case 'android-preordered':
             return flags.platforms.android.preordered;
+          case 'android-monthly-subscription':
+            return flags.platforms.android.monthlySubscription;
           case 'android-support-app':
             return flags.platforms.android.supportApp;
           case 'ios-owned':
@@ -2236,6 +2260,8 @@ function filterGames(gamesToFilter, filters) {
             return flags.platforms.ios.wishlisted;
           case 'ios-preordered':
             return flags.platforms.ios.preordered;
+          case 'ios-monthly-subscription':
+            return flags.platforms.ios.monthlySubscription;
           case 'ios-support-app':
             return flags.platforms.ios.supportApp;
           case 'pc-owned':
@@ -2244,6 +2270,8 @@ function filterGames(gamesToFilter, filters) {
             return flags.platforms.pc.wishlisted;
           case 'pc-preordered':
             return flags.platforms.pc.preordered;
+          case 'pc-monthly-subscription':
+            return flags.platforms.pc.monthlySubscription;
           case 'pc-support-app':
             return flags.platforms.pc.supportApp;
           default:

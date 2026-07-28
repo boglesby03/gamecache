@@ -102,6 +102,12 @@
           "url": "https://apps.apple.com/us/app/catan-classic/id335029050",
           "note": "Catan Classic",
           "wishlisted": true
+        },
+        {
+          "store": "App Store",
+          "url": "https://apps.apple.com/us/app/colonist-io-catan-inspired/id6444831129",
+          "note": "Colonist.io",
+          "owned": true
         }
       ],
       "pc": [
@@ -110,6 +116,12 @@
           "url": "https://store.steampowered.com/app/544730/Catan_Universe/",
           "note": "Catan Universe",
           "owned": true
+        },
+        {
+          "store": "BGA",
+          "url": "https://boardgamearena.com/gamepanel?game=catan",
+          "note": "BGA Premium",
+          "monthly_subscription": true
         }
       ]
     },
@@ -117,7 +129,21 @@
       "name": "Can't Stop!",
       "short_description": "Roll dice to claim three columns. Risk everything earned this turn with each roll.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "BGA",
+          "url": "https://en.boardgamearena.com/gamepanel?game=cantstop",
+          "note": "BGA Premium",
+          "monthly_subscription": true
+        },
+        {
+          "store": "BGA",
+          "url": "https://en.boardgamearena.com/gamepanel?game=cantstopexpress",
+          "note": "BGA Premium - Express",
+          "monthly_subscription": true
+        }
+      ]
     },
     "46": {
       "name": "Medici",
@@ -148,7 +174,14 @@
         {
           "store": "Steam",
           "url": "https://store.steampowered.com/app/520680/Lost_Cities/",
+          "note": "Lost Cities",
           "owned": true
+        },
+        {
+          "store": "BGA",
+          "url": "https://en.boardgamearena.com/gamepanel?game=lostcities",
+          "note": "BGA Premium",
+          "monthly_subscription": true
         }
       ]
     },
@@ -156,7 +189,15 @@
       "name": "El Grande",
       "short_description": "Use your caballeros to control regions of medieval Spain, keeping clear of the King!",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "BGA",
+          "url": "https://boardgamearena.com/gamepanel?game=elgrande",
+          "note": "BGA Free",
+          "owned": true
+        }
+      ]
     },
     "112": {
       "name": "Condottiere",
@@ -283,6 +324,12 @@
           "url": "https://store.steampowered.com/app/4163030/Cat_Chess/",
           "note": "Cat Chess",
           "wishlisted": true
+        },
+        {
+          "store": "BGA",
+          "url": "https://boardgamearena.com/gamepanel?game=chess",
+          "note": "BGA Free",
+          "owned": true
         }
       ]
     },
@@ -290,7 +337,15 @@
       "name": "For Sale",
       "short_description": "What's your bid? Bid on promising property bundles, then sell properties for checks.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "BGA",
+          "url": "https://boardgamearena.com/gamepanel?game=forsale",
+          "note": "BGA Premium",
+          "monthly_subscription": true
+        }
+      ]
     },
     "181": {
       "name": "Risk",
@@ -346,13 +401,29 @@
       "name": "Schotten Totten",
       "short_description": "Place your kilted clansmen, control stones, expand territory & foil the rival clan.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "BGA",
+          "url": "https://boardgamearena.com/gamepanel?game=schottentotten",
+          "note": "BGA Premium",
+          "monthly_subscription": true
+        }
+      ]
     },
     "394": {
       "name": "Kahuna",
       "short_description": "Place your bridges and destroy your opponent's via card-play to control 12 islands.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "BGA",
+          "url": "https://boardgamearena.com/gamepanel?game=kahuna",
+          "note": "BGA Free",
+          "owned": true
+        }
+      ]
     },
     "398": {
       "name": "Botswana",
@@ -407,6 +478,7 @@
         {
           "store": "Humble",
           "url": "https://www.humblebundle.com/home/library",
+          "note": "Abalone",
           "owned": true
         }
       ],
@@ -414,6 +486,13 @@
         {
           "store": "Steam",
           "url": "https://store.steampowered.com/app/279480/Abalone/",
+          "note": "Abalone",
+          "owned": true
+        },
+        {
+          "store": "BGA",
+          "url": "https://boardgamearena.com/gamepanel?game=abalone",
+          "note": "BGA Free",
           "owned": true
         }
       ]
@@ -422,7 +501,15 @@
       "name": "GIPF",
       "short_description": "Cycle your own pieces while slowly depleting your opponent's reserve.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "BGA",
+          "url": "https://boardgamearena.com/gamepanel?game=gipf",
+          "note": "BGA Free",
+          "owned": true
+        }
+      ]
     },
     "594": {
       "name": "Sleuth",
@@ -499,6 +586,12 @@
           "store": "Steam",
           "url": "https://store.steampowered.com/app/598810/Carcassonne__Tiles__Tactics/",
           "note": "with Inns & Cathedrals, The River, The Princess & the Dragon, Traders and Builders, Winter and Gingerbread man",
+          "owned": true
+        },
+        {
+          "store": "BGA",
+          "url": "https://en.boardgamearena.com/gamepanel?game=carcassonne",
+          "note": "BGA Premium",
           "owned": true
         }
       ]
@@ -588,6 +681,32 @@
           "url": "https://play.google.com/store/apps/details?id=com.marmalade.cluedo2companion",
           "note": "Companion",
           "support_app": true
+        }
+      ],
+      "ios": [
+        {
+          "store": "App Store",
+          "url": "https://apps.apple.com/us/app/clue-classic-edition/id1150534552",
+          "note": "Classic Edition",
+          "wishlisted": true
+        },
+        {
+          "store": "App Store",
+          "url": "https://apps.apple.com/us/app/cluesheet-companion/id1202159803",
+          "note": "Cluesheet Companion",
+          "owned": true
+        },
+        {
+          "store": "App Store",
+          "url": "https://apps.apple.com/us/app/clue-companion/id6467007967",
+          "note": "Companion",
+          "owned": true
+        },
+        {
+          "store": "App Store",
+          "url": "https://apps.apple.com/us/app/clue/id6447357776",
+          "note": "Clue",
+          "wishlisted": true
         }
       ],
       "pc": [
@@ -758,7 +877,15 @@
       "name": "DVONN",
       "short_description": "Avoid being disconnected from the three DVONN pieces on an ever-shrinking board.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "BGA",
+          "url": "https://boardgamearena.com/gamepanel?game=dvonn",
+          "note": "BGA Free",
+          "owned": true
+        }
+      ]
     },
     "2425": {
       "name": "Battleship",
@@ -825,7 +952,15 @@
       "name": "Survive: Escape from Atlantis!",
       "short_description": "Sharks, whales, and sea monsters, oh my! Hurry and escape before Atlantis disappears!",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "BGA",
+          "url": "https://boardgamearena.com/gamepanel?game=survive",
+          "note": "BGA Free",
+          "owned": true
+        }
+      ]
     },
     "2679": {
       "name": "Mouse Trap",
@@ -850,6 +985,26 @@
           "store": "Play Store",
           "url": "https://store.steampowered.com/app/1455630/THE_GAME_OF_LIFE_2/",
           "note": "Game of Life 2",
+          "wishlisted": true
+        }
+      ],
+      "ios": [
+        {
+          "store": "App Store",
+          "url": "https://apps.apple.com/us/app/the-game-of-life/id1117405948",
+          "note": "Game of Life",
+          "wishlisted": true
+        },
+        {
+          "store": "App Store",
+          "url": "https://apps.apple.com/us/app/the-game-of-life-2/id1512751689",
+          "note": "Game of Life 2",
+          "wishlisted": true
+        },
+        {
+          "store": "App Store",
+          "url": "https://apps.apple.com/us/app/the-game-of-life-road-trip/id1465749734",
+          "note": "Game of Life: Road Trip",
           "owned": true
         }
       ],
@@ -858,6 +1013,12 @@
           "store": "Steam",
           "url": "https://store.steampowered.com/app/403120/THE_GAME_OF_LIFE/",
           "note": "Game of Life",
+          "owned": true
+        },
+        {
+          "store": "Steam",
+          "url": "https://store.steampowered.com/app/1455630/THE_GAME_OF_LIFE_2/",
+          "note": "Game of Life 2",
           "owned": true
         }
       ]
@@ -952,13 +1113,29 @@
       "name": "Coloretto",
       "short_description": "Collect colorful chameleons, but be careful! Don't take too many types.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "BGA",
+          "url": "https://boardgamearena.com/gamepanel?game=coloretto",
+          "note": "BGA Free",
+          "owned": true
+        }
+      ]
     },
     "6249": {
       "name": "Alhambra",
       "short_description": "Compete to build the most valuable picturesque walled city in 13th-century Granada.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "BGA",
+          "url": "https://boardgamearena.com/gamepanel?game=alhambra",
+          "note": "BGA Free",
+          "owned": true
+        }
+      ]
     },
     "7098": {
       "name": "Monopoly: Deluxe Edition",
@@ -969,6 +1146,29 @@
         {
           "store": "Play Store",
           "url": "https://play.google.com/store/apps/details?id=com.marmalade.monopoly",
+          "note": "Monopoly",
+          "wishlisted": true
+        }
+      ],
+      "ios": [
+        {
+          "store": "App Store",
+          "url": "https://apps.apple.com/us/app/monopoly-the-board-game/id1477966166",
+          "note": "Monopoly",
+          "wishlisted": true
+        }
+      ],
+      "pc": [
+        {
+          "store": "Steam",
+          "url": "https://store.steampowered.com/app/2929170/NEW_MONOPOLY/",
+          "note": "Monopoly",
+          "wishlisted": true
+        },
+        {
+          "store": "Steam",
+          "url": "https://store.steampowered.com/app/2383760/Monopoly_Madness/",
+          "note": "Monopoly Madness",
           "wishlisted": true
         }
       ]
@@ -983,13 +1183,29 @@
       "name": "YINSH",
       "short_description": "Move rings over pieces to flip them, creating rows of five in your color.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "BGA",
+          "url": "https://en.boardgamearena.com/gamepanel?game=yinsh",
+          "note": "BGA Free",
+          "owned": true
+        }
+      ]
     },
     "8203": {
       "name": "Hey, That's My Fish!",
       "short_description": "Race to catch fish, but don't get stranded as ice disappears beneath your feet.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "BGA",
+          "url": "https://en.boardgamearena.com/gamepanel?game=heythatsmyfish",
+          "note": "BGA Free",
+          "monthly_subscription": true
+        }
+      ]
     },
     "9209": {
       "name": "Ticket to Ride",
@@ -1090,6 +1306,18 @@
           "url": "https://store.steampowered.com/app/108200/Ticket_to_Ride_Classic_Edition/",
           "note": "Classic Version with all the DLC as well",
           "owned": true
+        },
+        {
+          "store": "BGA",
+          "url": "https://en.boardgamearena.com/gamepanel?game=tickettoride",
+          "note": "BGA Premium",
+          "monthly_subscription": true
+        },
+        {
+          "store": "BGA",
+          "url": "https://en.boardgamearena.com/gamepanel?game=tickettoridemaps",
+          "note": "BGA Premium - Collection",
+          "monthly_subscription": true
         }
       ]
     },
@@ -1097,13 +1325,29 @@
       "name": "Saint Petersburg",
       "short_description": "Hire craftsmen, pay for buildings, snag noblemen as you compete for rubles and glory.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "BGA",
+          "url": "https://boardgamearena.com/gamepanel?game=saintpetersburg",
+          "note": "BGA Free",
+          "owned": true
+        }
+      ]
     },
     "9220": {
       "name": "Saboteur",
       "short_description": "You are dwarves laying tunnel cards to get gold: but which one of you is the traitor?",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "BGA",
+          "url": "https://en.boardgamearena.com/gamepanel?game=saboteur",
+          "note": "BGA Free",
+          "owned": true
+        }
+      ]
     },
     "9674": {
       "name": "Ingenious",
@@ -1167,7 +1411,14 @@
         {
           "store": "Steam",
           "url": "https://store.steampowered.com/app/108210/Memoir_44_Online/",
+          "note": "Memoir 44 Online",
           "owned": true
+        },
+        {
+          "store": "BGA",
+          "url": "https://en.boardgamearena.com/gamepanel?game=memoir",
+          "note": "BGA Free",
+          "monthly_subscription": true
         }
       ]
     },
@@ -1236,10 +1487,18 @@
       "supplemental_files": []
     },
     "12942": {
-      "name": "No Thanks",
+      "name": "No Thanks!",
       "short_description": "Take a card, pay to say no thanks or take what you must to score the least.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "BGA",
+          "url": "https://boardgamearena.com/gamepanel?game=nothanks",
+          "note": "BGA Free",
+          "owned": true
+        }
+      ]
     },
     "13230": {
       "name": "Gobble TicTacToe",
@@ -1281,8 +1540,15 @@
       "pc": [
         {
           "store": "Steam",
-          "url": "https://store.steampowered.com/app/2608220/Ticket_to_Ride_Europe_Expansion/?curator_clanid=44633384",
+          "url": "https://store.steampowered.com/app/2608220/Ticket_to_Ride_Europe_Expansion",
+          "note": "TTR DLC",
           "owned": true
+        },
+        {
+          "store": "BGA",
+          "url": "https://en.boardgamearena.com/gamepanel?game=tickettorideeurope",
+          "note": "BGA Premium",
+          "monthly_subscription": true
         }
       ]
     },
@@ -1309,6 +1575,14 @@
           "url": "https://boardgamegeek.com/filepage/121796/dungeon-gold-android-game",
           "note": "Dungeon Gold",
           "owned": true
+        }
+      ],
+      "pc": [
+        {
+          "store": "BGA",
+          "url": "https://en.boardgamearena.com/gamepanel?game=incangold",
+          "note": "BGA Premium",
+          "monthly_subscription": true
         }
       ]
     },
@@ -1385,7 +1659,15 @@
       "name": "Shogun",
       "short_description": "Gain control of medieval Japan by amassing troops and sending them out to battles.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "BGA",
+          "url": "https://boardgamearena.com/gamepanel?game=shogun",
+          "note": "BGA Free",
+          "owned": true
+        }
+      ]
     },
     "21241": {
       "name": "Neuroshima Hex!: The Year of Moloch",
@@ -1422,7 +1704,15 @@
       "name": "Mr. Jack",
       "short_description": "Narrow down the list of suspects so you can capture Mr. Jack. before he escapes.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "BGA",
+          "url": "https://boardgamearena.com/gamepanel?game=mrjack",
+          "note": "BGA Premium",
+          "monthly_subscription": true
+        }
+      ]
     },
     "23049": {
       "name": "Hedbanz",
@@ -1512,6 +1802,13 @@
         {
           "store": "Steam",
           "url": "https://steamcommunity.com/app/283450/",
+          "note": "Zooloretto",
+          "owned": true
+        },
+        {
+          "store": "BGA",
+          "url": "https://boardgamearena.com/gamepanel?game=zooloretto",
+          "note": "BGA Free",
           "owned": true
         }
       ]
@@ -1597,6 +1894,12 @@
           "url": "https://store.steampowered.com/app/579940/Race_for_the_Galaxy/",
           "note": "Race for the Galaxy",
           "wishlisted": true
+        },
+        {
+          "store": "BGA",
+          "url": "https://en.boardgamearena.com/gamepanel?game=raceforthegalaxy",
+          "note": "BGA Free",
+          "owned": true
         }
       ]
     },
@@ -1623,7 +1926,15 @@
       "name": "Amyitis",
       "short_description": "Prestige-seeking artisans and nobles gather at the genesis of an ancient world wonder",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "BGA",
+          "url": "https://boardgamearena.com/gamepanel?game=amyitis",
+          "note": "BGA Free",
+          "owned": true
+        }
+      ]
     },
     "30381": {
       "name": "Hamburgum",
@@ -1662,6 +1973,7 @@
         {
           "store": "Steam",
           "url": "https://store.steampowered.com/app/622440/Pandemic_The_Board_Game/",
+          "note": "Pandemic",
           "owned": true
         },
         {
@@ -1669,6 +1981,12 @@
           "url": "https://boardgamehelpers.com/Pandemic/Default.aspx",
           "note": "Setup Helper",
           "support_app": true
+        },
+        {
+          "store": "BGA",
+          "url": "https://en.boardgamearena.com/gamepanel?game=pandemic",
+          "note": "BGA Premium",
+          "monthly_subscription": true
         }
       ]
     },
@@ -1695,6 +2013,12 @@
           "url": "https://play.google.com/store/apps/details?id=com.geeksong.agricolascorer",
           "note": "Scorer",
           "wishlisted": true
+        },
+        {
+          "store": "Play Store",
+          "url": "https://play.google.com/store/apps/details?id=de.michael.spiele.agricola",
+          "note": "Scoresheet",
+          "support_app": true
         }
       ],
       "pc": [
@@ -1709,6 +2033,12 @@
           "url": "https://boardgamehelpers.com/Agricola/Default.aspx",
           "note": "Turn Order",
           "support_app": true
+        },
+        {
+          "store": "BGA",
+          "url": "https://en.boardgamearena.com/gamepanel?game=sevenwondersduel",
+          "note": "BGA Premium",
+          "monthly_subscription": true
         }
       ]
     },
@@ -1758,7 +2088,15 @@
       "name": "In the Year of the Dragon: 10th Anniversary",
       "short_description": "Choose and manage your workers to protect your palaces from a series of disasters.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "BGA",
+          "url": "https://boardgamearena.com/gamepanel?game=intheyearofthedragon",
+          "note": "BGA Free",
+          "owned": true
+        }
+      ]
     },
     "31627": {
       "name": "Ticket to Ride: Nordic Countries",
@@ -1812,6 +2150,12 @@
           "url": "https://store.steampowered.com/app/2177570/Stone_Age_Digital_Edition/",
           "note": "Stone Age",
           "wishlisted": true
+        },
+        {
+          "store": "BGA",
+          "url": "https://en.boardgamearena.com/gamepanel?game=stoneage",
+          "note": "BGA Free",
+          "owned": true
         }
       ]
     },
@@ -1947,13 +2291,29 @@
       "name": "Roll Through the Ages: The Bronze Age",
       "short_description": "Roll and Civilize your way to victory with an ancient Mediterranean empire.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "BGA",
+          "url": "https://boardgamearena.com/gamepanel?game=rollthroughtheagesthebronzeage",
+          "note": "BGA Free",
+          "owned": true
+        }
+      ]
     },
     "37628": {
       "name": "Haggis",
       "short_description": "Climbing card-game for two to four players. With bets and bombs!",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "BGA",
+          "url": "https://boardgamearena.com/gamepanel?game=haggis",
+          "note": "BGA Free",
+          "owned": true
+        }
+      ]
     },
     "37794": {
       "name": "Magnifico",
@@ -1985,7 +2345,15 @@
       "name": "Formula D",
       "short_description": "Use custom dice to race in the cities and on Formula 1 courses.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "BGA",
+          "url": "https://en.boardgamearena.com/gamepanel?game=formulad",
+          "note": "BGA Free",
+          "owned": true
+        }
+      ]
     },
     "38054": {
       "name": "Snow Tails",
@@ -2061,7 +2429,15 @@
       "name": "Finca",
       "short_description": "Use your farmers to acquire produce then deliver it where those goods are needed.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "BGA",
+          "url": "https://boardgamearena.com/gamepanel?game=finca",
+          "note": "BGA Free",
+          "owned": true
+        }
+      ]
     },
     "40692": {
       "name": "Small World",
@@ -2092,6 +2468,12 @@
           "url": "https://store.steampowered.com/app/235620/Small_World/",
           "note": "with Cursed, Grand Dames, Be Not Afraid..., Royal Bonus, Spider Web",
           "owned": true
+        },
+        {
+          "store": "BGA",
+          "url": "https://boardgamearena.com/gamepanel?game=smallworld",
+          "note": "BGA Premium",
+          "monthly_subscription": true
         }
       ]
     },
@@ -2125,7 +2507,15 @@
       "name": "Tobago",
       "short_description": "Determine the location of a hidden treasure and race your opponents to it.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "BGA",
+          "url": "https://boardgamearena.com/gamepanel?game=tobago",
+          "note": "BGA Free",
+          "owned": true
+        }
+      ]
     },
     "42452": {
       "name": "Rattus",
@@ -2213,7 +2603,16 @@
         {
           "store": "Play Store",
           "url": "https://play.google.com/store/apps/details?id=com.meepletouch.jaipur",
+          "note": "Jaipur",
           "wishlisted": true
+        }
+      ],
+      "pc": [
+        {
+          "store": "BGA",
+          "url": "https://boardgamearena.com/gamepanel?game=jaipur",
+          "note": "BGA Premium",
+          "monthly_subscription": true
         }
       ]
     },
@@ -2303,13 +2702,29 @@
       "name": "Spot it!: Classic",
       "short_description": "Quick! Which symbol is on both cards? Race others to gather or dump your cards.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "BGA",
+          "url": "https://boardgamearena.com/gamepanel?game=dobble",
+          "note": "BGA Free",
+          "owned": true
+        }
+      ]
     },
     "63888": {
       "name": "Innovation",
       "short_description": "Guide your civilization with inventions from the stone age through to the modern era.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "BGA",
+          "url": "https://en.boardgamearena.com/gamepanel?game=innovation",
+          "note": "BGA Premium",
+          "monthly_subscription": true
+        }
+      ]
     },
     "65244": {
       "name": "Forbidden Island",
@@ -2321,6 +2736,14 @@
           "store": "App Store",
           "url": "https://forbidden-island-ios.apps112.com/",
           "wishlisted": true
+        }
+      ],
+      "pc": [
+        {
+          "store": "BGA",
+          "url": "https://boardgamearena.com/gamepanel?game=forbiddenisland",
+          "note": "BGA Premium",
+          "monthly_subscription": true
         }
       ]
     },
@@ -2385,6 +2808,12 @@
           "url": "https://boardgamehelpers.com/SevenWonders/Default.aspx",
           "note": "Setup Helper",
           "support_app": true
+        },
+        {
+          "store": "BGA",
+          "url": "https://en.boardgamearena.com/gamepanel?game=sevenwonders",
+          "note": "BGA Premium",
+          "monthly_subscription": true
         }
       ]
     },
@@ -2410,7 +2839,14 @@
         {
           "store": "Steam",
           "url": "https://store.steampowered.com/app/3232870/King_of_Tokyo__Richard_Garfield/",
+          "note": "King of Tokyo",
           "wishlisted": true
+        },
+        {
+          "store": "BGA",
+          "url": "https://en.boardgamearena.com/gamepanel?game=kingoftokyo",
+          "note": "BGA Premium",
+          "monthly_subscription": true
         }
       ]
     },
@@ -2429,7 +2865,20 @@
         {
           "store": "Steam",
           "url": "https://store.steampowered.com/app/865160/Takenoko/",
+          "note": "Takenoko",
           "wishlisted": true
+        },
+        {
+          "store": "BGA",
+          "url": "https://boardgamearena.com/gamepanel?game=takenoko",
+          "note": "BGA Premium",
+          "monthly_subscription": true
+        },
+        {
+          "store": "BGA",
+          "url": "https://boardgamearena.com/gamepanel?game=takenokolor",
+          "note": "BGA Free - Takenokolor",
+          "owned": true
         }
       ]
     },
@@ -2496,6 +2945,13 @@
         {
           "store": "Steam",
           "url": "https://store.steampowered.com/app/2561310/K2_Digital_Edition/",
+          "note": "K2",
+          "owned": true
+        },
+        {
+          "store": "BGA",
+          "url": "https://boardgamearena.com/gamepanel?game=k2",
+          "note": "BGA Free",
           "owned": true
         }
       ]
@@ -2504,7 +2960,15 @@
       "name": "Paris Connection",
       "short_description": "Extend tracks and buy stock as players stretch railroads across France.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "BGA",
+          "url": "https://boardgamearena.com/gamepanel?game=parisconnection",
+          "note": "BGA Free",
+          "owned": true
+        }
+      ]
     },
     "75449": {
       "name": "Firenze",
@@ -2576,6 +3040,12 @@
           "url": "https://store.steampowered.com/app/903040/The_Castles_of_Burgundy/",
           "note": "Still need the map packs",
           "owned": true
+        },
+        {
+          "store": "BGA",
+          "url": "https://en.boardgamearena.com/gamepanel?game=castlesofburgundy",
+          "note": "BGA Free",
+          "owned": true
         }
       ]
     },
@@ -2619,7 +3089,15 @@
       "name": "Skull",
       "short_description": "Does the token hide a flower or skull? Bid, bluff and laugh with striking components.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "BGA",
+          "url": "https://boardgamearena.com/gamepanel?game=skull",
+          "note": "BGA Free",
+          "owned": true
+        }
+      ]
     },
     "94246": {
       "name": "1812: The Invasion of Canada",
@@ -2645,7 +3123,15 @@
       "name": "Dungeon Petz",
       "short_description": "Raise monstrous pets and sell them to demanding Dungeon Lords for fame and fortune.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "BGA",
+          "url": "https://boardgamearena.com/gamepanel?game=dungeonpetz",
+          "note": "BGA Free",
+          "owned": true
+        }
+      ]
     },
     "97786": {
       "name": "Small World Underground",
@@ -2684,6 +3170,14 @@
           "url": "https://apps.apple.com/us/app/boardible-mobile-board-games/id1610585922",
           "note": "Boardabile",
           "owned": true
+        }
+      ],
+      "pc": [
+        {
+          "store": "BGA",
+          "url": "https://en.boardgamearena.com/gamepanel?game=hanabi",
+          "note": "BGA Premium",
+          "monthly_subscription": true
         }
       ]
     },
@@ -2774,6 +3268,12 @@
           "url": "https://store.steampowered.com/app/3216750/Caverna/",
           "note": "Caverna",
           "wishlisted": true
+        },
+        {
+          "store": "BGA",
+          "url": "https://boardgamearena.com/gamepanel?game=caverna",
+          "note": "BGA Premium",
+          "monthly_subscription": true
         }
       ]
     },
@@ -2867,7 +3367,15 @@
       "name": "Seasons",
       "short_description": "Mages compete across twelve seasons to collect crystals and become the new archmage.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "BGA",
+          "url": "https://en.boardgamearena.com/gamepanel?game=seasons",
+          "note": "BGA Premium",
+          "owned": true
+        }
+      ]
     },
     "109125": {
       "name": "Wallenstein (Second Edition)",
@@ -2964,7 +3472,15 @@
       "name": "Targi",
       "short_description": "Compete as one of six Roman Generals in charge of a milecastle along Hadrian's Wall.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "BGA",
+          "url": "https://boardgamearena.com/gamepanel?game=targi",
+          "note": "BGA Free",
+          "owned": true
+        }
+      ]
     },
     "118695": {
       "name": "Riff Raff",
@@ -3067,6 +3583,12 @@
           "url": "https://store.steampowered.com/app/628900/Terra_Mystica/",
           "note": "Terra Mystica",
           "owned": true
+        },
+        {
+          "store": "BGA",
+          "url": "https://en.boardgamearena.com/gamepanel?game=terramystica",
+          "note": "BGA Premium",
+          "monthly_subscription": true
         }
       ]
     },
@@ -3118,7 +3640,15 @@
       "name": "Keyflower",
       "short_description": "Compete in a unique auction system to build the most prosperous village.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "BGA",
+          "url": "https://boardgamearena.com/gamepanel?game=keyflower",
+          "note": "BGA Free",
+          "owned": true
+        }
+      ]
     },
     "122522": {
       "name": "Smash Up",
@@ -3188,6 +3718,7 @@
         {
           "store": "Play Store",
           "url": "https://play.google.com/store/apps/details?id=com.funforgedigital.tokaido",
+          "note": "Tokaido",
           "owned": true
         }
       ],
@@ -3195,6 +3726,7 @@
         {
           "store": "App Store",
           "url": "https://apps.apple.com/us/app/tokaido/id1215230801",
+          "note": "Tokaido",
           "owned": true
         }
       ],
@@ -3202,6 +3734,13 @@
         {
           "store": "Steam",
           "url": "https://store.steampowered.com/app/648750/Tokaido/",
+          "note": "Tokaido",
+          "owned": true
+        },
+        {
+          "store": "BGA",
+          "url": "https://boardgamearena.com/gamepanel?game=tokaido",
+          "note": "BGA Premium",
           "owned": true
         }
       ]
@@ -3245,6 +3784,12 @@
           "url": "https://store.steampowered.com/app/1450330/Concordia_Digital_Edition/",
           "note": "Concordia with Salsa, Fish Market, Venus, Corsica & Gallia, Aegyptus & Creta, Britannia & Germania",
           "owned": true
+        },
+        {
+          "store": "BGA",
+          "url": "https://en.boardgamearena.com/gamepanel?game=concordia",
+          "note": "BGA Premium",
+          "monthly_subscription": true
         }
       ]
     },
@@ -3272,7 +3817,15 @@
       "name": "Libertalia",
       "short_description": "Scurvy pirate crews try to divide loot for glory and riches.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "BGA",
+          "url": "https://boardgamearena.com/gamepanel?game=libertalia",
+          "note": "BGA Premium",
+          "monthly_subscription": true
+        }
+      ]
     },
     "125678": {
       "name": "DC Deck-Building Game",
@@ -3296,7 +3849,15 @@
       "name": "Tzolk'in: The Mayan Calendar",
       "short_description": "Lead your people, build monuments and make offerings to earn the favour of the gods.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "BGA",
+          "url": "https://boardgamearena.com/gamepanel?game=tzolkin",
+          "note": "BGA Free",
+          "owned": true
+        }
+      ]
     },
     "127023": {
       "name": "Kemet",
@@ -3320,7 +3881,15 @@
       "name": "Ginkgopolis",
       "short_description": "Build upwards as well as outwards to control the most buildings in a future eco-city.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "BGA",
+          "url": "https://boardgamearena.com/gamepanel?game=ginkgopolis",
+          "note": "BGA Free",
+          "owned": true
+        }
+      ]
     },
     "128671": {
       "name": "Spartacus: A Game of Blood and Treachery",
@@ -3446,6 +4015,7 @@
         {
           "store": "Play Store",
           "url": "https://play.google.com/store/apps/details?id=com.nomadgames.loveletterdev",
+          "note": "Love Letter",
           "wishlisted": true
         }
       ],
@@ -3453,7 +4023,14 @@
         {
           "store": "Steam",
           "url": "https://store.steampowered.com/app/926520/Love_Letter/",
+          "note": "Love Letter",
           "owned": true
+        },
+        {
+          "store": "BGA",
+          "url": "https://en.boardgamearena.com/gamepanel?game=loveletter",
+          "note": "BGA Premium",
+          "monthly_subscription": true
         }
       ]
     },
@@ -3472,7 +4049,15 @@
       "name": "Coup",
       "short_description": "Bluff (and call bluffs!) to victory in this card game with no third chances.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "BGA",
+          "url": "https://boardgamearena.com/gamepanel?game=coupcitystate",
+          "note": "BGA Premium",
+          "monthly_subscription": true
+        }
+      ]
     },
     "131366": {
       "name": "Eight-Minute Empire",
@@ -3521,6 +4106,12 @@
           "url": "https://store.steampowered.com/app/893840/Roll_for_the_Galaxy/",
           "note": "Roll for the Galaxy",
           "wishlisted": true
+        },
+        {
+          "store": "BGA",
+          "url": "https://boardgamearena.com/gamepanel?game=rollforthegalaxy",
+          "note": "BGA Premium",
+          "monthly_subscription": true
         }
       ]
     },
@@ -3549,6 +4140,14 @@
           "url": "https://apps.apple.com/us/app/boardible-mobile-board-games/id1610585922",
           "note": "Boardible",
           "owned": true
+        }
+      ],
+      "pc": [
+        {
+          "store": "BGA",
+          "url": "https://boardgamearena.com/gamepanel?game=sushigo",
+          "note": "BGA Premium",
+          "monthly_subscription": true
         }
       ]
     },
@@ -3636,7 +4235,15 @@
       "name": "Arboretum",
       "short_description": "Build the Arboretum of your dreams, and prevent your rival from building theirs.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "BGA",
+          "url": "https://boardgamearena.com/gamepanel?game=arboretum",
+          "note": "BGA Premium",
+          "owned": true
+        }
+      ]
     },
     "141572": {
       "name": "Paperback",
@@ -3718,7 +4325,15 @@
       "name": "Glass Road",
       "short_description": "Vie for influence, manage threats, build, and employ the unique denizens of the city!",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "BGA",
+          "url": "https://boardgamearena.com/gamepanel?game=glassroad",
+          "note": "BGA Premium",
+          "monthly_subscription": true
+        }
+      ]
     },
     "143741": {
       "name": "BANG! The Dice Game",
@@ -3757,6 +4372,12 @@
           "url": "https://boardgamehelpers.com/RussianRailroads/",
           "note": "Setup Helper",
           "support_app": true
+        },
+        {
+          "store": "BGA",
+          "url": "https://boardgamearena.com/gamepanel?game=russianrailroads",
+          "note": "BGA Free",
+          "owned": true
         }
       ]
     },
@@ -3866,7 +4487,15 @@
       "name": "La Granja",
       "short_description": "Develop your farm and compete to deliver goods to the market at the right time.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "BGA",
+          "url": "https://en.boardgamearena.com/gamepanel?game=lagranja",
+          "note": "BGA Free",
+          "owned": true
+        }
+      ]
     },
     "147020": {
       "name": "Star Realms",
@@ -3886,7 +4515,15 @@
       "name": "Concept",
       "short_description": "Select icons to help your team guess a secret word or phrase.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "BGA",
+          "url": "https://boardgamearena.com/gamepanel?game=concept",
+          "note": "BGA Free",
+          "owned": true
+        }
+      ]
     },
     "147930": {
       "name": "King & Assassins",
@@ -3932,6 +4569,12 @@
           "store": "Steam",
           "url": "https://store.steampowered.com/app/376680/Splendor/",
           "note": "with Cities, The Strongholds, The Trading Posts",
+          "owned": true
+        },
+        {
+          "store": "BGA",
+          "url": "https://en.boardgamearena.com/gamepanel?game=splendor",
+          "note": "BGA Premium",
           "owned": true
         }
       ]
@@ -4009,7 +4652,15 @@
       "name": "Skull King",
       "short_description": "Trick-taking on the high seas. Meet your bid to please the Skull King.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "BGA",
+          "url": "https://en.boardgamearena.com/gamepanel?game=skullking",
+          "note": "BGA Premium",
+          "monthly_subscription": true
+        }
+      ]
     },
     "150312": {
       "name": "Welcome to the Dungeon",
@@ -4059,7 +4710,15 @@
       "name": "Diamonds",
       "short_description": "Every trick is a chance to grab jewels…or swipe them from your rivals!",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "BGA",
+          "url": "https://boardgamearena.com/gamepanel?game=diamonds",
+          "note": "BGA Free",
+          "owned": true
+        }
+      ]
     },
     "152237": {
       "name": "Pairs",
@@ -4101,7 +4760,15 @@
       "name": "Imperial Settlers",
       "short_description": "Construct buildings, harvest resources, and attack your neighbor!",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "BGA",
+          "url": "https://boardgamearena.com/gamepanel?game=imperialsettlers",
+          "note": "BGA Premium",
+          "monthly_subscription": true
+        }
+      ]
     },
     "154246": {
       "name": "La Isla",
@@ -4130,7 +4797,14 @@
         {
           "store": "Steam",
           "url": "https://store.steampowered.com/app/251210/Hive/",
+          "note": "Hive",
           "owned": true
+        },
+        {
+          "store": "BGA",
+          "url": "https://boardgamearena.com/gamepanel?game=hive",
+          "note": "BGA Premium",
+          "monthly_subscription": true
         }
       ]
     },
@@ -4155,7 +4829,16 @@
         {
           "store": "Play Store",
           "url": "https://play.google.com/store/apps/details?id=com.mobilecastles.castles",
+          "note": "Castles of Mad King Ludwig",
           "owned": true
+        }
+      ],
+      "pc": [
+        {
+          "store": "BGA",
+          "url": "https://boardgamearena.com/gamepanel?game=castleofmadkingludwig",
+          "note": "BGA Premium",
+          "monthly_subscription": true
         }
       ]
     },
@@ -4180,6 +4863,7 @@
         {
           "store": "Play Store",
           "url": "https://play.google.com/store/apps/details?id=com.northstargames.evolutiongame",
+          "note": "Evolution",
           "wishlisted": true
         }
       ],
@@ -4187,7 +4871,14 @@
         {
           "store": "Steam",
           "url": "https://store.steampowered.com/app/469800/Evolution_Board_Game/",
+          "note": "Evolution",
           "wishlisted": true
+        },
+        {
+          "store": "BGA",
+          "url": "https://boardgamearena.com/gamepanel?game=evolution",
+          "note": "BGA Free",
+          "owned": true
         }
       ]
     },
@@ -4227,7 +4918,15 @@
       "name": "Abyss",
       "short_description": "Control factions, influence the court and reign over underwater realms!",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "BGA",
+          "url": "https://boardgamearena.com/gamepanel?game=abyss",
+          "note": "BGA Premium",
+          "monthly_subscription": true
+        }
+      ]
     },
     "155994": {
       "name": "Movie Plotz: 10 Year Anniversary Edition",
@@ -4288,7 +4987,15 @@
       "name": "Five Tribes: The Djinns of Naqala",
       "short_description": "Move assassins, elders & builders through Naqala to claim oases & control djinns.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "BGA",
+          "url": "https://en.boardgamearena.com/gamepanel?game=fivetribes",
+          "note": "BGA Premium",
+          "owned": true
+        }
+      ]
     },
     "157403": {
       "name": "Black Fleet",
@@ -4356,7 +5063,15 @@
       "name": "Hanamikoji",
       "short_description": "Win the favor of the geishas through careful speculation and bold moves.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "BGA",
+          "url": "https://boardgamearena.com/gamepanel?game=hanamikoji",
+          "note": "BGA Free",
+          "owned": true
+        }
+      ]
     },
     "158882": {
       "name": "Elevenses for One",
@@ -4373,7 +5088,14 @@
         {
           "store": "Steam",
           "url": "https://store.steampowered.com/app/534360/Colt_Express/",
+          "note": "Colt Express",
           "owned": true
+        },
+        {
+          "store": "BGA",
+          "url": "https://boardgamearena.com/gamepanel?game=coltexpress",
+          "note": "BGA Premium",
+          "monthly_subscription": true
         }
       ]
     },
@@ -4430,7 +5152,16 @@
         {
           "store": "Play Store",
           "url": "https://play.google.com/store/apps/details?id=com.asmodeedigital.onitama",
+          "note": "Onitama",
           "owned": true
+        }
+      ],
+      "pc": [
+        {
+          "store": "BGA",
+          "url": "https://boardgamearena.com/gamepanel?game=evergreen",
+          "note": "BGA Premium",
+          "monthly_subscription": true
         }
       ]
     },
@@ -4457,6 +5188,12 @@
           "url": "https://play.google.com/store/apps/details?id=com.direwolfdigital.Renegade&hl=en",
           "note": "Renegade Games Companion",
           "support_app": true
+        },
+        {
+          "store": "Play Store",
+          "url": "https://play.google.com/store/apps/details?id=com.direwolfdigital.lanterns",
+          "note": "Lanterns",
+          "wishlisted": true
         }
       ],
       "ios": [
@@ -4465,6 +5202,12 @@
           "url": "https://apps.apple.com/ca/app/renegade-games-companion/id1046548265",
           "note": "Renegade Games Companion",
           "support_app": true
+        },
+        {
+          "store": "App Store",
+          "url": "https://apps.apple.com/us/app/lanterns-the-harvest-festival/id1155269699",
+          "note": "Lanterns",
+          "wishlisted": true
         }
       ]
     },
@@ -4492,6 +5235,14 @@
           "store": "App Store",
           "url": "https://apps.apple.com/us/app/boardible-mobile-board-games/id1610585922",
           "note": "Boardible",
+          "owned": true
+        }
+      ],
+      "pc": [
+        {
+          "store": "BGA",
+          "url": "https://boardgamearena.com/gamepanel?game=trekkingtheworld",
+          "note": "BGA Free",
           "owned": true
         }
       ]
@@ -4546,6 +5297,12 @@
           "url": "https://store.steampowered.com/app/900370/Stockpile/",
           "note": "Stockpile",
           "owned": true
+        },
+        {
+          "store": "BGA",
+          "url": "https://boardgamearena.com/gamepanel?game=stockpile",
+          "note": "BGA Premium",
+          "monthly_subscription": true
         }
       ]
     },
@@ -4575,13 +5332,29 @@
           "note": "Lab Equipment",
           "owned": true
         }
+      ],
+      "pc": [
+        {
+          "store": "BGA",
+          "url": "https://boardgamearena.com/gamepanel?game=alchemists",
+          "note": "BGA Free",
+          "owned": true
+        }
       ]
     },
     "162082": {
       "name": "Deus",
       "short_description": "Develop your civilization and repeat your advancements in this engine-builder.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "BGA",
+          "url": "https://boardgamearena.com/gamepanel?game=deus",
+          "note": "BGA Premium",
+          "owned": true
+        }
+      ]
     },
     "162886": {
       "name": "Spirit Island",
@@ -4654,6 +5427,12 @@
           "url": "https://store.steampowered.com/app/528250/Patchwork/",
           "note": "Patchwork",
           "owned": true
+        },
+        {
+          "store": "BGA",
+          "url": "https://en.boardgamearena.com/gamepanel?game=patchwork",
+          "note": "BGA Premium",
+          "monthly_subscription": true
         }
       ]
     },
@@ -4904,13 +5683,20 @@
         {
           "store": "Steam",
           "url": "https://store.steampowered.com/app/800270/Terraforming_Mars/",
-          "note": "with Prelude, Venus Next, Hella & Elysium",
+          "note": "Terraforming Mars with Prelude, Venus Next, Hella & Elysium",
           "owned": true
         },
         {
           "store": "Epic",
           "url": "https://store.epicgames.com/p/terraforming-mars-18c3ad",
+          "note": "Terraforming Mars",
           "owned": true
+        },
+        {
+          "store": "BGA",
+          "url": "https://boardgamearena.com/gamepanel?game=terraformingmars",
+          "note": "BGA Premium",
+          "monthly_subscription": true
         }
       ]
     },
@@ -5025,6 +5811,12 @@
           "url": "https://store.steampowered.com/app/286160/Tabletop_Simulator/",
           "note": "Tabletop Simulator DLC",
           "owned": true
+        },
+        {
+          "store": "BGA",
+          "url": "https://en.boardgamearena.com/gamepanel?game=twilightimperium",
+          "note": "BGA Premium",
+          "monthly_subscription": true
         }
       ]
     },
@@ -5075,6 +5867,12 @@
           "url": "https://store.steampowered.com/app/1015930/Blood_Rage_Digital_Edition/",
           "note": "with Gods of Asgard, Mythical Monsters, Mystics of Midgard",
           "owned": true
+        },
+        {
+          "store": "BGA",
+          "url": "https://boardgamearena.com/gamepanel?game=bloodrage",
+          "note": "BGA Premium",
+          "monthly_subscription": true
         }
       ]
     },
@@ -5082,7 +5880,15 @@
       "name": "Crusaders: Thy Will Be Done",
       "short_description": "Convert the locals, build churches & banks and spread the influence of your order.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "BGA",
+          "url": "https://boardgamearena.com/gamepanel?game=crusadersthywillbedone",
+          "note": "BGA Premium",
+          "owned": true
+        }
+      ]
     },
     "171011": {
       "name": "Favor of the Pharaoh",
@@ -5112,11 +5918,33 @@
       "rulebooks": [],
       "supplemental_files": []
     },
+    "171499": {
+      "name": "Cacao",
+      "short_description": "Cultivate and trade the 'fruit of the gods' and lead your tribe to prosperity.",
+      "rulebooks": [],
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "BGA",
+          "url": "https://boardgamearena.com/gamepanel?game=cacao",
+          "note": "BGA Free",
+          "owned": true
+        }
+      ]
+    },
     "171623": {
       "name": "Voyages of Marco Polo, The",
       "short_description": "Using unique abilities, fulfill contracts and reach your goals along the Silk Road.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "BGA",
+          "url": "https://boardgamearena.com/gamepanel?game=marcopolo",
+          "note": "BGA Free",
+          "owned": true
+        }
+      ]
     },
     "171662": {
       "name": "Neanderthal",
@@ -5182,13 +6010,29 @@
       "name": "Orléans: Deluxe Edition",
       "short_description": "Craftsmen, scholars & monks can help you reign supreme—but who will turn up to help?",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "BGA",
+          "url": "https://boardgamearena.com/gamepanel?game=orleans",
+          "note": "BGA Premium",
+          "monthly_subscription": true
+        }
+      ]
     },
     "171908": {
       "name": "El Grande Big Box",
       "short_description": "Wrestle for control of medieval Spain in this timeless area majority classic.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "BGA",
+          "url": "https://boardgamearena.com/gamepanel?game=elgrande",
+          "note": "BGA Free",
+          "owned": true
+        }
+      ]
     },
     "172081": {
       "name": "Burgle Bros.",
@@ -5199,7 +6043,14 @@
         {
           "store": "Steam",
           "url": "https://store.steampowered.com/app/705550/Burgle_Bros/",
+          "note": "Burgle Bros.",
           "owned": true
+        },
+        {
+          "store": "BGA",
+          "url": "https://boardgamearena.com/gamepanel?game=burglebros",
+          "note": "BGA Free",
+          "monthly_subscription": true
         }
       ]
     },
@@ -5207,7 +6058,43 @@
       "name": "Exploding Kittens: NSFW Deck",
       "short_description": "Match kittens and avoid explosions. Now with poop jokes!",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "android": [
+        {
+          "store": "Play Store",
+          "url": "https://play.google.com/store/apps/details?id=com.explodingkittens.projectbombsquad",
+          "note": "Exploding Kittens",
+          "wishlisted": true
+        },
+        {
+          "store": "Play Store",
+          "url": "https://play.google.com/store/apps/details?id=com.marmalade.explodingkittens",
+          "note": "Exploding Kittens 2",
+          "wishlisted": true
+        }
+      ],
+      "ios": [
+        {
+          "store": "App Store",
+          "url": "https://apps.apple.com/us/app/exploding-kittens-2/id6478287619",
+          "note": "Exploding Kittens 2",
+          "owned": true
+        }
+      ],
+      "pc": [
+        {
+          "store": "Steam",
+          "url": "https://store.steampowered.com/app/2999030/Exploding_Kittens_2/",
+          "note": "Exploding Kittens 2",
+          "wishlisted": true
+        },
+        {
+          "store": "BGA",
+          "url": "https://boardgamearena.com/gamepanel?game=explodingkittens",
+          "note": "BGA Premium",
+          "monthly_subscription": true
+        }
+      ]
     },
     "172287": {
       "name": "Champions of Midgard",
@@ -5262,7 +6149,15 @@
       "name": "Timeline Challenge",
       "short_description": "Are you ready for the timeline challenge? Your journey begins now!",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "BGA",
+          "url": "https://boardgamearena.com/gamepanel?game=timelinetwist",
+          "note": "BGA Free - Timeline Twist",
+          "owned": true
+        }
+      ]
     },
     "173341": {
       "name": "Loopin' Chewie",
@@ -5280,6 +6175,14 @@
           "store": "Play Store",
           "url": "https://play.google.com/store/apps/details?id=com.rprod.duel&hl=en_US",
           "wishlisted": true
+        }
+      ],
+      "pc": [
+        {
+          "store": "BGA",
+          "url": "https://en.boardgamearena.com/gamepanel?game=sevenwondersduel",
+          "note": "BGA Premium",
+          "monthly_subscription": true
         }
       ]
     },
@@ -5411,7 +6314,15 @@
       "name": "Shogun Big Box",
       "short_description": "Gain control of medieval Japan by amassing troops and sending them out to battles.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "BGA",
+          "url": "https://boardgamearena.com/gamepanel?game=shogun",
+          "note": "BGA Free",
+          "owned": true
+        }
+      ]
     },
     "176229": {
       "name": "Tides of Time",
@@ -5478,7 +6389,15 @@
       "name": "Feast for Odin, A",
       "short_description": "\"Puzzle\" the life of a Viking Age place as you hunt, farm, craft, raid and explore.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "BGA",
+          "url": "https://en.boardgamearena.com/gamepanel?game=feastforodin",
+          "note": "BGA Premium",
+          "monthly_subscription": true
+        }
+      ]
     },
     "178054": {
       "name": "Study in Emerald (Second Edition), A",
@@ -5667,6 +6586,12 @@
           "url": "https://store.steampowered.com/app/788420/Potion_Explosion/",
           "note": "Potion Explosion with The Fifth Ingredient",
           "owned": true
+        },
+        {
+          "store": "BGA",
+          "url": "https://en.boardgamearena.com/gamepanel?game=potionexplosion",
+          "note": "BGA Premium",
+          "monthly_subscription": true
         }
       ]
     },
@@ -5760,6 +6685,12 @@
           "url": "https://store.steampowered.com/app/758370/Through_the_Ages/",
           "note": "Through the Ages with New Leaders & Wonders",
           "owned": true
+        },
+        {
+          "store": "BGA",
+          "url": "https://boardgamearena.com/gamepanel?game=throughtheagesnewstory",
+          "note": "BGA Free",
+          "owned": true
         }
       ]
     },
@@ -5812,7 +6743,15 @@
       "name": "SteamRollers",
       "short_description": "Roll and write your tracks and deliver the goods.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "BGA",
+          "url": "https://boardgamearena.com/gamepanel?game=steamrollers",
+          "note": "BGA Free",
+          "owned": true
+        }
+      ]
     },
     "182874": {
       "name": "Grand Austria Hotel",
@@ -5861,6 +6800,12 @@
           "url": "https://store.steampowered.com/app/1325800/Viticulture_Essential_Edition/",
           "note": "with Tuscany Expansion",
           "owned": true
+        },
+        {
+          "store": "BGA",
+          "url": "https://en.boardgamearena.com/gamepanel?game=viticulture",
+          "note": "BGA Premium",
+          "monthly_subscription": true
         }
       ]
     },
@@ -5874,7 +6819,15 @@
       "name": "Mr. President: The American Presidency, 2001-2020",
       "short_description": "You are the President of the United States, attempting to govern in a new millennium.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "Steam",
+          "url": "https://store.steampowered.com/app/3333670/Mr_President/",
+          "note": "Mr. President",
+          "wishlisted": true
+        }
+      ]
     },
     "183840": {
       "name": "Oh My Goods!",
@@ -5898,7 +6851,15 @@
       "name": "Bunny Kingdom",
       "short_description": "Adorable bunnies build cities, harvest carrots, and go on missions to be \"Big Ears!\"",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "BGA",
+          "url": "https://boardgamearena.com/gamepanel?game=bunnykingdom",
+          "note": "BGA Premium",
+          "monthly_subscription": true
+        }
+      ]
     },
     "185196": {
       "name": "Rising 5: Runes of Asteros",
@@ -5997,7 +6958,15 @@
       "name": "Avignon: A Clash of Popes",
       "short_description": "Two players are rival candidates for Pope in the 14th century.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "ios": [
+        {
+          "store": "App Store",
+          "url": "https://apps.apple.com/us/app/avignon-a-clash-of-popes/id1079463873",
+          "note": "Avignon: A Clash of Popes",
+          "wishlisted": true
+        }
+      ]
     },
     "188866": {
       "name": "Awkward Guests: The Walton Case",
@@ -6008,7 +6977,16 @@
         {
           "store": "Play Store",
           "url": "https://play.google.com/store/apps/details?id=com.megacorpin.ii_partidas_y_soluciones",
+          "note": "Awkward Guests",
           "support_app": true
+        }
+      ],
+      "pc": [
+        {
+          "store": "BGA",
+          "url": "https://boardgamearena.com/gamepanel?game=awkwardgueststhewaltoncase",
+          "note": "BGA Free",
+          "owned": true
         }
       ]
     },
@@ -6076,7 +7054,15 @@
       "name": "Imhotep",
       "short_description": "Gather, ship, and lay stones to build the most magnificent monuments in Egypt.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "BGA",
+          "url": "https://boardgamearena.com/gamepanel?game=imhotep",
+          "note": "BGA free",
+          "owned": true
+        }
+      ]
     },
     "191963": {
       "name": "Thunder & Lightning",
@@ -6106,7 +7092,15 @@
       "name": "Sushi Go Party!",
       "short_description": "Pass sushi around a bigger table and take the best dishes. Save room for dessert!",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "BGA",
+          "url": "https://boardgamearena.com/gamepanel?game=sushigoparty",
+          "note": "BGA Premium",
+          "owned": true
+        }
+      ]
     },
     "192297": {
       "name": "America",
@@ -6203,7 +7197,15 @@
       "name": "Super Fantasy Brawl",
       "short_description": "Choose your team of unique heroes. Fight for domination and glory in the arena.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "BGA",
+          "url": "https://boardgamearena.com/gamepanel?game=superfantasybrawl",
+          "note": "BGA Free",
+          "owned": true
+        }
+      ]
     },
     "194523": {
       "name": "HMS Dolores",
@@ -6234,7 +7236,15 @@
       "name": "Santorini",
       "short_description": "Use different divine powers to build and climb the towers!",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "BGA",
+          "url": "https://boardgamearena.com/gamepanel?game=santorini",
+          "note": "BGA Free",
+          "owned": true
+        }
+      ]
     },
     "194923": {
       "name": "Techno Bowl: Arcade Football Unplugged",
@@ -6282,7 +7292,15 @@
       "name": "Yokohama: Deluxified",
       "short_description": "Claim your fame as the dominant merchant in Yokohama during the Meiji period.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "BGA",
+          "url": "https://boardgamearena.com/gamepanel?game=yokohama",
+          "note": "BGA Free",
+          "owned": true
+        }
+      ]
     },
     "196526": {
       "name": "Coffee Roaster",
@@ -6549,7 +7567,15 @@
       "name": "Pioneer Days",
       "short_description": "Hitch up the wagon and head west. Avoid disasters, dig for gold, and ride to victory.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "BGA",
+          "url": "https://boardgamearena.com/gamepanel?game=pioneerdaysproject",
+          "note": "BGA Free",
+          "owned": true
+        }
+      ]
     },
     "200077": {
       "name": "Mint Works",
@@ -6597,6 +7623,7 @@
         {
           "store": "Play Store",
           "url": "https://play.google.com/store/apps/details?id=com.direwolfdigital.clank",
+          "note": "Clank!",
           "wishlisted": true
         },
         {
@@ -6606,10 +7633,25 @@
           "support_app": true
         }
       ],
+      "ios": [
+        {
+          "store": "App Store",
+          "url": "https://apps.apple.com/us/app/dire-wolf-game-room/id1529031679",
+          "note": "Dire Wolf Game Room",
+          "support_app": true
+        },
+        {
+          "store": "App Store",
+          "url": "https://apps.apple.com/us/app/clank/id1580629864?platform=ipad",
+          "note": "Clank!",
+          "owned": true
+        }
+      ],
       "pc": [
         {
           "store": "Steam",
           "url": "https://store.steampowered.com/app/1722870/Clank/",
+          "note": "Clank!",
           "owned": true
         },
         {
@@ -6671,6 +7713,13 @@
         {
           "store": "Steam",
           "url": "https://store.steampowered.com/app/1034540/Lorenzo_il_Magnifico/",
+          "note": "Lorenzo il Magnifico",
+          "owned": true
+        },
+        {
+          "store": "BGA",
+          "url": "https://en.boardgamearena.com/gamepanel?game=lorenzo",
+          "note": "BGA Free",
           "owned": true
         }
       ]
@@ -6772,6 +7821,7 @@
         {
           "store": "Play Store",
           "url": "https://play.google.com/store/apps/details?id=com.meeplecorp.kingdomino",
+          "note": "Kingdomino",
           "wishlisted": true
         }
       ],
@@ -6779,7 +7829,14 @@
         {
           "store": "Steam",
           "url": "https://store.steampowered.com/app/3029180/Kingdomino/",
+          "note": "Kingdomino",
           "owned": true
+        },
+        {
+          "store": "BGA",
+          "url": "https://en.boardgamearena.com/gamepanel?game=kingdomino",
+          "note": "BGA Premium",
+          "monthly_subscription": true
         }
       ]
     },
@@ -6883,7 +7940,15 @@
       "name": "Jump Drive",
       "short_description": "Race to build the best space empire of alien worlds and new technologies.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "BGA",
+          "url": "https://en.boardgamearena.com/gamepanel?game=jumpdrive",
+          "note": "BGA",
+          "owned": true
+        }
+      ]
     },
     "205611": {
       "name": "Deutscher Spielepreis 2016 Goodie Box",
@@ -7139,7 +8204,15 @@
       "name": "Chicago 1875: City of the Big Shoulders",
       "short_description": "Manage companies, invest in stocks and optimize delivery of goods in 1870's Chicago.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "BGA",
+          "url": "https://boardgamearena.com/gamepanel?game=cityofthebigshoulders",
+          "note": "BGA Free",
+          "owned": true
+        }
+      ]
     },
     "214887": {
       "name": "CO₂: Second Chance",
@@ -7151,7 +8224,15 @@
       "name": "Downforce",
       "short_description": "Auction, bet, race! You can lose the race and still win the game.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "BGA",
+          "url": "https://en.boardgamearena.com/gamepanel?game=downforce",
+          "note": "BGA Premium",
+          "monthly_subscription": true
+        }
+      ]
     },
     "215312": {
       "name": "Stop Thief!",
@@ -7175,7 +8256,15 @@
       "name": "Clans of Caledonia",
       "short_description": "Lead your unique Scottish clan to economic might via production, trade, and export.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "BGA",
+          "url": "https://en.boardgamearena.com/gamepanel?game=clansofcaledonia",
+          "note": "BGA Premium",
+          "monthly_subscription": true
+        }
+      ]
     },
     "216381": {
       "name": "Hand of Fate",
@@ -7282,7 +8371,15 @@
       "name": "Tortuga 1667",
       "short_description": "Privateers capture Spanish gold for King and country. Maroon the disloyal to Tortuga!",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "BGA",
+          "url": "https://boardgamearena.com/gamepanel?game=tortugasixteensixtyseven",
+          "note": "BGA Free",
+          "owned": true
+        }
+      ]
     },
     "219101": {
       "name": "Pavlov's House",
@@ -7294,7 +8391,15 @@
       "name": "Bärenpark",
       "short_description": "Build a bear park on personal boards by carefully placing polyominoes.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "BGA",
+          "url": "https://boardgamearena.com/gamepanel?game=barenpark",
+          "note": "BGA Premium",
+          "owned": true
+        }
+      ]
     },
     "219650": {
       "name": "Arydia: The Paths We Dare Tread",
@@ -7341,6 +8446,12 @@
           "url": "https://boardgamehelpers.com/GaiaProject/Default.aspx",
           "note": "Map Generator",
           "support_app": true
+        },
+        {
+          "store": "BGA",
+          "url": "https://en.boardgamearena.com/gamepanel?game=gaiaproject",
+          "note": "BGA Premium",
+          "owned": true
         }
       ]
     },
@@ -7419,10 +8530,33 @@
       "short_description": "In this trick-taking game for 2, you must win more than your rival—but not too much!",
       "rulebooks": [],
       "supplemental_files": [],
+      "android": [
+        {
+          "store": "Play Store",
+          "url": "https://play.google.com/store/apps/details?id=com.direwolfdigital.thefoxintheforest",
+          "note": "Fox in the Forest",
+          "wishlisted": true
+        }
+      ],
+      "ios": [
+        {
+          "store": "App Store",
+          "url": "https://apps.apple.com/us/app/the-fox-in-the-forest/id1578000887",
+          "note": "Fox in the Forest",
+          "wishlisted": true
+        }
+      ],
       "pc": [
         {
           "store": "Steam",
           "url": "https://store.steampowered.com/app/1729050/The_Fox_in_the_Forest/",
+          "note": "Fox in the Forest",
+          "owned": true
+        },
+        {
+          "store": "BGA",
+          "url": "https://boardgamearena.com/gamepanel?game=thefoxintheforest",
+          "note": "BGA Free",
           "owned": true
         }
       ]
@@ -7455,7 +8589,15 @@
       "name": "Lady and the Tiger: Mini Edition, The",
       "short_description": "Bid, race, collect, and score across five small games.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "BGA",
+          "url": "https://boardgamearena.com/gamepanel?game=ladyandthetiger",
+          "note": "BGA Free",
+          "owned": true
+        }
+      ]
     },
     "223040": {
       "name": "Fantasy Realms",
@@ -7509,7 +8651,15 @@
       "name": "Hardback",
       "short_description": "Combine literary genres to assemble a masterpiece collection of letters.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "BGA",
+          "url": "https://boardgamearena.com/gamepanel?game=hardback",
+          "note": "BGA Free",
+          "owned": true
+        }
+      ]
     },
     "223855": {
       "name": "Sentient",
@@ -7803,6 +8953,14 @@
           "note": "Teotihuacan",
           "wishlisted": true
         }
+      ],
+      "pc": [
+        {
+          "store": "BGA",
+          "url": "https://boardgamearena.com/gamepanel?game=teotihuacan",
+          "note": "BGA Free",
+          "owned": true
+        }
       ]
     },
     "229956": {
@@ -7854,7 +9012,15 @@
       "name": "Azul",
       "short_description": "Artfully embellish the walls of your palace by drafting the most beautiful tiles.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "BGA",
+          "url": "https://boardgamearena.com/gamepanel?game=azul",
+          "note": "BGA Premium",
+          "monthly_subscription": true
+        }
+      ]
     },
     "230914": {
       "name": "Carcassonne Big Box 6",
@@ -7920,6 +9086,13 @@
         {
           "store": "Steam",
           "url": "https://store.steampowered.com/app/1776490/Now_Boarding/",
+          "note": "Now Boarding",
+          "owned": true
+        },
+        {
+          "store": "BGA",
+          "url": "https://en.boardgamearena.com/gamepanel?game=nowboarding",
+          "note": "BGA Free",
           "owned": true
         }
       ]
@@ -7957,6 +9130,12 @@
           "url": "https://christianliljeberg.se/obsession-score-sheet/",
           "note": "Score Sheet",
           "support_app": true
+        },
+        {
+          "store": "BGA",
+          "url": "https://boardgamearena.com/gamepanel?game=valeofeternity",
+          "note": "BGA Free",
+          "owned": true
         }
       ]
     },
@@ -8005,6 +9184,12 @@
           "url": "https://store.steampowered.com/app/1074300/Dragon_Castle_The_Board_Game/",
           "note": "Dragon Castle",
           "wishlisted": true
+        },
+        {
+          "store": "BGA",
+          "url": "https://boardgamearena.com/gamepanel?game=dragoncastle",
+          "note": "BGA Free",
+          "owned": true
         }
       ]
     },
@@ -8044,7 +9229,15 @@
       "name": "Twilight Imperium: Fourth Edition",
       "short_description": "Build an intergalactic empire through trade, research, conquest and grand politics.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "BGA",
+          "url": "https://en.boardgamearena.com/gamepanel?game=twilightimperium",
+          "note": "BGA Premium",
+          "owned": true
+        }
+      ]
     },
     "233208": {
       "name": "D-Day Dice (Second Edition)",
@@ -8104,7 +9297,15 @@
       "name": "Welcome To...",
       "short_description": "Design the most appealing 1950s neighborhood, with fences, parks, and swimming pools.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "BGA",
+          "url": "https://en.boardgamearena.com/gamepanel?game=welcometo",
+          "note": "BGA Premium",
+          "monthly_subscription": true
+        }
+      ]
     },
     "233958": {
       "name": "Plains Indian Wars",
@@ -8152,7 +9353,15 @@
       "name": "Spirits of the Forest",
       "short_description": "Collect spirits and garner the most points by nourishing the many forces of nature.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "BGA",
+          "url": "https://boardgamearena.com/gamepanel?game=spiritsoftheforest",
+          "note": "BGA Free",
+          "owned": true
+        }
+      ]
     },
     "235544": {
       "name": "Specter Ops: Broken Covenant",
@@ -8189,6 +9398,14 @@
           "url": "https://play.google.com/store/apps/details?id=com.GarphillGames.GarphillGamesCompanion",
           "note": "Garphill Games Companion",
           "support_app": true
+        }
+      ],
+      "pc": [
+        {
+          "store": "BGA",
+          "url": "https://en.boardgamearena.com/gamepanel?game=architectsofthewestkingdom",
+          "note": "BGA Premium",
+          "monthly_subscription": true
         }
       ]
     },
@@ -8290,7 +9507,15 @@
       "name": "Villagers",
       "short_description": "Draft cute medieval villagers to complete production chains & earn gold!",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "BGA",
+          "url": "https://boardgamearena.com/gamepanel?game=villagers",
+          "note": "BGA Premium",
+          "monthly_subscription": true
+        }
+      ]
     },
     "241987": {
       "name": "Dual Powers: Revolution 1917",
@@ -8302,7 +9527,15 @@
       "name": "Space Base",
       "short_description": "Amass spaceships for your fleet as you roll your way to domination.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "BGA",
+          "url": "https://en.boardgamearena.com/gamepanel?game=spacebase",
+          "note": "BGA Premium",
+          "monthly_subscription": true
+        }
+      ]
     },
     "242324": {
       "name": "Stew",
@@ -8466,7 +9699,15 @@
       "name": "Newton",
       "short_description": "Action selection and hand management in the age of enlightenment.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "BGA",
+          "url": "https://en.boardgamearena.com/gamepanel?game=newton",
+          "note": "BGA Premium",
+          "monthly_subscription": true
+        }
+      ]
     },
     "244995": {
       "name": "Illusion",
@@ -8497,7 +9738,15 @@
       "name": "Orchard: 9 card solitaire game",
       "short_description": "Create the most fruitful micro orchard, but beware of rotten fruit!",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "BGA",
+          "url": "https://boardgamearena.com/gamepanel?game=orchard",
+          "note": "BGA Free",
+          "owned": true
+        }
+      ]
     },
     "245638": {
       "name": "Coimbra",
@@ -8543,7 +9792,15 @@
       "name": "Gizmos",
       "short_description": "Gather energy marbles to build gizmos parts and trigger chain reactions and combos.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "BGA",
+          "url": "https://en.boardgamearena.com/gamepanel?game=gizmos",
+          "note": "BGA Premium",
+          "monthly_subscription": true
+        }
+      ]
     },
     "246201": {
       "name": "Lincoln",
@@ -8603,7 +9860,15 @@
       "name": "Dinosaur Tea Party",
       "short_description": "Ask questions about your fellow party guests as you try to deduce who is who.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "BGA",
+          "url": "https://boardgamearena.com/gamepanel?game=dinosaurteaparty",
+          "note": "BGA Free",
+          "owned": true
+        }
+      ]
     },
     "247182": {
       "name": "Flashpoint: South China Sea",
@@ -8652,7 +9917,15 @@
       "name": "War Chest",
       "short_description": "Recruit, bolster and maneuver your way to controlling the hex-grid battlefield.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "BGA",
+          "url": "https://boardgamearena.com/gamepanel?game=warchest",
+          "note": "BGA Free",
+          "owned": true
+        }
+      ]
     },
     "249675": {
       "name": "Desolate",
@@ -8707,7 +9980,14 @@
         {
           "store": "Steam",
           "url": "https://store.steampowered.com/app/2879570/Barrage/",
+          "note": "Barrage",
           "wishlisted": true
+        },
+        {
+          "store": "BGA",
+          "url": "https://en.boardgamearena.com/gamepanel?game=barrage",
+          "note": "BGA Premium",
+          "monthly_subscription": true
         }
       ]
     },
@@ -8729,6 +10009,14 @@
           "url": "https://apps.apple.com/us/app/allplay-games/id1489947719",
           "owned": true
         }
+      ],
+      "pc": [
+        {
+          "store": "BGA",
+          "url": "https://boardgamearena.com/gamepanel?game=ontour",
+          "note": "BGA Free",
+          "owned": true
+        }
       ]
     },
     "251441": {
@@ -8747,7 +10035,15 @@
       "name": "Sprawlopolis",
       "short_description": "Build the best metropolis by following the planning rules.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "ios": [
+        {
+          "store": "App Store",
+          "url": "https://apps.apple.com/us/app/sprawlopolis-score-tracker/id1443634855",
+          "note": "Score Tracker",
+          "support_app": true
+        }
+      ]
     },
     "251661": {
       "name": "Oathsworn: Into the Deepwood",
@@ -8835,7 +10131,15 @@
       "name": "Paint the Roses",
       "short_description": "Work together to finish the royal gardens by outsmarting the Queen of Hearts.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "BGA",
+          "url": "https://boardgamearena.com/gamepanel?game=painttheroses",
+          "note": "BGA Free",
+          "owned": true
+        }
+      ]
     },
     "254386": {
       "name": "Raccoon Tycoon: Deluxe Edition",
@@ -8859,7 +10163,15 @@
       "name": "Just One",
       "short_description": "Give unique one-word clues so someone can guess one word!",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "Tabletop Simulator",
+          "url": "https://en.boardgamearena.com/gamepanel?game=justone",
+          "note": "BGA Free",
+          "owned": true
+        }
+      ]
     },
     "254683": {
       "name": "Dodos Riding Dinos",
@@ -8967,7 +10279,15 @@
       "name": "Pax Pamir: Second Edition",
       "short_description": "Swing the tides of \"The Great Game\" as countries vie for control of Afghanistan.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "BGA",
+          "url": "https://boardgamearena.com/gamepanel?game=paxpamir",
+          "note": "BGA Free",
+          "owned": true
+        }
+      ]
     },
     "256999": {
       "name": "Project: ELITE",
@@ -9095,7 +10415,15 @@
       "name": "Planet Unknown",
       "short_description": "Develop and colonize your planet with oddly shaped tiles served on a rotating tray.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "BGA",
+          "url": "https://boardgamearena.com/gamepanel?game=planetunknown",
+          "note": "BGA Free",
+          "owned": true
+        }
+      ]
     },
     "260322": {
       "name": "Potions Class",
@@ -9137,7 +10465,15 @@
       "name": "Res Arcana",
       "short_description": "Rival mages create artifacts, vying for places of power and ancient monuments.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "BGA",
+          "url": "https://en.boardgamearena.com/gamepanel?game=resarcana",
+          "note": "BGA Premium",
+          "monthly_subscription": true
+        }
+      ]
     },
     "262770": {
       "name": "Twin Stars: Adventure Series II",
@@ -9184,6 +10520,12 @@
           "url": "https://store.steampowered.com/app/2977360/Cartographers/",
           "note": "Cartographers",
           "wishlisted": true
+        },
+        {
+          "store": "BGA",
+          "url": "https://en.boardgamearena.com/gamepanel?game=cartographers",
+          "note": "BGA Premium",
+          "monthly_subscription": true
         }
       ]
     },
@@ -9197,7 +10539,15 @@
       "name": "Draftosaurus",
       "short_description": "A dinosaur park will always attract tourists – if you can place your species right.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "BGA",
+          "url": "https://boardgamearena.com/gamepanel?game=draftosaurus",
+          "note": "BGA Premium",
+          "monthly_subscription": true
+        }
+      ]
     },
     "264220": {
       "name": "Tainted Grail: The Fall of Avalon",
@@ -9239,7 +10589,15 @@
       "name": "Mandala",
       "short_description": "Create and destroy mandalas in this beautifully tense abstract game for two.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "BGA",
+          "url": "https://boardgamearena.com/gamepanel?game=mandala",
+          "note": "BGA Premium",
+          "monthly_subscription": true
+        }
+      ]
     },
     "264637": {
       "name": "Yokohama Duel: Deluxified",
@@ -9251,7 +10609,15 @@
       "name": "Age of Civilization",
       "short_description": "Empires rise and fall, and wonders are built. Will your civilization prevail?",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "BGA",
+          "url": "https://boardgamearena.com/gamepanel?game=ageofcivilization",
+          "note": "BGA Premium",
+          "monthly_subscription": true
+        }
+      ]
     },
     "265125": {
       "name": "Garphill Games 5-Year Anniversary Promo Pack",
@@ -9269,7 +10635,15 @@
       "name": "Tiny Towns",
       "short_description": "Plan well as you build your town one building at a time. Will it fit?",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "BGA",
+          "url": "https://boardgamearena.com/gamepanel?game=tinytowns",
+          "note": "BGA Premium",
+          "monthly_subscription": true
+        }
+      ]
     },
     "265784": {
       "name": "Cleopatra and the Society of Architects: Deluxe Edition",
@@ -9292,14 +10666,60 @@
         {
           "store": "Play Store",
           "url": "https://play.google.com/store/apps/details?id=com.MonsterCouch.Wingspan",
+          "note": "Wingspan",
           "wishlisted": true
+        },
+        {
+          "store": "Play Store",
+          "url": "https://play.google.com/store/apps/details?id=de.michael.spiele.fluegelschlag",
+          "note": "WingScore",
+          "support_app": true
+        },
+        {
+          "store": "Play Store",
+          "url": "https://play.google.com/store/apps/details?id=com.wingspan.scoreapp",
+          "note": "Wingspan Score",
+          "support_app": true
+        }
+      ],
+      "ios": [
+        {
+          "store": "App Store",
+          "url": "https://apps.apple.com/us/app/wingsong/id1533477533",
+          "note": "Wingsong",
+          "support_app": true
+        },
+        {
+          "store": "App Store",
+          "url": "https://apps.apple.com/us/app/wingspan-the-board-game/id1459520638",
+          "note": "Wingspan",
+          "wishlisted": true
+        },
+        {
+          "store": "App Store",
+          "url": "https://apps.apple.com/us/app/wingmate-companion/id1482429144",
+          "note": "WingMate Companion",
+          "support_app": true
+        },
+        {
+          "store": "App Store",
+          "url": "https://apps.apple.com/us/app/wingscore-wingspan-scoresheet/id1493233219",
+          "note": "Wingscore: Scoresheet",
+          "support_app": true
         }
       ],
       "pc": [
         {
           "store": "Steam",
           "url": "https://store.steampowered.com/app/1054490/Wingspan/",
+          "note": "Wingspan",
           "owned": true
+        },
+        {
+          "store": "BGA",
+          "url": "https://boardgamearena.com/gamepanel?game=wingspan",
+          "note": "BGA Premium",
+          "monthly_subscription": true
         }
       ]
     },
@@ -9361,7 +10781,15 @@
       "name": "Parks",
       "short_description": "Hike through National Parks tiles, collecting memories and admiring gorgeous scenery.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "BGA",
+          "url": "https://en.boardgamearena.com/gamepanel?game=parks",
+          "note": "BGA Premium",
+          "monthly_subscription": true
+        }
+      ]
     },
     "266722": {
       "name": "Rumble Nation",
@@ -9430,12 +10858,34 @@
       "short_description": "The pressure rises as you find similarities and eliminate characters!",
       "rulebooks": [],
       "supplemental_files": [],
+      "android": [
+        {
+          "store": "Play Store",
+          "url": "https://play.google.com/store/apps/details?id=com.horriblegames.similo&hl=en_US",
+          "note": "Similo",
+          "owned": true
+        }
+      ],
+      "ios": [
+        {
+          "store": "App Store",
+          "url": "https://apps.apple.com/us/app/similo-the-card-game/id1512015829",
+          "note": "Similo",
+          "wishlisted": true
+        }
+      ],
       "pc": [
         {
           "store": "Steam",
           "url": "https://store.steampowered.com/app/1387170/Similo_The_Card_Game/",
-          "note": "with Fables, Myths, History",
+          "note": "Similo with Fables, Myths, History",
           "owned": true
+        },
+        {
+          "store": "BGA",
+          "url": "https://boardgamearena.com/gamepanel?game=similo",
+          "note": "BGA Premium",
+          "monthly_subscription": true
         }
       ]
     },
@@ -9449,7 +10899,15 @@
       "name": "Hadara",
       "short_description": "Employ citizens with a variety of skills to make your civilization thrive.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "BGA",
+          "url": "https://boardgamearena.com/gamepanel?game=hadara",
+          "note": "BGA Free",
+          "owned": true
+        }
+      ]
     },
     "269385": {
       "name": "Lord of the Rings: Journeys in Middle-Earth, The",
@@ -9550,7 +11008,15 @@
       "name": "Botanik",
       "short_description": "Build the best steampunk garden by winning the tiles you need.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "BGA",
+          "url": "https://boardgamearena.com/gamepanel?game=botanik",
+          "note": "BGA Premium",
+          "owned": true
+        }
+      ]
     },
     "271530": {
       "name": "Ankh'or",
@@ -9626,6 +11092,14 @@
           "note": "Watergate",
           "wishlisted": true
         }
+      ],
+      "pc": [
+        {
+          "store": "BGA",
+          "url": "https://en.boardgamearena.com/gamepanel?game=watergate",
+          "note": "BGA Premium",
+          "owned": true
+        }
       ]
     },
     "274466": {
@@ -9673,6 +11147,12 @@
           "url": "https://store.steampowered.com/app/2532360/Point_Salad__The_Board_Game/",
           "note": "Point Salad",
           "owned": true
+        },
+        {
+          "store": "BGA",
+          "url": "https://en.boardgamearena.com/gamepanel?game=pointsalad",
+          "note": "BGA Premium",
+          "monthly_subscription": true
         }
       ]
     },
@@ -9720,13 +11200,29 @@
           "note": "Maracaibo",
           "wishlisted": true
         }
+      ],
+      "pc": [
+        {
+          "store": "BGA",
+          "url": "https://en.boardgamearena.com/gamepanel?game=maracaibo",
+          "note": "BGA Premium",
+          "monthly_subscription": true
+        }
       ]
     },
     "276042": {
       "name": "Conspiracy: Abyss Universe",
       "short_description": "Rally lords to your underwater senate and collect pearls to rule the realm of Abyss.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "BGA",
+          "url": "https://boardgamearena.com/gamepanel?game=conspiracy",
+          "note": "BGA Premium",
+          "monthly_subscription": true
+        }
+      ]
     },
     "276386": {
       "name": "Caesar: Rome vs. Gaul",
@@ -9858,7 +11354,15 @@
       "name": "Welcome to New Las Vegas",
       "short_description": "Build the most attractive city with casinos, shows, hotels, and limousines.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "BGA",
+          "url": "https://boardgamearena.com/gamepanel?game=welcometonewlasvegas",
+          "note": "BGA Free",
+          "owned": true
+        }
+      ]
     },
     "281152": {
       "name": "On the Underground: London / Berlin",
@@ -9874,7 +11378,7 @@
       "android": [
         {
           "store": "Play Store",
-          "url": "https://store.steampowered.com/app/965610/Reiner_Knizia_Yellow__Yangtze/",
+          "url": "https://play.google.com/store/apps/details?id=com.direwolfdigital.theisleofcats",
           "note": "Isle of Cats",
           "wishlisted": true
         }
@@ -9893,6 +11397,12 @@
           "url": "https://store.steampowered.com/app/2438980/The_Isle_of_Cats/",
           "note": "Isle of Cats",
           "owned": true
+        },
+        {
+          "store": "BGA",
+          "url": "https://boardgamearena.com/gamepanel?game=theisleofcats",
+          "note": "BGA Premium",
+          "monthly_subscription": true
         }
       ]
     },
@@ -10001,7 +11511,15 @@
       "name": "Aquatica",
       "short_description": "Recruit heroes and conquer locations in a race to expand your kingdom under the sea.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "BGA",
+          "url": "https://boardgamearena.com/gamepanel?game=aquatica",
+          "note": "BGA Premium",
+          "monthly_subscription": true
+        }
+      ]
     },
     "283792": {
       "name": "SpaceShipped",
@@ -10025,13 +11543,29 @@
       "name": "Marco Polo II: In the Service of the Khan",
       "short_description": "Travel to cities along the silk road, trading silk, spice, gold & jade along the way.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "BGA",
+          "url": "https://boardgamearena.com/gamepanel?game=marcopolotwo",
+          "note": "BGA Premium",
+          "owned": true
+        }
+      ]
     },
     "284083": {
       "name": "Crew: The Quest for Planet Nine, The",
       "short_description": "Cooperate with your fellow astronauts as you explore the outer solar system.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "Steam",
+          "url": "https://boardgamearena.com/gamepanel?game=thecrew",
+          "note": "BGA Free",
+          "owned": true
+        }
+      ]
     },
     "284118": {
       "name": "Mechanical Beast",
@@ -10069,6 +11603,14 @@
           "store": "App Store",
           "url": "https://apps.apple.com/us/app/mind-mgmt-assistant/id1579210331",
           "note": "Assistant",
+          "owned": true
+        }
+      ],
+      "pc": [
+        {
+          "store": "BGA",
+          "url": "https://boardgamearena.com/gamepanel?game=mindmgmt",
+          "note": "BGA Free",
           "owned": true
         }
       ]
@@ -10144,7 +11686,15 @@
       "name": "Tapestry",
       "short_description": "Lead a unique civilization to greatness through cultural and technological advances.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "BGA",
+          "url": "https://en.boardgamearena.com/gamepanel?game=tapestry",
+          "note": "BGA Premium",
+          "monthly_subscription": true
+        }
+      ]
     },
     "286109": {
       "name": "Hierarchy",
@@ -10193,7 +11743,15 @@
       "name": "Oriflamme",
       "short_description": "Decide to act early or late to set traps and attack to become the most influential.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "BGA",
+          "url": "https://boardgamearena.com/gamepanel?game=dobble",
+          "note": "BGA Free",
+          "owned": true
+        }
+      ]
     },
     "287742": {
       "name": "TIME Stories Revolution: The Hadal Project",
@@ -10205,13 +11763,29 @@
       "name": "Azul: Summer Pavilion",
       "short_description": "Create beautiful windows with coloured glass more efficiently than anyone else.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "BGA",
+          "url": "https://en.boardgamearena.com/gamepanel?game=azulsummerpavilion",
+          "note": "BGA Premium",
+          "monthly_subscription": true
+        }
+      ]
     },
     "288169": {
       "name": "Fox in the Forest Duet, The",
       "short_description": "Win tricks to move in the forest, collecting the gems before running out of time.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "BGA",
+          "url": "https://boardgamearena.com/gamepanel?game=thefoxintheforestduet",
+          "note": "BGA Premium",
+          "monthly_subscription": true
+        }
+      ]
     },
     "288558": {
       "name": "Chu Han",
@@ -10260,7 +11834,15 @@
       "name": "SCOUT",
       "short_description": "Poach your opponents' artists and outdo each other's circus shows.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "Steam",
+          "url": "https://store.steampowered.com/app/2095240/Lets_Play_Oink_Games__SCOUT/",
+          "note": "Let's Play Oink Games",
+          "wishlisted": true
+        }
+      ]
     },
     "291457": {
       "name": "Gloomhaven: Jaws of the Lion",
@@ -10339,7 +11921,15 @@
       "name": "Nidavellir",
       "short_description": "Assemble and prepare a formidable crew of dwarves to fight the mighty Fafnir!",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "BGA",
+          "url": "https://boardgamearena.com/gamepanel?game=nidavellir",
+          "note": "BGA Premium",
+          "monthly_subscription": true
+        }
+      ]
     },
     "293112": {
       "name": "White Eagle Defiant: Poland 1939",
@@ -10452,7 +12042,15 @@
       "name": "Distilled",
       "short_description": "Purchase goods, upgrade your distillery, and craft the world's finest spirits.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "BGA",
+          "url": "https://boardgamearena.com/gamepanel?game=distilled",
+          "note": "BGA Premium",
+          "monthly_subscription": true
+        }
+      ]
     },
     "295905": {
       "name": "Cosmic Frog",
@@ -10665,7 +12263,15 @@
       "name": "Trekking the World",
       "short_description": "A light strategy game about the pleasures and wonders of world travel.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "BGA",
+          "url": "https://boardgamearena.com/gamepanel?game=trekkingtheworld",
+          "note": "BGA Free",
+          "owned": true
+        }
+      ]
     },
     "300523": {
       "name": "Biblios: Quill and Parchment",
@@ -10809,7 +12415,15 @@
       "name": "Hadrian's Wall",
       "short_description": "Compete as one of six Roman Generals in charge of a milecastle along Hadrian's Wall.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "BGA",
+          "url": "https://en.boardgamearena.com/gamepanel?game=hadrianswall",
+          "note": "BGA",
+          "monthly_subscription": true
+        }
+      ]
     },
     "305221": {
       "name": "Dinosaur Table Battles",
@@ -10862,6 +12476,14 @@
           "note": "Companion",
           "support_app": true
         }
+      ],
+      "pc": [
+        {
+          "store": "BGA",
+          "url": "https://boardgamearena.com/gamepanel?game=regicide",
+          "note": "BGA Free",
+          "owned": true
+        }
       ]
     },
     "307044": {
@@ -10904,7 +12526,15 @@
       "name": "Praga Caput Regni",
       "short_description": "Wealthy citizens of medieval Prague organize building projects to gain king's favor.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "BGA",
+          "url": "https://en.boardgamearena.com/gamepanel?game=praga",
+          "note": "BGA Free",
+          "owned": true
+        }
+      ]
     },
     "308989": {
       "name": "Bristol 1350",
@@ -10987,6 +12617,14 @@
           "note": "Carnegie: Solo",
           "wishlisted": true
         }
+      ],
+      "pc": [
+        {
+          "store": "BGA",
+          "url": "https://boardgamearena.com/gamepanel?game=carnegie",
+          "note": "BGA Premium",
+          "owned": true
+        }
       ]
     },
     "311193": {
@@ -11033,9 +12671,10 @@
       "supplemental_files": [],
       "pc": [
         {
-          "store": "Steam",
+          "store": "BGA",
           "url": "https://store.steampowered.com/app/3387300/Lost_Ruins_of_Arnak/",
-          "wishlisted": true
+          "note": "BGA Free",
+          "owned": true
         }
       ]
     },
@@ -11139,7 +12778,15 @@
       "name": "LOOP, The",
       "short_description": "Team up to outwit Dr. Faux and save the timeline from collapsing!",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "BGA",
+          "url": "https://boardgamearena.com/gamepanel?game=azulduel",
+          "note": "BGA Free",
+          "owned": true
+        }
+      ]
     },
     "316554": {
       "name": "Dune: Imperium",
@@ -11150,8 +12797,8 @@
         {
           "store": "Play Store",
           "url": "https://play.google.com/store/apps/details?id=com.direwolfdigital.dune",
-          "note": "Companion App",
-          "support_app": true
+          "note": "Dune: Imperium",
+          "wishlisted": true
         },
         {
           "store": "Play Store",
@@ -11160,10 +12807,25 @@
           "support_app": true
         }
       ],
+      "ios": [
+        {
+          "store": "App Store",
+          "url": "https://apps.apple.com/us/app/dune-imperium/id1575414319",
+          "note": "Dune: Imperium",
+          "wishlisted": true
+        },
+        {
+          "store": "App Store",
+          "url": "https://apps.apple.com/us/app/dire-wolf-game-room/id1529031679",
+          "note": "Dire Wolf Game Room",
+          "owned": true
+        }
+      ],
       "pc": [
         {
           "store": "Steam",
           "url": "https://store.steampowered.com/app/1689500/Dune_Imperium/",
+          "note": "Dune: Imperium",
           "owned": true
         },
         {
@@ -11190,7 +12852,15 @@
       "name": "Beyond the Sun",
       "short_description": "Collectively develop a tech tree to fuel new discoveries and colonize space.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "BGA",
+          "url": "https://en.boardgamearena.com/gamepanel?game=beyondthesun",
+          "note": "BGA Premium",
+          "owned": true
+        }
+      ]
     },
     "318084": {
       "name": "Furnace",
@@ -11280,7 +12950,15 @@
       "name": "Darwin's Journey",
       "short_description": "Retrace Darwin’s journey to the Galapagos in a worker-placement adventure.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "BGA",
+          "url": "https://en.boardgamearena.com/gamepanel?game=barrage",
+          "note": "BGA Premium",
+          "monthly_subscription": true
+        }
+      ]
     },
     "322339": {
       "name": "Hanamikoji: Geisha's Road",
@@ -11358,13 +13036,29 @@
       "name": "Crew: Mission Deep Sea, The",
       "short_description": "Explore the deep sea, outwit fate, and discover the mythic land of Mu!",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "BGA",
+          "url": "https://boardgamearena.com/gamepanel?game=thecrewdeepsea",
+          "note": "BGA Premium",
+          "monthly_subscription": true
+        }
+      ]
     },
     "325038": {
       "name": "Brambles: A Solo Card Game, The",
       "short_description": "Play combinations of ancient cards to vanquish the bramble spirits",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "BGA",
+          "url": "https://boardgamearena.com/gamepanel?game=thebrambles",
+          "note": "BGA Free",
+          "owned": true
+        }
+      ]
     },
     "325348": {
       "name": "Successors (Fourth Edition)",
@@ -11382,7 +13076,15 @@
       "name": "Alhambra: Big Box (Second Edition)",
       "short_description": "Build your own Alhambra and explore 26 modules from all 6 expansions.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "BGA",
+          "url": "https://boardgamearena.com/gamepanel?game=alhambra",
+          "note": "BGA Free",
+          "owned": true
+        }
+      ]
     },
     "326494": {
       "name": "Adventures of Robin Hood, The",
@@ -11442,7 +13144,15 @@
       "name": "Caper: Europe",
       "short_description": "Three heists. Two rivals. One criminal mastermind will rise to the top.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "BGA",
+          "url": "https://boardgamearena.com/gamepanel?game=capereurope",
+          "note": "BGA Free",
+          "owned": true
+        }
+      ]
     },
     "328575": {
       "name": "Ragnarocks",
@@ -11503,6 +13213,12 @@
           "url": "https://boardgamehelpers.com/RussianRailroads/",
           "note": "Setup Helper",
           "support_app": true
+        },
+        {
+          "store": "BGA",
+          "url": "https://boardgamearena.com/gamepanel?game=ultimaterailroads",
+          "note": "BGA Free",
+          "owned": true
         }
       ]
     },
@@ -11534,7 +13250,15 @@
       "name": "Grove: 9 card solitaire game",
       "short_description": "Grow your fruit grove with the help, or hindrance, of a cheeky squirrel.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "BGA",
+          "url": "https://boardgamearena.com/gamepanel?game=grovesolitaire",
+          "note": "BGA Free",
+          "owned": true
+        }
+      ]
     },
     "330036": {
       "name": "Great Plains",
@@ -11551,6 +13275,7 @@
         {
           "store": "Play Store",
           "url": "https://play.google.com/store/apps/details?id=com.northstargames.nature",
+          "note": "Nature",
           "wishlisted": true
         }
       ],
@@ -11558,7 +13283,14 @@
         {
           "store": "Steam",
           "url": "https://store.steampowered.com/app/1926610/Nature_Game_System/",
+          "note": "Nature",
           "wishlisted": true
+        },
+        {
+          "store": "BGA",
+          "url": "https://en.boardgamearena.com/gamepanel?game=nature",
+          "note": "BGA Free",
+          "owned": true
         }
       ]
     },
@@ -11597,7 +13329,15 @@
       "name": "Mythic Battles: Ragnarök",
       "short_description": "Take control of Norse divinities and command their forces in the ultimate conflict!",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "BGA",
+          "url": "https://boardgamearena.com/gamepanel?game=mythicbattlesragnarok",
+          "note": "BGA Free",
+          "owned": true
+        }
+      ]
     },
     "332398": {
       "name": "Everdell: The Complete Collection",
@@ -11615,7 +13355,15 @@
       "name": "Revive",
       "short_description": "Revive civilization, 5000 years after the fall of humankind.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "BGA",
+          "url": "https://boardgamearena.com/gamepanel?game=revive",
+          "note": "BGA Premium",
+          "monthly_subscription": true
+        }
+      ]
     },
     "332800": {
       "name": "Summoner Wars (Second Edition)",
@@ -11651,7 +13399,15 @@
       "name": "Sobek: 2 Players",
       "short_description": "Detectives compete or work together to solve mysteries. Elementary!",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "BGA",
+          "url": "https://boardgamearena.com/gamepanel?game=sobektwoplayers",
+          "note": "BGA Premium",
+          "monthly_subscription": true
+        }
+      ]
     },
     "333553": {
       "name": "For the King (and Me)",
@@ -11663,7 +13419,15 @@
       "name": "Verdant",
       "short_description": "Collect and care for houseplants as you arrange the coziest home.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "BGA",
+          "url": "https://boardgamearena.com/gamepanel?game=verdant",
+          "note": "BGA Premium",
+          "monthly_subscription": true
+        }
+      ]
     },
     "334363": {
       "name": "Vijayanagara: The Deccan Empires of Medieval India, 1290-1398",
@@ -11675,7 +13439,15 @@
       "name": "For Northwood! A Solo Trick-Taking Game",
       "short_description": "Woodland rulers engage in debate in this tactical solo trick-taking game.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "BGA",
+          "url": "https://boardgamearena.com/gamepanel?game=fornorthwood",
+          "note": "BGA Free",
+          "owned": true
+        }
+      ]
     },
     "334931": {
       "name": "Robinson Crusoe: Adventures on the Cursed Island – Collector's Edition (Gamefound Edition)",
@@ -11821,7 +13593,15 @@
       "name": "Gest of Robin Hood, A",
       "short_description": "Fight for Justice or Maintain Order in 12th-century England.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "BGA",
+          "url": "https://boardgamearena.com/gamepanel?game=agestofrobinhood",
+          "note": "BGA Free",
+          "owned": true
+        }
+      ]
     },
     "338460": {
       "name": "Isle of Cats: Explore & Draw, The",
@@ -11912,7 +13692,15 @@
       "name": "Welcome to the Moon",
       "short_description": "Escape from Earth and plan the humankind journey to the moon to save humanity.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "BGA",
+          "url": "https://boardgamearena.com/gamepanel?game=bunnykingdom",
+          "note": "BGA Premium",
+          "monthly_subscription": true
+        }
+      ]
     },
     "339958": {
       "name": "Gutenberg",
@@ -11978,7 +13766,15 @@
       "name": "Great Western Trail: Second Edition",
       "short_description": "Wrangle your herd of cows across the Midwest prairie and deliver it to Kansas City.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "BGA",
+          "url": "https://en.boardgamearena.com/gamepanel?game=nucleum",
+          "note": "BGA Premium",
+          "monthly_subscription": true
+        }
+      ]
     },
     "341496": {
       "name": "Caesar's Empire",
@@ -12095,6 +13891,12 @@
           "url": "https://boardgamehelpers.com/ArkNova/Default.aspx",
           "note": "Map Randomizer",
           "owned": true
+        },
+        {
+          "store": "BGA",
+          "url": "https://boardgamearena.com/gamepanel?game=arknova",
+          "note": "BGA Premium",
+          "monthly_subscription": true
         }
       ]
     },
@@ -12108,7 +13910,15 @@
       "name": "That Time You Killed Me",
       "short_description": "Prove yourself across all spacetime as the true inventor of the time machine.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "BGA",
+          "url": "https://boardgamearena.com/gamepanel?game=thattimeyoukilledme",
+          "note": "BGA Free",
+          "owned": true
+        }
+      ]
     },
     "344759": {
       "name": "Rocketeer: Fate of the Future, The",
@@ -12120,7 +13930,15 @@
       "name": "Dog Lover",
       "short_description": "Rescue beloved dogs, train them new tricks, and cherish their unique traits.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "BGA",
+          "url": "https://boardgamearena.com/gamepanel?game=doglover",
+          "note": "BGA Free",
+          "owned": true
+        }
+      ]
     },
     "344872": {
       "name": "À la Food Cart",
@@ -12156,7 +13974,15 @@
       "name": "Cat in the Box",
       "short_description": "Win tricks without knowing the colour of your cards until you play them.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "BGA",
+          "url": "https://boardgamearena.com/gamepanel?game=catinthebox",
+          "note": "BGA Premium",
+          "monthly_subscription": true
+        }
+      ]
     },
     "346142": {
       "name": "Watson & Holmes: The lost diaries",
@@ -12168,7 +13994,15 @@
       "name": "7 Wonders: Architects",
       "short_description": "Race against others to assemble your wonder, but speed won't guarantee victory.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "BGA",
+          "url": "https://en.boardgamearena.com/gamepanel?game=sevenwondersarchitects",
+          "note": "BGA Premium",
+          "monthly_subscription": true
+        }
+      ]
     },
     "346742": {
       "name": "Fishing Lessons",
@@ -12180,7 +14014,15 @@
       "name": "Azul: Queen's Garden",
       "short_description": "Create the perfect garden patterns for Queen Maria of Aragon.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "BGA",
+          "url": "https://boardgamearena.com/gamepanel?game=azulqueensgarden",
+          "note": "BGA Premium",
+          "monthly_subscription": true
+        }
+      ]
     },
     "347137": {
       "name": "Chronicles of Avel",
@@ -12234,7 +14076,15 @@
       "name": "Palaces of Carrara (Second Edition), The",
       "short_description": "Erect stunning buildings with the world-renowned marble in beautiful Tuscany.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "BGA",
+          "url": "https://boardgamearena.com/gamepanel?game=carrara",
+          "note": "BGA Free",
+          "owned": true
+        }
+      ]
     },
     "348406": {
       "name": "Marvel Dice Throne: Battle Chest",
@@ -12258,13 +14108,29 @@
       "name": "Earth",
       "short_description": "Strategically grow your ecosystem card engine with unique flora, fauna, and terrains.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "BGA",
+          "url": "https://en.boardgamearena.com/gamepanel?game=earth",
+          "note": "BGA Premium",
+          "monthly_subscription": true
+        }
+      ]
     },
     "350316": {
       "name": "Wayfarers of the South Tigris",
       "short_description": "Explore the waterways, map the land, and chart the stars in medieval Baghdad.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "BGA",
+          "url": "https://boardgamearena.com/gamepanel?game=wayfarers",
+          "note": "BGA Premium",
+          "owned": true
+        }
+      ]
     },
     "350755": {
       "name": "King of Monster Island",
@@ -12276,7 +14142,15 @@
       "name": "Guild of Merchant Explorers, The",
       "short_description": "Explore strange lands, establish trade routes, and search for treasure.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "BGA",
+          "url": "https://boardgamearena.com/gamepanel?game=theguildofmerchantexplorers",
+          "note": "BGA Premium",
+          "monthly_subscription": true
+        }
+      ]
     },
     "351040": {
       "name": "Ready Set Bet",
@@ -12372,7 +14246,15 @@
       "name": "Resist!",
       "short_description": "Lead a band of resistance fighters as they try to take back their homeland!",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "BGA",
+          "url": "https://boardgamearena.com/gamepanel?game=resist",
+          "note": "BGA Premium",
+          "monthly_subscription": true
+        }
+      ]
     },
     "353288": {
       "name": "Trekking Through History",
@@ -12454,6 +14336,14 @@
           "note": "Boop: World",
           "wishlisted": true
         }
+      ],
+      "pc": [
+        {
+          "store": "BGA",
+          "url": "https://en.boardgamearena.com/gamepanel?game=boop",
+          "note": "BGA Free",
+          "monthly_subscription": true
+        }
       ]
     },
     "355444": {
@@ -12498,7 +14388,15 @@
       "name": "Turing Machine",
       "short_description": "Crack codes using a real analog computer.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "BGA",
+          "url": "https://boardgamearena.com/gamepanel?game=turingmachine",
+          "note": "BGA Premium",
+          "monthly_subscription": true
+        }
+      ]
     },
     "356883": {
       "name": "Millennia: Tracks of Time",
@@ -12506,11 +14404,33 @@
       "rulebooks": [],
       "supplemental_files": []
     },
+    "356905": {
+      "name": "Room 25: Hypercube",
+      "short_description": "Run as fast as you can, survive the possible hidden guards and escape the maze.",
+      "rulebooks": [],
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "BGA",
+          "url": "https://boardgamearena.com/gamepanel?game=roomtwentyfive",
+          "note": "BGA Free",
+          "owned": true
+        }
+      ]
+    },
     "357726": {
       "name": "51st State: Ultimate Edition",
       "short_description": "Build, deal and raze the ultimate state with the base game and 6 expansions.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "BGA",
+          "url": "https://boardgamearena.com/gamepanel?game=fiftyfirststate",
+          "note": "BGA Free",
+          "owned": true
+        }
+      ]
     },
     "358085": {
       "name": "Village Rails",
@@ -12797,6 +14717,12 @@
           "url": "https://store.steampowered.com/app/2238070/Evergreen_The_Board_Game/",
           "note": "Evergreen",
           "wishlisted": true
+        },
+        {
+          "store": "BGA",
+          "url": "https://boardgamearena.com/gamepanel?game=evergreen",
+          "note": "BGA Premium",
+          "monthly_subscription": true
         }
       ]
     },
@@ -12828,13 +14754,29 @@
       "name": "Splendor Duel",
       "short_description": "Renaissance merchants go head to head to please nobility by collecting jewels.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "BGA",
+          "url": "https://boardgamearena.com/gamepanel?game=splendorduel",
+          "note": "BGA Premium",
+          "monthly_subscription": true
+        }
+      ]
     },
     "364186": {
       "name": "Terra Nova",
       "short_description": "Control one of ten asymmetric factions in a streamlined version of Terra Mystica.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "BGA",
+          "url": "https://boardgamearena.com/gamepanel?game=terranova",
+          "note": "BGA Free",
+          "owned": true
+        }
+      ]
     },
     "364766": {
       "name": "MicroMacro: Crime City – All In",
@@ -12897,6 +14839,14 @@
           "support_app": true
         }
       ],
+      "ios": [
+        {
+          "store": "App Store",
+          "url": "https://apps.apple.com/us/app/dire-wolf-game-room/id1529031679",
+          "note": "Dire Wolf Game Room",
+          "support_app": true
+        }
+      ],
       "pc": [
         {
           "store": "Steam",
@@ -12916,7 +14866,15 @@
       "name": "Heat: Pedal to the Metal",
       "short_description": "Push your car to the limit in the pursuit of victory, but don’t overheat!",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "BGA",
+          "url": "https://en.boardgamearena.com/gamepanel?game=heat",
+          "note": "BGA Premium",
+          "monthly_subscription": true
+        }
+      ]
     },
     "366023": {
       "name": "Marvel Zombies: Heroes' Resistance",
@@ -12977,7 +14935,15 @@
       "name": "Sea Salt & Paper",
       "short_description": "A few delicate Origami-style illustrations and a whole marine universe comes to life!",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "BGA",
+          "url": "https://en.boardgamearena.com/gamepanel?game=seasaltpaper",
+          "note": "BGA Premium",
+          "monthly_subscription": true
+        }
+      ]
     },
     "367498": {
       "name": "Horizons of Spirit Island",
@@ -13037,7 +15003,15 @@
       "name": "Let's Go! To Japan",
       "short_description": "Create a travel itinerary and go on your dream vacation to Japan.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "BGA",
+          "url": "https://en.boardgamearena.com/gamepanel?game=letsgotojapan",
+          "note": "BGA Premium",
+          "monthly_subscription": true
+        }
+      ]
     },
     "368227": {
       "name": "Ginormopod 2050 A.D.: Attack of the Giant Bug Monsters",
@@ -13161,7 +15135,15 @@
       "name": "Beer & Bread",
       "short_description": "Two villages face off in the traditions of brewing beer and baking bread.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "BGA",
+          "url": "https://boardgamearena.com/gamepanel?game=beerbread",
+          "note": "BGA Premium",
+          "owned": true
+        }
+      ]
     },
     "370591": {
       "name": "Dorfromantik: The Board Game",
@@ -13180,7 +15162,15 @@
       "name": "Fugitive (Second Edition)",
       "short_description": "The second edition of the hit deduction game!",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "BGA",
+          "url": "https://en.boardgamearena.com/gamepanel?game=fugitive",
+          "note": "BGA Free",
+          "owned": true
+        }
+      ]
     },
     "370913": {
       "name": "Star Wars: The Clone Wars",
@@ -13198,7 +15188,15 @@
       "name": "Luthier",
       "short_description": "Craft musical instruments for patrons through worker placement and hidden bidding.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "BGA",
+          "url": "https://en.boardgamearena.com/gamepanel?game=luthier",
+          "note": "BGA Beta",
+          "monthly_subscription": true
+        }
+      ]
     },
     "371333": {
       "name": "Hissy Fit",
@@ -13244,7 +15242,15 @@
       "name": "White Castle, The",
       "short_description": "Become the most influential clan in Japan's Himeji stronghold.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "BGA",
+          "url": "https://en.boardgamearena.com/gamepanel?game=thewhitecastle",
+          "note": "BGA Premium",
+          "monthly_subscription": true
+        }
+      ]
     },
     "373105": {
       "name": "Legendary Encounters: The Matrix",
@@ -13256,13 +15262,29 @@
       "name": "Sky Team",
       "short_description": "Work together silently to land a plane under increasingly challenging circumstances.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "BGA",
+          "url": "https://en.boardgamearena.com/gamepanel?game=skyteam",
+          "note": "BGA Premium",
+          "monthly_subscription": true
+        }
+      ]
     },
     "373577": {
       "name": "Forage: A 9 card solitaire game",
       "short_description": "Search the woodland and gather wild food, but watch out for those hungry mice!",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "BGA",
+          "url": "https://boardgamearena.com/gamepanel?game=forage",
+          "note": "BGA Free",
+          "owned": true
+        }
+      ]
     },
     "373600": {
       "name": "Cthulhu: Death May Die – Fear of the Unknown",
@@ -13341,13 +15363,23 @@
         {
           "store": "Play Store",
           "url": "https://play.google.com/store/apps/details?id=com.direwolfdigital.mylileverdell",
+          "note": "Welcome to Everdell",
           "owned": true
+        }
+      ],
+      "ios": [
+        {
+          "store": "App Store",
+          "url": "https://apps.apple.com/us/app/welcome-to-everdell/id6459537401",
+          "note": "Welcome to Everdell",
+          "wishlisted": true
         }
       ],
       "pc": [
         {
           "store": "Steam",
           "url": "https://store.steampowered.com/app/2553410/Welcome_To_Everdell/",
+          "note": "Welcome to Everdell",
           "owned": true
         }
       ]
@@ -13538,6 +15570,20 @@
         }
       ]
     },
+    "381248": {
+      "name": "Nemesis: Retaliation",
+      "short_description": "Highly trained marines enter an alien nest with strict orders and advanced tools.",
+      "rulebooks": [],
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "BGA",
+          "url": "https://en.boardgamearena.com/gamepanel?game=nemesisretaliation",
+          "note": "BGA Premium",
+          "monthly_subscription": true
+        }
+      ]
+    },
     "381297": {
       "name": "Unmatched Adventures: Tales to Amaze",
       "short_description": "Team up in Unmatched to take down the Mothman or Martian Invader.",
@@ -13611,6 +15657,14 @@
           "support_app": true
         }
       ],
+      "ios": [
+        {
+          "store": "App Store",
+          "url": "https://apps.apple.com/us/app/dire-wolf-game-room/id1529031679",
+          "note": "Dire Wolf Game Room",
+          "support_app": true
+        }
+      ],
       "pc": [
         {
           "store": "Steam",
@@ -13624,7 +15678,15 @@
       "name": "Age of Innovation",
       "short_description": "Terraform the world to expand your faction and create innovations on the way.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "BGA",
+          "url": "https://en.boardgamearena.com/gamepanel?game=ageofinnovation",
+          "note": "BGA Premium",
+          "monthly_subscription": true
+        }
+      ]
     },
     "383206": {
       "name": "Freelancers: A Crossroads Game",
@@ -13642,7 +15704,15 @@
       "name": "Paint the Roses: Deluxe Edition",
       "short_description": "Work together using logic, deduction, and discussion to finish the Royal Gardens.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "BGA",
+          "url": "https://boardgamearena.com/gamepanel?game=painttheroses",
+          "note": "BGA Free",
+          "owned": true
+        }
+      ]
     },
     "383450": {
       "name": "Pies",
@@ -13690,13 +15760,29 @@
       "name": "Fromage",
       "short_description": "Cheesemakers compete to run the most prosperous creamery in France.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "BGA",
+          "url": "https://boardgamearena.com/gamepanel?game=fromage",
+          "note": "BGA Premium",
+          "monthly_subscription": true
+        }
+      ]
     },
     "385529": {
       "name": "Vale of Eternity, The",
       "short_description": "Tame many mythical creatures, harnessing their powers in order to summon dragons.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "BGA",
+          "url": "https://en.boardgamearena.com/gamepanel?game=valeofeternity",
+          "note": "BGA Premium",
+          "monthly_subscription": true
+        }
+      ]
     },
     "385610": {
       "name": "Kutná Hora: The City of Silver",
@@ -13720,7 +15806,15 @@
       "name": "Path of Civilization",
       "short_description": "Civilization development with simultaneous play.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "BGA",
+          "url": "https://boardgamearena.com/gamepanel?game=imperialsettlers",
+          "note": "BGA Premium",
+          "monthly_subscription": true
+        }
+      ]
     },
     "385720": {
       "name": "Dustrunner",
@@ -13732,7 +15826,15 @@
       "name": "Faraway",
       "short_description": "Explore a mysterious land and fulfill quests on your way back.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "BGA",
+          "url": "https://en.boardgamearena.com/gamepanel?game=faraway",
+          "note": "BGA Premium",
+          "monthly_subscription": true
+        }
+      ]
     },
     "385966": {
       "name": "Championland: Track & Field",
@@ -13756,7 +15858,15 @@
       "name": "Stonespine Architects",
       "short_description": "Build your own perilous dungeon and become a master architect.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "BGA",
+          "url": "https://en.boardgamearena.com/gamepanel?game=stonespinearchitects",
+          "note": "BGA Premium",
+          "monthly_subscription": true
+        }
+      ]
     },
     "387866": {
       "name": "Star Wars: Unlimited",
@@ -13823,6 +15933,12 @@
           "url": "https://boardgamehelpers.com/GalacticCruise/Default.aspx",
           "note": "Setup Helper",
           "support_app": true
+        },
+        {
+          "store": "BGA",
+          "url": "https://en.boardgamearena.com/gamepanel?game=galacticcruise",
+          "note": "BGA Premium",
+          "monthly_subscription": true
         }
       ]
     },
@@ -13845,6 +15961,14 @@
           "url": "https://apps.apple.com/us/app/forest-shuffle-smart-counter/id6544800532",
           "note": "Smart Counter",
           "support_app": true
+        }
+      ],
+      "pc": [
+        {
+          "store": "BGA",
+          "url": "https://en.boardgamearena.com/gamepanel?game=forestshuffle",
+          "note": "BGA Premium",
+          "monthly_subscription": true
         }
       ]
     },
@@ -13951,6 +16075,14 @@
           "support_app": true
         }
       ],
+      "ios": [
+        {
+          "store": "App Store",
+          "url": "https://apps.apple.com/us/app/dire-wolf-game-room/id1529031679",
+          "note": "Dire Wolf Game Room",
+          "support_app": true
+        }
+      ],
       "pc": [
         {
           "store": "Steam",
@@ -13994,7 +16126,15 @@
       "name": "Pirates of Maracaibo",
       "short_description": "Set sail for an adventurous raid…for perhaps it will be your last!",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "BGA",
+          "url": "https://en.boardgamearena.com/gamepanel?game=piratesofmaracaibo",
+          "note": "BGA Premium",
+          "owned": true
+        }
+      ]
     },
     "397459": {
       "name": "Bluey: Keepy Uppy",
@@ -14056,19 +16196,57 @@
       "name": "River of Gold",
       "short_description": "A game of rivals and riches set on the legendary river of Rokugan.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "BGA",
+          "url": "https://boardgamearena.com/gamepanel?game=riverofgold",
+          "note": "BGA Premium",
+          "monthly_subscription": true
+        }
+      ]
     },
     "400297": {
       "name": "Sfynx",
       "short_description": "Players manipulate tiles on a grid to match patterns on riddle cards.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "BGA",
+          "url": "https://boardgamearena.com/gamepanel?game=sfynx",
+          "note": "BGA Free",
+          "owned": true
+        }
+      ]
     },
     "400314": {
       "name": "Apiary",
       "short_description": "Hyper-intelligent bees take to outer space to build, explore, and grow.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "BGA",
+          "url": "https://boardgamearena.com/gamepanel?game=apiary",
+          "note": "BGA Premium",
+          "monthly_subscription": true
+        }
+      ]
+    },
+    "400366": {
+      "name": "Wondrous Creatures",
+      "short_description": "Build the best reserve in the world for 100+ fantastic creatures!",
+      "rulebooks": [],
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "BGA",
+          "url": "https://en.boardgamearena.com/gamepanel?game=wondrouscreatures",
+          "note": "BGA Premium",
+          "monthly_subscription": true
+        }
+      ]
     },
     "400617": {
       "name": "Mythic Mischief Vol. II",
@@ -14164,7 +16342,15 @@
       "name": "Middle Ages",
       "short_description": "Develop your fiefdom tile by tile to become the wealthiest noble of the kingdom!!",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "BGA",
+          "url": "https://boardgamearena.com/gamepanel?game=middleages",
+          "note": "BGA Free",
+          "owned": true
+        }
+      ]
     },
     "404509": {
       "name": "Cthulhu: Dark Providence",
@@ -14218,7 +16404,15 @@
       "name": "River Valley Glassworks",
       "short_description": "Compete to collect pieces of glass and place them strategically in your shop.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "BGA",
+          "url": "https://boardgamearena.com/gamepanel?game=rivervalleyglassworks",
+          "note": "BGA Free",
+          "owned": true
+        }
+      ]
     },
     "407343": {
       "name": "Ironwood",
@@ -14333,7 +16527,15 @@
       "name": "Gang, The",
       "short_description": "Bet together the order of your hands in Texas Hold'em Poker to win together.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "BGA",
+          "url": "https://en.boardgamearena.com/gamepanel?game=thegang",
+          "note": "BGA Premium",
+          "monthly_subscription": true
+        }
+      ]
     },
     "411860": {
       "name": "Unmatched: The Witcher – Steel and Silver",
@@ -14463,7 +16665,15 @@
       "name": "Castle Combo",
       "short_description": "Combine medieval villagers and castle dwellers to score points.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "BGA",
+          "url": "https://en.boardgamearena.com/gamepanel?game=castlecombo",
+          "note": "BGA Premium",
+          "monthly_subscription": true
+        }
+      ]
     },
     "417197": {
       "name": "Rebirth",
@@ -14576,6 +16786,12 @@
           "url": "https://boardgamehelpers.com/Flip7/Default.aspx",
           "note": "Score Calc",
           "support_app": true
+        },
+        {
+          "store": "BGA",
+          "url": "https://en.boardgamearena.com/gamepanel?game=flipseven",
+          "note": "BGA Free",
+          "owned": true
         }
       ]
     },
@@ -14583,7 +16799,15 @@
       "name": "Trekking the World: Second Edition",
       "short_description": "A major redesign of a light strategy game about the wonders of travel.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "BGA",
+          "url": "https://boardgamearena.com/gamepanel?game=trekkingtheworld",
+          "note": "BGA Free",
+          "owned": true
+        }
+      ]
     },
     "420498": {
       "name": "Unstoppable",
@@ -14661,7 +16885,15 @@
       "name": "King of Tokyo: Duel",
       "short_description": "Monsters go head-to-head in Tokyo to prove their ferocity and media skills.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "BGA",
+          "url": "https://boardgamearena.com/gamepanel?game=kingoftokyoduel",
+          "note": "BGA Premium",
+          "monthly_subscription": true
+        }
+      ]
     },
     "422541": {
       "name": "Star Trek: Captain's Chair",
@@ -14847,7 +17079,15 @@
       "name": "Celestia: Big Box",
       "short_description": "Players take turns as pilot and press their luck to win the greatest treasures!",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "BGA",
+          "url": "https://boardgamearena.com/gamepanel?game=celestia",
+          "note": "BGA Free",
+          "owned": true
+        }
+      ]
     },
     "429653": {
       "name": "Andromeda's Edge: Deluxe Edition",
@@ -15069,7 +17309,15 @@
       "name": "Lord of the Rings: Fate of the Fellowship, The",
       "short_description": "As members of The Fellowship, embark on a journey to save—or doom—Middle-earth.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "BGA",
+          "url": "https://boardgamearena.com/gamepanel?game=fateoffellowship",
+          "note": "BGA Free",
+          "owned": true
+        }
+      ]
     },
     "436446": {
       "name": "DC Super Heroes United: Batman Hush",
@@ -15132,6 +17380,14 @@
           "url": "https://apps.apple.com/us/app/dartmoor-smart-counter/id6761472246",
           "note": "Smart Counter",
           "support_app": true
+        }
+      ],
+      "pc": [
+        {
+          "store": "BGA",
+          "url": "https://en.boardgamearena.com/gamepanel?game=forestshuffledartmoor",
+          "note": "BGA Premium",
+          "monthly_subscription": true
         }
       ]
     },
@@ -15343,7 +17599,15 @@
       "name": "FlipToons",
       "short_description": "Flip your way to fame in this animated deck-building game.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "BGA",
+          "url": "https://en.boardgamearena.com/gamepanel?game=fliptoons",
+          "note": "BGA Premium",
+          "monthly_subscription": true
+        }
+      ]
     },
     "449412": {
       "name": "Risk G.I. JOE: Special Missions",
@@ -15749,7 +18013,15 @@
       "name": "First Giants",
       "short_description": "Dinosaurs, flying reptiles & giant mammals — create the most prestigious exhibition!",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "BGA",
+          "url": "https://en.boardgamearena.com/gamepanel?game=firstgiants",
+          "note": "BGA Premium",
+          "monthly_subscription": true
+        }
+      ]
     },
     "462620": {
       "name": "Lord of the Rings: Circle of Conflict, The",
@@ -15779,7 +18051,15 @@
       "name": "Flip 7: With A Vengeance",
       "short_description": "Flip 7 just got meaner! Lose and steal points with new cards.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "BGA",
+          "url": "https://boardgamearena.com/gamepanel?game=flipsevenwithavengeance",
+          "note": "BGA Free",
+          "owned": true
+        }
+      ]
     },
     "463717": {
       "name": "Happiest Cat In The World, The",
@@ -15961,12 +18241,6 @@
     "474888": {
       "name": "Book Women, The",
       "short_description": "A strategic eurogame of route building, dice management inspired by the Book Women.",
-      "rulebooks": [],
-      "supplemental_files": []
-    },
-    "475207": {
-      "name": "Lost Ruins of Arnak: Surprise Shipment",
-      "short_description": "Venture deeper into the jungle, where the ancient canopy guards its oldest mysteries.",
       "rulebooks": [],
       "supplemental_files": []
     },

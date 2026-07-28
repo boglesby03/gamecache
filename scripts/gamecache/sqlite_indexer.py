@@ -248,12 +248,14 @@ class SqliteIndexer:
         if note:
             normalized['note'] = note
 
-        for flag in ('owned', 'wishlisted', 'preordered'):
+        for flag in ('owned', 'wishlisted', 'preordered', 'monthly_subscription'):
             if bool(entry.get(flag, False)):
                 normalized[flag] = True
 
         if bool(entry.get('support_app', False)) or entry.get('state') == 'support_app':
             normalized['support_app'] = True
+        if bool(entry.get('monthly_subscription', False)) or entry.get('state') in ('monthly_subscription', 'subscription'):
+            normalized['monthly_subscription'] = True
 
         return normalized
 
