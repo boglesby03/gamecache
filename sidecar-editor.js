@@ -34,7 +34,7 @@
   };
 
   const PLATFORM_KEYS = ["android", "ios", "pc"];
-  const PLATFORM_FLAGS = ["owned", "wishlisted", "preordered"];
+  const PLATFORM_FLAGS = ["owned", "wishlisted", "preordered", "monthly_subscription"];
   const PLATFORM_STORE_OPTIONS = {
     android: ["Play Store", "BGG", "Humble", "Amazon Appstore", "Samsung Galaxy Store", "itch.io"],
     ios: ["App Store", "TestFlight", "itch.io"],
@@ -101,6 +101,9 @@
 
     if (raw.support_app === true || raw.state === "support_app") {
       out.support_app = true;
+    }
+    if (raw.monthly_subscription === true || raw.state === "monthly_subscription" || raw.state === "subscription") {
+      out.monthly_subscription = true;
     }
 
     if (raw.state === "wishlisted") {
@@ -291,6 +294,7 @@
 
   function getPlatformState(entry) {
     if (!entry || typeof entry !== "object") return "";
+    if (entry.monthly_subscription === true) return "monthly_subscription";
     if (entry.support_app === true) return "support_app";
     if (entry.preordered === true) return "preordered";
     if (entry.wishlisted === true) return "wishlisted";
@@ -331,7 +335,9 @@
       if (store) entry.store = store;
       entry.url = url;
       if (note) entry.note = note;
-      if (state === "support_app") {
+      if (state === "monthly_subscription") {
+        entry.monthly_subscription = true;
+      } else if (state === "support_app") {
         entry.support_app = true;
       } else if (state === "wishlisted") {
         entry.wishlisted = true;
