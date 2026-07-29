@@ -44,6 +44,10 @@ const STATUS_LABELS = {
   unowned: 'Digital Only',
 };
 
+const GLOBE_ICON_URL = `data:image/svg+xml;utf8,${encodeURIComponent(
+  "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><defs><radialGradient id='o' cx='35%' cy='30%' r='70%'><stop offset='0%' stop-color='#8fe3ff'/><stop offset='100%' stop-color='#1e88e5'/></radialGradient></defs><circle cx='32' cy='32' r='30' fill='url(#o)'/><path fill='#43a047' d='M14 22c5-7 12-10 18-10 2 3 4 5 7 6 3 1 8 1 11 4 2 2 1 5-1 7-2 2-5 2-7 5-1 2 0 4-2 6-3 2-7 0-10-2-3-2-4-6-8-7-4-1-8 2-10-1-2-3 0-6 2-8z'/><path fill='#66bb6a' d='M21 46c3 2 7 5 12 5 6 0 11-3 15-7-1-2-2-5-5-6-4-1-7 2-10 3-5 2-8 1-12-2-3-2-6-1-8 1 1 2 4 4 8 6z'/><circle cx='22' cy='20' r='3' fill='#81c784'/></svg>"
+)}`;
+
 function formatStatusLabel(status) {
   return STATUS_LABELS[status] || status;
 }
@@ -173,7 +177,7 @@ function getDigitalStoreMeta(store, url, platform) {
     'ea app': { label: 'EA', title: 'EA app', iconUrl: getFaviconUrl('www.ea.com') },
     'ubisoft connect': { label: 'UBI', title: 'Ubisoft Connect', iconUrl: getFaviconUrl('www.ubisoft.com') },
     'bgg': { label: 'BGG', title: 'BoardGameGeek', iconUrl: 'https://cdn.simpleicons.org/boardgamegeek' },
-    'web': { label: 'WEB', title: 'Web', iconUrl: getFaviconUrl('www.google.com') },
+    'web': { label: 'WEB', title: 'Web', iconUrl: GLOBE_ICON_URL },
   };
 
   if (storeKey && knownStores[storeKey]) {

@@ -4,6 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Game Metadata Sidecar Editor</title>
+  <script src="sqljs/sql-wasm.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/fflate@0.8.3/umd/index.js"></script>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,400,0,0" />
   <link rel="stylesheet" href="sidecar-editor.css" />
 </head>
@@ -65,6 +67,27 @@
             <input id="field-name" type="text" />
           </label>
         </div>
+
+        <section class="cover-preview" aria-live="polite">
+          <div class="cover-preview-content">
+            <div class="cover-preview-frame">
+              <img id="field-cover-image" class="cover-preview-image hidden" alt="Game cover art" loading="lazy" referrerpolicy="no-referrer" />
+              <div id="field-cover-fallback" class="cover-preview-fallback">No cover art available</div>
+            </div>
+
+            <dl class="cover-meta" id="field-cover-meta">
+              <div class="cover-meta-row"><dt>Year</dt><dd id="field-sqlite-year">-</dd></div>
+              <div class="cover-meta-row"><dt>Rank</dt><dd id="field-sqlite-rank">-</dd></div>
+              <div class="cover-meta-row"><dt>Rating</dt><dd id="field-sqlite-rating">-</dd></div>
+              <div class="cover-meta-row"><dt>Play Time</dt><dd id="field-sqlite-playing-time">-</dd></div>
+              <div class="cover-meta-row"><dt>Min Age</dt><dd id="field-sqlite-min-age">-</dd></div>
+              <div class="cover-meta-row"><dt>Complexity</dt><dd id="field-sqlite-weight">-</dd></div>
+              <div class="cover-meta-row"><dt>Owned</dt><dd id="field-sqlite-numowned">-</dd></div>
+              <div class="cover-meta-row"><dt>Plays</dt><dd id="field-sqlite-numplays">-</dd></div>
+            </dl>
+          </div>
+          <p id="field-cover-status" class="cover-preview-status">Loading cover art from SQLite...</p>
+        </section>
 
         <label>
           <span>Short Description</span>

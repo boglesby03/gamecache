@@ -6,6 +6,9 @@
     selectedId: null,
     dirty: false,
     handle: null,
+    coverArtById: {},
+    coverArtLoaded: false,
+    coverArtSource: "",
   };
 
   const els = {
@@ -23,6 +26,17 @@
     editorForm: document.getElementById("editor-form"),
     fieldId: document.getElementById("field-id"),
     fieldName: document.getElementById("field-name"),
+    fieldCoverImage: document.getElementById("field-cover-image"),
+    fieldCoverFallback: document.getElementById("field-cover-fallback"),
+    fieldCoverStatus: document.getElementById("field-cover-status"),
+    fieldSqliteYear: document.getElementById("field-sqlite-year"),
+    fieldSqliteRank: document.getElementById("field-sqlite-rank"),
+    fieldSqliteRating: document.getElementById("field-sqlite-rating"),
+    fieldSqlitePlayingTime: document.getElementById("field-sqlite-playing-time"),
+    fieldSqliteMinAge: document.getElementById("field-sqlite-min-age"),
+    fieldSqliteWeight: document.getElementById("field-sqlite-weight"),
+    fieldSqliteNumowned: document.getElementById("field-sqlite-numowned"),
+    fieldSqliteNumplays: document.getElementById("field-sqlite-numplays"),
     fieldShortDescription: document.getElementById("field-short-description"),
     rulebooksList: document.getElementById("rulebooks-list"),
     supplementalList: document.getElementById("supplemental-list"),
@@ -40,6 +54,10 @@
     ios: ["App Store", "TestFlight", "itch.io"],
     pc: ["Steam", "Web", "Tabletop Simulator", "Tabletopia", "Yucata", "BGA", "Epic", "EA app", "Ubisoft Connect", "GOG", "Microsoft Store", "itch.io", "Humble", "Amazon"],
   };
+
+  const GLOBE_ICON_URL = `data:image/svg+xml;utf8,${encodeURIComponent(
+    "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><defs><radialGradient id='o' cx='35%' cy='30%' r='70%'><stop offset='0%' stop-color='#8fe3ff'/><stop offset='100%' stop-color='#1e88e5'/></radialGradient></defs><circle cx='32' cy='32' r='30' fill='url(#o)'/><path fill='#43a047' d='M14 22c5-7 12-10 18-10 2 3 4 5 7 6 3 1 8 1 11 4 2 2 1 5-1 7-2 2-5 2-7 5-1 2 0 4-2 6-3 2-7 0-10-2-3-2-4-6-8-7-4-1-8 2-10-1-2-3 0-6 2-8z'/><path fill='#66bb6a' d='M21 46c3 2 7 5 12 5 6 0 11-3 15-7-1-2-2-5-5-6-4-1-7 2-10 3-5 2-8 1-12-2-3-2-6-1-8 1 1 2 4 4 8 6z'/><circle cx='22' cy='20' r='3' fill='#81c784'/></svg>"
+  )}`;
 
   function getFaviconUrl(domain) {
     return `https://www.google.com/s2/favicons?domain=${encodeURIComponent(domain)}&sz=64`;
@@ -124,7 +142,7 @@
       "ea app": { label: "EA", title: "EA app", iconUrl: getFaviconUrl("www.ea.com") },
       "ubisoft connect": { label: "UBI", title: "Ubisoft Connect", iconUrl: getFaviconUrl("www.ubisoft.com") },
       "bgg": { label: "BGG", title: "BoardGameGeek", iconUrl: "https://cdn.simpleicons.org/boardgamegeek" },
-      "web": { label: "WEB", title: "Web", iconUrl: getFaviconUrl("www.google.com") },
+      "web": { label: "WEB", title: "Web", iconUrl: GLOBE_ICON_URL },
     };
 
     if (knownStores[storeKey]) {
@@ -365,6 +383,243 @@
     return `rb:${rb} sup:${sf} plat:${p}`;
   }
 
+  function getCoverInfoForGameId(id) {
+    if (!id) return null;
+    const cover = state.coverArtById[String(id)];
+    return cover && typeof cover === "object" ? cover : null;
+  }
+
+  function getCoverThumbnailForList(id) {
+    const cover = getCoverInfoForGameId(id);
+    if (!cover) return "";
+    return String(cover.thumbnail || cover.image || "").trim();
+  }
+
+  function setSelectedCoverStatus(message) {
+    if (!els.fieldCoverStatus) return;
+    els.fieldCoverStatus.textContent = message;
+  }
+
+  function isPresentValue(value) {
+    return value !== null && value !== undefined && String(value).trim() !== "";
+  }
+
+  function formatIntegerValue(value) {
+    const numberValue = Number(value);
+    if (!Number.isFinite(numberValue) || numberValue <= 0) return "-";
+    return Math.round(numberValue).toLocaleString();
+  }
+
+  function formatDecimalValue(value, digits = 2) {
+    const numberValue = Number(value);
+    if (!Number.isFinite(numberValue) || numberValue <= 0) return "-";
+    return numberValue.toFixed(digits);
+  }
+
+  function setMetaValue(element, value) {
+    if (!element) return;
+    element.textContent = value;
+  }
+
+  function renderSelectedSqliteDetails(id) {
+    const cover = getCoverInfoForGameId(id);
+
+    if (!cover) {
+      setMetaValue(els.fieldSqliteYear, "-");
+      setMetaValue(els.fieldSqliteRank, "-");
+      setMetaValue(els.fieldSqliteRating, "-");
+      setMetaValue(els.fieldSqlitePlayingTime, "-");
+      setMetaValue(els.fieldSqliteMinAge, "-");
+      setMetaValue(els.fieldSqliteWeight, "-");
+      setMetaValue(els.fieldSqliteNumowned, "-");
+      setMetaValue(els.fieldSqliteNumplays, "-");
+      return;
+    }
+
+    setMetaValue(els.fieldSqliteYear, formatIntegerValue(cover.year));
+    setMetaValue(els.fieldSqliteRank, formatIntegerValue(cover.rank));
+    setMetaValue(els.fieldSqliteRating, formatDecimalValue(cover.rating, 2));
+
+    const playTime = formatIntegerValue(cover.playing_time);
+    setMetaValue(els.fieldSqlitePlayingTime, playTime === "-" ? "-" : `${playTime} min`);
+
+    const minAge = formatIntegerValue(cover.min_age);
+    setMetaValue(els.fieldSqliteMinAge, minAge === "-" ? "-" : `${minAge}+`);
+
+    setMetaValue(els.fieldSqliteWeight, formatDecimalValue(cover.weight, 2));
+    setMetaValue(els.fieldSqliteNumowned, formatIntegerValue(cover.numowned));
+    setMetaValue(els.fieldSqliteNumplays, formatIntegerValue(cover.numplays));
+  }
+
+  function renderSelectedCover(id, entry) {
+    if (!els.fieldCoverImage || !els.fieldCoverFallback) return;
+
+    const cover = getCoverInfoForGameId(id);
+    const imageUrl = cover ? String(cover.image || cover.thumbnail || "").trim() : "";
+    renderSelectedSqliteDetails(id);
+
+    if (imageUrl) {
+      const titleName = String(entry && entry.name ? entry.name : "Game").trim() || "Game";
+      els.fieldCoverImage.src = imageUrl;
+      els.fieldCoverImage.alt = `${titleName} cover art`;
+      els.fieldCoverImage.classList.remove("hidden");
+      els.fieldCoverFallback.classList.add("hidden");
+      setSelectedCoverStatus(state.coverArtSource ? `Cover loaded from ${state.coverArtSource}.` : "Cover loaded from SQLite.");
+      return;
+    }
+
+    els.fieldCoverImage.removeAttribute("src");
+    els.fieldCoverImage.classList.add("hidden");
+    els.fieldCoverFallback.classList.remove("hidden");
+
+    if (!state.coverArtLoaded) {
+      setSelectedCoverStatus("Loading cover art from SQLite...");
+    } else {
+      setSelectedCoverStatus("No cover found for this game in SQLite.");
+    }
+  }
+
+  function parseConfigIniValue(rawValue) {
+    const value = String(rawValue || "").trim();
+    if (!value) return "";
+    const quoteWrapped =
+      (value.startsWith('"') && value.endsWith('"')) ||
+      (value.startsWith("'") && value.endsWith("'"));
+    return quoteWrapped ? value.slice(1, -1).trim() : value;
+  }
+
+  async function readGitHubRepoFromConfig() {
+    try {
+      const response = await fetch("config.ini", { cache: "no-store" });
+      if (!response.ok) return "";
+      const text = await response.text();
+      const lines = text.split(/\r?\n/);
+      for (const rawLine of lines) {
+        const line = String(rawLine || "").trim();
+        if (!line || line.startsWith("#")) continue;
+        const match = line.match(/^github_repo\s*=\s*(.+)$/i);
+        if (!match) continue;
+        return parseConfigIniValue(match[1]);
+      }
+    } catch (error) {
+      console.debug("Could not read config.ini for repo fallback.", error);
+    }
+    return "";
+  }
+
+  async function getDatabaseCandidates() {
+    const candidates = [
+      { url: "gamecache.sqlite.gz", source: "local gamecache.sqlite.gz" },
+      { url: "mybgg.sqlite.gz", source: "local mybgg.sqlite.gz" },
+    ];
+
+    const repo = await readGitHubRepoFromConfig();
+    if (repo) {
+      candidates.push({
+        url: `https://cors-proxy.mybgg.workers.dev/${repo}`,
+        source: `GitHub repo ${repo}`,
+      });
+    }
+
+    return candidates;
+  }
+
+  async function fetchDatabaseBytes(candidates) {
+    for (const candidate of candidates) {
+      try {
+        const response = await fetch(candidate.url, { cache: "no-store" });
+        if (!response.ok) continue;
+        const rawBytes = new Uint8Array(await response.arrayBuffer());
+        let bytes = rawBytes;
+
+        if (window.fflate && typeof window.fflate.gunzipSync === "function") {
+          try {
+            bytes = window.fflate.gunzipSync(rawBytes);
+          } catch (_error) {
+            // Some sources may already return decompressed SQLite bytes.
+            bytes = rawBytes;
+          }
+        }
+
+        return { bytes, source: candidate.source };
+      } catch (_error) {
+        // Try the next candidate.
+      }
+    }
+
+    return null;
+  }
+
+  async function loadCoverArtIndexFromSqlite() {
+    if (!window.initSqlJs) {
+      console.warn("SQL.js was not loaded; cover art lookup is disabled.");
+      state.coverArtLoaded = true;
+      return;
+    }
+
+    try {
+      const SQL = await window.initSqlJs({
+        locateFile: (file) => `sqljs/${file}`,
+      });
+
+      const candidates = await getDatabaseCandidates();
+      const dbPayload = await fetchDatabaseBytes(candidates);
+
+      if (!dbPayload) {
+        state.coverArtLoaded = true;
+        if (state.selectedId) {
+          renderSelectedCover(state.selectedId, getSelectedEntry());
+        }
+        return;
+      }
+
+      const db = new SQL.Database(dbPayload.bytes);
+      const covers = {};
+      const statement = db.prepare(`
+        SELECT id, image, thumbnail, year, rank, rating, playing_time, min_age, weight, numowned, numplays
+        FROM games
+      `);
+
+      while (statement.step()) {
+        const row = statement.getAsObject();
+        const id = String(row.id || "").trim();
+        const image = String(row.image || "").trim();
+        const thumbnail = String(row.thumbnail || "").trim();
+        if (!id) continue;
+        covers[id] = {
+          image,
+          thumbnail,
+          year: row.year,
+          rank: row.rank,
+          rating: row.rating,
+          playing_time: row.playing_time,
+          min_age: row.min_age,
+          weight: row.weight,
+          numowned: row.numowned,
+          numplays: row.numplays,
+        };
+      }
+
+      statement.free();
+      db.close();
+
+      state.coverArtById = covers;
+      state.coverArtSource = dbPayload.source;
+      state.coverArtLoaded = true;
+
+      renderGameList();
+      if (state.selectedId) {
+        renderSelectedCover(state.selectedId, getSelectedEntry());
+      }
+    } catch (error) {
+      console.warn("Failed to load cover art from SQLite.", error);
+      state.coverArtLoaded = true;
+      if (state.selectedId) {
+        renderSelectedCover(state.selectedId, getSelectedEntry());
+      }
+    }
+  }
+
   function setDirty(nextDirty) {
     state.dirty = !!nextDirty;
     els.dirtyStatus.textContent = state.dirty ? "Unsaved changes" : "Saved";
@@ -395,6 +650,23 @@
       if (state.selectedId === id) li.classList.add("active");
       li.dataset.id = id;
 
+      const rowTop = document.createElement("div");
+      rowTop.className = "game-item-row";
+
+      const listCoverUrl = getCoverThumbnailForList(id);
+      if (listCoverUrl) {
+        const cover = document.createElement("img");
+        cover.className = "game-item-cover";
+        cover.src = listCoverUrl;
+        cover.alt = `${name} cover`;
+        cover.loading = "lazy";
+        cover.referrerPolicy = "no-referrer";
+        rowTop.appendChild(cover);
+      }
+
+      const textWrap = document.createElement("div");
+      textWrap.className = "game-item-text";
+
       const nameDiv = document.createElement("div");
       nameDiv.className = "name";
       nameDiv.textContent = `${name}`;
@@ -403,8 +675,10 @@
       metaDiv.className = "meta";
       metaDiv.textContent = `${id} • ${gameSummary(entry)}`;
 
-      li.appendChild(nameDiv);
-      li.appendChild(metaDiv);
+      textWrap.appendChild(nameDiv);
+      textWrap.appendChild(metaDiv);
+      rowTop.appendChild(textWrap);
+      li.appendChild(rowTop);
       fragment.appendChild(li);
     }
 
@@ -517,6 +791,7 @@
     els.fieldId.value = id;
     els.fieldName.value = entry.name || "";
     els.fieldShortDescription.value = entry.short_description || "";
+    renderSelectedCover(id, entry);
 
     renderDocList(els.rulebooksList, entry.rulebooks || []);
     renderDocList(els.supplementalList, entry.supplemental_files || []);
@@ -803,7 +1078,10 @@
     bindEvents();
     showEditor(false);
     renderGameList();
-    await loadFromDefaultFile({ silent: true });
+    await Promise.all([
+      loadFromDefaultFile({ silent: true }),
+      loadCoverArtIndexFromSqlite(),
+    ]);
   }
 
   init();
