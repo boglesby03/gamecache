@@ -14,8 +14,10 @@ Existing entries are preserved and only missing keys are added.
 import argparse
 import html
 import json
+import socket
 import sqlite3
 import re
+import time
 import urllib.request
 import urllib.parse
 from pathlib import Path
@@ -619,6 +621,60 @@ def load_brettspielwelt_candidates(conn: sqlite3.Connection) -> Dict[str, Dict[s
     return candidates
 
 
+def augment_tts_candidates_with_sidecar(
+    data: Dict[str, Any],
+    candidates: Dict[str, Dict[str, Any]],
+) -> int:
+    """Promote existing sidecar TTS entries into discovery candidates.
+
+    This allows manually curated sidecar TTS links/notes to guide matching for
+    additional modules even when SQLite family metadata lacks the TTS tag.
+    """
+    games = data.get("games", {})
+    if not isinstance(games, dict):
+        return 0
+
+    added = 0
+    for game_id, entry in games.items():
+        if not isinstance(entry, dict):
+            continue
+        gid = str(game_id).strip()
+        if not gid.isdigit():
+            continue
+
+        existing_urls = _find_existing_tabletop_simulator_links(entry)
+        if not existing_urls:
+            continue
+
+        name = str(entry.get("name", "")).strip()
+        if not name:
+            continue
+
+        note_aliases = _tts_note_aliases_from_entry(entry)
+        if gid not in candidates:
+            candidates[gid] = {
+                "id": gid,
+                "name": name,
+                "alternate_names": note_aliases,
+            }
+            added += 1
+            continue
+
+        existing_alt = candidates[gid].get("alternate_names", [])
+        if not isinstance(existing_alt, list):
+            existing_alt = []
+        merged_alt = [str(v).strip() for v in existing_alt if str(v).strip()]
+        seen = {v.lower() for v in merged_alt}
+        for alias in note_aliases:
+            k = alias.lower()
+            if alias and k not in seen:
+                seen.add(k)
+                merged_alt.append(alias)
+        candidates[gid]["alternate_names"] = merged_alt
+
+    return added
+
+
 def load_boardspace_candidates(conn: sqlite3.Connection) -> Dict[str, Dict[str, Any]]:
     """Load games that appear to have Boardspace implementations from SQLite metadata."""
     cur = conn.cursor()
@@ -706,7 +762,7 @@ def fetch_yucata_game_urls(timeout: float = 20.0) -> Dict[str, str]:
     )
 
     with urllib.request.urlopen(req, timeout=timeout) as resp:
-        body = resp.read().decode("utf-8", errors="replace")
+        body = _read_http_body_with_timeout(resp, timeout=timeout)
 
     data = json.loads(body)
     games = data.get("d", {}).get("Games", [])
@@ -1019,6 +1075,44 @@ def _brettspielwelt_name_keys(value: str) -> List[str]:
     return keys
 
 
+def _read_http_body_with_timeout(resp: Any, timeout: float, max_bytes: int = 2_000_000) -> str:
+    """Read an HTTP response body with a hard deadline to avoid stalled reads."""
+    timeout = max(float(timeout or 0.0), 0.5)
+    deadline = time.monotonic() + timeout
+    chunks: List[bytes] = []
+    total = 0
+
+    # Try to access the underlying socket so each chunk read can respect the
+    # remaining deadline, even for long chunked-transfer responses.
+    sock: Optional[socket.socket] = None
+    try:
+        sock = resp.fp.raw._sock  # type: ignore[attr-defined]
+    except Exception:
+        sock = None
+
+    while True:
+        remaining = deadline - time.monotonic()
+        if remaining <= 0:
+            raise TimeoutError("HTTP response read timed out")
+        if sock is not None:
+            try:
+                sock.settimeout(max(0.1, min(timeout, remaining)))
+            except Exception:
+                pass
+        try:
+            chunk = resp.read(64 * 1024)
+        except socket.timeout as exc:
+            raise TimeoutError("HTTP response read timed out") from exc
+        if not chunk:
+            break
+        chunks.append(chunk)
+        total += len(chunk)
+        if total > max_bytes:
+            raise ValueError(f"HTTP response exceeded max_bytes={max_bytes}")
+
+    return b"".join(chunks).decode("utf-8", errors="replace")
+
+
 def _fetch_tts_workshop_matches_for_query(query: str, timeout: float = 20.0) -> List[Tuple[str, str]]:
     """Return parsed TTS workshop (url, title) pairs from Steam browse search HTML."""
     query = str(query or "").strip()
@@ -1093,7 +1187,7 @@ def _fetch_tts_workshop_title(url: str, timeout: float = 20.0) -> str:
                 },
             )
             with urllib.request.urlopen(req, timeout=timeout) as resp:
-                body = resp.read().decode("utf-8", errors="replace")
+                body = _read_http_body_with_timeout(resp, timeout=timeout)
             parsed = json.loads(body)
             details = parsed.get("response", {}).get("publishedfiledetails", [])
             if isinstance(details, list) and details:
@@ -1113,7 +1207,7 @@ def _fetch_tts_workshop_title(url: str, timeout: float = 20.0) -> str:
 
     try:
         with urllib.request.urlopen(req, timeout=timeout) as resp:
-            body = resp.read().decode("utf-8", errors="replace")
+            body = _read_http_body_with_timeout(resp, timeout=timeout)
     except Exception:
         return ""
 
@@ -1146,6 +1240,20 @@ def _tts_generic_suffix_tokens() -> Set[str]:
         "collector",
         "collectors",
         "game",
+        "family",
+        "anniversary",
+        "basic",
+        "full",
+        "vanilla",
+        "second",
+        "third",
+        "fourth",
+        "fifth",
+        "sixth",
+        "seventh",
+        "eighth",
+        "ninth",
+        "tenth",
     }
 
 
@@ -1170,6 +1278,11 @@ def _tts_allowed_tail_tokens() -> Set[str]:
         "alpha",
         "english",
         "en",
+        "full",
+        "basic",
+        "vanilla",
+        "family",
+        "plus",
     }
 
 
@@ -1235,19 +1348,7 @@ def _tts_is_base_equivalent_suffix_text(value: str) -> bool:
         return False
 
     allowed = _tts_generic_suffix_tokens() | {"mini", "master", "set"}
-    blocked = {
-        "second",
-        "third",
-        "fourth",
-        "fifth",
-        "sixth",
-        "seventh",
-        "eighth",
-        "ninth",
-        "tenth",
-        "anniversary",
-    }
-    if any(token in blocked or token.isdigit() for token in tokens):
+    if any(token.isdigit() for token in tokens):
         return False
     return all(token in allowed for token in tokens)
 
@@ -1339,6 +1440,103 @@ def _tts_tail_is_allowed(tail: str) -> bool:
     return True
 
 
+def _tts_title_language_allowed(result_title: str) -> bool:
+    """Allow titles that are English, language-independent, or untagged.
+
+    Policy details:
+    - Reject explicit non-English language markers.
+    - Allow explicit English markers.
+    - Allow explicit language-independent markers.
+    - If no language markers are present, treat as untagged and allow.
+    """
+    text = str(result_title or "").strip()
+    if not text:
+        return False
+
+    lowered = text.lower()
+    if re.search(r"[^\x00-\x7F]", lowered):
+        return False
+
+    normalized = re.sub(r"[\[\]\(\){}|:+,./\\_-]+", " ", lowered)
+    tokens = set(_tokenize_words(normalized))
+
+    english_tokens = {
+        "en",
+        "eng",
+        "english",
+    }
+    language_independent_phrases = {
+        "language independent",
+        "language-independent",
+        "lang independent",
+        "lang-independent",
+        "no language",
+        "textless",
+    }
+
+    non_english_tokens = {
+        "ru",
+        "rus",
+        "russian",
+        "fr",
+        "fre",
+        "french",
+        "de",
+        "ger",
+        "german",
+        "deutsch",
+        "es",
+        "spa",
+        "spanish",
+        "espanol",
+        "it",
+        "ita",
+        "italian",
+        "pt",
+        "por",
+        "portuguese",
+        "pl",
+        "pol",
+        "polish",
+        "nl",
+        "dut",
+        "dutch",
+        "cz",
+        "cze",
+        "czech",
+        "tr",
+        "tur",
+        "turkish",
+        "ua",
+        "ukr",
+        "ukrainian",
+        "jp",
+        "jpn",
+        "japanese",
+        "kr",
+        "kor",
+        "korean",
+        "cn",
+        "chi",
+        "chs",
+        "cht",
+        "chinese",
+    }
+
+    has_english = bool(tokens.intersection(english_tokens))
+    has_language_independent = any(phrase in lowered for phrase in language_independent_phrases)
+    has_non_english = bool(tokens.intersection(non_english_tokens))
+
+    if has_non_english:
+        return False
+    if has_english or has_language_independent:
+        return True
+
+    # Untagged titles are kept; strict language rejection only applies when a
+    # specific non-English language tag is present in the title.
+    return True
+
+
 def _score_tts_title_match(candidate_name: str, result_title: str) -> int:
     """Return a conservative confidence score for candidate<->workshop title matching."""
     candidate_name = str(candidate_name or "").strip()
@@ -1382,6 +1580,20 @@ def _score_tts_title_match(candidate_name: str, result_title: str) -> int:
             "collectors",
             "chest",
             "battle",
+            "second",
+            "third",
+            "fourth",
+            "fifth",
+            "sixth",
+            "seventh",
+            "eighth",
+            "ninth",
+            "tenth",
+            "anniversary",
+            "family",
+            "basic",
+            "full",
+            "vanilla",
         }
         out: List[str] = []
         for token in tokens:
@@ -1399,9 +1611,26 @@ def _score_tts_title_match(candidate_name: str, result_title: str) -> int:
     if cand_sig:
         if len(cand_sig) >= 3 and all(token in title_sig for token in cand_sig):
             return 95
-        if len(cand_sig) == 2 and min(len(cand_sig[0]), len(cand_sig[1])) >= 6:
+        if len(cand_sig) == 2 and (min(len(cand_sig[0]), len(cand_sig[1])) >= 4 or len("".join(cand_sig)) >= 8):
             if all(token in title_sig for token in cand_sig):
                 return 95
+
+    # Canonical comparison after removing edition/variant qualifiers.
+    def canonical_text(value: str) -> str:
+        drop = {
+            "the", "a", "an", "of", "and", "to", "for", "with", "vs",
+            "edition", "game", "base", "set", "deluxe", "collector", "collectors",
+            "second", "third", "fourth", "fifth", "sixth", "seventh", "eighth", "ninth", "tenth",
+            "anniversary", "family", "basic", "full", "vanilla",
+        }
+        tokens = [t for t in _tokenize_words(value) if t and t not in drop and not t.isdigit()]
+        return " ".join(tokens)
+
+    candidate_core = canonical_text(candidate_name)
+    title_core = canonical_text(result_title)
+    if candidate_core and title_core:
+        if title_core == candidate_core or title_core.startswith(candidate_core + " "):
+            return 95
 
     lowered_title = result_title.lower()
     for prefix in _tts_candidate_prefixes(candidate_name):
@@ -1529,6 +1758,39 @@ def _is_tts_official_dlc_entry(item: Dict[str, Any]) -> bool:
     return "official dlc" in note
 
 
+def _tts_note_aliases_from_entry(entry: Dict[str, Any]) -> List[str]:
+    """Collect candidate alias names from existing TTS notes in sidecar."""
+    aliases: List[str] = []
+    seen: Set[str] = set()
+
+    for platform in ("android", "ios", "pc"):
+        items = entry.get(platform)
+        if isinstance(items, dict):
+            items = [items]
+        if not isinstance(items, list):
+            continue
+        for item in items:
+            if not isinstance(item, dict):
+                continue
+            if not _is_tts_entry(item):
+                continue
+            note = re.sub(r"\s+", " ", str(item.get("note", "") or "").strip())
+            if not note:
+                continue
+            if re.search(r"[^\x00-\x7F]", note):
+                continue
+            tokens = _tokenize_words(note)
+            if len(tokens) < 2 and len(note) < 8:
+                continue
+            key = note.lower()
+            if key in seen:
+                continue
+            seen.add(key)
+            aliases.append(note)
+
+    return aliases
+
+
 def _fetch_tts_official_dlc_catalog(timeout: float = 20.0) -> List[Dict[str, str]]:
     """Fetch official DLC list for Tabletop Simulator from Steam store API."""
     params = urllib.parse.urlencode({"appid": TABLETOP_SIMULATOR_APP_ID, "l": "english", "cc": "us"})
@@ -1542,7 +1804,7 @@ def _fetch_tts_official_dlc_catalog(timeout: float = 20.0) -> List[Dict[str, str
     )
 
     with urllib.request.urlopen(req, timeout=timeout) as resp:
-        body = resp.read().decode("utf-8", errors="replace")
+        body = _read_http_body_with_timeout(resp, timeout=timeout)
     parsed = json.loads(body)
 
     out: List[Dict[str, str]] = []
@@ -2444,6 +2706,28 @@ def enrich_tabletop_simulator_links(
             continue
 
         candidate_names = _tts_query_names(candidate)
+        # Manual sidecar TTS notes often capture practical aliases/editions;
+        # use them as high-signal hints for finding additional modules.
+        note_aliases = _tts_note_aliases_from_entry(entry)
+        if note_aliases:
+            merged: List[str] = []
+            seen_names: Set[str] = set()
+
+            def add_name(value: str) -> None:
+                text = str(value or "").strip()
+                key = text.lower()
+                if text and key not in seen_names:
+                    seen_names.add(key)
+                    merged.append(text)
+
+            # Keep canonical name first, then note aliases, then other alternates.
+            if candidate_names:
+                add_name(candidate_names[0])
+                for alias in note_aliases:
+                    add_name(alias)
+                for name in candidate_names[1:]:
+                    add_name(name)
+                candidate_names = merged
         matched_results: Dict[str, Tuple[int, str]] = {}
 
         # Query only first few distinct names to control request volume.
@@ -2463,6 +2747,8 @@ def enrich_tabletop_simulator_links(
 
             for item_url, item_title in results[:25]:
                 if item_url in existing_urls:
+                    continue
+                if not _tts_title_language_allowed(item_title):
                     continue
                 score = 0
                 for name_for_scoring in queried_names:
@@ -2872,6 +3158,7 @@ def main() -> int:
     tabletop_simulator_dlc_store_label_updates = 0
     tabletop_simulator_dlc_url_updates = 0
     tabletop_simulator_official_dlc_entry_updates = 0
+    tabletop_simulator_sidecar_candidate_promotions = 0
     brettspielwelt_added = 0
     boardspace_added = 0
     brettspielwelt_corrected = 0
@@ -2897,6 +3184,12 @@ def main() -> int:
     tabletopia_name_by_short_url: Dict[str, str] = {}
     vassal_title_by_slug: Dict[str, str] = {}
     yucata_misses: List[Tuple[str, str, List[str]]] = []
+
+    tabletop_simulator_sidecar_candidate_promotions = augment_tts_candidates_with_sidecar(
+        data,
+        tabletop_simulator_candidates,
+    )
+    tabletop_simulator_candidates_count = len(tabletop_simulator_candidates)
     if not args.skip_yucata_auto_links and yucata_candidates_count > 0:
         try:
             yucata_map = fetch_yucata_game_urls(timeout=args.yucata_timeout)
@@ -3003,6 +3296,7 @@ def main() -> int:
         print(f"tabletopia_candidates={tabletopia_candidates_count}")
         print(f"vassal_candidates={vassal_candidates_count}")
         print(f"tabletop_simulator_candidates={tabletop_simulator_candidates_count}")
+        print(f"tabletop_simulator_sidecar_candidate_promotions={tabletop_simulator_sidecar_candidate_promotions}")
         print(f"brettspielwelt_candidates={brettspielwelt_candidates_count}")
         print(f"boardspace_candidates={boardspace_candidates_count}")
         print(f"would_add_yucata_links={yucata_added}")
@@ -3057,6 +3351,7 @@ def main() -> int:
     print(f"tabletopia_candidates={tabletopia_candidates_count}")
     print(f"vassal_candidates={vassal_candidates_count}")
     print(f"tabletop_simulator_candidates={tabletop_simulator_candidates_count}")
+    print(f"tabletop_simulator_sidecar_candidate_promotions={tabletop_simulator_sidecar_candidate_promotions}")
     print(f"brettspielwelt_candidates={brettspielwelt_candidates_count}")
     print(f"boardspace_candidates={boardspace_candidates_count}")
     print(f"added_yucata_links={yucata_added}")
