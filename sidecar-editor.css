@@ -321,6 +321,13 @@ label span {
   line-height: 1;
 }
 
+.platform-title .platform-logo {
+  width: 14px;
+  height: 14px;
+  object-fit: contain;
+  display: block;
+}
+
 .platform-card .section-head {
   margin-bottom: 0.5rem;
 }
@@ -339,9 +346,36 @@ label span {
 
 .platform-row-main {
   display: grid;
-  grid-template-columns: minmax(95px, 130px) minmax(0, 2.7fr) minmax(105px, 130px) max-content;
+  grid-template-columns: 22px minmax(95px, 130px) minmax(0, 2.7fr) minmax(105px, 130px) max-content;
   gap: 0.45rem;
   align-items: center;
+}
+
+.store-icon-slot {
+  width: 18px;
+  height: 18px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  background: rgba(0, 0, 0, 0.04);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  color: #333;
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+.store-icon-logo {
+  width: 14px;
+  height: 14px;
+  object-fit: contain;
+  display: block;
+}
+
+.store-icon-slot.store-icon-badge {
+  padding: 0 2px;
 }
 
 .platform-card label {

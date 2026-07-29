@@ -41,6 +41,151 @@
     pc: ["Steam", "Web", "Tabletop Simulator", "Tabletopia", "Yucata", "BGA", "Epic", "EA app", "Ubisoft Connect", "GOG", "Microsoft Store", "itch.io", "Humble", "Amazon"],
   };
 
+  function getFaviconUrl(domain) {
+    return `https://www.google.com/s2/favicons?domain=${encodeURIComponent(domain)}&sz=64`;
+  }
+
+  function normalizeStoreKey(value) {
+    return String(value || "")
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, " ")
+      .trim();
+  }
+
+  function normalizeUrl(url) {
+    const trimmed = String(url || "").trim();
+    if (!trimmed) return "";
+    if (/^https?:\/\//i.test(trimmed)) return trimmed;
+    if (/^www\./i.test(trimmed)) return `https://${trimmed}`;
+    return trimmed;
+  }
+
+  function detectStoreKeyFromUrl(url) {
+    const normalizedUrl = normalizeUrl(url);
+    if (!normalizedUrl) return "";
+
+    try {
+      const parsedUrl = new URL(normalizedUrl);
+      const host = parsedUrl.hostname.toLowerCase();
+      const path = parsedUrl.pathname.toLowerCase();
+      const fullUrl = normalizedUrl.toLowerCase();
+
+      if (
+        host.includes("tabletopsimulator.com") ||
+        fullUrl.includes("tabletopsimulator") ||
+        path.includes("/app/286160")
+      ) return "tabletop simulator";
+
+      if (host.includes("tabletopia.com")) return "tabletopia";
+      if (host.includes("yucata.de")) return "yucata";
+      if (host.includes("boardgamearena")) return "board game arena";
+      if (host.includes("steampowered") || host.includes("steamcommunity")) return "steam";
+      if (host.includes("epicgames")) return "epic";
+      if (host.includes("gog.com")) return "gog";
+      if (host.includes("itch.io")) return "itch io";
+      if (host.includes("play.google.com")) return "play store";
+      if (host.includes("apps.apple.com")) return "app store";
+      if (host.includes("microsoft.com") || host.includes("xbox.com")) return "microsoft store";
+      if (host.includes("humblebundle")) return "humble";
+      if (host.includes("amazon.")) return "amazon";
+      if (host.includes("boardgamegeek.com")) return "bgg";
+    } catch (_error) {
+      // Ignore parse errors and fall through.
+    }
+
+    return "";
+  }
+
+  function getStoreIconMeta(store, url) {
+    const storeKey = normalizeStoreKey(store) || detectStoreKeyFromUrl(url);
+    if (!storeKey) return null;
+
+    const knownStores = {
+      "board game arena": { label: "BGA", title: "Board Game Arena", iconUrl: "https://boardgamearena.com/favicon.ico" },
+      "bga": { label: "BGA", title: "Board Game Arena", iconUrl: "https://boardgamearena.com/favicon.ico" },
+      "steam": { label: "STEAM", title: "Steam", iconUrl: getFaviconUrl("store.steampowered.com") },
+      "epic": { label: "EPIC", title: "Epic Games", iconUrl: getFaviconUrl("www.epicgames.com") },
+      "epic games": { label: "EPIC", title: "Epic Games", iconUrl: getFaviconUrl("www.epicgames.com") },
+      "gog": { label: "GOG", title: "GOG", iconUrl: getFaviconUrl("www.gog.com") },
+      "itch io": { label: "ITCH", title: "itch.io", iconUrl: getFaviconUrl("itch.io") },
+      "itchio": { label: "ITCH", title: "itch.io", iconUrl: getFaviconUrl("itch.io") },
+      "tabletop simulator": { label: "TTS", title: "Tabletop Simulator", iconUrl: "https://cdn2.steamgriddb.com/icon/68230fb510baa246a67bf901c7f895ea/32/256x256.png" },
+      "table top simulator": { label: "TTS", title: "Tabletop Simulator", iconUrl: "https://cdn2.steamgriddb.com/icon/68230fb510baa246a67bf901c7f895ea/32/256x256.png" },
+      "tts": { label: "TTS", title: "Tabletop Simulator", iconUrl: "https://cdn2.steamgriddb.com/icon/68230fb510baa246a67bf901c7f895ea/32/256x256.png" },
+      "tabletopia": { label: "TTOP", title: "Tabletopia", iconUrl: "https://tabletopia.com/favicon.ico" },
+      "yucata": { label: "YUC", title: "Yucata", iconUrl: "https://www.yucata.de/favicon.ico" },
+      "yucata de": { label: "YUC", title: "Yucata", iconUrl: "https://www.yucata.de/favicon.ico" },
+      "play store": { label: "PLAY", title: "Google Play", iconUrl: getFaviconUrl("play.google.com") },
+      "google play": { label: "PLAY", title: "Google Play", iconUrl: getFaviconUrl("play.google.com") },
+      "app store": { label: "APPLE", title: "App Store", iconUrl: getFaviconUrl("apps.apple.com") },
+      "microsoft store": { label: "MS", title: "Microsoft Store", iconUrl: getFaviconUrl("www.microsoft.com") },
+      "humble": { label: "HUMBLE", title: "Humble", iconUrl: "https://cdn.simpleicons.org/humblebundle" },
+      "amazon": { label: "AMZ", title: "Amazon", iconUrl: getFaviconUrl("www.amazon.com") },
+      "ea app": { label: "EA", title: "EA app", iconUrl: getFaviconUrl("www.ea.com") },
+      "ubisoft connect": { label: "UBI", title: "Ubisoft Connect", iconUrl: getFaviconUrl("www.ubisoft.com") },
+      "bgg": { label: "BGG", title: "BoardGameGeek", iconUrl: "https://cdn.simpleicons.org/boardgamegeek" },
+      "web": { label: "WEB", title: "Web", iconUrl: getFaviconUrl("www.google.com") },
+    };
+
+    if (knownStores[storeKey]) {
+      return knownStores[storeKey];
+    }
+
+    const compact = storeKey
+      .split(" ")
+      .filter(Boolean)
+      .map((part) => part[0])
+      .join("")
+      .slice(0, 4)
+      .toUpperCase() || "D";
+
+    return {
+      label: compact,
+      title: String(store || storeKey).trim(),
+      iconUrl: "",
+    };
+  }
+
+  function updatePlatformRowIcon(row) {
+    if (!row) return;
+
+    const iconSlot = row.querySelector('[data-key="store-icon"]');
+    const storeInput = row.querySelector('[data-key="store"]');
+    const urlInput = row.querySelector('[data-key="url"]');
+    if (!iconSlot || !storeInput || !urlInput) return;
+
+    const meta = getStoreIconMeta(storeInput.value, urlInput.value);
+    iconSlot.innerHTML = "";
+    iconSlot.classList.remove("store-icon-badge");
+
+    if (!meta) {
+      iconSlot.title = "";
+      iconSlot.removeAttribute("aria-label");
+      return;
+    }
+
+    iconSlot.title = meta.title || "Store";
+    iconSlot.setAttribute("aria-label", meta.title || "Store");
+
+    if (meta.iconUrl) {
+      const img = document.createElement("img");
+      img.className = "store-icon-logo";
+      img.src = meta.iconUrl;
+      img.alt = meta.title || "Store icon";
+      img.loading = "lazy";
+      img.referrerPolicy = "no-referrer";
+      img.addEventListener("error", () => {
+        img.remove();
+        iconSlot.textContent = meta.label || "D";
+        iconSlot.classList.add("store-icon-badge");
+      });
+      iconSlot.appendChild(img);
+    } else {
+      iconSlot.textContent = meta.label || "D";
+      iconSlot.classList.add("store-icon-badge");
+    }
+  }
+
   function ensureGamesContainer(data) {
     if (!data || typeof data !== "object") {
       return { games: {} };
@@ -553,6 +698,7 @@
     row.querySelector('[data-key="state"]').value = getPlatformState(entry);
     row.querySelector('[data-key="note"]').value = entry.note || "";
     target.appendChild(row);
+    updatePlatformRowIcon(row);
   }
 
   function onDocListClick(event) {
@@ -575,6 +721,10 @@
     const target = event.target;
     if (!(target instanceof HTMLInputElement || target instanceof HTMLTextAreaElement || target instanceof HTMLSelectElement)) {
       return;
+    }
+
+    if (target.closest(".platform-row") && (target.matches('[data-key="store"]') || target.matches('[data-key="url"]'))) {
+      updatePlatformRowIcon(target.closest(".platform-row"));
     }
 
     commitEditorToState();

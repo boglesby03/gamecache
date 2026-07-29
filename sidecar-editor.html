@@ -106,7 +106,7 @@
 
           <article class="platform-card" data-platform="ios">
             <div class="section-head">
-              <h3 class="platform-title"><span class="material-symbols-rounded" aria-hidden="true">phone_iphone</span><span>iOS</span></h3>
+              <h3 class="platform-title"><img src="https://cdn.simpleicons.org/apple" alt="Apple" class="platform-logo" loading="lazy" referrerpolicy="no-referrer" /><span>iOS</span></h3>
               <button type="button" class="btn mini" data-action="add-platform-entry" data-platform="ios">Add</button>
             </div>
             <div class="platform-entry-list" data-platform-list="ios"></div>
@@ -131,6 +131,7 @@
   <template id="platform-row-template">
     <div class="platform-row">
       <div class="platform-row-main">
+        <span class="store-icon-slot" data-key="store-icon" aria-hidden="true"></span>
         <select data-key="store"></select>
         <input type="url" data-key="url" placeholder="https://..." />
         <label class="state-select-wrap">

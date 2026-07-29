@@ -102,8 +102,8 @@ function normalizeStoreKey(value) {
     .trim();
 }
 
-function getSimpleIconUrl(slug) {
-  return `https://cdn.simpleicons.org/${slug}`;
+function getFaviconUrl(domain) {
+  return `https://www.google.com/s2/favicons?domain=${encodeURIComponent(domain)}&sz=64`;
 }
 
 function detectStoreKeyFromUrl(url) {
@@ -152,28 +152,28 @@ function getDigitalStoreMeta(store, url, platform) {
   const knownStores = {
     'board game arena': { label: 'BGA', title: 'Board Game Arena', iconUrl: 'https://boardgamearena.com/favicon.ico' },
     'bga': { label: 'BGA', title: 'Board Game Arena', iconUrl: 'https://boardgamearena.com/favicon.ico' },
-    'steam': { label: 'STEAM', title: 'Steam', iconUrl: getSimpleIconUrl('steam') },
-    'epic': { label: 'EPIC', title: 'Epic Games', iconUrl: getSimpleIconUrl('epicgames') },
-    'epic games': { label: 'EPIC', title: 'Epic Games', iconUrl: getSimpleIconUrl('epicgames') },
-    'gog': { label: 'GOG', title: 'GOG', iconUrl: getSimpleIconUrl('gogdotcom') },
-    'itch io': { label: 'ITCH', title: 'itch.io', iconUrl: getSimpleIconUrl('itchdotio') },
-    'itchio': { label: 'ITCH', title: 'itch.io', iconUrl: getSimpleIconUrl('itchdotio') },
+    'steam': { label: 'STEAM', title: 'Steam', iconUrl: getFaviconUrl('store.steampowered.com') },
+    'epic': { label: 'EPIC', title: 'Epic Games', iconUrl: getFaviconUrl('www.epicgames.com') },
+    'epic games': { label: 'EPIC', title: 'Epic Games', iconUrl: getFaviconUrl('www.epicgames.com') },
+    'gog': { label: 'GOG', title: 'GOG', iconUrl: getFaviconUrl('www.gog.com') },
+    'itch io': { label: 'ITCH', title: 'itch.io', iconUrl: getFaviconUrl('itch.io') },
+    'itchio': { label: 'ITCH', title: 'itch.io', iconUrl: getFaviconUrl('itch.io') },
     'tabletop simulator': { label: 'TTS', title: 'Tabletop Simulator', iconUrl: 'https://cdn2.steamgriddb.com/icon/68230fb510baa246a67bf901c7f895ea/32/256x256.png' },
     'table top simulator': { label: 'TTS', title: 'Tabletop Simulator', iconUrl: 'https://cdn2.steamgriddb.com/icon/68230fb510baa246a67bf901c7f895ea/32/256x256.png' },
     'tts': { label: 'TTS', title: 'Tabletop Simulator', iconUrl: 'https://cdn2.steamgriddb.com/icon/68230fb510baa246a67bf901c7f895ea/32/256x256.png' },
     'tabletopia': { label: 'TTOP', title: 'Tabletopia', iconUrl: 'https://tabletopia.com/favicon.ico' },
     'yucata': { label: 'YUC', title: 'Yucata', iconUrl: 'https://www.yucata.de/favicon.ico' },
     'yucata de': { label: 'YUC', title: 'Yucata', iconUrl: 'https://www.yucata.de/favicon.ico' },
-    'play store': { label: 'PLAY', title: 'Google Play', iconUrl: getSimpleIconUrl('googleplay') },
-    'google play': { label: 'PLAY', title: 'Google Play', iconUrl: getSimpleIconUrl('googleplay') },
-    'app store': { label: 'APPLE', title: 'App Store', iconUrl: getSimpleIconUrl('appstore') },
-    'microsoft store': { label: 'MS', title: 'Microsoft Store', iconUrl: getSimpleIconUrl('microsoftstore') },
-    'humble': { label: 'HUMBLE', title: 'Humble', iconUrl: getSimpleIconUrl('humblebundle') },
-    'amazon': { label: 'AMZ', title: 'Amazon', iconUrl: getSimpleIconUrl('amazon') },
-    'ea app': { label: 'EA', title: 'EA app', iconUrl: getSimpleIconUrl('ea') },
-    'ubisoft connect': { label: 'UBI', title: 'Ubisoft Connect', iconUrl: getSimpleIconUrl('ubisoft') },
-    'bgg': { label: 'BGG', title: 'BoardGameGeek', iconUrl: getSimpleIconUrl('boardgamegeek') },
-    'web': { label: 'WEB', title: 'Web', iconUrl: getSimpleIconUrl('googlechrome') },
+    'play store': { label: 'PLAY', title: 'Google Play', iconUrl: getFaviconUrl('play.google.com') },
+    'google play': { label: 'PLAY', title: 'Google Play', iconUrl: getFaviconUrl('play.google.com') },
+    'app store': { label: 'APPLE', title: 'App Store', iconUrl: getFaviconUrl('apps.apple.com') },
+    'microsoft store': { label: 'MS', title: 'Microsoft Store', iconUrl: getFaviconUrl('www.microsoft.com') },
+    'humble': { label: 'HUMBLE', title: 'Humble', iconUrl: 'https://cdn.simpleicons.org/humblebundle' },
+    'amazon': { label: 'AMZ', title: 'Amazon', iconUrl: getFaviconUrl('www.amazon.com') },
+    'ea app': { label: 'EA', title: 'EA app', iconUrl: getFaviconUrl('www.ea.com') },
+    'ubisoft connect': { label: 'UBI', title: 'Ubisoft Connect', iconUrl: getFaviconUrl('www.ubisoft.com') },
+    'bgg': { label: 'BGG', title: 'BoardGameGeek', iconUrl: 'https://cdn.simpleicons.org/boardgamegeek' },
+    'web': { label: 'WEB', title: 'Web', iconUrl: getFaviconUrl('www.google.com') },
   };
 
   if (storeKey && knownStores[storeKey]) {
@@ -269,7 +269,7 @@ function renderDigitalVersionsSection(clone, game) {
   const entry = readDigitalEntry(game);
   const platformMeta = {
     android: { label: 'Android', icon: 'android' },
-    ios: { label: 'iOS', iconUrl: getSimpleIconUrl('apple') },
+    ios: { label: 'iOS', iconUrl: 'https://cdn.simpleicons.org/apple' },
     pc: { label: 'PC', icon: 'desktop_windows' },
   };
   const platformDisplayOrder = ['pc', 'android', 'ios'];
