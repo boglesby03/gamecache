@@ -866,7 +866,33 @@ button[data-action="save-row"] {
 
 .actions {
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.actions-left {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  min-width: 0;
+}
+
+.actions-status {
+  color: var(--muted);
+  font-size: 0.85rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 42ch;
+}
+
+.actions-status.success {
+  color: var(--ok);
+}
+
+.actions-status.error {
+  color: var(--danger);
 }
 
 @media (max-width: 1050px) {
@@ -909,6 +935,21 @@ button[data-action="save-row"] {
 
   .row-actions {
     justify-self: start;
+  }
+
+  .actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .actions-left {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .actions-status {
+    white-space: normal;
+    max-width: none;
   }
 
   .cover-preview-content {

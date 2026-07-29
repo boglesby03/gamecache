@@ -12,6 +12,7 @@
     coverArtSource: "",
     dragContext: null,
     selectedStoreFilters: new Set(),
+    forceSearchInFlight: false,
   };
 
   const els = {
@@ -52,6 +53,8 @@
     supplementalList: document.getElementById("supplemental-list"),
     addRulebook: document.getElementById("add-rulebook"),
     addSupplemental: document.getElementById("add-supplemental"),
+    forceSearchDigital: document.getElementById("force-search-digital"),
+    forceSearchStatus: document.getElementById("force-search-status"),
     deleteGame: document.getElementById("delete-game"),
     docRowTemplate: document.getElementById("doc-row-template"),
     platformRowTemplate: document.getElementById("platform-row-template"),
@@ -1021,6 +1024,7 @@
   function selectGame(id) {
     state.selectedId = id;
     populateEditor(id);
+    refreshForceSearchAvailability();
     renderGameList();
   }
 
@@ -1054,6 +1058,7 @@
       state.handle = null;
       setDirty(false);
       showEditor(false);
+      refreshForceSearchAvailability();
       renderGameList();
     } catch (err) {
       if (!silent) {
@@ -1078,6 +1083,7 @@
     state.handle = null;
     setDirty(false);
     showEditor(false);
+    refreshForceSearchAvailability();
     renderGameList();
   }
 
@@ -1568,7 +1574,101 @@
     state.selectedId = null;
     showEditor(false);
     setDirty(true);
+    refreshForceSearchAvailability();
     renderGameList();
+  }
+
+  function setForceSearchStatus(message, kind = "") {
+    if (!els.forceSearchStatus) return;
+    els.forceSearchStatus.textContent = String(message || "");
+    els.forceSearchStatus.classList.remove("success", "error");
+    if (kind === "success" || kind === "error") {
+      els.forceSearchStatus.classList.add(kind);
+    }
+  }
+
+  function setForceSearchBusy(busy) {
+    state.forceSearchInFlight = !!busy;
+    if (els.forceSearchDigital) {
+      els.forceSearchDigital.disabled = state.forceSearchInFlight || !state.selectedId;
+      if (state.forceSearchInFlight) {
+        els.forceSearchDigital.textContent = "Searching...";
+      } else {
+        els.forceSearchDigital.textContent = "Force Digital Search (All Sources)";
+      }
+    }
+  }
+
+  function refreshForceSearchAvailability() {
+    if (!els.forceSearchDigital) return;
+    if (state.forceSearchInFlight) return;
+    els.forceSearchDigital.disabled = !state.selectedId;
+  }
+
+  async function forceSearchDigitalImplementations() {
+    if (!state.selectedId || state.forceSearchInFlight) return;
+
+    commitEditorToState();
+    const gameId = String(state.selectedId || "").trim();
+    const beforeEntry = normalizeEntry(state.data.games[gameId], "");
+    const beforeSerialized = JSON.stringify(beforeEntry);
+
+    setForceSearchBusy(true);
+    setForceSearchStatus("Searching all digital sources for this game...");
+
+    try {
+      const response = await fetch("/api/force-digital-search", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/json",
+        },
+        body: JSON.stringify({
+          game_id: gameId,
+          entry: beforeEntry,
+        }),
+      });
+
+      const payload = await response.json().catch(() => ({}));
+      if (!response.ok || payload.ok !== true) {
+        const detail = String((payload && payload.error) || `HTTP ${response.status}`);
+        throw new Error(detail);
+      }
+
+      const mergedEntry = normalizeEntry(payload.entry || {}, beforeEntry.name || "");
+      state.data.games[gameId] = mergedEntry;
+      const afterSerialized = JSON.stringify(mergedEntry);
+      if (beforeSerialized !== afterSerialized) {
+        setDirty(true);
+      }
+
+      populateEditor(gameId);
+      renderGameList();
+
+      const addedCount = Number((payload.summary && payload.summary.added_urls_count) || 0);
+      const sourceErrors = payload.summary && payload.summary.source_errors ? payload.summary.source_errors : {};
+      const errorCount = Object.keys(sourceErrors || {}).length;
+      if (addedCount > 0) {
+        const suffix = errorCount > 0 ? ` (${errorCount} source timeout/error)` : "";
+        setForceSearchStatus(`Added ${addedCount} link${addedCount === 1 ? "" : "s"}${suffix}.`, "success");
+      } else {
+        const suffix = errorCount > 0 ? ` (${errorCount} source timeout/error)` : "";
+        setForceSearchStatus(`No new links found${suffix}.`);
+      }
+    } catch (error) {
+      console.error(error);
+      const message = String(error && error.message ? error.message : "Unknown error");
+      setForceSearchStatus(`Search failed: ${message}`, "error");
+      if (message.includes("Failed to fetch") || message.includes("404")) {
+        alert(
+          "Force search API is unavailable. Start the editor using:\n\n" +
+          "python scripts/sidecar_editor_server.py --port 8000\n\n" +
+          "Then open http://localhost:8000/sidecar-editor.html"
+        );
+      }
+    } finally {
+      setForceSearchBusy(false);
+    }
   }
 
   function bindEvents() {
@@ -1604,6 +1704,9 @@
     }
     els.gameList.addEventListener("click", onListClick);
     els.deleteGame.addEventListener("click", deleteSelectedGame);
+    if (els.forceSearchDigital) {
+      els.forceSearchDigital.addEventListener("click", forceSearchDigitalImplementations);
+    }
 
     els.addRulebook.addEventListener("click", () => {
       addDocRow(els.rulebooksList, {}, { editing: true, hasSaved: false });
@@ -1654,6 +1757,8 @@
     bindEvents();
     showEditor(false);
     renderGameList();
+    setForceSearchBusy(false);
+    refreshForceSearchAvailability();
     await Promise.all([
       loadFromDefaultFile({ silent: true }),
       loadCoverArtIndexFromSqlite(),

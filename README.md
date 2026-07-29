@@ -188,6 +188,11 @@ Create a beautiful, searchable website for your BoardGameGeek collection! This p
    4. Edit entries and use **Download JSON** or **Save to File**
    5. Place the updated file at `game_metadata_overrides.json`
 
+   To use the in-editor **Force Digital Search (All Sources)** button (single-game lookup across Yucata/Tabletopia/VASSAL/TTS/BrettspielWelt/Boardspace, ignoring candidate-family gates), start the editor with the API-enabled server instead:
+   ```bash
+   python scripts/sidecar_editor_server.py --port 8000
+   ```
+
    The terminal editor still exists for simple one-off edits, but the web editor is the supported path for the multi-store layout:
    ```bash
    python scripts/edit_game_sidecar.py
