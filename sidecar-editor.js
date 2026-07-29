@@ -58,7 +58,7 @@
   const PLATFORM_STORE_OPTIONS = {
     android: ["Play Store", "BGG", "Humble", "Amazon Appstore", "Samsung Galaxy Store", "itch.io"],
     ios: ["App Store", "TestFlight", "itch.io"],
-    pc: ["Steam", "Web", "Tabletop Simulator", "Tabletopia", "Yucata", "VASSAL", "BGA", "Epic", "EA app", "Ubisoft Connect", "GOG", "Microsoft Store", "itch.io", "Humble", "Amazon"],
+    pc: ["Steam", "Web", "Tabletop Simulator", "Tabletopia", "Yucata", "VASSAL", "BrettspielWelt", "BGA", "Epic", "EA app", "Ubisoft Connect", "GOG", "Microsoft Store", "itch.io", "Humble", "Amazon"],
   };
 
   const GLOBE_ICON_URL = `data:image/svg+xml;utf8,${encodeURIComponent(
@@ -93,6 +93,7 @@
 
     if (storeKey === "yucata" || storeKey === "yucata de" || normalizedUrl.includes("yucata.de")) return true;
     if (storeKey === "vassal" || normalizedUrl.includes("vassalengine.org")) return true;
+    if (storeKey === "brettspielwelt" || normalizedUrl.includes("brettspielwelt.de")) return true;
     if (storeKey === "bga" || storeKey === "board game arena" || normalizedUrl.includes("boardgamearena.com")) return true;
 
     return false;
@@ -117,6 +118,7 @@
       if (host.includes("tabletopia.com")) return "tabletopia";
       if (host.includes("yucata.de")) return "yucata";
       if (host.includes("vassalengine.org")) return "vassal";
+      if (host.includes("brettspielwelt.de")) return "brettspielwelt";
       if (host.includes("boardgamearena")) return "board game arena";
       if (host.includes("steampowered") || host.includes("steamcommunity")) return "steam";
       if (host.includes("epicgames")) return "epic";
@@ -155,6 +157,7 @@
       "yucata": { label: "YUC", title: "Yucata", iconUrl: "https://www.yucata.de/favicon.ico" },
       "yucata de": { label: "YUC", title: "Yucata", iconUrl: "https://www.yucata.de/favicon.ico" },
       "vassal": { label: "VAS", title: "VASSAL", iconUrl: "https://vassalengine.org/favicon.ico" },
+      "brettspielwelt": { label: "BSW", title: "BrettspielWelt", iconUrl: "https://www.brettspielwelt.de/favicon.ico" },
       "play store": { label: "PLAY", title: "Google Play", iconUrl: getFaviconUrl("play.google.com") },
       "google play": { label: "PLAY", title: "Google Play", iconUrl: getFaviconUrl("play.google.com") },
       "app store": { label: "APPLE", title: "App Store", iconUrl: getFaviconUrl("apps.apple.com") },

@@ -12,10 +12,12 @@ Existing entries are preserved and only missing keys are added.
 """
 
 import argparse
+import html
 import json
 import sqlite3
 import re
 import urllib.request
+import urllib.parse
 from pathlib import Path
 from typing import Dict, Tuple, List, Any, Optional, Set
 
@@ -25,6 +27,8 @@ DEFAULT_DB = "gamecache.sqlite"
 YUCATA_CATALOG_API = "https://www.yucata.de/Services/YucataService.svc/GetGamesWithTags"
 TABLETOPIA_CATALOG_API = "https://api.tabletopia.com/games"
 VASSAL_PROJECTS_API = "https://vassalengine.org/api/gls/v1/projects"
+TABLETOP_SIMULATOR_WORKSHOP_SEARCH_URL = "https://steamcommunity.com/workshop/browse/"
+BRETTSPIELWELT_SPIELE_URL = "https://www.brettspielwelt.de/Spiele/"
 
 # Some Yucata titles don't expose an IdName that matches BGG naming conventions.
 # Use explicit game-id overrides so sync can still add/maintain correct links.
@@ -46,6 +50,37 @@ YUCATA_GAME_ID_OVERRIDES: Dict[str, str] = {
     "312484": "https://www.yucata.de/en/GameInfo/Arnak",  # Lost Ruins of Arnak
     "318553": "https://www.yucata.de/en/GameInfo/RajasDice",  # Rajas of the Ganges: The Dice Charmers
     "144733": "https://www.yucata.de/en/GameInfo/RRR2",  # Russian Railroads
+}
+
+# Some BrettspielWelt slugs are localized or product-line based and don't
+# normalize to BGG naming conventions. Keep deterministic per-game overrides.
+BRETTSPIELWELT_GAME_ID_OVERRIDES: Dict[str, str] = {
+    "13": "https://www.brettspielwelt.de/Spiele/Siedler/",  # Catan
+    "41": "https://www.brettspielwelt.de/Spiele/CantStop/",  # Can't Stop!
+    "8203": "https://www.brettspielwelt.de/Spiele/Fischen/",  # Hey, That's My Fish!
+    "24480": "https://www.brettspielwelt.de/Spiele/DieSaeulenDerErde/",  # The Pillars of the Earth
+    "54138": "https://www.brettspielwelt.de/Spiele/Imperial/",  # Imperial 2030
+    "136888": "https://www.brettspielwelt.de/Spiele/Bruegge/",  # Bruges
+    "156943": "https://www.brettspielwelt.de/Spiele/SanktPetersburg/",  # Saint Petersburg (Second Edition)
+    "171623": "https://www.brettspielwelt.de/Spiele/",  # The Voyages of Marco Polo (no dedicated slug found)
+    "244522": "https://www.brettspielwelt.de/Spiele/GanzSchoenClever/",  # Ganz Schön Clever
+    "463783": "https://www.brettspielwelt.de/Spiele/LasVegas/",  # Las Vegas
+    "199966": "https://www.brettspielwelt.de/Spiele/Kingsburg/",  # Kingsburg (Second Edition)
+    "425064": "https://www.brettspielwelt.de/Spiele/Kingsburg/",  # Kingsburg (Third Edition)
+}
+
+# Optional note overrides for explicit edition fallback mappings.
+BRETTSPIELWELT_GAME_ID_NOTE_OVERRIDES: Dict[str, str] = {
+    "13": "Siedler",
+    "41": "Can't Stop",
+    "8203": "Fischen",
+    "24480": "Die Saeulen der Erde",
+    "54138": "Imperial",
+    "136888": "Bruegge",
+    "156943": "Sankt Petersburg",
+    "171623": "BrettspielWelt Spiele",
+    "199966": "Kingsburg",
+    "425064": "Kingsburg",
 }
 
 
@@ -367,6 +402,146 @@ def load_vassal_candidates(conn: sqlite3.Connection) -> Dict[str, Dict[str, Any]
     return candidates
 
 
+def load_tabletop_simulator_candidates(conn: sqlite3.Connection) -> Dict[str, Dict[str, Any]]:
+    """Load games that appear to have Tabletop Simulator implementations from SQLite metadata."""
+    cur = conn.cursor()
+    cur.execute(
+        """
+        WITH ranked AS (
+          SELECT
+            id,
+            name,
+            tags,
+            families,
+            alternate_names,
+            ROW_NUMBER() OVER (
+              PARTITION BY id
+              ORDER BY
+                CASE WHEN tags LIKE '%"own"%' THEN 0 ELSE 1 END,
+                CASE WHEN tags LIKE '%"preordered"%' THEN 1 ELSE 2 END,
+                LENGTH(name),
+                name
+            ) AS rn
+          FROM games
+          WHERE id IS NOT NULL AND name IS NOT NULL AND TRIM(name) <> ''
+        )
+        SELECT id, name, families, alternate_names
+        FROM ranked
+        WHERE rn = 1
+        """
+    )
+
+    candidates: Dict[str, Dict[str, Any]] = {}
+    for game_id, name, families_raw, alt_raw in cur.fetchall():
+        has_tts_family = False
+        try:
+            families = json.loads(families_raw or "[]")
+            if isinstance(families, list):
+                for family in families:
+                    family_name = ""
+                    if isinstance(family, dict):
+                        family_name = str(family.get("name", ""))
+                    elif isinstance(family, str):
+                        family_name = family
+                    normalized_family = family_name.lower()
+                    if "digital implementations: tabletop simulator" in normalized_family:
+                        has_tts_family = True
+                        break
+        except Exception:
+            pass
+
+        if not has_tts_family:
+            continue
+
+        alt_names: List[str] = []
+        try:
+            parsed_alt = json.loads(alt_raw or "[]")
+            if isinstance(parsed_alt, list):
+                alt_names = [str(item).strip() for item in parsed_alt if str(item).strip()]
+        except Exception:
+            pass
+
+        key = str(int(game_id))
+        candidates[key] = {
+            "id": key,
+            "name": str(name or "").strip(),
+            "alternate_names": alt_names,
+        }
+
+    return candidates
+
+
+def load_brettspielwelt_candidates(conn: sqlite3.Connection) -> Dict[str, Dict[str, Any]]:
+    """Load games that appear to have BrettspielWelt implementations from SQLite metadata."""
+    cur = conn.cursor()
+    cur.execute(
+        """
+        WITH ranked AS (
+          SELECT
+            id,
+            name,
+            tags,
+            families,
+            alternate_names,
+            ROW_NUMBER() OVER (
+              PARTITION BY id
+              ORDER BY
+                CASE WHEN tags LIKE '%"own"%' THEN 0 ELSE 1 END,
+                CASE WHEN tags LIKE '%"preordered"%' THEN 1 ELSE 2 END,
+                LENGTH(name),
+                name
+            ) AS rn
+          FROM games
+          WHERE id IS NOT NULL AND name IS NOT NULL AND TRIM(name) <> ''
+        )
+        SELECT id, name, families, alternate_names
+        FROM ranked
+        WHERE rn = 1
+        """
+    )
+
+    candidates: Dict[str, Dict[str, Any]] = {}
+    for game_id, name, families_raw, alt_raw in cur.fetchall():
+        has_bsw_family = False
+        try:
+            families = json.loads(families_raw or "[]")
+            if isinstance(families, list):
+                for family in families:
+                    family_name = ""
+                    if isinstance(family, dict):
+                        family_name = str(family.get("name", ""))
+                    elif isinstance(family, str):
+                        family_name = family
+                    normalized_family = family_name.lower()
+                    if "digital implementations: brettspielwelt" in normalized_family:
+                        has_bsw_family = True
+                        break
+        except Exception:
+            pass
+
+        key = str(int(game_id))
+        has_override = key in BRETTSPIELWELT_GAME_ID_OVERRIDES
+
+        if not has_bsw_family and not has_override:
+            continue
+
+        alt_names: List[str] = []
+        try:
+            parsed_alt = json.loads(alt_raw or "[]")
+            if isinstance(parsed_alt, list):
+                alt_names = [str(item).strip() for item in parsed_alt if str(item).strip()]
+        except Exception:
+            pass
+
+        candidates[key] = {
+            "id": key,
+            "name": str(name or "").strip(),
+            "alternate_names": alt_names,
+        }
+
+    return candidates
+
+
 def fetch_yucata_game_urls(timeout: float = 20.0) -> Dict[str, str]:
     """Fetch Yucata catalog and map normalized names to GameInfo URLs."""
     payload = b"{}"
@@ -570,6 +745,150 @@ def fetch_vassal_project_catalog(timeout: float = 20.0, limit: int = 100) -> Tup
     return mapping, title_by_slug
 
 
+def fetch_brettspielwelt_catalog(timeout: float = 20.0) -> Dict[str, str]:
+    """Fetch BrettspielWelt Spiele catalog and map normalized keys to game URLs."""
+    req = urllib.request.Request(
+        BRETTSPIELWELT_SPIELE_URL,
+        headers={
+            "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+            "User-Agent": "Mozilla/5.0 (GameCache sidecar sync)",
+        },
+    )
+
+    with urllib.request.urlopen(req, timeout=timeout) as resp:
+        body = resp.read().decode("utf-8", errors="replace")
+
+    mapping: Dict[str, str] = {}
+    seen_slugs: Set[str] = set()
+    for match in re.finditer(r'href="/Spiele/([^"#?]+)/"', body, flags=re.IGNORECASE):
+        slug = str(match.group(1) or "").strip()
+        if not slug or slug.lower() == "spiele":
+            continue
+        if slug in seen_slugs:
+            continue
+        seen_slugs.add(slug)
+
+        game_url = f"https://www.brettspielwelt.de/Spiele/{slug}/"
+        for key in _brettspielwelt_name_keys(slug):
+            mapping.setdefault(key, game_url)
+
+    return mapping
+
+
+def _brettspielwelt_name_keys(value: str) -> List[str]:
+    """Return conservative keys for BrettspielWelt matching.
+
+    Unlike `_candidate_name_keys`, this intentionally avoids acronym keys because
+    they can cause high-collision false positives against short BSW slugs.
+    """
+    raw = str(value or "").strip()
+    if not raw:
+        return []
+
+    keys: List[str] = []
+    seen: Set[str] = set()
+
+    def add(v: str) -> None:
+        k = _normalize_name(v)
+        if k and k not in seen:
+            seen.add(k)
+            keys.append(k)
+
+    add(raw)
+    add(_split_camel(raw))
+
+    tokens = _tokenize_words(raw)
+    if tokens:
+        add("".join(tokens))
+        no_articles = [t for t in tokens if t not in {"the", "a", "an"}]
+        if no_articles:
+            add("".join(no_articles))
+
+    if ":" in raw:
+        base, _suffix = raw.split(":", 1)
+        add(base)
+
+    return keys
+
+
+def _fetch_tts_workshop_matches_for_query(query: str, timeout: float = 20.0) -> List[Tuple[str, str]]:
+    """Return parsed TTS workshop (url, title) pairs from Steam browse search HTML."""
+    query = str(query or "").strip()
+    if not query:
+        return []
+
+    params = urllib.parse.urlencode(
+        {
+            "appid": "286160",  # Tabletop Simulator
+            "searchtext": query,
+            "childpublishedfileid": "0",
+            "browsesort": "textsearch",
+            "section": "home",
+        }
+    )
+    url = f"{TABLETOP_SIMULATOR_WORKSHOP_SEARCH_URL}?{params}"
+
+    req = urllib.request.Request(
+        url,
+        headers={
+            "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+            "User-Agent": "Mozilla/5.0 (GameCache sidecar sync)",
+        },
+    )
+
+    with urllib.request.urlopen(req, timeout=timeout) as resp:
+        body = resp.read().decode("utf-8", errors="replace")
+
+    matches: List[Tuple[str, str]] = []
+    seen_urls: Set[str] = set()
+
+    pattern = re.compile(
+        r'href="(https://steamcommunity\.com/sharedfiles/filedetails/\?id=\d+)"[^>]*>\s*<img[^>]*alt="([^"]+)"',
+        flags=re.IGNORECASE,
+    )
+    for match in pattern.finditer(body):
+        item_url = str(match.group(1) or "").strip()
+        item_title = html.unescape(str(match.group(2) or "").strip())
+        if not item_url or not item_title:
+            continue
+        if item_url in seen_urls:
+            continue
+        seen_urls.add(item_url)
+        matches.append((item_url, item_title))
+
+    return matches
+
+
+def _score_tts_title_match(candidate_name: str, result_title: str) -> int:
+    """Return a conservative confidence score for candidate<->workshop title matching."""
+    candidate_name = str(candidate_name or "").strip()
+    result_title = str(result_title or "").strip()
+    if not candidate_name or not result_title:
+        return 0
+
+    candidate_norm = _normalize_name(candidate_name)
+    title_norm = _normalize_name(result_title)
+    if not candidate_norm or not title_norm:
+        return 0
+
+    if candidate_norm == title_norm:
+        return 100
+
+    candidate_keys = set(_candidate_name_keys(candidate_name))
+    title_keys = set(_candidate_name_keys(result_title))
+    if candidate_keys & title_keys:
+        return 90
+
+    if candidate_norm in title_norm and len(candidate_norm) >= 8:
+        extra = max(0, len(title_norm) - len(candidate_norm))
+        return max(70, 85 - min(extra, 15))
+
+    if title_norm in candidate_norm and len(title_norm) >= 8:
+        return 72
+
+    return 0
+
+
 def _find_existing_yucata_link(entry: Dict[str, Any]) -> Optional[str]:
     for platform in ("android", "ios", "pc"):
         platform_items = entry.get(platform)
@@ -617,6 +936,40 @@ def _find_existing_vassal_link(entry: Dict[str, Any]) -> Optional[str]:
             store = str(item.get("store", "")).strip().lower()
             url = str(item.get("url", "")).strip().lower()
             if "vassal" in store or "vassalengine.org" in url:
+                return str(item.get("url", "")).strip()
+    return None
+
+
+def _find_existing_tabletop_simulator_link(entry: Dict[str, Any]) -> Optional[str]:
+    for platform in ("android", "ios", "pc"):
+        platform_items = entry.get(platform)
+        if isinstance(platform_items, dict):
+            platform_items = [platform_items]
+        if not isinstance(platform_items, list):
+            continue
+        for item in platform_items:
+            if not isinstance(item, dict):
+                continue
+            store = str(item.get("store", "")).strip().lower()
+            url = str(item.get("url", "")).strip().lower()
+            if "tabletop simulator" in store or "steamcommunity.com/sharedfiles/filedetails/" in url:
+                return str(item.get("url", "")).strip()
+    return None
+
+
+def _find_existing_brettspielwelt_link(entry: Dict[str, Any]) -> Optional[str]:
+    for platform in ("android", "ios", "pc"):
+        platform_items = entry.get(platform)
+        if isinstance(platform_items, dict):
+            platform_items = [platform_items]
+        if not isinstance(platform_items, list):
+            continue
+        for item in platform_items:
+            if not isinstance(item, dict):
+                continue
+            store = str(item.get("store", "")).strip().lower()
+            url = str(item.get("url", "")).strip().lower()
+            if "brettspielwelt" in store or "brettspielwelt.de" in url:
                 return str(item.get("url", "")).strip()
     return None
 
@@ -719,6 +1072,14 @@ def _should_mark_online(item: Dict[str, Any], tabletopia_premium_by_short_url: O
         return True
     if store_key == "vassal" or "vassalengine.org" in url_lower:
         return True
+    if store_key == "brettspielwelt" or "brettspielwelt.de" in url_lower:
+        return True
+    if (
+        "tabletopsimulator" in store_key
+        or store_key == "tts"
+        or "steamcommunity.com/sharedfiles/filedetails/" in url_lower
+    ):
+        return True
     if store_key in ("bga", "boardgamearena") or "boardgamearena.com" in url_lower:
         return True
 
@@ -733,7 +1094,7 @@ def _should_mark_online(item: Dict[str, Any], tabletopia_premium_by_short_url: O
 
 
 def annotate_online_statuses(data: Dict[str, Any], tabletopia_premium_by_short_url: Optional[Dict[str, bool]] = None) -> int:
-    """Backfill online=true for Yucata, BGA, and free Tabletopia entries."""
+    """Backfill online=true for Yucata, VASSAL, TTS, BGA, and free Tabletopia entries."""
     games = data.get("games", {})
     if not isinstance(games, dict):
         return 0
@@ -1102,6 +1463,180 @@ def enrich_vassal_links(
     return added_links, len(candidates)
 
 
+def enrich_tabletop_simulator_links(
+    data: Dict[str, Any],
+    candidates: Dict[str, Dict[str, Any]],
+    timeout: float = 20.0,
+) -> Tuple[int, int]:
+    """Add missing Tabletop Simulator workshop links to sidecar entries.
+
+    Uses a conservative, name-based search over Steam Workshop and only accepts
+    high-confidence matches.
+    """
+    games = data.setdefault("games", {})
+    added_links = 0
+
+    for game_id, candidate in candidates.items():
+        entry = games.get(game_id)
+        if not isinstance(entry, dict):
+            continue
+
+        existing = _find_existing_tabletop_simulator_link(entry)
+        if existing:
+            continue
+
+        candidate_names = [candidate.get("name", "")] + list(candidate.get("alternate_names", []))
+        best_url = ""
+        best_title = ""
+        best_score = 0
+
+        # Query only first few distinct names to control request volume.
+        queried_names: List[str] = []
+        for candidate_name in candidate_names:
+            query_name = str(candidate_name or "").strip()
+            if not query_name or query_name in queried_names:
+                continue
+            queried_names.append(query_name)
+            if len(queried_names) > 3:
+                break
+
+            try:
+                results = _fetch_tts_workshop_matches_for_query(query_name, timeout=timeout)
+            except Exception:
+                continue
+
+            for item_url, item_title in results[:25]:
+                score = 0
+                for name_for_scoring in queried_names:
+                    score = max(score, _score_tts_title_match(name_for_scoring, item_title))
+                if score > best_score:
+                    best_score = score
+                    best_url = item_url
+                    best_title = item_title
+
+            if best_score >= 90:
+                break
+
+        # Keep matching strict to avoid accidental bad links.
+        if best_score < 90 or not best_url:
+            continue
+
+        payload: Dict[str, Any] = {
+            "store": "Tabletop Simulator",
+            "url": best_url,
+            "online": True,
+            "note": str(candidate.get("name", "")).strip() or best_title,
+        }
+        if not payload.get("note"):
+            payload.pop("note", None)
+
+        pc_entries = _ensure_platform_list(entry, "pc")
+        pc_entries.append(payload)
+        added_links += 1
+
+    return added_links, len(candidates)
+
+
+def enrich_brettspielwelt_links(
+    data: Dict[str, Any],
+    candidates: Dict[str, Dict[str, Any]],
+    brettspielwelt_map: Dict[str, str],
+) -> Tuple[int, int, int]:
+    """Upsert BrettspielWelt links to sidecar entries.
+
+    Returns:
+        (added_links, candidate_count, corrected_or_removed_links)
+    """
+    games = data.setdefault("games", {})
+    added_links = 0
+    corrected_links = 0
+
+    for game_id, candidate in candidates.items():
+        entry = games.get(game_id)
+        if not isinstance(entry, dict):
+            continue
+
+        candidate_names = [candidate.get("name", "")] + list(candidate.get("alternate_names", []))
+        match_url = ""
+        for candidate_name in candidate_names:
+            for key in _brettspielwelt_name_keys(str(candidate_name)):
+                if key in brettspielwelt_map:
+                    match_url = brettspielwelt_map[key]
+                    break
+            if match_url:
+                break
+
+        if not match_url:
+            match_url = str(BRETTSPIELWELT_GAME_ID_OVERRIDES.get(str(game_id), "")).strip()
+
+        pc_entries = _ensure_platform_list(entry, "pc")
+        existing_indexes: List[int] = []
+        for idx, item in enumerate(pc_entries):
+            if not isinstance(item, dict):
+                continue
+            store = str(item.get("store", "")).strip().lower()
+            url = str(item.get("url", "")).strip().lower()
+            if "brettspielwelt" in store or "brettspielwelt.de" in url:
+                existing_indexes.append(idx)
+
+        if not match_url:
+            # Remove stale/incorrect BSW links for this candidate when no
+            # confident mapping exists.
+            for idx in reversed(existing_indexes):
+                pc_entries.pop(idx)
+                corrected_links += 1
+            continue
+
+        payload: Dict[str, Any] = {
+            "store": "BrettspielWelt",
+            "url": match_url,
+            "online": True,
+            "note": str(
+                BRETTSPIELWELT_GAME_ID_NOTE_OVERRIDES.get(
+                    str(game_id),
+                    str(candidate.get("name", "")).strip(),
+                )
+            ).strip(),
+        }
+        if payload.get("note") == "":
+            payload.pop("note", None)
+
+        if not existing_indexes:
+            pc_entries.append(payload)
+            added_links += 1
+            continue
+
+        first_idx = existing_indexes[0]
+        first_item = pc_entries[first_idx]
+        if not isinstance(first_item, dict):
+            pc_entries[first_idx] = payload
+            corrected_links += 1
+        else:
+            changed = False
+            if str(first_item.get("store", "")).strip() != payload["store"]:
+                first_item["store"] = payload["store"]
+                changed = True
+            if str(first_item.get("url", "")).strip() != payload["url"]:
+                first_item["url"] = payload["url"]
+                changed = True
+            if first_item.get("online") is not True:
+                first_item["online"] = True
+                changed = True
+            desired_note = payload.get("note", "")
+            if desired_note and str(first_item.get("note", "")).strip() != desired_note:
+                first_item["note"] = desired_note
+                changed = True
+            if changed:
+                corrected_links += 1
+
+        # Remove duplicates after keeping/updating the first entry.
+        for idx in reversed(existing_indexes[1:]):
+            pc_entries.pop(idx)
+            corrected_links += 1
+
+    return added_links, len(candidates), corrected_links
+
+
 def load_sidecar(path: Path) -> Dict:
     if not path.exists():
         return {"games": {}}
@@ -1222,6 +1757,28 @@ def main() -> int:
         default=20.0,
         help="Timeout in seconds for VASSAL catalog API request (default: 20).",
     )
+    parser.add_argument(
+        "--skip-tabletop-simulator-auto-links",
+        action="store_true",
+        help="Skip automatic Tabletop Simulator workshop link enrichment.",
+    )
+    parser.add_argument(
+        "--tabletop-simulator-timeout",
+        type=float,
+        default=20.0,
+        help="Timeout in seconds for Tabletop Simulator workshop search requests (default: 20).",
+    )
+    parser.add_argument(
+        "--skip-brettspielwelt-auto-links",
+        action="store_true",
+        help="Skip automatic BrettspielWelt link enrichment from SQLite + Spiele catalog.",
+    )
+    parser.add_argument(
+        "--brettspielwelt-timeout",
+        type=float,
+        default=20.0,
+        help="Timeout in seconds for BrettspielWelt Spiele catalog request (default: 20).",
+    )
     args = parser.parse_args()
 
     db_path = Path(args.db)
@@ -1238,6 +1795,8 @@ def main() -> int:
         yucata_candidates = load_yucata_candidates(conn)
         tabletopia_candidates = load_tabletopia_candidates(conn)
         vassal_candidates = load_vassal_candidates(conn)
+        tabletop_simulator_candidates = load_tabletop_simulator_candidates(conn)
+        brettspielwelt_candidates = load_brettspielwelt_candidates(conn)
     finally:
         conn.close()
 
@@ -1247,6 +1806,9 @@ def main() -> int:
     yucata_notes_updated = 0
     tabletopia_added = 0
     vassal_added = 0
+    tabletop_simulator_added = 0
+    brettspielwelt_added = 0
+    brettspielwelt_corrected = 0
     tabletopia_premium_catalog_count = 0
     tabletopia_status_notes_updated = 0
     vassal_status_notes_updated = 0
@@ -1255,9 +1817,13 @@ def main() -> int:
     yucata_candidates_count = len(yucata_candidates)
     tabletopia_candidates_count = len(tabletopia_candidates)
     vassal_candidates_count = len(vassal_candidates)
+    tabletop_simulator_candidates_count = len(tabletop_simulator_candidates)
+    brettspielwelt_candidates_count = len(brettspielwelt_candidates)
     yucata_error = ""
     tabletopia_error = ""
     vassal_error = ""
+    tabletop_simulator_error = ""
+    brettspielwelt_error = ""
     tabletopia_premium_by_short_url: Dict[str, bool] = {}
     tabletopia_name_by_short_url: Dict[str, str] = {}
     vassal_title_by_slug: Dict[str, str] = {}
@@ -1307,6 +1873,27 @@ def main() -> int:
         except Exception as exc:
             vassal_error = str(exc)
 
+    if not args.skip_tabletop_simulator_auto_links and tabletop_simulator_candidates_count > 0:
+        try:
+            tabletop_simulator_added, _ = enrich_tabletop_simulator_links(
+                data,
+                tabletop_simulator_candidates,
+                timeout=args.tabletop_simulator_timeout,
+            )
+        except Exception as exc:
+            tabletop_simulator_error = str(exc)
+
+    if not args.skip_brettspielwelt_auto_links and brettspielwelt_candidates_count > 0:
+        try:
+            brettspielwelt_map = fetch_brettspielwelt_catalog(timeout=args.brettspielwelt_timeout)
+            brettspielwelt_added, _, brettspielwelt_corrected = enrich_brettspielwelt_links(
+                data,
+                brettspielwelt_candidates,
+                brettspielwelt_map,
+            )
+        except Exception as exc:
+            brettspielwelt_error = str(exc)
+
     online_statuses_updated = annotate_online_statuses(data, tabletopia_premium_by_short_url=tabletopia_premium_by_short_url)
     owned_removed_from_online = strip_owned_from_online_entries(data)
 
@@ -1317,9 +1904,14 @@ def main() -> int:
         print(f"yucata_candidates={yucata_candidates_count}")
         print(f"tabletopia_candidates={tabletopia_candidates_count}")
         print(f"vassal_candidates={vassal_candidates_count}")
+        print(f"tabletop_simulator_candidates={tabletop_simulator_candidates_count}")
+        print(f"brettspielwelt_candidates={brettspielwelt_candidates_count}")
         print(f"would_add_yucata_links={yucata_added}")
         print(f"would_add_tabletopia_links={tabletopia_added}")
         print(f"would_add_vassal_links={vassal_added}")
+        print(f"would_add_tabletop_simulator_links={tabletop_simulator_added}")
+        print(f"would_add_brettspielwelt_links={brettspielwelt_added}")
+        print(f"would_correct_brettspielwelt_links={brettspielwelt_corrected}")
         print(f"tabletopia_premium_catalog_count={tabletopia_premium_catalog_count}")
         print(f"would_update_tabletopia_statuses_notes={tabletopia_status_notes_updated}")
         print(f"would_update_vassal_statuses_notes={vassal_status_notes_updated}")
@@ -1337,6 +1929,10 @@ def main() -> int:
             print(f"tabletopia_error={tabletopia_error}")
         if vassal_error:
             print(f"vassal_error={vassal_error}")
+        if tabletop_simulator_error:
+            print(f"tabletop_simulator_error={tabletop_simulator_error}")
+        if brettspielwelt_error:
+            print(f"brettspielwelt_error={brettspielwelt_error}")
         print(f"total_after={len(data.get('games', {}))}")
         return 0
 
@@ -1351,9 +1947,14 @@ def main() -> int:
     print(f"yucata_candidates={yucata_candidates_count}")
     print(f"tabletopia_candidates={tabletopia_candidates_count}")
     print(f"vassal_candidates={vassal_candidates_count}")
+    print(f"tabletop_simulator_candidates={tabletop_simulator_candidates_count}")
+    print(f"brettspielwelt_candidates={brettspielwelt_candidates_count}")
     print(f"added_yucata_links={yucata_added}")
     print(f"added_tabletopia_links={tabletopia_added}")
     print(f"added_vassal_links={vassal_added}")
+    print(f"added_tabletop_simulator_links={tabletop_simulator_added}")
+    print(f"added_brettspielwelt_links={brettspielwelt_added}")
+    print(f"corrected_brettspielwelt_links={brettspielwelt_corrected}")
     print(f"tabletopia_premium_catalog_count={tabletopia_premium_catalog_count}")
     print(f"updated_tabletopia_statuses_notes={tabletopia_status_notes_updated}")
     print(f"updated_vassal_statuses_notes={vassal_status_notes_updated}")
@@ -1371,6 +1972,10 @@ def main() -> int:
         print(f"tabletopia_error={tabletopia_error}")
     if vassal_error:
         print(f"vassal_error={vassal_error}")
+    if tabletop_simulator_error:
+        print(f"tabletop_simulator_error={tabletop_simulator_error}")
+    if brettspielwelt_error:
+        print(f"brettspielwelt_error={brettspielwelt_error}")
     print(f"total_sidecar_games={len(data.get('games', {}))}")
     print(f"written={sidecar_path}")
 
