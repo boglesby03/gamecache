@@ -663,6 +663,7 @@ button[data-action="save-row"] {
   margin-top: 0.35rem;
   color: var(--muted);
   font-size: 0.82rem;
+  font-weight: 600;
 }
 
 .platform-row-view-url {

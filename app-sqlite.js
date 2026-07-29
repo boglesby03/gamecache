@@ -400,8 +400,8 @@ function renderDigitalVersionsSection(clone, game) {
       const hasVisibleLabel = Boolean(item.note || item.storeMeta || item.store);
       const attrs = {
         className: `digital-version-item ${statusClass}${item.url ? '' : ' no-link'}${hasVisibleLabel ? ' has-label' : ''}`,
-        title: `${item.label}${item.store ? ` • ${item.store}` : ''}${statusText ? ` • ${statusText}` : ''}${item.note ? ` • ${item.note}` : ''}`,
-        'aria-label': `${item.label}${item.store ? ` ${item.store}` : ''}${statusText ? ` ${statusText}` : ''}${item.note ? ` ${item.note}` : ''}`
+        title: `${item.label}${item.store ? ` • ${item.store}` : ''}${statusText ? ` • ${statusText}` : ''}${item.note ? ` • Display Name: ${item.note}` : ''}`,
+        'aria-label': `${item.label}${item.store ? ` ${item.store}` : ''}${statusText ? ` ${statusText}` : ''}${item.note ? ` Display Name ${item.note}` : ''}`
       };
       if (item.url) {
         attrs.href = item.url;
