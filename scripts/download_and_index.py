@@ -18,10 +18,103 @@ from gamecache.sqlite_indexer import SqliteIndexer  # noqa: E402
 from gamecache.github_integration import setup_github_integration  # noqa: E402
 from gamecache.config import parse_config_file, create_nested_config  # noqa: E402
 from gamecache.http_client import open_url  # noqa: E402
+from gamecache.models import BoardGame  # noqa: E402
 from setup_logging import setup_logging  # noqa: E402
 
 
 UPGRADE_INSTRUCTIONS_URL = "https://github.com/EmilStenstrom/gamecache#keeping-your-copy-updated"
+
+
+def _load_sidecar_game_ids(sidecar_path):
+    """Load numeric BGG game ids from sidecar metadata file."""
+    path = Path(sidecar_path)
+    if not path.exists():
+        return set()
+
+    try:
+        with open(path, "r", encoding="utf-8") as f:
+            payload = json.load(f)
+    except Exception as exc:
+        print(f"Warning: Could not parse sidecar file {sidecar_path}: {exc}")
+        return set()
+
+    games_obj = payload.get("games") if isinstance(payload, dict) else None
+    if not isinstance(games_obj, dict):
+        return set()
+
+    ids = set()
+    for key in games_obj.keys():
+        key_str = str(key).strip()
+        if key_str.isdigit():
+            ids.add(int(key_str))
+    return ids
+
+
+def _create_unowned_collection_stub(game_id, game_name):
+    """Create minimal collection metadata for a sidecar-only game."""
+    return {
+        "id": game_id,
+        "name": game_name or f"BGG #{game_id}",
+        "numplays": 0,
+        "image": None,
+        "image_version": None,
+        "thumbnail": None,
+        "thumbnail_version": None,
+        "tags": ["unowned"],
+        "comment": "",
+        "wishlist_comment": "",
+        "players": [],
+        "version_name": "",
+        "version_year": 0,
+        "last_modified": "1970-01-01 00:00:00",
+        "first_played": None,
+        "last_played": None,
+        "collection_id": game_id,
+        "publisher_ids": [],
+        "version_publisher": 0,
+        "custom_version_year": 0,
+        "wishlist_priority": "0",
+    }
+
+
+def _append_sidecar_missing_games(collection, downloader, sidecar_path):
+    """Fetch and append games found in sidecar but missing from BGG collection."""
+    sidecar_ids = _load_sidecar_game_ids(sidecar_path)
+    if not sidecar_ids:
+        print("No numeric sidecar game IDs found; skipping sidecar-only enrichment.")
+        return 0
+
+    existing_ids = {int(getattr(game, "id", 0)) for game in collection}
+    missing_ids = sorted(game_id for game_id in sidecar_ids if game_id not in existing_ids)
+    print(f"Sidecar IDs: {len(sidecar_ids)} • Collection IDs: {len(existing_ids)} • Missing from collection: {len(missing_ids)}")
+    if not missing_ids:
+        return 0
+
+    print(f"Fetching {len(missing_ids)} sidecar games missing from collection...")
+    try:
+        detail_rows = downloader.client.game_list(missing_ids)
+    except Exception as exc:
+        print(f"Warning: Could not fetch sidecar-only game details from BGG: {exc}")
+        return 0
+    detail_by_id = {int(row.get("id")): row for row in detail_rows if row and row.get("id")}
+
+    appended = 0
+    for game_id in missing_ids:
+        game_data = detail_by_id.get(game_id)
+        if not game_data:
+            print(f"Warning: BGG details not found for sidecar game id {game_id}")
+            continue
+
+        try:
+            stub = _create_unowned_collection_stub(game_id, game_data.get("name", ""))
+            collection.append(BoardGame(game_data, stub, expansions=[], accessories=[]))
+            appended += 1
+        except Exception as exc:
+            print(f"Warning: Could not add sidecar game id {game_id}: {exc}")
+
+    if appended:
+        print(f"Added {appended} sidecar-only game(s) to index input.")
+    return appended
 
 
 def get_last_run_date_from_sqlite(sqlite_path):
@@ -125,8 +218,10 @@ def main(args):
     # Best-effort update check (does not affect script success)
     check_for_upstream_updates_via_github(SETTINGS.get("github", {}).get("repo"))
 
-    # Get BGG token from config
-    bgg_token = SETTINGS["boardgamegeek"].get("token")
+    # Get BGG token from config, with environment fallback used by update scripts.
+    bgg_token = SETTINGS["boardgamegeek"].get("token") or os.environ.get("GAMECACHE_BGG_TOKEN")
+    if not bgg_token:
+        print("Warning: No BGG token found in config.ini or GAMECACHE_BGG_TOKEN; BGG requests may fail.")
 
     downloader = Downloader(
         cache_bgg=args.cache_bgg,
@@ -148,6 +243,8 @@ def main(args):
         plays_mindate=plays_mindate,
         ignore_collection_cache=args.ignore_collection_cache,
     )
+
+    _append_sidecar_missing_games(collection, downloader, args.digital_versions_file)
 
     #TODO Fix allowing duplicates
     # Deduplicate collection based on game ID

@@ -40,6 +40,13 @@ let lastRunDate = null;
 let overflowGroupCounter = 0;
 
 const DIGITAL_PLATFORMS = ['android', 'ios', 'pc'];
+const STATUS_LABELS = {
+  unowned: 'Digital Only',
+};
+
+function formatStatusLabel(status) {
+  return STATUS_LABELS[status] || status;
+}
 
 // Utility functions
 function showError(message) {
@@ -137,8 +144,9 @@ function readDigitalEntry(game) {
   const saved = game && game.digital_versions && typeof game.digital_versions === 'object'
     ? game.digital_versions
     : {};
+  const fallbackName = String((game && game.name) || '').trim();
   const entry = {
-    name: String(saved.name || '').trim(),
+    name: String(saved.name || fallbackName || '').trim(),
     short_description: String(saved.short_description || '').trim(),
     platforms: {}
   };
@@ -215,7 +223,7 @@ function renderDigitalVersionsSection(clone, game) {
               ? 'Owned'
               : '';
     const attrs = {
-      className: `digital-version-item ${statusClass}${item.url ? '' : ' no-link'}`,
+      className: `digital-version-item ${statusClass}${item.url ? '' : ' no-link'}${item.note ? ' has-label' : ''}`,
       title: `${item.label}${item.store ? ` • ${item.store}` : ''}${statusText ? ` • ${statusText}` : ''}${item.note ? ` • ${item.note}` : ''}`,
       'aria-label': `${item.label}${item.store ? ` ${item.store}` : ''}${statusText ? ` ${statusText}` : ''}${item.note ? ` ${item.note}` : ''}`
     };
@@ -228,6 +236,11 @@ function renderDigitalVersionsSection(clone, game) {
     const el = createElement(tag, attrs);
     const icon = createElement('span', { className: 'material-symbols-rounded icon-small' }, item.monthlySubscription ? 'subscriptions' : item.supportApp ? 'extension' : item.icon);
     el.appendChild(icon);
+
+    if (item.note) {
+      const label = createElement('span', { className: 'digital-version-label' }, item.note);
+      el.appendChild(label);
+    }
 
     list.appendChild(el);
   });
@@ -1118,7 +1131,7 @@ function setupStatusFilter() {
 
   const sortedStatus = Object.keys(statusCounts).sort();
   const items = sortedStatus.map(stat => ({
-    label: stat,
+    label: formatStatusLabel(stat),
     value: stat,
     count: statusCounts[stat]
   }));
@@ -2927,11 +2940,16 @@ function renderTiles(items, sectionHeading, container, tileTemplate, chipTemplat
 
   sectionHeading.style.display = "block";
 
+    const classNames = Array.from(container.classList);
+    const isAccessoryContainer = classNames.some(cls => cls.includes('accessory'));
+    const isContainsContainer = classNames.some(cls => cls.includes('contains'));
+    const isReimplementsContainer = classNames.some(cls => cls.includes('reimplements'));
+    const isReimplementedbyContainer = classNames.some(cls => cls.includes('reimplementedby'));
+    const isIntegratesContainer = classNames.some(cls => cls.includes('integrates'));
+
     // Check if any items have thumbnails
     const hasImages = items.some(item => item.thumbnail);
     if (hasImages) {
-      // Use grid class based on container class (check if 'accessory' is in any class name)
-      const isAccessoryContainer = Array.from(container.classList).some(cls => cls.includes('accessory'));
       const gridClass = isAccessoryContainer ? 'accessory-grid' : 'expansion-grid';
       container.classList.add(gridClass);
     }
@@ -2957,20 +2975,18 @@ function renderTiles(items, sectionHeading, container, tileTemplate, chipTemplat
         link.classList.add(tileClass);
       }
 
-      if (
-        (Array.isArray(item.tags) && item.tags.includes("wishlist")) ||
-        item.tags === "wishlist"
-      ) {
+      const itemTags = Array.isArray(item.tags)
+        ? item.tags
+        : (typeof item.tags === 'string' && item.tags ? [item.tags] : []);
+
+      if (itemTags.includes("wishlist")) {
         link.classList.add("wl-expansion-chip");
-      } else if (
-        (Array.isArray(item.tags) && item.tags.includes("preordered")) ||
-        item.tags === "preordered"
-      ) {
+      } else if (itemTags.includes("preordered")) {
         link.classList.add("po-expansion-chip");
-      } else if (
-        (Array.isArray(item.tags) && item.tags.includes("unowned")) ||
-        item.tags === "unowned"
-      ) {
+      } else if (itemTags.includes("unowned")) {
+        link.classList.add("un-expansion-chip");
+      } else if ((isIntegratesContainer || isReimplementsContainer) && itemTags.length === 0) {
+        // Unknown linked games in integrates/reimplements should use unowned styling.
         link.classList.add("un-expansion-chip");
       }
 
@@ -2994,11 +3010,6 @@ function renderTiles(items, sectionHeading, container, tileTemplate, chipTemplat
       // Apply overflow class for items beyond visible count
       if (visibleCount !== null && index >= visibleCount) {
         // Determine overflow class based on container type
-        const classNames = Array.from(container.classList);
-        const isAccessoryContainer = classNames.some(cls => cls.includes('accessory'));
-        const isContainsContainer = classNames.some(cls => cls.includes('contains'));
-        const isReimplementedbyContainer = classNames.some(cls => cls.includes('reimplementedby'));
-        const isIntegratesContainer = classNames.some(cls => cls.includes('integrates'));
         let overflowClass = 'expansion-overflow';
         if (isAccessoryContainer) {
           overflowClass = 'accessory-overflow';
@@ -3288,6 +3299,8 @@ function renderGameCard(game) {
   // Apply background color based on game status
   if (game.tags.includes("preordered")) {
     card.style.backgroundColor = "rgba(25, 217, 25, 0.15)"; // Light green background for preordered
+  } else if (game.tags.includes("unowned")) {
+    card.style.backgroundColor = "var(--unowned-bg)";
   } else {
     card.style.backgroundColor = getWishlistCardBackground(game.wishlist_priority, game.tags.includes("wishlist"));
   }
@@ -3463,7 +3476,7 @@ function renderGameCard(game) {
 
   const statusStat = clone.querySelector('.status-stat');
   statusStat.style.display = 'flex';
-  clone.querySelector('.status-value').textContent = game.tags[0];
+  clone.querySelector('.status-value').textContent = formatStatusLabel(game.tags[0] || '');
   if (game.wishlist_priority) {
     createHoverTooltip(statusStat, game.wishlist_priority, 4);
   }

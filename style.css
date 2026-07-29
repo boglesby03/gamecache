@@ -26,6 +26,7 @@
     --wl-border-hover: rgba(0, 0, 255, 0.4);
     --wl-text: #003366;
     --wl-text-hover: #001a33;
+    --unowned-bg: rgba(205, 205, 205, 0.9);
 }
 
 body {
@@ -492,6 +493,15 @@ body {
     text-decoration: none;
 }
 
+.digital-version-item.has-label {
+    width: auto;
+    height: 28px;
+    max-width: 240px;
+    border-radius: 999px;
+    padding: 0 10px 0 8px;
+    gap: 6px;
+}
+
 .digital-version-item:hover {
     border-color: rgba(0, 0, 0, 0.3);
     background: rgba(0, 0, 0, 0.08);
@@ -503,6 +513,17 @@ body {
 
 .digital-version-item .material-symbols-rounded {
     font-size: 16px;
+    flex: 0 0 auto;
+}
+
+.digital-version-label {
+    display: inline-block;
+    max-width: 190px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 12px;
+    line-height: 1;
 }
 
 .digital-version-item.status-owned {
@@ -822,7 +843,7 @@ a.accessory-tile.wl-accessory-chip {
 }
 
 .un-expansion-chip {
-    background: rgba(205, 205, 205, 0.9);
+    background: var(--unowned-bg);
     /* lighter grey for unowned items */
     color: #1f1f1f;
     border: 1px solid rgba(145, 145, 145, 0.9);

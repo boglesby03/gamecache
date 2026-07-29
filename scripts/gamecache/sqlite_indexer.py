@@ -276,14 +276,14 @@ class SqliteIndexer:
 
         return normalized
 
-    def _normalize_digital_entry(self, entry: Any) -> Dict[str, Any]:
+    def _normalize_digital_entry(self, entry: Any, fallback_name: str = "") -> Dict[str, Any]:
         """Normalize digital metadata and platform status fields for storage in SQLite."""
         if not isinstance(entry, dict):
             return {}
 
         normalized: Dict[str, Any] = {}
 
-        name = str(entry.get('name', '') or '').strip()
+        name = str(entry.get('name', '') or fallback_name or '').strip()
         short_description = str(entry.get('short_description', '') or '').strip()
         rulebooks = self._normalize_document_list(entry.get('rulebooks', []))
         supplemental_files = self._normalize_document_list(entry.get('supplemental_files', []))
@@ -466,7 +466,10 @@ class SqliteIndexer:
 
             color_str = self._extract_dominant_color(game, cursor)
             digital_versions_json = json.dumps(
-                self._normalize_digital_entry(self.digital_versions.get(str(game.get('id')), {}))
+                self._normalize_digital_entry(
+                    self.digital_versions.get(str(game.get('id')), {}),
+                    str(game.get('name', '') or '').strip(),
+                )
             )
 
             game_rows.append((
