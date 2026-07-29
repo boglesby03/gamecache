@@ -141,6 +141,32 @@ body {
   margin-bottom: 0.6rem;
 }
 
+.store-filter-wrap {
+  margin-bottom: 0.7rem;
+}
+
+.store-filter-wrap label {
+  display: block;
+  margin-bottom: 0.3rem;
+  color: var(--muted);
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.store-filter-wrap select {
+  width: 100%;
+  min-height: 7.8rem;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 0.3rem;
+  background: #fff;
+}
+
+.store-filter-wrap .btn {
+  margin-top: 0.45rem;
+  width: 100%;
+}
+
 input,
 textarea,
 button {

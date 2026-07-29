@@ -11,6 +11,7 @@
     coverArtLoaded: false,
     coverArtSource: "",
     dragContext: null,
+    selectedStoreFilters: new Set(),
   };
 
   const els = {
@@ -21,6 +22,8 @@
     newId: document.getElementById("new-id"),
     createGame: document.getElementById("create-game"),
     search: document.getElementById("search"),
+    storeFilter: document.getElementById("store-filter"),
+    clearStoreFilter: document.getElementById("clear-store-filter"),
     gameList: document.getElementById("game-list"),
     dirtyStatus: document.getElementById("dirty-status"),
     countStatus: document.getElementById("count-status"),
@@ -75,6 +78,89 @@
       .toLowerCase()
       .replace(/[^a-z0-9]+/g, " ")
       .trim();
+  }
+
+  function toStoreFilterLabel(key) {
+    const parts = String(key || "").split(" ").filter(Boolean);
+    if (parts.length === 0) return "Unknown";
+    return parts
+      .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+      .join(" ");
+  }
+
+  function getStoreFilterKey(rawStore, rawUrl) {
+    const explicit = normalizeStoreKey(rawStore);
+    if (explicit) return explicit;
+    return detectStoreKeyFromUrl(rawUrl);
+  }
+
+  function getEntryStoreKeys(entry) {
+    const keys = new Set();
+    if (!entry || typeof entry !== "object") return keys;
+
+    for (const platform of PLATFORM_KEYS) {
+      const list = normalizePlatformEntries(entry[platform]);
+      for (const item of list) {
+        const key = getStoreFilterKey(item.store || "", item.url || "");
+        if (key) keys.add(key);
+      }
+    }
+    return keys;
+  }
+
+  function gameMatchesStoreFilter(entry) {
+    if (!state.selectedStoreFilters || state.selectedStoreFilters.size === 0) return true;
+    const keys = getEntryStoreKeys(entry);
+    for (const selected of state.selectedStoreFilters) {
+      if (keys.has(selected)) return true;
+    }
+    return false;
+  }
+
+  function syncSelectedStoreFiltersFromUI() {
+    if (!els.storeFilter) return;
+    const selected = new Set();
+    Array.from(els.storeFilter.selectedOptions).forEach((option) => {
+      const value = String(option.value || "").trim();
+      if (value) selected.add(value);
+    });
+    state.selectedStoreFilters = selected;
+  }
+
+  function renderStoreFilterOptions() {
+    if (!els.storeFilter) return;
+
+    const selected = new Set(state.selectedStoreFilters || []);
+    const stores = new Map();
+    const ids = Object.keys(state.data.games || {});
+
+    for (const id of ids) {
+      const entry = normalizeEntry(state.data.games[id], "");
+      for (const key of getEntryStoreKeys(entry)) {
+        const current = stores.get(key);
+        if (!current) {
+          stores.set(key, { label: toStoreFilterLabel(key), count: 1 });
+          continue;
+        }
+        current.count += 1;
+      }
+    }
+
+    const sortedStores = Array.from(stores.entries()).sort((a, b) => a[1].label.localeCompare(b[1].label));
+    els.storeFilter.innerHTML = "";
+    for (const [key, info] of sortedStores) {
+      const option = document.createElement("option");
+      option.value = key;
+      option.textContent = `${info.label} (${info.count})`;
+      if (selected.has(key)) {
+        option.selected = true;
+      }
+      els.storeFilter.appendChild(option);
+    }
+
+    state.selectedStoreFilters = new Set(
+      Array.from(els.storeFilter.selectedOptions).map((option) => String(option.value || "").trim()).filter(Boolean)
+    );
   }
 
   function normalizeUrl(url) {
@@ -681,11 +767,14 @@
     const term = String(els.search.value || "").trim().toLowerCase();
     const ids = getSortedIds();
 
+    renderStoreFilterOptions();
+
     els.gameList.innerHTML = "";
 
     const fragment = document.createDocumentFragment();
     for (const id of ids) {
       const entry = normalizeEntry(state.data.games[id], "");
+      if (!gameMatchesStoreFilter(entry)) continue;
       const name = entry.name || "(unnamed)";
       const haystack = `${id} ${name}`.toLowerCase();
       if (term && !haystack.includes(term)) continue;
@@ -1496,6 +1585,23 @@
     els.savePickedFile.addEventListener("click", saveToPickedFile);
     els.createGame.addEventListener("click", createOrOpenById);
     els.search.addEventListener("input", renderGameList);
+    if (els.storeFilter) {
+      els.storeFilter.addEventListener("change", () => {
+        syncSelectedStoreFiltersFromUI();
+        renderGameList();
+      });
+    }
+    if (els.clearStoreFilter) {
+      els.clearStoreFilter.addEventListener("click", () => {
+        state.selectedStoreFilters = new Set();
+        if (els.storeFilter) {
+          Array.from(els.storeFilter.options).forEach((option) => {
+            option.selected = false;
+          });
+        }
+        renderGameList();
+      });
+    }
     els.gameList.addEventListener("click", onListClick);
     els.deleteGame.addEventListener("click", deleteSelectedGame);
 
