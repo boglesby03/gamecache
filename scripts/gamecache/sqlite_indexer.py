@@ -1,6 +1,7 @@
 import sqlite3
 import json
 import logging
+import re
 from pathlib import Path
 from typing import List, Dict, Any
 from .models import BoardGame
@@ -220,6 +221,27 @@ class SqliteIndexer:
 
         return normalized
 
+    def _normalize_store_key(self, value: str) -> str:
+        return re.sub(r"[^a-z0-9]+", "", str(value or "").lower())
+
+    def _is_online_digital_entry(self, entry: Any, store: str, url: str, note: str) -> bool:
+        if not isinstance(entry, dict):
+            return False
+        if bool(entry.get('online', False)) or entry.get('state') == 'online':
+            return True
+
+        store_key = self._normalize_store_key(store)
+        url_lower = str(url or '').lower()
+        note_lower = str(note or '').lower()
+        store_lower = str(store or '').lower()
+
+        if store_key in ('yucata', 'yucatade') or 'yucata.de' in url_lower:
+            return True
+        if store_key in ('bga', 'boardgamearena') or 'boardgamearena.com' in url_lower:
+            return True
+
+        return False
+
     def _normalize_digital_platform_entry(self, entry: Any) -> Dict[str, Any]:
         """Normalize a single digital platform/service entry."""
         if not isinstance(entry, dict):
@@ -248,7 +270,7 @@ class SqliteIndexer:
         if note:
             normalized['note'] = note
 
-        for flag in ('owned', 'wishlisted', 'preordered', 'monthly_subscription'):
+        for flag in ('owned', 'online', 'wishlisted', 'preordered', 'monthly_subscription'):
             if bool(entry.get(flag, False)):
                 normalized[flag] = True
 
@@ -256,6 +278,12 @@ class SqliteIndexer:
             normalized['support_app'] = True
         if bool(entry.get('monthly_subscription', False)) or entry.get('state') in ('monthly_subscription', 'subscription'):
             normalized['monthly_subscription'] = True
+
+        if self._is_online_digital_entry(entry, store, url, note):
+            normalized['online'] = True
+
+        if normalized.get('online') is True and normalized.get('owned') is True:
+            normalized.pop('owned', None)
 
         return normalized
 

@@ -623,6 +623,12 @@ body {
     color: #5530a6;
 }
 
+.digital-version-item.status-online {
+    border-color: rgba(0, 140, 100, 0.45);
+    background: rgba(0, 176, 120, 0.14);
+    color: #0f6b4f;
+}
+
 .digital-version-item.status-support-app {
     border-color: rgba(184, 104, 0, 0.45);
     background: rgba(255, 177, 66, 0.14);

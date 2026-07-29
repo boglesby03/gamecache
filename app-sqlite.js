@@ -222,7 +222,7 @@ function normalizeDigitalPlatformEntry(entry) {
   const note = String(entry.note || entry.description || '').trim();
   if (note) normalized.note = note;
 
-  ['owned', 'wishlisted', 'preordered', 'monthly_subscription'].forEach((flag) => {
+  ['owned', 'online', 'wishlisted', 'preordered', 'monthly_subscription'].forEach((flag) => {
     if (Boolean(entry[flag])) {
       normalized[flag] = true;
     }
@@ -233,6 +233,19 @@ function normalizeDigitalPlatformEntry(entry) {
   }
   if (Boolean(entry.monthly_subscription) || entry.state === 'monthly_subscription' || entry.state === 'subscription') {
     normalized.monthly_subscription = true;
+  }
+
+  const storeKey = normalizeStoreKey(store);
+  const normalizedUrl = normalizeDigitalUrl(url).toLowerCase();
+  const isYucata = storeKey === 'yucata' || storeKey === 'yucata de' || normalizedUrl.includes('yucata.de');
+  const isBga = storeKey === 'bga' || storeKey === 'board game arena' || normalizedUrl.includes('boardgamearena.com');
+
+  if (Boolean(entry.online) || entry.state === 'online' || isYucata || isBga) {
+    normalized.online = true;
+  }
+
+  if (normalized.online === true && normalized.owned === true) {
+    delete normalized.owned;
   }
 
   return Object.keys(normalized).length > 0 ? normalized : null;
@@ -280,11 +293,12 @@ function renderDigitalVersionsSection(clone, game) {
 
   function getDigitalItemPriority(item) {
     if (item.owned) return 0;
-    if (item.supportApp) return 1;
-    if (item.preordered) return 2;
-    if (item.wishlisted) return 3;
-    if (item.monthlySubscription) return 4;
-    return 5;
+    if (item.online) return 1;
+    if (item.supportApp) return 2;
+    if (item.preordered) return 3;
+    if (item.wishlisted) return 4;
+    if (item.monthlySubscription) return 5;
+    return 6;
   }
 
   const itemsByPlatform = {};
@@ -301,11 +315,12 @@ function renderDigitalVersionsSection(clone, game) {
         owned: Boolean(service.owned),
         wishlisted: Boolean(service.wishlisted),
         preordered: Boolean(service.preordered),
+        online: Boolean(service.online),
         monthlySubscription: Boolean(service.monthly_subscription),
         supportApp: Boolean(service.support_app),
         url: normalizeDigitalUrl(service.url || ''),
       }))
-      .filter((item) => item.owned || item.wishlisted || item.preordered || item.monthlySubscription || item.supportApp || item.url || item.store || item.note)
+      .filter((item) => item.owned || item.online || item.wishlisted || item.preordered || item.monthlySubscription || item.supportApp || item.url || item.store || item.note)
       .sort((a, b) => {
         const priorityDiff = getDigitalItemPriority(a) - getDigitalItemPriority(b);
         if (priorityDiff !== 0) return priorityDiff;
@@ -358,6 +373,8 @@ function renderDigitalVersionsSection(clone, game) {
       let statusClass = 'status-owned';
       if (item.monthlySubscription) {
         statusClass = 'status-monthly-subscription';
+      } else if (item.online) {
+        statusClass = 'status-online';
       } else if (item.supportApp) {
         statusClass = 'status-support-app';
       } else if (item.preordered) {
@@ -367,7 +384,9 @@ function renderDigitalVersionsSection(clone, game) {
       }
 
       const statusText = item.monthlySubscription
-        ? 'Monthly Subscription'
+        ? 'Subscribe'
+        : item.online
+          ? 'Online'
         : item.supportApp
           ? 'Support App'
           : item.preordered

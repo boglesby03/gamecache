@@ -48,7 +48,7 @@
   };
 
   const PLATFORM_KEYS = ["android", "ios", "pc"];
-  const PLATFORM_FLAGS = ["owned", "wishlisted", "preordered", "monthly_subscription"];
+  const PLATFORM_FLAGS = ["owned", "online", "wishlisted", "preordered", "monthly_subscription"];
   const PLATFORM_STORE_OPTIONS = {
     android: ["Play Store", "BGG", "Humble", "Amazon Appstore", "Samsung Galaxy Store", "itch.io"],
     ios: ["App Store", "TestFlight", "itch.io"],
@@ -76,6 +76,19 @@
     if (/^https?:\/\//i.test(trimmed)) return trimmed;
     if (/^www\./i.test(trimmed)) return `https://${trimmed}`;
     return trimmed;
+  }
+
+  function isOnlineEntry(raw, store, url, note) {
+    if (!raw || typeof raw !== "object") return false;
+    if (raw.online === true || raw.state === "online") return true;
+
+    const storeKey = normalizeStoreKey(store);
+    const normalizedUrl = normalizeUrl(url).toLowerCase();
+
+    if (storeKey === "yucata" || storeKey === "yucata de" || normalizedUrl.includes("yucata.de")) return true;
+    if (storeKey === "bga" || storeKey === "board game arena" || normalizedUrl.includes("boardgamearena.com")) return true;
+
+    return false;
   }
 
   function detectStoreKeyFromUrl(url) {
@@ -269,12 +282,22 @@
       out.monthly_subscription = true;
     }
 
+    if (isOnlineEntry(raw, store, url, note)) {
+      out.online = true;
+    }
+
     if (raw.state === "wishlisted") {
       out.wishlisted = true;
     } else if (raw.state === "preordered") {
       out.preordered = true;
+    } else if (raw.state === "online") {
+      out.online = true;
     } else if (raw.state === "owned") {
       out.owned = true;
+    }
+
+    if (out.online === true && out.owned === true) {
+      delete out.owned;
     }
 
     return Object.keys(out).length > 0 ? out : null;
@@ -717,6 +740,7 @@
     if (entry.support_app === true) return "support_app";
     if (entry.preordered === true) return "preordered";
     if (entry.wishlisted === true) return "wishlisted";
+    if (entry.online === true || isOnlineEntry(entry, entry.store || "", entry.url || "", entry.note || "")) return "online";
     return "";
   }
 
@@ -762,6 +786,8 @@
         entry.wishlisted = true;
       } else if (state === "preordered") {
         entry.preordered = true;
+      } else if (state === "online") {
+        entry.online = true;
       } else {
         entry.owned = true;
       }
