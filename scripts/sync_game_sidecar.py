@@ -28,6 +28,8 @@ YUCATA_CATALOG_API = "https://www.yucata.de/Services/YucataService.svc/GetGamesW
 TABLETOPIA_CATALOG_API = "https://api.tabletopia.com/games"
 VASSAL_PROJECTS_API = "https://vassalengine.org/api/gls/v1/projects"
 TABLETOP_SIMULATOR_WORKSHOP_SEARCH_URL = "https://steamcommunity.com/workshop/browse/"
+TABLETOP_SIMULATOR_DLC_CATALOG_API = "https://store.steampowered.com/api/dlcforapp/"
+TABLETOP_SIMULATOR_APP_ID = "286160"
 BRETTSPIELWELT_SPIELE_URL = "https://www.brettspielwelt.de/Spiele/"
 BOARDSPACE_INDEX_URL = "https://boardspace.net/english/index.shtml"
 
@@ -83,6 +85,32 @@ BRETTSPIELWELT_GAME_ID_NOTE_OVERRIDES: Dict[str, str] = {
     "199966": "Kingsburg",
     "425064": "Kingsburg",
 }
+
+# Deterministic Tabletop Simulator overrides for titles where Steam workshop
+# search ranking is inconsistent but a vetted module URL is known.
+TABLETOP_SIMULATOR_GAME_ID_OVERRIDES: Dict[str, str] = {
+    "206480": "https://steamcommunity.com/sharedfiles/filedetails/?id=2129754084",  # Imperial Struggle by GMT Games [Scripted]
+    "296151": "https://steamcommunity.com/sharedfiles/filedetails/?id=2977151576",  # Viscounts of the West Kingdom [All Content]
+}
+
+# Known bad workshop URLs that have been manually confirmed as incorrect
+# mappings for sidecar auto-linking.
+TABLETOP_SIMULATOR_BAD_URLS: Set[str] = {
+    "https://steamcommunity.com/sharedfiles/filedetails/?id=2795034467",  # Earth -> Erdein (wrong)
+}
+
+TABLETOP_SIMULATOR_DLC_URL_TEMPLATE = "https://store.steampowered.com/app/{appid}/"
+
+# Explicit official DLC target overrides by DLC app id.
+# Values are BGG game ids to attach the official DLC link to.
+TABLETOP_SIMULATOR_OFFICIAL_DLC_APP_ID_TARGETS: Dict[str, List[str]] = {
+    "610700": ["170216"],  # Tabletop Simulator - Blood Rage
+    "610708": ["147949"],  # Tabletop Simulator - One Night Ultimate Werewolf
+    "437590": ["163967", "285826"],  # Tabletop Simulator - Tiny Epic Galaxies
+}
+
+# Keep discovery enabled; matching rules determine confidence acceptance.
+TABLETOP_SIMULATOR_ENABLE_AUTO_DISCOVERY = True
 
 
 def choose_canonical_names(conn: sqlite3.Connection) -> List[Tuple[int, str]]:
@@ -470,6 +498,54 @@ def load_tabletop_simulator_candidates(conn: sqlite3.Connection) -> Dict[str, Di
         }
 
     return candidates
+
+
+def load_all_name_candidates(conn: sqlite3.Connection) -> Dict[str, Dict[str, Any]]:
+        """Load canonical game names + alternates for all games."""
+        cur = conn.cursor()
+        cur.execute(
+                """
+                WITH ranked AS (
+                    SELECT
+                        id,
+                        name,
+                        tags,
+                        alternate_names,
+                        ROW_NUMBER() OVER (
+                            PARTITION BY id
+                            ORDER BY
+                                CASE WHEN tags LIKE '%"own"%' THEN 0 ELSE 1 END,
+                                CASE WHEN tags LIKE '%"preordered"%' THEN 1 ELSE 2 END,
+                                LENGTH(name),
+                                name
+                        ) AS rn
+                    FROM games
+                    WHERE id IS NOT NULL AND name IS NOT NULL AND TRIM(name) <> ''
+                )
+                SELECT id, name, alternate_names
+                FROM ranked
+                WHERE rn = 1
+                """
+        )
+
+        candidates: Dict[str, Dict[str, Any]] = {}
+        for game_id, name, alt_raw in cur.fetchall():
+                alt_names: List[str] = []
+                try:
+                        parsed_alt = json.loads(alt_raw or "[]")
+                        if isinstance(parsed_alt, list):
+                                alt_names = [str(item).strip() for item in parsed_alt if str(item).strip()]
+                except Exception:
+                        pass
+
+                key = str(int(game_id))
+                candidates[key] = {
+                        "id": key,
+                        "name": str(name or "").strip(),
+                        "alternate_names": alt_names,
+                }
+
+        return candidates
 
 
 def load_brettspielwelt_candidates(conn: sqlite3.Connection) -> Dict[str, Dict[str, Any]]:
@@ -991,11 +1067,285 @@ def _fetch_tts_workshop_matches_for_query(query: str, timeout: float = 20.0) -> 
     return matches
 
 
+def _fetch_tts_workshop_title(url: str, timeout: float = 20.0) -> str:
+    """Fetch a Steam Workshop item page title for confidence validation."""
+    item_url = str(url or "").strip()
+    if not item_url:
+        return ""
+
+    id_match = re.search(r"[?&]id=(\d+)", item_url)
+    if id_match:
+        workshop_id = id_match.group(1)
+        try:
+            api_url = "https://api.steampowered.com/ISteamRemoteStorage/GetPublishedFileDetails/v1/"
+            payload = urllib.parse.urlencode(
+                {
+                    "itemcount": "1",
+                    "publishedfileids[0]": workshop_id,
+                }
+            ).encode("utf-8")
+            req = urllib.request.Request(
+                api_url,
+                data=payload,
+                headers={
+                    "User-Agent": "Mozilla/5.0 (GameCache sidecar sync)",
+                    "Content-Type": "application/x-www-form-urlencoded",
+                },
+            )
+            with urllib.request.urlopen(req, timeout=timeout) as resp:
+                body = resp.read().decode("utf-8", errors="replace")
+            parsed = json.loads(body)
+            details = parsed.get("response", {}).get("publishedfiledetails", [])
+            if isinstance(details, list) and details:
+                title = str(details[0].get("title", "") or "").strip()
+                if title:
+                    return title
+        except Exception:
+            pass
+
+    req = urllib.request.Request(
+        item_url,
+        headers={
+            "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+            "User-Agent": "Mozilla/5.0 (GameCache sidecar sync)",
+        },
+    )
+
+    try:
+        with urllib.request.urlopen(req, timeout=timeout) as resp:
+            body = resp.read().decode("utf-8", errors="replace")
+    except Exception:
+        return ""
+
+    meta_match = re.search(
+        r'<meta\s+property="og:title"\s+content="([^"]+)"',
+        body,
+        flags=re.IGNORECASE,
+    )
+    if meta_match:
+        return html.unescape(str(meta_match.group(1) or "").strip())
+
+    h1_match = re.search(
+        r'<div[^>]*class="workshopItemTitle"[^>]*>(.*?)</div>',
+        body,
+        flags=re.IGNORECASE | re.DOTALL,
+    )
+    if h1_match:
+        text = re.sub(r"<[^>]+>", "", str(h1_match.group(1) or ""))
+        return html.unescape(text.strip())
+
+    return ""
+
+
+def _tts_generic_suffix_tokens() -> Set[str]:
+    return {
+        "edition",
+        "essential",
+        "deluxe",
+        "complete",
+        "collector",
+        "collectors",
+        "game",
+    }
+
+
+def _tts_allowed_tail_tokens() -> Set[str]:
+    return {
+        "scripted",
+        "prototype",
+        "mod",
+        "module",
+        "setup",
+        "save",
+        "table",
+        "tts",
+        "expansion",
+        "expansions",
+        "all",
+        "solo",
+        "redux",
+        "updated",
+        "update",
+        "beta",
+        "alpha",
+        "english",
+        "en",
+    }
+
+
+def _tts_candidate_prefixes(value: str) -> List[str]:
+    raw = str(value or "").strip()
+    if not raw:
+        return []
+
+    variants: List[str] = []
+    seen: Set[str] = set()
+
+    def add(text: str) -> None:
+        normalized = re.sub(r"\s+", " ", str(text or "").strip())
+        key = normalized.lower()
+        if normalized and key not in seen:
+            seen.add(key)
+            variants.append(normalized)
+
+    add(raw)
+
+    raw_tokens = _tokenize_words(raw)
+    generic_suffix = _tts_generic_suffix_tokens()
+    trimmed_tokens = list(raw_tokens)
+    while trimmed_tokens and trimmed_tokens[-1] in generic_suffix:
+        trimmed_tokens.pop()
+    if trimmed_tokens and trimmed_tokens != raw_tokens:
+        add(" ".join(trimmed_tokens))
+
+    if ":" in raw:
+        base, suffix = raw.split(":", 1)
+        if _tts_is_base_equivalent_suffix_text(suffix):
+            add(base)
+
+    return variants
+
+
+def _tts_is_generic_suffix_text(value: str) -> bool:
+    tokens = _tokenize_words(value)
+    if not tokens:
+        return False
+
+    generic = _tts_generic_suffix_tokens() | {
+        "second",
+        "third",
+        "fourth",
+        "fifth",
+        "sixth",
+        "seventh",
+        "eighth",
+        "ninth",
+        "tenth",
+        "anniversary",
+        "mini",
+        "master",
+        "set",
+    }
+    return all(token in generic for token in tokens)
+
+
+def _tts_is_base_equivalent_suffix_text(value: str) -> bool:
+    tokens = _tokenize_words(value)
+    if not tokens:
+        return False
+
+    allowed = _tts_generic_suffix_tokens() | {"mini", "master", "set"}
+    blocked = {
+        "second",
+        "third",
+        "fourth",
+        "fifth",
+        "sixth",
+        "seventh",
+        "eighth",
+        "ninth",
+        "tenth",
+        "anniversary",
+    }
+    if any(token in blocked or token.isdigit() for token in tokens):
+        return False
+    return all(token in allowed for token in tokens)
+
+
+def _tts_query_names(candidate: Dict[str, Any]) -> List[str]:
+    primary = str(candidate.get("name", "") or "").strip()
+    alternates = list(candidate.get("alternate_names", []) or [])
+
+    names: List[str] = []
+    seen: Set[str] = set()
+
+    def add(value: str) -> None:
+        text = re.sub(r"[:\-\s]+$", "", str(value or "").strip())
+        key = text.lower()
+        if text and key not in seen:
+            seen.add(key)
+            names.append(text)
+
+    add(primary)
+
+    if ":" in primary:
+        base, suffix = primary.split(":", 1)
+        if _tts_is_base_equivalent_suffix_text(suffix):
+            add(base)
+
+    match = re.match(r"^(.*?)(?:\s*[-,(]\s*|\s+)([A-Za-z0-9' ]+edition|[A-Za-z0-9' ]+anniversary edition|collector'?s edition|deluxe edition|master set)\)?$", primary, flags=re.IGNORECASE)
+    if match and _tts_is_base_equivalent_suffix_text(match.group(2)):
+        add(match.group(1))
+
+    for alt in alternates:
+        alt_text = str(alt or "").strip()
+        if not alt_text:
+            continue
+        if re.search(r"[^\x00-\x7F]", alt_text):
+            continue
+        alt_tokens = _tokenize_words(alt_text)
+        if not alt_tokens:
+            continue
+
+        # Keep alternates only when they are substantial enough to reduce
+        # single-word/franchise collision risk.
+        substantial = (len(alt_tokens) >= 2 and len("".join(alt_tokens)) >= 8) or (
+            len(alt_tokens) == 1 and len(alt_tokens[0]) >= 10
+        )
+        if not substantial:
+            continue
+
+        if alt_text.lower() == primary.lower():
+            add(alt_text)
+            continue
+        if ":" in primary:
+            base, suffix = primary.split(":", 1)
+            if alt_text.lower() == base.strip().lower() and _tts_is_base_equivalent_suffix_text(suffix):
+                add(alt_text)
+                continue
+
+            # For non-base-equivalent subtitles, avoid broad base/franchise aliases.
+            if alt_text.lower() == base.strip().lower():
+                continue
+
+        add(alt_text)
+
+    return names
+
+
+def _tts_tail_is_allowed(tail: str) -> bool:
+    text = str(tail or "").strip()
+    if not text:
+        return True
+
+    if re.search(r"[^\x00-\x7F]", text):
+        return False
+
+    # Drop bracket wrappers and punctuation separators, then ensure only a
+    # narrow set of modifier tokens remain.
+    cleaned = re.sub(r"[\[\]\(\){}|:+,./\\_-]+", " ", text)
+    tokens = _tokenize_words(cleaned)
+    if not tokens:
+        return True
+    if all(token.isdigit() for token in tokens):
+        return False
+
+    allowed_tokens = _tts_allowed_tail_tokens()
+    for token in tokens:
+        if token.isdigit():
+            continue
+        if token not in allowed_tokens:
+            return False
+    return True
+
+
 def _score_tts_title_match(candidate_name: str, result_title: str) -> int:
     """Return a conservative confidence score for candidate<->workshop title matching."""
     candidate_name = str(candidate_name or "").strip()
     result_title = str(result_title or "").strip()
     if not candidate_name or not result_title:
+        return 0
+    if re.search(r"[^\x00-\x7F]", result_title):
         return 0
 
     candidate_norm = _normalize_name(candidate_name)
@@ -1003,20 +1353,73 @@ def _score_tts_title_match(candidate_name: str, result_title: str) -> int:
     if not candidate_norm or not title_norm:
         return 0
 
-    if candidate_norm == title_norm:
+    candidate_years = set(re.findall(r"\b\d{4}\b", candidate_name))
+    title_years = set(re.findall(r"\b\d{4}\b", result_title))
+    if title_years - candidate_years:
+        return 0
+
+    if candidate_norm == title_norm and not re.search(r"[^\x00-\x7F]", result_title):
         return 100
 
-    candidate_keys = set(_candidate_name_keys(candidate_name))
-    title_keys = set(_candidate_name_keys(result_title))
-    if candidate_keys & title_keys:
-        return 90
+    def significant_tokens(value: str) -> List[str]:
+        tokens = _tokenize_words(value)
+        stop = {
+            "the",
+            "a",
+            "an",
+            "of",
+            "and",
+            "to",
+            "for",
+            "with",
+            "vs",
+            "edition",
+            "game",
+            "base",
+            "set",
+            "deluxe",
+            "collector",
+            "collectors",
+            "chest",
+            "battle",
+        }
+        out: List[str] = []
+        for token in tokens:
+            if token in stop:
+                continue
+            if token.isdigit():
+                continue
+            if len(token) < 3:
+                continue
+            out.append(token)
+        return out
 
-    if candidate_norm in title_norm and len(candidate_norm) >= 8:
-        extra = max(0, len(title_norm) - len(candidate_norm))
-        return max(70, 85 - min(extra, 15))
+    cand_sig = significant_tokens(candidate_name)
+    title_sig = set(significant_tokens(result_title))
+    if cand_sig:
+        if len(cand_sig) >= 3 and all(token in title_sig for token in cand_sig):
+            return 95
+        if len(cand_sig) == 2 and min(len(cand_sig[0]), len(cand_sig[1])) >= 6:
+            if all(token in title_sig for token in cand_sig):
+                return 95
 
-    if title_norm in candidate_norm and len(title_norm) >= 8:
-        return 72
+    lowered_title = result_title.lower()
+    for prefix in _tts_candidate_prefixes(candidate_name):
+        lowered_prefix = prefix.lower()
+        if lowered_title == lowered_prefix:
+            return 100
+        if lowered_title.startswith(lowered_prefix):
+            tail = result_title[len(prefix):]
+            if _tts_tail_is_allowed(tail):
+                return 96
+
+    stripped_title = re.sub(r"\s+", " ", re.sub(r"[\[\(].*$", "", result_title)).strip()
+    if stripped_title:
+        stripped_norm = _normalize_name(stripped_title)
+        if stripped_norm == candidate_norm:
+            tail = result_title[len(stripped_title):]
+            if _tts_tail_is_allowed(tail):
+                return 95
 
     return 0
 
@@ -1087,6 +1490,380 @@ def _find_existing_tabletop_simulator_link(entry: Dict[str, Any]) -> Optional[st
             if "tabletop simulator" in store or "steamcommunity.com/sharedfiles/filedetails/" in url:
                 return str(item.get("url", "")).strip()
     return None
+
+
+def _find_existing_tabletop_simulator_links(entry: Dict[str, Any]) -> Set[str]:
+    urls: Set[str] = set()
+    for platform in ("android", "ios", "pc"):
+        platform_items = entry.get(platform)
+        if isinstance(platform_items, dict):
+            platform_items = [platform_items]
+        if not isinstance(platform_items, list):
+            continue
+        for item in platform_items:
+            if not isinstance(item, dict):
+                continue
+            store = str(item.get("store", "")).strip().lower()
+            url = str(item.get("url", "")).strip()
+            if "tabletop simulator" in store or "steamcommunity.com/sharedfiles/filedetails/" in url.lower():
+                if url:
+                    urls.add(url)
+    return urls
+
+
+def _is_tts_entry(item: Dict[str, Any]) -> bool:
+    store = str(item.get("store", "")).strip().lower()
+    url = str(item.get("url", "")).strip().lower()
+    return (
+        "tabletop simulator" in store
+        or store == "tts"
+        or "steamcommunity.com/sharedfiles/filedetails/" in url
+        or "store.steampowered.com/app/" in url
+    )
+
+
+def _is_tts_official_dlc_entry(item: Dict[str, Any]) -> bool:
+    if not _is_tts_entry(item):
+        return False
+    note = str(item.get("note", "")).strip().lower()
+    return "official dlc" in note
+
+
+def _fetch_tts_official_dlc_catalog(timeout: float = 20.0) -> List[Dict[str, str]]:
+    """Fetch official DLC list for Tabletop Simulator from Steam store API."""
+    params = urllib.parse.urlencode({"appid": TABLETOP_SIMULATOR_APP_ID, "l": "english", "cc": "us"})
+    url = f"{TABLETOP_SIMULATOR_DLC_CATALOG_API}?{params}"
+    req = urllib.request.Request(
+        url,
+        headers={
+            "Accept": "application/json,*/*;q=0.8",
+            "User-Agent": "Mozilla/5.0 (GameCache sidecar sync)",
+        },
+    )
+
+    with urllib.request.urlopen(req, timeout=timeout) as resp:
+        body = resp.read().decode("utf-8", errors="replace")
+    parsed = json.loads(body)
+
+    out: List[Dict[str, str]] = []
+    dlc_items = parsed.get("dlc", []) if isinstance(parsed, dict) else []
+    if not isinstance(dlc_items, list):
+        return out
+
+    for item in dlc_items:
+        if not isinstance(item, dict):
+            continue
+        appid = str(item.get("id", "") or "").strip()
+        name = str(item.get("name", "") or "").strip()
+        if not appid.isdigit() or not name:
+            continue
+        out.append(
+            {
+                "appid": appid,
+                "name": name,
+                "url": TABLETOP_SIMULATOR_DLC_URL_TEMPLATE.format(appid=appid),
+            }
+        )
+
+    return out
+
+
+def _normalize_tts_dlc_game_name(dlc_name: str) -> str:
+    text = str(dlc_name or "").strip()
+    text = re.sub(r"^Tabletop\s+Simulator\s*[-:\u2013\u2014]\s*", "", text, flags=re.IGNORECASE)
+    return re.sub(r"\s+", " ", text).strip()
+
+
+def _build_exact_name_index(candidates: Dict[str, Dict[str, Any]]) -> Dict[str, List[str]]:
+    index: Dict[str, List[str]] = {}
+    for game_id, candidate in candidates.items():
+        names = [str(candidate.get("name", "")).strip()] + [str(n).strip() for n in candidate.get("alternate_names", [])]
+        for name in names:
+            key = _normalize_name(name)
+            if not key:
+                continue
+            index.setdefault(key, [])
+            if game_id not in index[key]:
+                index[key].append(game_id)
+    return index
+
+
+def add_tabletop_simulator_official_dlc_links(
+    data: Dict[str, Any],
+    all_name_candidates: Dict[str, Dict[str, Any]],
+    timeout: float = 20.0,
+) -> Tuple[int, int]:
+    """Add official TTS DLC links from Steam, matched to collection games.
+
+    Returns:
+        (added_links, unmatched_dlc_items)
+    """
+    games = data.get("games", {})
+    if not isinstance(games, dict):
+        return 0, 0
+
+    exact_index = _build_exact_name_index(all_name_candidates)
+    dlc_items = _fetch_tts_official_dlc_catalog(timeout=timeout)
+    added = 0
+    unmatched = 0
+
+    for dlc in dlc_items:
+        dlc_name = str(dlc.get("name", "")).strip()
+        normalized_dlc_game_name = _normalize_tts_dlc_game_name(dlc_name)
+        dlc_appid = str(dlc.get("appid", "")).strip()
+        dlc_url = str(dlc.get("url", "")).strip()
+        if not normalized_dlc_game_name or not dlc_url:
+            continue
+
+        override_target_ids = TABLETOP_SIMULATOR_OFFICIAL_DLC_APP_ID_TARGETS.get(dlc_appid, [])
+        if override_target_ids:
+            added_any = False
+            for target_game_id in override_target_ids:
+                entry = games.get(str(target_game_id))
+                if not isinstance(entry, dict):
+                    continue
+
+                pc_entries = _ensure_platform_list(entry, "pc")
+                dlc_url_lower = dlc_url.lower()
+                already_present = any(
+                    isinstance(item, dict)
+                    and str(item.get("url", "")).strip().lower() == dlc_url_lower
+                    for item in pc_entries
+                )
+                if already_present:
+                    added_any = True
+                    continue
+
+                pc_entries.append(
+                    {
+                        "store": "Tabletop Simulator",
+                        "url": dlc_url,
+                        "monthly_subscription": True,
+                        "note": f"Official DLC: {normalized_dlc_game_name}",
+                    }
+                )
+                added += 1
+                added_any = True
+
+            if not added_any:
+                unmatched += 1
+            continue
+
+        target_game_id: Optional[str] = None
+
+        exact_key = _normalize_name(normalized_dlc_game_name)
+        exact_matches = exact_index.get(exact_key, [])
+        if len(exact_matches) == 1:
+            target_game_id = exact_matches[0]
+        elif len(exact_matches) > 1:
+            with_workshop: List[str] = []
+            for match_game_id in exact_matches:
+                match_entry = games.get(str(match_game_id))
+                if not isinstance(match_entry, dict):
+                    continue
+                existing_urls = _find_existing_tabletop_simulator_links(match_entry)
+                if any("steamcommunity.com/sharedfiles/filedetails/" in url.lower() for url in existing_urls):
+                    with_workshop.append(match_game_id)
+            if len(with_workshop) == 1:
+                target_game_id = with_workshop[0]
+            else:
+                unmatched += 1
+                continue
+        else:
+            best_id = ""
+            best_score = 0
+            second_score = 0
+            for game_id, candidate in all_name_candidates.items():
+                score = 0
+                for name_for_scoring in _tts_query_names(candidate):
+                    score = max(score, _score_tts_title_match(name_for_scoring, normalized_dlc_game_name))
+                if score > best_score:
+                    second_score = best_score
+                    best_score = score
+                    best_id = game_id
+                elif score > second_score:
+                    second_score = score
+
+            if best_score >= 95 and best_score > second_score:
+                target_game_id = best_id
+
+        if not target_game_id:
+            unmatched += 1
+            continue
+
+        entry = games.get(str(target_game_id))
+        if not isinstance(entry, dict):
+            unmatched += 1
+            continue
+
+        pc_entries = _ensure_platform_list(entry, "pc")
+        dlc_url_lower = dlc_url.lower()
+        already_present = any(
+            isinstance(item, dict)
+            and str(item.get("url", "")).strip().lower() == dlc_url_lower
+            for item in pc_entries
+        )
+        if already_present:
+            continue
+
+        # Use the same store label as modules so UI/icon mapping remains consistent.
+        pc_entries.append(
+            {
+                "store": "Tabletop Simulator",
+                "url": dlc_url,
+                "monthly_subscription": True,
+                "note": f"Official DLC: {normalized_dlc_game_name}",
+            }
+        )
+        added += 1
+
+    return added, unmatched
+
+
+def normalize_tabletop_simulator_dlc_store_labels(data: Dict[str, Any]) -> int:
+    """Migrate legacy DLC store labels to Tabletop Simulator.
+
+    This ensures official DLC entries render with the same icon/style mapping
+    as workshop modules in the UI.
+    """
+    games = data.get("games", {})
+    if not isinstance(games, dict):
+        return 0
+
+    updated = 0
+    for _game_id, entry in games.items():
+        if not isinstance(entry, dict):
+            continue
+        for platform in ("android", "ios", "pc"):
+            items = entry.get(platform)
+            if isinstance(items, dict):
+                items = [items]
+                entry[platform] = items
+            if not isinstance(items, list):
+                continue
+            for item in items:
+                if not isinstance(item, dict):
+                    continue
+                store = str(item.get("store", "")).strip().lower()
+                if store != "tabletop simulator dlc":
+                    continue
+                item["store"] = "Tabletop Simulator"
+                note = str(item.get("note", "")).strip()
+                if note.lower() == "official dlc":
+                    # Keep existing note text; no-op, but count store migration.
+                    pass
+                updated += 1
+
+    return updated
+
+
+def normalize_tabletop_simulator_official_dlc_urls(data: Dict[str, Any]) -> int:
+    """Canonicalize and dedupe official TTS DLC app links.
+
+    For entries marked as official DLC under Tabletop Simulator, convert any
+    slugged Steam app URL to canonical `.../app/<id>/` and remove duplicates.
+    """
+    games = data.get("games", {})
+    if not isinstance(games, dict):
+        return 0
+
+    updated = 0
+    for _game_id, entry in games.items():
+        if not isinstance(entry, dict):
+            continue
+        pc_entries = entry.get("pc")
+        if isinstance(pc_entries, dict):
+            pc_entries = [pc_entries]
+            entry["pc"] = pc_entries
+        if not isinstance(pc_entries, list):
+            continue
+
+        seen_official_appids: Set[str] = set()
+        for idx in reversed(range(len(pc_entries))):
+            item = pc_entries[idx]
+            if not isinstance(item, dict):
+                continue
+            store = str(item.get("store", "")).strip().lower()
+            note = str(item.get("note", "")).strip().lower()
+            url = str(item.get("url", "")).strip()
+            if store != "tabletop simulator" or "official dlc" not in note:
+                continue
+
+            match = re.search(r"store\.steampowered\.com/app/(\d+)", url, flags=re.IGNORECASE)
+            if not match:
+                continue
+            appid = match.group(1)
+            canonical_url = TABLETOP_SIMULATOR_DLC_URL_TEMPLATE.format(appid=appid)
+
+            if appid in seen_official_appids:
+                pc_entries.pop(idx)
+                updated += 1
+                continue
+
+            seen_official_appids.add(appid)
+            if url != canonical_url:
+                item["url"] = canonical_url
+                updated += 1
+
+    return updated
+
+
+def normalize_tabletop_simulator_official_dlc_entries(data: Dict[str, Any]) -> int:
+    """Normalize official TTS DLC entry state and ordering.
+
+    - Official DLC entries become Subscribe-only (`monthly_subscription=true`)
+      and are not marked `online`.
+    - Official DLC entries are ordered before other TTS module entries.
+    """
+    games = data.get("games", {})
+    if not isinstance(games, dict):
+        return 0
+
+    updated = 0
+    for _game_id, entry in games.items():
+        if not isinstance(entry, dict):
+            continue
+
+        pc_entries = entry.get("pc")
+        if isinstance(pc_entries, dict):
+            pc_entries = [pc_entries]
+            entry["pc"] = pc_entries
+        if not isinstance(pc_entries, list):
+            continue
+
+        # Normalize state for official DLC entries.
+        for item in pc_entries:
+            if not isinstance(item, dict):
+                continue
+            if not _is_tts_official_dlc_entry(item):
+                continue
+
+            changed = False
+            if item.get("monthly_subscription") is not True:
+                item["monthly_subscription"] = True
+                changed = True
+            if "online" in item:
+                item.pop("online", None)
+                changed = True
+            if item.get("owned") is True:
+                item.pop("owned", None)
+                changed = True
+            if changed:
+                updated += 1
+
+        # Reorder only TTS entries so official DLC appears first among them.
+        tts_indexes = [idx for idx, item in enumerate(pc_entries) if isinstance(item, dict) and _is_tts_entry(item)]
+        if tts_indexes:
+            tts_items = [pc_entries[idx] for idx in tts_indexes]
+            tts_official = [it for it in tts_items if isinstance(it, dict) and _is_tts_official_dlc_entry(it)]
+            tts_other = [it for it in tts_items if not (isinstance(it, dict) and _is_tts_official_dlc_entry(it))]
+            reordered_tts = tts_official + tts_other
+            if reordered_tts != tts_items:
+                for idx, new_item in zip(tts_indexes, reordered_tts):
+                    pc_entries[idx] = new_item
+                updated += 1
+
+    return updated
 
 
 def _find_existing_brettspielwelt_link(entry: Dict[str, Any]) -> Optional[str]:
@@ -1205,6 +1982,9 @@ def _should_mark_online(item: Dict[str, Any], tabletopia_premium_by_short_url: O
     store = str(item.get("store", "")).strip()
     url = str(item.get("url", "")).strip()
     note = str(item.get("note", "")).strip()
+
+    if _is_tts_official_dlc_entry(item):
+        return False
 
     if item.get("monthly_subscription") is True:
         return False
@@ -1618,7 +2398,7 @@ def enrich_tabletop_simulator_links(
     data: Dict[str, Any],
     candidates: Dict[str, Dict[str, Any]],
     timeout: float = 20.0,
-) -> Tuple[int, int]:
+) -> Tuple[int, int, int]:
     """Add missing Tabletop Simulator workshop links to sidecar entries.
 
     Uses a conservative, name-based search over Steam Workshop and only accepts
@@ -1626,20 +2406,45 @@ def enrich_tabletop_simulator_links(
     """
     games = data.setdefault("games", {})
     added_links = 0
+    corrected_links = 0
 
     for game_id, candidate in candidates.items():
         entry = games.get(game_id)
         if not isinstance(entry, dict):
             continue
 
-        existing = _find_existing_tabletop_simulator_link(entry)
-        if existing:
+        pc_entries = _ensure_platform_list(entry, "pc")
+
+        # Remove deterministic known-bad mappings quickly without remote calls.
+        bad_urls_lower = {u.lower() for u in TABLETOP_SIMULATOR_BAD_URLS}
+        for idx in reversed(range(len(pc_entries))):
+            item = pc_entries[idx]
+            if not isinstance(item, dict):
+                continue
+            url = str(item.get("url", "")).strip()
+            if url and url.lower() in bad_urls_lower:
+                pc_entries.pop(idx)
+                corrected_links += 1
+
+        existing_urls = _find_existing_tabletop_simulator_links(entry)
+
+        override_url = str(TABLETOP_SIMULATOR_GAME_ID_OVERRIDES.get(str(game_id), "")).strip()
+        if override_url and override_url not in existing_urls:
+            payload: Dict[str, Any] = {
+                "store": "Tabletop Simulator",
+                "url": override_url,
+                "online": True,
+                "note": str(candidate.get("name", "")).strip() or "Tabletop Simulator",
+            }
+            pc_entries.append(payload)
+            added_links += 1
+            existing_urls.add(override_url)
+
+        if not TABLETOP_SIMULATOR_ENABLE_AUTO_DISCOVERY:
             continue
 
-        candidate_names = [candidate.get("name", "")] + list(candidate.get("alternate_names", []))
-        best_url = ""
-        best_title = ""
-        best_score = 0
+        candidate_names = _tts_query_names(candidate)
+        matched_results: Dict[str, Tuple[int, str]] = {}
 
         # Query only first few distinct names to control request volume.
         queried_names: List[str] = []
@@ -1657,35 +2462,36 @@ def enrich_tabletop_simulator_links(
                 continue
 
             for item_url, item_title in results[:25]:
+                if item_url in existing_urls:
+                    continue
                 score = 0
                 for name_for_scoring in queried_names:
                     score = max(score, _score_tts_title_match(name_for_scoring, item_title))
-                if score > best_score:
-                    best_score = score
-                    best_url = item_url
-                    best_title = item_title
+                if score < 95:
+                    continue
+                existing_match = matched_results.get(item_url)
+                if not existing_match or score > existing_match[0]:
+                    matched_results[item_url] = (score, item_title)
 
-            if best_score >= 90:
-                break
+        if not matched_results:
+            matched_results = {}
 
-        # Keep matching strict to avoid accidental bad links.
-        if best_score < 90 or not best_url:
-            continue
+        for item_url, (_score, item_title) in sorted(
+            matched_results.items(),
+            key=lambda pair: (-pair[1][0], pair[1][1].lower(), pair[0]),
+        )[:3]:
+            payload: Dict[str, Any] = {
+                "store": "Tabletop Simulator",
+                "url": item_url,
+                "online": True,
+                "note": str(item_title or "").strip() or str(candidate.get("name", "")).strip(),
+            }
+            if not payload.get("note"):
+                payload.pop("note", None)
+            pc_entries.append(payload)
+            added_links += 1
 
-        payload: Dict[str, Any] = {
-            "store": "Tabletop Simulator",
-            "url": best_url,
-            "online": True,
-            "note": str(candidate.get("name", "")).strip() or best_title,
-        }
-        if not payload.get("note"):
-            payload.pop("note", None)
-
-        pc_entries = _ensure_platform_list(entry, "pc")
-        pc_entries.append(payload)
-        added_links += 1
-
-    return added_links, len(candidates)
+    return added_links, len(candidates), corrected_links
 
 
 def enrich_brettspielwelt_links(
@@ -2043,6 +2849,7 @@ def main() -> int:
     conn = sqlite3.connect(str(db_path))
     try:
         rows = choose_canonical_names(conn)
+        all_name_candidates = load_all_name_candidates(conn)
         yucata_candidates = load_yucata_candidates(conn)
         tabletopia_candidates = load_tabletopia_candidates(conn)
         vassal_candidates = load_vassal_candidates(conn)
@@ -2059,6 +2866,12 @@ def main() -> int:
     tabletopia_added = 0
     vassal_added = 0
     tabletop_simulator_added = 0
+    tabletop_simulator_corrected = 0
+    tabletop_simulator_dlc_added = 0
+    tabletop_simulator_dlc_unmatched = 0
+    tabletop_simulator_dlc_store_label_updates = 0
+    tabletop_simulator_dlc_url_updates = 0
+    tabletop_simulator_official_dlc_entry_updates = 0
     brettspielwelt_added = 0
     boardspace_added = 0
     brettspielwelt_corrected = 0
@@ -2131,13 +2944,31 @@ def main() -> int:
 
     if not args.skip_tabletop_simulator_auto_links and tabletop_simulator_candidates_count > 0:
         try:
-            tabletop_simulator_added, _ = enrich_tabletop_simulator_links(
+            tabletop_simulator_added, _, tabletop_simulator_corrected = enrich_tabletop_simulator_links(
                 data,
                 tabletop_simulator_candidates,
                 timeout=args.tabletop_simulator_timeout,
             )
         except Exception as exc:
             tabletop_simulator_error = str(exc)
+
+    if not args.skip_tabletop_simulator_auto_links:
+        tabletop_simulator_dlc_store_label_updates = normalize_tabletop_simulator_dlc_store_labels(data)
+        tabletop_simulator_dlc_url_updates = normalize_tabletop_simulator_official_dlc_urls(data)
+        tabletop_simulator_official_dlc_entry_updates = normalize_tabletop_simulator_official_dlc_entries(data)
+
+    if not args.skip_tabletop_simulator_auto_links:
+        try:
+            tabletop_simulator_dlc_added, tabletop_simulator_dlc_unmatched = add_tabletop_simulator_official_dlc_links(
+                data,
+                all_name_candidates,
+                timeout=args.tabletop_simulator_timeout,
+            )
+        except Exception as exc:
+            if tabletop_simulator_error:
+                tabletop_simulator_error = f"{tabletop_simulator_error}; dlc_error={exc}"
+            else:
+                tabletop_simulator_error = f"dlc_error={exc}"
 
     if not args.skip_brettspielwelt_auto_links and brettspielwelt_candidates_count > 0:
         try:
@@ -2178,6 +3009,12 @@ def main() -> int:
         print(f"would_add_tabletopia_links={tabletopia_added}")
         print(f"would_add_vassal_links={vassal_added}")
         print(f"would_add_tabletop_simulator_links={tabletop_simulator_added}")
+        print(f"would_add_tabletop_simulator_dlc_links={tabletop_simulator_dlc_added}")
+        print(f"would_unmatched_tabletop_simulator_dlc_links={tabletop_simulator_dlc_unmatched}")
+        print(f"would_update_tabletop_simulator_dlc_store_labels={tabletop_simulator_dlc_store_label_updates}")
+        print(f"would_update_tabletop_simulator_dlc_urls={tabletop_simulator_dlc_url_updates}")
+        print(f"would_update_tabletop_simulator_official_dlc_entries={tabletop_simulator_official_dlc_entry_updates}")
+        print(f"would_correct_tabletop_simulator_links={tabletop_simulator_corrected}")
         print(f"would_add_brettspielwelt_links={brettspielwelt_added}")
         print(f"would_add_boardspace_links={boardspace_added}")
         print(f"would_correct_brettspielwelt_links={brettspielwelt_corrected}")
@@ -2226,6 +3063,12 @@ def main() -> int:
     print(f"added_tabletopia_links={tabletopia_added}")
     print(f"added_vassal_links={vassal_added}")
     print(f"added_tabletop_simulator_links={tabletop_simulator_added}")
+    print(f"added_tabletop_simulator_dlc_links={tabletop_simulator_dlc_added}")
+    print(f"unmatched_tabletop_simulator_dlc_links={tabletop_simulator_dlc_unmatched}")
+    print(f"updated_tabletop_simulator_dlc_store_labels={tabletop_simulator_dlc_store_label_updates}")
+    print(f"updated_tabletop_simulator_dlc_urls={tabletop_simulator_dlc_url_updates}")
+    print(f"updated_tabletop_simulator_official_dlc_entries={tabletop_simulator_official_dlc_entry_updates}")
+    print(f"corrected_tabletop_simulator_links={tabletop_simulator_corrected}")
     print(f"added_brettspielwelt_links={brettspielwelt_added}")
     print(f"added_boardspace_links={boardspace_added}")
     print(f"corrected_brettspielwelt_links={brettspielwelt_corrected}")
