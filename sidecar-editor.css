@@ -505,6 +505,9 @@ label span {
 #add-rulebook,
 #add-supplemental,
 button[data-action="add-platform-entry"],
+button[data-action="drag-handle"],
+button[data-action="move-up"],
+button[data-action="move-down"],
 button[data-action="remove"],
 #short-description-save,
 button[data-action="save-row"] {
@@ -514,6 +517,31 @@ button[data-action="save-row"] {
   display: inline-flex;
   align-items: center;
   justify-content: center;
+}
+
+.drag-handle {
+  cursor: grab;
+}
+
+.drag-handle:active {
+  cursor: grabbing;
+}
+
+.doc-row.is-dragging,
+.platform-row.is-dragging {
+  opacity: 0.45;
+}
+
+.doc-row.drop-before,
+.platform-row.drop-before {
+  border-top: 2px solid var(--accent);
+  padding-top: 0.2rem;
+}
+
+.doc-row.drop-after,
+.platform-row.drop-after {
+  border-bottom: 2px solid var(--accent);
+  padding-bottom: 0.2rem;
 }
 
 .row-link {

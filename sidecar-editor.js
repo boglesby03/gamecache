@@ -10,6 +10,7 @@
     coverArtById: {},
     coverArtLoaded: false,
     coverArtSource: "",
+    dragContext: null,
   };
 
   const els = {
@@ -1069,6 +1070,7 @@
     }
     row.dataset.hasSaved = hasSaved ? "true" : "false";
     setRowEditing(row, editing);
+    enableRowDragging(row);
 
     target.appendChild(row);
     return row;
@@ -1093,6 +1095,7 @@
     row.dataset.hasSaved = hasSaved ? "true" : "false";
     target.appendChild(row);
     setRowEditing(row, editing);
+    enableRowDragging(row);
     updatePlatformRowIcon(row);
     return row;
   }
@@ -1239,6 +1242,120 @@
     updateRowLinkPreview(row);
   }
 
+  function moveRow(row, direction) {
+    const parent = row && row.parentElement;
+    if (!parent) return false;
+
+    if (direction === "up") {
+      const previous = row.previousElementSibling;
+      if (!previous) return false;
+      parent.insertBefore(row, previous);
+      return true;
+    }
+
+    if (direction === "down") {
+      const next = row.nextElementSibling;
+      if (!next) return false;
+      parent.insertBefore(next, row);
+      return true;
+    }
+
+    return false;
+  }
+
+  function clearDragMarkers() {
+    document.querySelectorAll('.doc-row.drop-before, .doc-row.drop-after, .platform-row.drop-before, .platform-row.drop-after').forEach((el) => {
+      el.classList.remove("drop-before", "drop-after");
+    });
+  }
+
+  function enableRowDragging(row) {
+    if (!row) return;
+
+    const handles = row.querySelectorAll('[data-action="drag-handle"]');
+    if (!handles.length) return;
+
+    row.draggable = false;
+
+    handles.forEach((handle) => {
+      handle.draggable = true;
+
+      handle.addEventListener("dragstart", (event) => {
+        const sourceRow = handle.closest(".doc-row, .platform-row");
+        if (!sourceRow) return;
+
+        state.dragContext = {
+          row: sourceRow,
+          rowType: sourceRow.classList.contains("doc-row") ? "doc" : "platform",
+          parent: sourceRow.parentElement,
+        };
+
+        sourceRow.classList.add("is-dragging");
+        if (event.dataTransfer) {
+          event.dataTransfer.effectAllowed = "move";
+          event.dataTransfer.setData("text/plain", "reorder");
+        }
+      });
+
+      handle.addEventListener("dragend", () => {
+        if (state.dragContext && state.dragContext.row) {
+          state.dragContext.row.classList.remove("is-dragging");
+        }
+        state.dragContext = null;
+        clearDragMarkers();
+      });
+    });
+
+    row.addEventListener("dragover", (event) => {
+      const drag = state.dragContext;
+      if (!drag || drag.row === row) return;
+
+      const sameType = (drag.rowType === "doc" && row.classList.contains("doc-row")) ||
+        (drag.rowType === "platform" && row.classList.contains("platform-row"));
+      if (!sameType || drag.parent !== row.parentElement) return;
+
+      event.preventDefault();
+      if (event.dataTransfer) {
+        event.dataTransfer.dropEffect = "move";
+      }
+
+      clearDragMarkers();
+      const rect = row.getBoundingClientRect();
+      const insertAfter = (event.clientY - rect.top) > rect.height / 2;
+      row.classList.add(insertAfter ? "drop-after" : "drop-before");
+    });
+
+    row.addEventListener("dragleave", (event) => {
+      if (!row.contains(event.relatedTarget)) {
+        row.classList.remove("drop-before", "drop-after");
+      }
+    });
+
+    row.addEventListener("drop", (event) => {
+      const drag = state.dragContext;
+      if (!drag || drag.row === row) return;
+
+      const sameType = (drag.rowType === "doc" && row.classList.contains("doc-row")) ||
+        (drag.rowType === "platform" && row.classList.contains("platform-row"));
+      if (!sameType || drag.parent !== row.parentElement) return;
+
+      event.preventDefault();
+
+      const rect = row.getBoundingClientRect();
+      const insertAfter = (event.clientY - rect.top) > rect.height / 2;
+      if (insertAfter) {
+        row.insertAdjacentElement("afterend", drag.row);
+      } else {
+        row.insertAdjacentElement("beforebegin", drag.row);
+      }
+
+      drag.row.classList.remove("is-dragging");
+      state.dragContext = null;
+      clearDragMarkers();
+      commitEditorToState();
+    });
+  }
+
   function onDocListClick(event) {
     const btn = event.target.closest("button[data-action]");
     if (!btn) return;
@@ -1246,6 +1363,14 @@
     const row = btn.closest(".doc-row");
     if (!row) return;
     const action = btn.dataset.action;
+
+    if (action === "move-up" || action === "move-down") {
+      const moved = moveRow(row, action === "move-up" ? "up" : "down");
+      if (moved) {
+        commitEditorToState();
+      }
+      return;
+    }
 
     if (action === "remove") {
       row.remove();
@@ -1278,6 +1403,14 @@
     const row = btn.closest(".platform-row");
     if (!row) return;
     const action = btn.dataset.action;
+
+    if (action === "move-up" || action === "move-down") {
+      const moved = moveRow(row, action === "move-up" ? "up" : "down");
+      if (moved) {
+        commitEditorToState();
+      }
+      return;
+    }
 
     if (action === "remove") {
       row.remove();
