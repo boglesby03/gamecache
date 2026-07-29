@@ -95,6 +95,107 @@ function normalizeDigitalUrl(url) {
   return trimmed;
 }
 
+function normalizeStoreKey(value) {
+  return String(value || '')
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, ' ')
+    .trim();
+}
+
+function getSimpleIconUrl(slug) {
+  return `https://cdn.simpleicons.org/${slug}`;
+}
+
+function detectStoreKeyFromUrl(url) {
+  const normalizedUrl = normalizeDigitalUrl(url);
+  if (!normalizedUrl) return '';
+
+  try {
+    const parsedUrl = new URL(normalizedUrl);
+    const host = parsedUrl.hostname.toLowerCase();
+    const path = parsedUrl.pathname.toLowerCase();
+    const fullUrl = normalizedUrl.toLowerCase();
+
+    // Detect Tabletop Simulator first so Steam-hosted TTS URLs don't resolve as generic Steam.
+    if (
+      host.includes('tabletopsimulator.com') ||
+      fullUrl.includes('tabletopsimulator') ||
+      path.includes('/app/286160')
+    ) return 'tabletop simulator';
+
+    if (host.includes('tabletopia.com')) return 'tabletopia';
+    if (host.includes('yucata.de')) return 'yucata';
+
+    if (host.includes('boardgamearena')) return 'board game arena';
+    if (host.includes('steampowered') || host.includes('steamcommunity')) return 'steam';
+    if (host.includes('epicgames')) return 'epic';
+    if (host.includes('gog.com')) return 'gog';
+    if (host.includes('itch.io')) return 'itch io';
+    if (host.includes('tabletop-simulator')) return 'tabletop simulator';
+    if (host.includes('play.google.com')) return 'play store';
+    if (host.includes('apps.apple.com')) return 'app store';
+    if (host.includes('microsoft.com') || host.includes('xbox.com')) return 'microsoft store';
+    if (host.includes('humblebundle')) return 'humble';
+    if (host.includes('amazon.')) return 'amazon';
+    if (host.includes('boardgamegeek.com')) return 'bgg';
+  } catch (_error) {
+    // Ignore invalid URL parse errors and fall through.
+  }
+
+  return '';
+}
+
+function getDigitalStoreMeta(store, url, platform) {
+  const storeKey = normalizeStoreKey(store) || detectStoreKeyFromUrl(url);
+  if (!storeKey) return null;
+
+  const knownStores = {
+    'board game arena': { label: 'BGA', title: 'Board Game Arena', iconUrl: 'https://boardgamearena.com/favicon.ico' },
+    'bga': { label: 'BGA', title: 'Board Game Arena', iconUrl: 'https://boardgamearena.com/favicon.ico' },
+    'steam': { label: 'STEAM', title: 'Steam', iconUrl: getSimpleIconUrl('steam') },
+    'epic': { label: 'EPIC', title: 'Epic Games', iconUrl: getSimpleIconUrl('epicgames') },
+    'epic games': { label: 'EPIC', title: 'Epic Games', iconUrl: getSimpleIconUrl('epicgames') },
+    'gog': { label: 'GOG', title: 'GOG', iconUrl: getSimpleIconUrl('gogdotcom') },
+    'itch io': { label: 'ITCH', title: 'itch.io', iconUrl: getSimpleIconUrl('itchdotio') },
+    'itchio': { label: 'ITCH', title: 'itch.io', iconUrl: getSimpleIconUrl('itchdotio') },
+    'tabletop simulator': { label: 'TTS', title: 'Tabletop Simulator', iconUrl: 'https://cdn2.steamgriddb.com/icon/68230fb510baa246a67bf901c7f895ea/32/256x256.png' },
+    'table top simulator': { label: 'TTS', title: 'Tabletop Simulator', iconUrl: 'https://cdn2.steamgriddb.com/icon/68230fb510baa246a67bf901c7f895ea/32/256x256.png' },
+    'tts': { label: 'TTS', title: 'Tabletop Simulator', iconUrl: 'https://cdn2.steamgriddb.com/icon/68230fb510baa246a67bf901c7f895ea/32/256x256.png' },
+    'tabletopia': { label: 'TTOP', title: 'Tabletopia', iconUrl: 'https://tabletopia.com/favicon.ico' },
+    'yucata': { label: 'YUC', title: 'Yucata', iconUrl: 'https://www.yucata.de/favicon.ico' },
+    'yucata de': { label: 'YUC', title: 'Yucata', iconUrl: 'https://www.yucata.de/favicon.ico' },
+    'play store': { label: 'PLAY', title: 'Google Play', iconUrl: getSimpleIconUrl('googleplay') },
+    'google play': { label: 'PLAY', title: 'Google Play', iconUrl: getSimpleIconUrl('googleplay') },
+    'app store': { label: 'APPLE', title: 'App Store', iconUrl: getSimpleIconUrl('appstore') },
+    'microsoft store': { label: 'MS', title: 'Microsoft Store', iconUrl: getSimpleIconUrl('microsoftstore') },
+    'humble': { label: 'HUMBLE', title: 'Humble', iconUrl: getSimpleIconUrl('humblebundle') },
+    'amazon': { label: 'AMZ', title: 'Amazon', iconUrl: getSimpleIconUrl('amazon') },
+    'ea app': { label: 'EA', title: 'EA app', iconUrl: getSimpleIconUrl('ea') },
+    'ubisoft connect': { label: 'UBI', title: 'Ubisoft Connect', iconUrl: getSimpleIconUrl('ubisoft') },
+    'bgg': { label: 'BGG', title: 'BoardGameGeek', iconUrl: getSimpleIconUrl('boardgamegeek') },
+    'web': { label: 'WEB', title: 'Web', iconUrl: getSimpleIconUrl('googlechrome') },
+  };
+
+  if (storeKey && knownStores[storeKey]) {
+    return knownStores[storeKey];
+  }
+
+  if (storeKey) {
+    const compact = storeKey
+      .split(' ')
+      .filter(Boolean)
+      .map((part) => part[0])
+      .join('')
+      .slice(0, 4)
+      .toUpperCase() || 'D';
+    return {
+      label: compact,
+      title: String(store || storeKey).trim(),
+      icon: platform === 'android' ? 'android' : platform === 'ios' ? 'phone_iphone' : 'desktop_windows',
+    };
+  }
+}
+
 function normalizeDigitalPlatformEntry(entry) {
   if (!entry || typeof entry !== 'object') return null;
 
@@ -168,81 +269,166 @@ function renderDigitalVersionsSection(clone, game) {
   const entry = readDigitalEntry(game);
   const platformMeta = {
     android: { label: 'Android', icon: 'android' },
-    ios: { label: 'iOS', icon: 'phone_iphone' },
+    ios: { label: 'iOS', iconUrl: getSimpleIconUrl('apple') },
     pc: { label: 'PC', icon: 'desktop_windows' },
   };
+  const platformDisplayOrder = ['pc', 'android', 'ios'];
 
-  const items = DIGITAL_PLATFORMS.flatMap((platform) => {
+  function getDigitalItemPriority(item) {
+    if (item.owned) return 0;
+    if (item.supportApp) return 1;
+    if (item.preordered) return 2;
+    if (item.wishlisted) return 3;
+    if (item.monthlySubscription) return 4;
+    return 5;
+  }
+
+  const itemsByPlatform = {};
+  platformDisplayOrder.forEach((platform) => {
     const entries = entry.platforms[platform] || [];
-    return entries.map((service) => ({
-      platform,
-      label: platformMeta[platform].label,
-      icon: platformMeta[platform].icon,
-      store: String(service.store || '').trim(),
-      note: String(service.note || '').trim(),
-      owned: Boolean(service.owned),
-      wishlisted: Boolean(service.wishlisted),
-      preordered: Boolean(service.preordered),
-      monthlySubscription: Boolean(service.monthly_subscription),
-      supportApp: Boolean(service.support_app),
-      url: normalizeDigitalUrl(service.url || ''),
-    }));
-  })
-    .filter((item) => item.owned || item.wishlisted || item.preordered || item.monthlySubscription || item.supportApp || item.url || item.store || item.note);
+    itemsByPlatform[platform] = entries
+      .map((service) => ({
+        storeMeta: getDigitalStoreMeta(service.store, service.url, platform),
+        platform,
+        label: platformMeta[platform].label,
+        icon: platformMeta[platform].icon,
+        store: String(service.store || '').trim(),
+        note: String(service.note || '').trim(),
+        owned: Boolean(service.owned),
+        wishlisted: Boolean(service.wishlisted),
+        preordered: Boolean(service.preordered),
+        monthlySubscription: Boolean(service.monthly_subscription),
+        supportApp: Boolean(service.support_app),
+        url: normalizeDigitalUrl(service.url || ''),
+      }))
+      .filter((item) => item.owned || item.wishlisted || item.preordered || item.monthlySubscription || item.supportApp || item.url || item.store || item.note)
+      .sort((a, b) => {
+        const priorityDiff = getDigitalItemPriority(a) - getDigitalItemPriority(b);
+        if (priorityDiff !== 0) return priorityDiff;
 
-  if (items.length === 0) {
+        const aStore = String(a.store || (a.storeMeta && a.storeMeta.title) || '').toLowerCase();
+        const bStore = String(b.store || (b.storeMeta && b.storeMeta.title) || '').toLowerCase();
+        if (aStore !== bStore) return aStore.localeCompare(bStore);
+
+        return String(a.note || '').toLowerCase().localeCompare(String(b.note || '').toLowerCase());
+      });
+  });
+
+  const hasItems = platformDisplayOrder.some((platform) => (itemsByPlatform[platform] || []).length > 0);
+  if (!hasItems) {
     digitalSection.style.display = 'none';
     return;
   }
 
   digitalSection.style.display = 'block';
   list.innerHTML = '';
+  list.classList.add('digital-platform-groups');
 
-  items.forEach((item) => {
-    const tag = item.url ? 'a' : 'span';
-    let statusClass = 'status-owned';
-    if (item.monthlySubscription) {
-      statusClass = 'status-monthly-subscription';
-    } else if (item.supportApp) {
-      statusClass = 'status-support-app';
-    } else if (item.preordered) {
-      statusClass = 'status-preordered';
-    } else if (item.wishlisted) {
-      statusClass = 'status-wishlisted';
+  platformDisplayOrder.forEach((platform) => {
+    const platformItems = itemsByPlatform[platform] || [];
+    if (platformItems.length === 0) return;
+
+    const group = createElement('div', { className: 'digital-platform-group' });
+    const header = createElement('div', { className: 'digital-platform-header' });
+    let headerIcon;
+    if (platformMeta[platform].iconUrl) {
+      headerIcon = createElement('img', {
+        className: 'digital-platform-logo',
+        src: platformMeta[platform].iconUrl,
+        alt: `${platformMeta[platform].label} icon`,
+        loading: 'lazy',
+        referrerpolicy: 'no-referrer'
+      });
+    } else {
+      headerIcon = createElement('span', { className: 'material-symbols-rounded icon-small' }, platformMeta[platform].icon);
     }
+    const headerLabel = createElement('span', { className: 'digital-platform-title' }, platformMeta[platform].label);
+    header.appendChild(headerIcon);
+    header.appendChild(headerLabel);
+    group.appendChild(header);
 
-    const statusText = item.monthlySubscription
-      ? 'Monthly Subscription'
-      : item.supportApp
-        ? 'Support App'
-        : item.preordered
-          ? 'Preordered'
-          : item.wishlisted
-            ? 'Wishlisted'
-            : item.owned
-              ? 'Owned'
-              : '';
-    const attrs = {
-      className: `digital-version-item ${statusClass}${item.url ? '' : ' no-link'}${item.note ? ' has-label' : ''}`,
-      title: `${item.label}${item.store ? ` • ${item.store}` : ''}${statusText ? ` • ${statusText}` : ''}${item.note ? ` • ${item.note}` : ''}`,
-      'aria-label': `${item.label}${item.store ? ` ${item.store}` : ''}${statusText ? ` ${statusText}` : ''}${item.note ? ` ${item.note}` : ''}`
-    };
-    if (item.url) {
-      attrs.href = item.url;
-      attrs.target = '_blank';
-      attrs.rel = 'noopener noreferrer';
-    }
+    const platformList = createElement('div', { className: 'digital-platform-list' });
 
-    const el = createElement(tag, attrs);
-    const icon = createElement('span', { className: 'material-symbols-rounded icon-small' }, item.monthlySubscription ? 'subscriptions' : item.supportApp ? 'extension' : item.icon);
-    el.appendChild(icon);
+    platformItems.forEach((item) => {
+      const tag = item.url ? 'a' : 'span';
+      let statusClass = 'status-owned';
+      if (item.monthlySubscription) {
+        statusClass = 'status-monthly-subscription';
+      } else if (item.supportApp) {
+        statusClass = 'status-support-app';
+      } else if (item.preordered) {
+        statusClass = 'status-preordered';
+      } else if (item.wishlisted) {
+        statusClass = 'status-wishlisted';
+      }
 
-    if (item.note) {
-      const label = createElement('span', { className: 'digital-version-label' }, item.note);
-      el.appendChild(label);
-    }
+      const statusText = item.monthlySubscription
+        ? 'Monthly Subscription'
+        : item.supportApp
+          ? 'Support App'
+          : item.preordered
+            ? 'Preordered'
+            : item.wishlisted
+              ? 'Wishlisted'
+              : item.owned
+                ? 'Owned'
+                : '';
 
-    list.appendChild(el);
+      const hasVisibleLabel = Boolean(item.note || item.storeMeta || item.store);
+      const attrs = {
+        className: `digital-version-item ${statusClass}${item.url ? '' : ' no-link'}${hasVisibleLabel ? ' has-label' : ''}`,
+        title: `${item.label}${item.store ? ` • ${item.store}` : ''}${statusText ? ` • ${statusText}` : ''}${item.note ? ` • ${item.note}` : ''}`,
+        'aria-label': `${item.label}${item.store ? ` ${item.store}` : ''}${statusText ? ` ${statusText}` : ''}${item.note ? ` ${item.note}` : ''}`
+      };
+      if (item.url) {
+        attrs.href = item.url;
+        attrs.target = '_blank';
+        attrs.rel = 'noopener noreferrer';
+      }
+
+      const el = createElement(tag, attrs);
+
+      const storeIconWrapper = createElement('span', {
+        className: 'digital-store-icon',
+        title: (item.storeMeta && item.storeMeta.title) || item.store || '',
+        'aria-label': (item.storeMeta && item.storeMeta.title) || item.store || 'Store'
+      });
+
+      if (item.storeMeta && item.storeMeta.iconUrl) {
+        const storeIcon = createElement('img', {
+          className: 'digital-store-logo',
+          src: item.storeMeta.iconUrl,
+          alt: (item.storeMeta && item.storeMeta.title) || item.store || 'Store icon',
+          loading: 'lazy',
+          referrerpolicy: 'no-referrer'
+        });
+        storeIcon.addEventListener('error', () => {
+          storeIcon.remove();
+          if (!storeIconWrapper.textContent) {
+            const fallbackLabel = (item.storeMeta && item.storeMeta.label) || (item.store ? item.store.slice(0, 4).toUpperCase() : 'D');
+            storeIconWrapper.textContent = fallbackLabel;
+            storeIconWrapper.classList.add('digital-store-badge');
+          }
+        });
+        storeIconWrapper.appendChild(storeIcon);
+      } else {
+        const fallbackLabel = (item.storeMeta && item.storeMeta.label) || (item.store ? item.store.slice(0, 4).toUpperCase() : 'D');
+        storeIconWrapper.textContent = fallbackLabel;
+        storeIconWrapper.classList.add('digital-store-badge');
+      }
+
+      el.appendChild(storeIconWrapper);
+
+      if (item.note) {
+        const label = createElement('span', { className: 'digital-version-label' }, item.note);
+        el.appendChild(label);
+      }
+
+      platformList.appendChild(el);
+    });
+
+    group.appendChild(platformList);
+    list.appendChild(group);
   });
 }
 

@@ -473,7 +473,45 @@ body {
 }
 
 
-.digital-version-list {
+.digital-platform-groups {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.digital-platform-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.digital-platform-header {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: #444;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+}
+
+.digital-platform-header .material-symbols-rounded {
+    font-size: 15px;
+}
+
+.digital-platform-logo {
+    width: 14px;
+    height: 14px;
+    object-fit: contain;
+    display: block;
+}
+
+.digital-platform-title {
+    line-height: 1;
+}
+
+.digital-platform-list {
     display: flex;
     flex-wrap: wrap;
     gap: 6px;
@@ -514,6 +552,47 @@ body {
 .digital-version-item .material-symbols-rounded {
     font-size: 16px;
     flex: 0 0 auto;
+}
+
+.digital-store-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 20px;
+    height: 18px;
+    padding: 0 5px;
+    border-radius: 999px;
+    background: rgba(0, 0, 0, 0.14);
+    color: inherit;
+    font-size: 9px;
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+}
+
+.digital-store-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 18px;
+    height: 18px;
+    flex: 0 0 auto;
+}
+
+.digital-store-logo {
+    width: 16px;
+    height: 16px;
+    object-fit: contain;
+    display: block;
+    border-radius: 3px;
+}
+
+.digital-store-icon.digital-store-badge {
+    min-width: 20px;
+    height: 18px;
+    padding: 0 5px;
+    border-radius: 999px;
 }
 
 .digital-version-label {

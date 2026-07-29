@@ -38,7 +38,7 @@
   const PLATFORM_STORE_OPTIONS = {
     android: ["Play Store", "BGG", "Humble", "Amazon Appstore", "Samsung Galaxy Store", "itch.io"],
     ios: ["App Store", "TestFlight", "itch.io"],
-    pc: ["Steam", "Web", "Tabletop Simulator", "BGA", "Epic", "EA app", "Ubisoft Connect", "GOG", "Microsoft Store", "itch.io", "Humble", "Amazon"],
+    pc: ["Steam", "Web", "Tabletop Simulator", "Tabletopia", "Yucata", "BGA", "Epic", "EA app", "Ubisoft Connect", "GOG", "Microsoft Store", "itch.io", "Humble", "Amazon"],
   };
 
   function ensureGamesContainer(data) {
