@@ -10,7 +10,15 @@
       "name": "Acquire",
       "short_description": "Invest, divest, and stage hostile takeovers in this classic real estate game.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "VASSAL",
+          "url": "https://vassalengine.org/library/projects/Acquire",
+          "online": true,
+          "note": "Acquire"
+        }
+      ]
     },
     "9": {
       "name": "El Caballero",
@@ -213,7 +221,15 @@
       "name": "Condottiere",
       "short_description": "Manage and deploy your mercenaries to the right province to take control over Italy!",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "VASSAL",
+          "url": "https://vassalengine.org/library/projects/Condottiere",
+          "online": true,
+          "note": "Condottiere"
+        }
+      ]
     },
     "116": {
       "name": "Guillotine",
@@ -346,6 +362,12 @@
           "url": "https://tabletopia.com/games/chess",
           "note": "Chess",
           "online": true
+        },
+        {
+          "store": "VASSAL",
+          "url": "https://vassalengine.org/library/projects/Cacao",
+          "online": true,
+          "note": "Chess"
         }
       ]
     },
@@ -483,7 +505,15 @@
       "name": "Citadels",
       "short_description": "Bishop, warlord, thief, king: change roles, build your city and hinder your rivals.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "VASSAL",
+          "url": "https://vassalengine.org/library/projects/Citadels",
+          "online": true,
+          "note": "Citadels"
+        }
+      ]
     },
     "503": {
       "name": "Through the Desert",
@@ -549,7 +579,15 @@
       "name": "Battle Masters",
       "short_description": "A massive fantasy minis battle where cards dictate your army\u2019s moves and attacks on a giant mat.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "VASSAL",
+          "url": "https://vassalengine.org/library/projects/Battle_Masters",
+          "online": true,
+          "note": "Battle Masters"
+        }
+      ]
     },
     "712": {
       "name": "Blood Bowl",
@@ -587,7 +625,15 @@
       "name": "Battle Line",
       "short_description": "Mobilize stronger formations to counter the enemy along an ever-changing battle-line.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "VASSAL",
+          "url": "https://vassalengine.org/library/projects/Battle_Line",
+          "online": true,
+          "note": "Battle Line"
+        }
+      ]
     },
     "822": {
       "name": "Carcassonne",
@@ -621,6 +667,12 @@
           "url": "https://en.boardgamearena.com/gamepanel?game=carcassonne",
           "note": "BGA Premium",
           "online": true
+        },
+        {
+          "store": "VASSAL",
+          "url": "https://vassalengine.org/library/projects/Carcassonne",
+          "online": true,
+          "note": "Carcassonne"
         }
       ]
     },
@@ -668,7 +720,15 @@
       "name": "Babel",
       "short_description": "Gather followers to erect temples and hinder your opponent at every turn.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "VASSAL",
+          "url": "https://vassalengine.org/library/projects/Babel",
+          "online": true,
+          "note": "Babel"
+        }
+      ]
     },
     "1107": {
       "name": "Nyet!",
@@ -843,6 +903,12 @@
           "url": "https://store.steampowered.com/app/307600/Chainsaw_Warrior_Lords_of_the_Night_Classic/",
           "note": "Lords of the Night Classic",
           "owned": true
+        },
+        {
+          "store": "VASSAL",
+          "url": "https://vassalengine.org/library/projects/Chainsaw_Warrior",
+          "online": true,
+          "note": "Chainsaw Warrior"
         }
       ]
     },
@@ -1239,7 +1305,15 @@
       "name": "Carcassonne: The Castle",
       "short_description": "A two-player, tile playing, castle building battle.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "VASSAL",
+          "url": "https://vassalengine.org/library/projects/Carcassonne_The_Castle",
+          "online": true,
+          "note": "Carcassonne: The Castle"
+        }
+      ]
     },
     "7854": {
       "name": "YINSH",
@@ -1401,8 +1475,8 @@
         {
           "store": "Yucata",
           "url": "https://www.yucata.de/en/GameInfo/SaintPetersburg2",
-          "online": true,
-          "note": "Saint Petersburg"
+          "note": "Saint Petersburg",
+          "online": true
         }
       ]
     },
@@ -1470,6 +1544,14 @@
           "url": "https://apps.apple.com/ca/app/betrayal-at-house-soundboard/id850054574",
           "note": "Soundboard",
           "owned": true
+        }
+      ],
+      "pc": [
+        {
+          "store": "VASSAL",
+          "url": "https://vassalengine.org/library/projects/Betrayal_At_House_On_The_Hill",
+          "online": true,
+          "note": "Betrayal at House on the Hill"
         }
       ]
     },
@@ -1594,7 +1676,15 @@
       "name": "Commands & Colors: Ancients",
       "short_description": "Accessible tactical wargame from the dawn of history to the opening of the Dark Age.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "VASSAL",
+          "url": "https://vassalengine.org/library/projects/Commands__Colors_Ancients",
+          "online": true,
+          "note": "Commands & Colors: Ancients"
+        }
+      ]
     },
     "14996": {
       "name": "Ticket to Ride: Europe",
@@ -1842,6 +1932,12 @@
           "url": "https://www.yucata.de/en/GameInfo/Sekigahara",
           "note": "Sekigahara: The Unification of Japan",
           "online": true
+        },
+        {
+          "store": "VASSAL",
+          "url": "https://vassalengine.org/library/projects/Sekigahara_Unification_of_Japan",
+          "online": true,
+          "note": "Sekigahara: The Unification of Japan"
         }
       ]
     },
@@ -1881,7 +1977,15 @@
       "name": "1989: Dawn of Freedom",
       "short_description": "A game of political struggle as the Soviet Empire begins to show cracks.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "VASSAL",
+          "url": "https://vassalengine.org/library/projects/1989_Dawn_of_Freedom",
+          "online": true,
+          "note": "1989: Dawn of Freedom"
+        }
+      ]
     },
     "27588": {
       "name": "Zooloretto",
@@ -1913,7 +2017,15 @@
       "name": "1960: The Making of the President",
       "short_description": "Conquer America in 1960: debate, campaign, and rewrite history.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "VASSAL",
+          "url": "https://vassalengine.org/library/projects/1960_The_Making_of_the_President",
+          "online": true,
+          "note": "1960: The Making of the President"
+        }
+      ]
     },
     "27746": {
       "name": "Colosseum",
@@ -2364,6 +2476,12 @@
           "url": "https://store.steampowered.com/app/1131620/Dominion/",
           "note": "Dominion",
           "owned": true
+        },
+        {
+          "store": "VASSAL",
+          "url": "https://vassalengine.org/library/projects/Dominion",
+          "online": true,
+          "note": "Dominion"
         }
       ]
     },
@@ -2383,7 +2501,15 @@
       "name": "Claustrophobia",
       "short_description": "Fight for glory and redemption against endless waves of Hell's minions.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "VASSAL",
+          "url": "https://vassalengine.org/library/projects/Claustrophobia",
+          "online": true,
+          "note": "Claustrophobia"
+        }
+      ]
     },
     "37046": {
       "name": "Ghost Stories",
@@ -2420,8 +2546,8 @@
         {
           "store": "Yucata",
           "url": "https://www.yucata.de/en/GameInfo/RollAges",
-          "online": true,
-          "note": "Roll Through the Ages: The Bronze Age"
+          "note": "Roll Through the Ages: The Bronze Age",
+          "online": true
         }
       ]
     },
@@ -2523,6 +2649,12 @@
           "url": "https://www.yucata.de/en/GameInfo/Loyang",
           "note": "At the Gates of Loyang",
           "online": true
+        },
+        {
+          "store": "VASSAL",
+          "url": "https://vassalengine.org/library/projects/At_the_Gates_of_Loyang",
+          "online": true,
+          "note": "At the Gates of Loyang"
         }
       ]
     },
@@ -2551,6 +2683,14 @@
           "url": "https://apps.apple.com/us/app/dixit-world/id1340833766?platform=ipad",
           "note": "Dixit World",
           "owned": true
+        }
+      ],
+      "pc": [
+        {
+          "store": "VASSAL",
+          "url": "https://vassalengine.org/library/projects/Dixit",
+          "online": true,
+          "note": "Dixit"
         }
       ]
     },
@@ -2697,7 +2837,15 @@
       "name": "Chaos in the Old World",
       "short_description": "Rival chaos gods send forth their minions to spread corruption and destruction.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "VASSAL",
+          "url": "https://vassalengine.org/library/projects/Chaos_in_the_Old_World",
+          "online": true,
+          "note": "Chaos in the Old World"
+        }
+      ]
     },
     "43570": {
       "name": "Friday",
@@ -2725,7 +2873,15 @@
       "name": "Alhambra: Big Box",
       "short_description": "Build your own Alhambra and enjoy five of its expansions.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "VASSAL",
+          "url": "https://vassalengine.org/library/projects/Alhambra_Big_Box",
+          "online": true,
+          "note": "Alhambra: Big Box"
+        }
+      ]
     },
     "45748": {
       "name": "Carcassonne: Wheel of Fortune",
@@ -2750,6 +2906,12 @@
           "url": "https://tabletopia.com/games/alien-frontiers",
           "note": "Alien Frontiers",
           "online": true
+        },
+        {
+          "store": "VASSAL",
+          "url": "https://vassalengine.org/library/projects/Alien_Frontiers",
+          "online": true,
+          "note": "Alien Frontiers"
         }
       ]
     },
@@ -2842,6 +3004,12 @@
           "url": "https://tabletopia.com/games/dominant-species",
           "note": "Dominant Species",
           "monthly_subscription": true
+        },
+        {
+          "store": "VASSAL",
+          "url": "https://vassalengine.org/library/projects/Dominant_Species",
+          "online": true,
+          "note": "Dominant Species"
         }
       ]
     },
@@ -3224,6 +3392,12 @@
         {
           "store": "Yucata",
           "url": "https://www.yucata.de/en/GameInfo/FewAcresOfSnow",
+          "note": "Few Acres of Snow, A",
+          "online": true
+        },
+        {
+          "store": "VASSAL",
+          "url": "https://vassalengine.org/library/projects/A_Few_Acres_of_Snow",
           "online": true,
           "note": "Few Acres of Snow, A"
         }
@@ -3284,8 +3458,8 @@
         {
           "store": "Yucata",
           "url": "https://www.yucata.de/en/GameInfo/CastlesOfBurgundy",
-          "online": true,
-          "note": "Castles of Burgundy, The"
+          "note": "Castles of Burgundy, The",
+          "online": true
         }
       ]
     },
@@ -3358,6 +3532,12 @@
           "url": "https://store.steampowered.com/app/555370/1812_The_Invasion_of_Canada/",
           "note": "1812",
           "owned": true
+        },
+        {
+          "store": "VASSAL",
+          "url": "https://vassalengine.org/library/projects/1812_The_Invasion_of_Canada",
+          "online": true,
+          "note": "1812: The Invasion of Canada"
         }
       ]
     },
@@ -3553,6 +3733,12 @@
           "url": "https://store.steampowered.com/app/1075190/A_Game_of_Thrones_The_Board_Game__Digital_Edition",
           "note": "with A Dance with Dragons, A Feast for Crows",
           "owned": true
+        },
+        {
+          "store": "VASSAL",
+          "url": "https://vassalengine.org/library/projects/A_Game_of_Thrones_The_Board_Game_Second_Edition",
+          "online": true,
+          "note": "Game of Thrones: (Second Edition), A"
         }
       ]
     },
@@ -3675,7 +3861,15 @@
       "name": "Cuba Libre",
       "short_description": "Play as one of four factions vying for control of Cuba in card-driven COIN Vol:2.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "VASSAL",
+          "url": "https://vassalengine.org/library/projects/Cuba_Libre",
+          "online": true,
+          "note": "Cuba Libre"
+        }
+      ]
     },
     "112192": {
       "name": "Sugar Gliders",
@@ -4287,6 +4481,12 @@
           "url": "https://store.steampowered.com/app/422610/1775_Rebellion/",
           "note": "1775",
           "owned": true
+        },
+        {
+          "store": "VASSAL",
+          "url": "https://vassalengine.org/library/projects/1775_Rebellion",
+          "online": true,
+          "note": "1775: Rebellion"
         }
       ]
     },
@@ -4345,6 +4545,12 @@
           "url": "https://store.steampowered.com/app/510550/Congo_Merc/",
           "note": "Congo Merc",
           "owned": true
+        },
+        {
+          "store": "VASSAL",
+          "url": "https://vassalengine.org/library/projects/Congo_Merc_The_Congo_1964",
+          "online": true,
+          "note": "Congo Merc: The Congo, 1964!"
         }
       ]
     },
@@ -4583,7 +4789,15 @@
       "name": "Rise of Augustus",
       "short_description": "Compete with other players to vie for the favor of the first Roman Emperor, Augustus.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "VASSAL",
+          "url": "https://vassalengine.org/library/projects/Rise_of_Augustus",
+          "online": true,
+          "note": "Rise of Augustus"
+        }
+      ]
     },
     "137408": {
       "name": "Amerigo",
@@ -4620,6 +4834,12 @@
           "url": "https://boardgamearena.com/gamepanel?game=arboretum",
           "note": "BGA Premium",
           "online": true
+        },
+        {
+          "store": "VASSAL",
+          "url": "https://vassalengine.org/library/projects/Arboretum",
+          "online": true,
+          "note": "Arboretum"
         }
       ]
     },
@@ -4884,6 +5104,12 @@
           "store": "Steam",
           "url": "https://store.steampowered.com/app/348400/BattleLore_Command/",
           "owned": true
+        },
+        {
+          "store": "VASSAL",
+          "url": "https://vassalengine.org/library/projects/BattleLore_Second_Edition",
+          "online": true,
+          "note": "BattleLore: Second Edition"
         }
       ]
     },
@@ -5109,6 +5335,14 @@
           "url": "https://play.google.com/store/apps/details?id=com.jtlie.dead_of_winter_crossroads",
           "note": "Crossroads",
           "support_app": true
+        }
+      ],
+      "pc": [
+        {
+          "store": "VASSAL",
+          "url": "https://vassalengine.org/library/projects/Dead_of_Winter_A_Crossroads_Game",
+          "online": true,
+          "note": "Dead of Winter: A Crossroads Game"
         }
       ]
     },
@@ -5403,8 +5637,8 @@
         {
           "store": "Yucata",
           "url": "https://www.yucata.de/en/GameInfo/PortRoyal2",
-          "online": true,
-          "note": "Port Royal"
+          "note": "Port Royal",
+          "online": true
         }
       ]
     },
@@ -5512,8 +5746,8 @@
         {
           "store": "Yucata",
           "url": "https://www.yucata.de/en/GameInfo/NationsDiceGame",
-          "online": true,
-          "note": "Nations: The Dice Game"
+          "note": "Nations: The Dice Game",
+          "online": true
         }
       ]
     },
@@ -5628,7 +5862,15 @@
       "name": "Conan",
       "short_description": "Become the Overlord or play as Conan and his companions in this action-packed game!",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "VASSAL",
+          "url": "https://vassalengine.org/library/projects/Conan",
+          "online": true,
+          "note": "Conan"
+        }
+      ]
     },
     "160069": {
       "name": "Ticket to Ride: 10th Anniversary",
@@ -5874,6 +6116,12 @@
           "url": "https://boardgamearena.com/gamepanel?game=alchemists",
           "note": "BGA Free",
           "online": true
+        },
+        {
+          "store": "VASSAL",
+          "url": "https://vassalengine.org/library/projects/Alchemists",
+          "online": true,
+          "note": "Alchemists"
         }
       ]
     },
@@ -6228,6 +6476,14 @@
           "note": "Dice Roller",
           "support_app": true
         }
+      ],
+      "pc": [
+        {
+          "store": "VASSAL",
+          "url": "https://vassalengine.org/library/projects/Against_the_Reich",
+          "online": true,
+          "note": "Ashes Reborn: Rise of the Phoenixborn"
+        }
       ]
     },
     "167763": {
@@ -6525,6 +6781,12 @@
           "url": "https://www.yucata.de/en/GameInfo/Cacao",
           "note": "Cacao",
           "online": true
+        },
+        {
+          "store": "VASSAL",
+          "url": "https://vassalengine.org/library/projects/Cacao",
+          "online": true,
+          "note": "Cacao"
         }
       ]
     },
@@ -6674,6 +6936,12 @@
           "url": "https://tabletopia.com/games/burgle-bros",
           "note": "Burgle Bros.",
           "online": true
+        },
+        {
+          "store": "VASSAL",
+          "url": "https://vassalengine.org/library/projects/Burgle_Bros.",
+          "online": true,
+          "note": "Burgle Bros."
         }
       ]
     },
@@ -7027,7 +7295,15 @@
       "name": "13 Days: The Cuban Missile Crisis, 1962",
       "short_description": "USA and USSR seek world domination - but too much aggression triggers nuclear war.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "VASSAL",
+          "url": "https://vassalengine.org/library/projects/13_Days_The_Cuban_Missile_Crisis",
+          "online": true,
+          "note": "13 Days: The Cuban Missile Crisis, 1962"
+        }
+      ]
     },
     "177639": {
       "name": "Raptor",
@@ -7101,6 +7377,12 @@
           "url": "https://store.steampowered.com/app/884670/Codenames",
           "note": "Codenames",
           "wishlisted": true
+        },
+        {
+          "store": "VASSAL",
+          "url": "https://vassalengine.org/library/projects/Codenames",
+          "online": true,
+          "note": "Codenames"
         }
       ]
     },
@@ -7189,6 +7471,12 @@
           "url": "https://the7thcontinent.seriouspoulp.com/en/resources/music",
           "note": "Music",
           "owned": true
+        },
+        {
+          "store": "VASSAL",
+          "url": "https://vassalengine.org/library/projects/The_7th_Continent",
+          "online": true,
+          "note": "7th Continent, The"
         }
       ]
     },
@@ -7467,8 +7755,8 @@
         {
           "store": "Yucata",
           "url": "https://www.yucata.de/en/GameInfo/GrandAustria",
-          "online": true,
-          "note": "Grand Austria Hotel"
+          "note": "Grand Austria Hotel",
+          "online": true
         }
       ]
     },
@@ -7533,7 +7821,15 @@
       "name": "Deep Space D-6",
       "short_description": "It was a trap! Roll your crew dice to survive the onslaught of an alien armada.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "VASSAL",
+          "url": "https://vassalengine.org/library/projects/Deep_Space_D-6",
+          "online": true,
+          "note": "Deep Space D-6"
+        }
+      ]
     },
     "183685": {
       "name": "Mr. President: The American Presidency, 2001-2020",
@@ -7815,8 +8111,8 @@
         {
           "store": "Yucata",
           "url": "https://www.yucata.de/en/GameInfo/CoBCard",
-          "online": true,
-          "note": "Castles of Burgundy: The Card Game, The"
+          "note": "Castles of Burgundy: The Card Game, The",
+          "online": true
         }
       ]
     },
@@ -7926,8 +8222,8 @@
         {
           "store": "Yucata",
           "url": "https://www.yucata.de/en/GameInfo/Delphi",
-          "online": true,
-          "note": "Oracle of Delphi, The"
+          "note": "Oracle of Delphi, The",
+          "online": true
         }
       ]
     },
@@ -8576,8 +8872,8 @@
         {
           "store": "Yucata",
           "url": "https://www.yucata.de/en/GameInfo/Lorenzo",
-          "online": true,
-          "note": "Lorenzo il Magnifico"
+          "note": "Lorenzo il Magnifico",
+          "online": true
         }
       ]
     },
@@ -8944,7 +9240,15 @@
       "name": "Agricola, Master of Britain",
       "short_description": "Can you subdue the heathen Britons & Celts and maybe the Caledonians too!",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "VASSAL",
+          "url": "https://vassalengine.org/library/projects/Agricola_Master_of_Britain",
+          "online": true,
+          "note": "Agricola, Master of Britain"
+        }
+      ]
     },
     "206941": {
       "name": "First Class: All Aboard the Orient Express!",
@@ -9457,8 +9761,8 @@
         {
           "store": "Yucata",
           "url": "https://www.yucata.de/en/GameInfo/Rajas",
-          "online": true,
-          "note": "Rajas of the Ganges"
+          "note": "Rajas of the Ganges",
+          "online": true
         }
       ]
     },
@@ -9681,7 +9985,15 @@
       "name": "Brass: Birmingham",
       "short_description": "Build networks, grow industries, and navigate the world of the Industrial Revolution.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "VASSAL",
+          "url": "https://vassalengine.org/library/projects/Brass_Birmingham",
+          "online": true,
+          "note": "Brass: Birmingham"
+        }
+      ]
     },
     "224597": {
       "name": "Warhammer Underworlds: Shadespire",
@@ -9784,8 +10096,8 @@
         {
           "store": "Yucata",
           "url": "https://www.yucata.de/en/GameInfo/RedCathedral",
-          "online": true,
-          "note": "Red Cathedral, The"
+          "note": "Red Cathedral, The",
+          "online": true
         }
       ]
     },
@@ -10285,7 +10597,15 @@
       "name": "Civilization: A New Dawn",
       "short_description": "Build Wonders, expand across the map and develop your Empire.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "VASSAL",
+          "url": "https://vassalengine.org/library/projects/Civilization_A_New_Dawn",
+          "online": true,
+          "note": "Civilization: A New Dawn"
+        }
+      ]
     },
     "233312": {
       "name": "Stuffed Fables",
@@ -11429,6 +11749,12 @@
           "url": "https://tabletopia.com/games/brave-little-belgium",
           "note": "Brave Little Belgium",
           "online": true
+        },
+        {
+          "store": "VASSAL",
+          "url": "https://vassalengine.org/library/projects/Brave_Little_Belgium",
+          "online": true,
+          "note": "Brave Little Belgium"
         }
       ]
     },
@@ -11679,6 +12005,12 @@
           "url": "https://tabletopia.com/games/blitzkrieg-nippon",
           "note": "Blitzkrieg!: World War Two in 20 Minutes",
           "online": true
+        },
+        {
+          "store": "VASSAL",
+          "url": "https://vassalengine.org/library/projects/Blitzkrieg_World_War_Two_in_20_Minutes",
+          "online": true,
+          "note": "Blitzkrieg!: World War Two in 20 Minutes"
         }
       ]
     },
@@ -11757,7 +12089,15 @@
       "name": "Dominant Species: Marine",
       "short_description": "Dominate your aquatic foes or you\u2019ll be sleeping with the fishes.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "VASSAL",
+          "url": "https://vassalengine.org/library/projects/Dominant_Species_Marine",
+          "online": true,
+          "note": "Dominant Species: Marine"
+        }
+      ]
     },
     "263479": {
       "name": "Hunt for Blackbeard",
@@ -12156,7 +12496,15 @@
       "name": "300: Earth & Water",
       "short_description": "Greek city-states and the vast Persian Empire clash in this short but smart wargame.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "VASSAL",
+          "url": "https://vassalengine.org/library/projects/300_Earth__Water",
+          "online": true,
+          "note": "300: Earth & Water"
+        }
+      ]
     },
     "267127": {
       "name": "Aerion",
@@ -12197,7 +12545,7 @@
       ]
     },
     "268620": {
-      "name": "Similo: Myths",
+      "name": "Similo",
       "short_description": "The pressure rises as you find similarities and eliminate characters!",
       "rulebooks": [],
       "supplemental_files": [],
@@ -12234,7 +12582,7 @@
         {
           "store": "Tabletopia",
           "url": "https://tabletopia.com/games/similo-animals-fables",
-          "note": "Similo: Myths",
+          "note": "Similo",
           "online": true
         }
       ]
@@ -12565,7 +12913,15 @@
       "name": "Banish the Snakes: A Game of St. Patrick in Ireland",
       "short_description": "A solitaire and/or cooperative game in 5th century Ireland.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "VASSAL",
+          "url": "https://vassalengine.org/library/projects/Banish_the_Snakes_A_Game_of_St._Patrick_in_Ireland",
+          "online": true,
+          "note": "Banish the Snakes: A Game of St. Patrick in Ireland"
+        }
+      ]
     },
     "275913": {
       "name": "Bruxelles 1897",
@@ -12623,7 +12979,15 @@
       "name": "Caesar: Rome vs. Gaul",
       "short_description": "Card driven strategic and area control struggle between Ancient Rome and Gaul.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "VASSAL",
+          "url": "https://vassalengine.org/library/projects/Caesar_Rome_vs_Gaul",
+          "online": true,
+          "note": "Caesar: Rome vs. Gaul"
+        }
+      ]
     },
     "276498": {
       "name": "Paris: La Cit\u00e9 de la Lumi\u00e8re",
@@ -12940,6 +13304,7 @@
         {
           "store": "Play Store",
           "url": "https://play.google.com/store/apps/details?id=com.MonsterCouch.Calico",
+          "note": "Quilts and Cats of Calico",
           "wishlisted": true
         }
       ],
@@ -13578,7 +13943,15 @@
       "name": "Cosmic Frog",
       "short_description": "Use your two-mile-tall, overpowered, cosmic frog to harvest the best terrain.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "VASSAL",
+          "url": "https://vassalengine.org/library/projects/Cosmic_frog",
+          "online": true,
+          "note": "Cosmic Frog"
+        }
+      ]
     },
     "295947": {
       "name": "Cascadia",
@@ -13975,7 +14348,15 @@
       "name": "Polis",
       "short_description": "The great struggle between Athens and Sparta. Much more than a wargame.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "Yucata",
+          "url": "https://www.yucata.de/en/GameInfo/Polis",
+          "note": "Polis",
+          "online": true
+        }
+      ]
     },
     "303553": {
       "name": "Skulls of Sedlec",
@@ -14013,8 +14394,8 @@
         {
           "store": "Yucata",
           "url": "https://www.yucata.de/en/GameInfo/DTB",
-          "online": true,
-          "note": "Dinosaur Table Battles"
+          "note": "Dinosaur Table Battles",
+          "online": true
         }
       ]
     },
@@ -14292,8 +14673,8 @@
         {
           "store": "Yucata",
           "url": "https://www.yucata.de/en/GameInfo/Arnak",
-          "online": true,
-          "note": "Lost Ruins of Arnak"
+          "note": "Lost Ruins of Arnak",
+          "online": true
         }
       ]
     },
@@ -14570,8 +14951,8 @@
         {
           "store": "Yucata",
           "url": "https://www.yucata.de/en/GameInfo/RajasDice",
-          "online": true,
-          "note": "Rajas of the Ganges: The Dice Charmers"
+          "note": "Rajas of the Ganges: The Dice Charmers",
+          "online": true
         }
       ]
     },
@@ -14623,7 +15004,15 @@
       "name": "Aurelian: Restorer of the World",
       "short_description": "Strategic level, Solitaire wargame: reunite the Roman Empire.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "VASSAL",
+          "url": "https://vassalengine.org/library/projects/Aurelian_Restorer_of_the_World",
+          "online": true,
+          "note": "Aurelian: Restorer of the World"
+        }
+      ]
     },
     "322010": {
       "name": "Enchanted Plumes",
@@ -15420,6 +15809,12 @@
           "url": "https://tabletopia.com/games/a-gest-of-robin-hood",
           "note": "Gest of Robin Hood, A",
           "online": true
+        },
+        {
+          "store": "VASSAL",
+          "url": "https://vassalengine.org/library/projects/A_Gest_of_Robin_Hood",
+          "online": true,
+          "note": "Gest of Robin Hood, A"
         }
       ]
     },
@@ -16845,6 +17240,7 @@
         {
           "store": "Steam",
           "url": "https://store.steampowered.com/app/3362880/Wingspan_Asia_Expansion/",
+          "note": "Wingspan Asia",
           "wishlisted": true
         },
         {
@@ -17269,8 +17665,8 @@
         {
           "store": "Yucata",
           "url": "https://www.yucata.de/en/GameInfo/WhiteCastle",
-          "online": true,
-          "note": "White Castle, The"
+          "note": "White Castle, The",
+          "online": true
         }
       ]
     },

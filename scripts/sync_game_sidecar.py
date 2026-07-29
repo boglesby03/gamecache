@@ -24,6 +24,7 @@ DEFAULT_SIDECAR = "game_metadata_overrides.json"
 DEFAULT_DB = "gamecache.sqlite"
 YUCATA_CATALOG_API = "https://www.yucata.de/Services/YucataService.svc/GetGamesWithTags"
 TABLETOPIA_CATALOG_API = "https://api.tabletopia.com/games"
+VASSAL_PROJECTS_API = "https://vassalengine.org/api/gls/v1/projects"
 
 # Some Yucata titles don't expose an IdName that matches BGG naming conventions.
 # Use explicit game-id overrides so sync can still add/maintain correct links.
@@ -294,6 +295,78 @@ def load_tabletopia_candidates(conn: sqlite3.Connection) -> Dict[str, Dict[str, 
     return candidates
 
 
+def load_vassal_candidates(conn: sqlite3.Connection) -> Dict[str, Dict[str, Any]]:
+    """Load games that appear to have VASSAL implementations from SQLite metadata."""
+    cur = conn.cursor()
+    cur.execute(
+        """
+        WITH ranked AS (
+          SELECT
+            id,
+            name,
+            tags,
+            families,
+            alternate_names,
+            ROW_NUMBER() OVER (
+              PARTITION BY id
+              ORDER BY
+                CASE WHEN tags LIKE '%"own"%' THEN 0 ELSE 1 END,
+                CASE WHEN tags LIKE '%"preordered"%' THEN 1 ELSE 2 END,
+                LENGTH(name),
+                name
+            ) AS rn
+          FROM games
+          WHERE id IS NOT NULL AND name IS NOT NULL AND TRIM(name) <> ''
+        )
+        SELECT id, name, families, alternate_names
+        FROM ranked
+        WHERE rn = 1
+        """
+    )
+
+    candidates: Dict[str, Dict[str, Any]] = {}
+    for game_id, name, families_raw, alt_raw in cur.fetchall():
+        has_vassal_family = False
+        try:
+            families = json.loads(families_raw or "[]")
+            if isinstance(families, list):
+                for family in families:
+                    family_name = ""
+                    if isinstance(family, dict):
+                        family_name = str(family.get("name", ""))
+                    elif isinstance(family, str):
+                        family_name = family
+                    normalized_family = family_name.lower()
+                    if (
+                        "digital implementations: vassal" in normalized_family
+                        or "digital implementations: vassel" in normalized_family
+                    ):
+                        has_vassal_family = True
+                        break
+        except Exception:
+            pass
+
+        if not has_vassal_family:
+            continue
+
+        alt_names: List[str] = []
+        try:
+            parsed_alt = json.loads(alt_raw or "[]")
+            if isinstance(parsed_alt, list):
+                alt_names = [str(item).strip() for item in parsed_alt if str(item).strip()]
+        except Exception:
+            pass
+
+        key = str(int(game_id))
+        candidates[key] = {
+            "id": key,
+            "name": str(name or "").strip(),
+            "alternate_names": alt_names,
+        }
+
+    return candidates
+
+
 def fetch_yucata_game_urls(timeout: float = 20.0) -> Dict[str, str]:
     """Fetch Yucata catalog and map normalized names to GameInfo URLs."""
     payload = b"{}"
@@ -434,6 +507,69 @@ def fetch_tabletopia_game_catalog(timeout: float = 20.0) -> Tuple[Dict[str, str]
     return mapping, premium_by_short_url, name_by_short_url
 
 
+def fetch_vassal_project_catalog(timeout: float = 20.0, limit: int = 100) -> Tuple[Dict[str, str], Dict[str, str]]:
+    """Fetch VASSAL project catalog and map normalized names to project URLs.
+
+    Returns:
+    - mapping normalized key -> project URL
+    - mapping slug -> catalog display title
+    """
+    mapping: Dict[str, str] = {}
+    title_by_slug: Dict[str, str] = {}
+
+    safe_limit = max(1, min(int(limit), 100))
+    next_query = f"?limit={safe_limit}"
+    visited_queries: Set[str] = set()
+
+    while next_query:
+        if next_query in visited_queries:
+            break
+        visited_queries.add(next_query)
+
+        req = urllib.request.Request(
+            f"{VASSAL_PROJECTS_API}{next_query}",
+            headers={
+                "Accept": "application/json",
+                "User-Agent": "Mozilla/5.0 (GameCache sidecar sync)",
+            },
+        )
+
+        with urllib.request.urlopen(req, timeout=timeout) as resp:
+            body = resp.read().decode("utf-8", errors="replace")
+        payload = json.loads(body)
+
+        projects = payload.get("projects", []) if isinstance(payload, dict) else []
+        meta = payload.get("meta", {}) if isinstance(payload, dict) else {}
+
+        for project in projects:
+            if not isinstance(project, dict):
+                continue
+
+            slug = str(project.get("slug", "")).strip()
+            name = str(project.get("name", "")).strip()
+            game = project.get("game") if isinstance(project.get("game"), dict) else {}
+            game_title = str(game.get("title", "")).strip() if isinstance(game, dict) else ""
+
+            if not slug:
+                continue
+
+            project_url = f"https://vassalengine.org/library/projects/{slug}"
+
+            key_sources = [slug, name, game_title]
+            for source_name in key_sources:
+                for key in _candidate_name_keys(source_name):
+                    mapping.setdefault(key, project_url)
+
+            title_candidate = game_title or name or slug.replace("_", " ")
+            if title_candidate:
+                title_by_slug[slug.lower()] = title_candidate
+
+        next_page = str(meta.get("next_page", "") or "").strip()
+        next_query = next_page if next_page.startswith("?") else ""
+
+    return mapping, title_by_slug
+
+
 def _find_existing_yucata_link(entry: Dict[str, Any]) -> Optional[str]:
     for platform in ("android", "ios", "pc"):
         platform_items = entry.get(platform)
@@ -466,6 +602,30 @@ def _find_existing_tabletopia_link(entry: Dict[str, Any]) -> Optional[str]:
             if "tabletopia" in store or "tabletopia.com" in url:
                 return str(item.get("url", "")).strip()
     return None
+
+
+def _find_existing_vassal_link(entry: Dict[str, Any]) -> Optional[str]:
+    for platform in ("android", "ios", "pc"):
+        platform_items = entry.get(platform)
+        if isinstance(platform_items, dict):
+            platform_items = [platform_items]
+        if not isinstance(platform_items, list):
+            continue
+        for item in platform_items:
+            if not isinstance(item, dict):
+                continue
+            store = str(item.get("store", "")).strip().lower()
+            url = str(item.get("url", "")).strip().lower()
+            if "vassal" in store or "vassalengine.org" in url:
+                return str(item.get("url", "")).strip()
+    return None
+
+
+def _extract_vassal_slug(url: str) -> str:
+    match = re.search(r"vassalengine\.org/library/projects/([^/?#]+)", str(url or ""), flags=re.IGNORECASE)
+    if not match:
+        return ""
+    return match.group(1).strip().lower()
 
 
 def _extract_tabletopia_short_url(url: str) -> str:
@@ -556,6 +716,8 @@ def _should_mark_online(item: Dict[str, Any], tabletopia_premium_by_short_url: O
     store_lower = store.lower()
 
     if store_key in ("yucata", "yucatade") or "yucata.de" in url_lower:
+        return True
+    if store_key == "vassal" or "vassalengine.org" in url_lower:
         return True
     if store_key in ("bga", "boardgamearena") or "boardgamearena.com" in url_lower:
         return True
@@ -716,6 +878,69 @@ def annotate_tabletopia_statuses_and_notes(
     return updated
 
 
+def annotate_vassal_statuses_and_notes(
+    data: Dict[str, Any],
+    vassal_title_by_slug: Optional[Dict[str, str]] = None,
+) -> int:
+    """Apply VASSAL rules:
+
+    - Note must be game name (or VASSAL catalog title when game name is blank).
+    - VASSAL entries are online=true.
+    - online entries must not keep owned=true.
+    """
+    games = data.get("games", {})
+    if not isinstance(games, dict):
+        return 0
+
+    updated = 0
+    for _game_id, entry in games.items():
+        if not isinstance(entry, dict):
+            continue
+
+        game_name = str(entry.get("name", "")).strip()
+
+        for platform in ("android", "ios", "pc"):
+            platform_items = entry.get(platform)
+            if isinstance(platform_items, dict):
+                platform_items = [platform_items]
+                entry[platform] = platform_items
+            if not isinstance(platform_items, list):
+                continue
+
+            for item in platform_items:
+                if not isinstance(item, dict):
+                    continue
+
+                store = str(item.get("store", "")).strip().lower()
+                url = str(item.get("url", "")).strip().lower()
+                if "vassal" not in store and "vassalengine.org" not in url:
+                    continue
+
+                changed = False
+
+                note_target = game_name
+                slug = _extract_vassal_slug(url)
+                if not note_target and slug and vassal_title_by_slug:
+                    note_target = str(vassal_title_by_slug.get(slug, "")).strip()
+
+                if note_target and str(item.get("note", "")).strip() != note_target:
+                    item["note"] = note_target
+                    changed = True
+
+                if item.get("online") is not True:
+                    item["online"] = True
+                    changed = True
+
+                if item.get("owned") is True:
+                    item.pop("owned", None)
+                    changed = True
+
+                if changed:
+                    updated += 1
+
+    return updated
+
+
 def enrich_yucata_links(data: Dict[str, Any], candidates: Dict[str, Dict[str, Any]], yucata_map: Dict[str, str]) -> Tuple[int, int]:
     """Add missing Yucata links to sidecar entries.
 
@@ -816,6 +1041,59 @@ def enrich_tabletopia_links(
             payload["monthly_subscription"] = True
         elif short_url:
             payload["online"] = True
+
+        pc_entries = _ensure_platform_list(entry, "pc")
+        pc_entries.append(payload)
+        added_links += 1
+
+    return added_links, len(candidates)
+
+
+def enrich_vassal_links(
+    data: Dict[str, Any],
+    candidates: Dict[str, Dict[str, Any]],
+    vassal_map: Dict[str, str],
+    vassal_title_by_slug: Optional[Dict[str, str]] = None,
+) -> Tuple[int, int]:
+    """Add missing VASSAL links to sidecar entries."""
+    games = data.setdefault("games", {})
+    added_links = 0
+
+    for game_id, candidate in candidates.items():
+        entry = games.get(game_id)
+        if not isinstance(entry, dict):
+            continue
+
+        existing = _find_existing_vassal_link(entry)
+        if existing:
+            continue
+
+        candidate_names = [candidate.get("name", "")] + list(candidate.get("alternate_names", []))
+        match_url = ""
+        for candidate_name in candidate_names:
+            for key in _candidate_name_keys(str(candidate_name)):
+                if key in vassal_map:
+                    match_url = vassal_map[key]
+                    break
+            if match_url:
+                break
+
+        if not match_url:
+            continue
+
+        slug = _extract_vassal_slug(match_url)
+        fallback_catalog_name = ""
+        if slug and vassal_title_by_slug:
+            fallback_catalog_name = str(vassal_title_by_slug.get(slug, "")).strip()
+
+        payload: Dict[str, Any] = {
+            "store": "VASSAL",
+            "url": match_url,
+            "online": True,
+            "note": str(candidate.get("name", "")).strip() or fallback_catalog_name or "",
+        }
+        if payload.get("note") == "":
+            payload.pop("note", None)
 
         pc_entries = _ensure_platform_list(entry, "pc")
         pc_entries.append(payload)
@@ -933,6 +1211,17 @@ def main() -> int:
         default=20.0,
         help="Timeout in seconds for Tabletopia catalog API request (default: 20).",
     )
+    parser.add_argument(
+        "--skip-vassal-auto-links",
+        action="store_true",
+        help="Skip automatic VASSAL link enrichment from SQLite + VASSAL catalog.",
+    )
+    parser.add_argument(
+        "--vassal-timeout",
+        type=float,
+        default=20.0,
+        help="Timeout in seconds for VASSAL catalog API request (default: 20).",
+    )
     args = parser.parse_args()
 
     db_path = Path(args.db)
@@ -948,6 +1237,7 @@ def main() -> int:
         rows = choose_canonical_names(conn)
         yucata_candidates = load_yucata_candidates(conn)
         tabletopia_candidates = load_tabletopia_candidates(conn)
+        vassal_candidates = load_vassal_candidates(conn)
     finally:
         conn.close()
 
@@ -956,16 +1246,21 @@ def main() -> int:
     yucata_added = 0
     yucata_notes_updated = 0
     tabletopia_added = 0
+    vassal_added = 0
     tabletopia_premium_catalog_count = 0
     tabletopia_status_notes_updated = 0
+    vassal_status_notes_updated = 0
     online_statuses_updated = 0
     owned_removed_from_online = 0
     yucata_candidates_count = len(yucata_candidates)
     tabletopia_candidates_count = len(tabletopia_candidates)
+    vassal_candidates_count = len(vassal_candidates)
     yucata_error = ""
     tabletopia_error = ""
+    vassal_error = ""
     tabletopia_premium_by_short_url: Dict[str, bool] = {}
     tabletopia_name_by_short_url: Dict[str, str] = {}
+    vassal_title_by_slug: Dict[str, str] = {}
     yucata_misses: List[Tuple[str, str, List[str]]] = []
     if not args.skip_yucata_auto_links and yucata_candidates_count > 0:
         try:
@@ -996,6 +1291,22 @@ def main() -> int:
         except Exception as exc:
             tabletopia_error = str(exc)
 
+    if not args.skip_vassal_auto_links and vassal_candidates_count > 0:
+        try:
+            vassal_map, vassal_title_by_slug = fetch_vassal_project_catalog(timeout=args.vassal_timeout)
+            vassal_added, _ = enrich_vassal_links(
+                data,
+                vassal_candidates,
+                vassal_map,
+                vassal_title_by_slug=vassal_title_by_slug,
+            )
+            vassal_status_notes_updated = annotate_vassal_statuses_and_notes(
+                data,
+                vassal_title_by_slug=vassal_title_by_slug,
+            )
+        except Exception as exc:
+            vassal_error = str(exc)
+
     online_statuses_updated = annotate_online_statuses(data, tabletopia_premium_by_short_url=tabletopia_premium_by_short_url)
     owned_removed_from_online = strip_owned_from_online_entries(data)
 
@@ -1005,10 +1316,13 @@ def main() -> int:
         print(f"would_update_existing={updated_existing}")
         print(f"yucata_candidates={yucata_candidates_count}")
         print(f"tabletopia_candidates={tabletopia_candidates_count}")
+        print(f"vassal_candidates={vassal_candidates_count}")
         print(f"would_add_yucata_links={yucata_added}")
         print(f"would_add_tabletopia_links={tabletopia_added}")
+        print(f"would_add_vassal_links={vassal_added}")
         print(f"tabletopia_premium_catalog_count={tabletopia_premium_catalog_count}")
         print(f"would_update_tabletopia_statuses_notes={tabletopia_status_notes_updated}")
+        print(f"would_update_vassal_statuses_notes={vassal_status_notes_updated}")
         print(f"would_update_yucata_notes={yucata_notes_updated}")
         if args.report_yucata_misses:
             print(f"would_report_yucata_misses={len(yucata_misses)}")
@@ -1021,6 +1335,8 @@ def main() -> int:
             print(f"yucata_error={yucata_error}")
         if tabletopia_error:
             print(f"tabletopia_error={tabletopia_error}")
+        if vassal_error:
+            print(f"vassal_error={vassal_error}")
         print(f"total_after={len(data.get('games', {}))}")
         return 0
 
@@ -1034,10 +1350,13 @@ def main() -> int:
     print(f"updated_existing={updated_existing}")
     print(f"yucata_candidates={yucata_candidates_count}")
     print(f"tabletopia_candidates={tabletopia_candidates_count}")
+    print(f"vassal_candidates={vassal_candidates_count}")
     print(f"added_yucata_links={yucata_added}")
     print(f"added_tabletopia_links={tabletopia_added}")
+    print(f"added_vassal_links={vassal_added}")
     print(f"tabletopia_premium_catalog_count={tabletopia_premium_catalog_count}")
     print(f"updated_tabletopia_statuses_notes={tabletopia_status_notes_updated}")
+    print(f"updated_vassal_statuses_notes={vassal_status_notes_updated}")
     print(f"updated_yucata_notes={yucata_notes_updated}")
     if args.report_yucata_misses:
         print(f"reported_yucata_misses={len(yucata_misses)}")
@@ -1050,6 +1369,8 @@ def main() -> int:
         print(f"yucata_error={yucata_error}")
     if tabletopia_error:
         print(f"tabletopia_error={tabletopia_error}")
+    if vassal_error:
+        print(f"vassal_error={vassal_error}")
     print(f"total_sidecar_games={len(data.get('games', {}))}")
     print(f"written={sidecar_path}")
 
