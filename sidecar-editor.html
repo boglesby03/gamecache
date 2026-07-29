@@ -76,6 +76,7 @@
             </div>
 
             <dl class="cover-meta" id="field-cover-meta">
+              <div class="cover-meta-row"><dt>Display Name</dt><dd id="field-sqlite-display-name">-</dd></div>
               <div class="cover-meta-row"><dt>Year</dt><dd id="field-sqlite-year">-</dd></div>
               <div class="cover-meta-row"><dt>Rank</dt><dd id="field-sqlite-rank">-</dd></div>
               <div class="cover-meta-row"><dt>Rating</dt><dd id="field-sqlite-rating">-</dd></div>
@@ -85,19 +86,35 @@
               <div class="cover-meta-row"><dt>Owned</dt><dd id="field-sqlite-numowned">-</dd></div>
               <div class="cover-meta-row"><dt>Plays</dt><dd id="field-sqlite-numplays">-</dd></div>
             </dl>
+            <a id="field-bgg-link" class="detail-link hidden" href="#" target="_blank" rel="noopener noreferrer">
+              View on BoardGameGeek
+            </a>
           </div>
-          <p id="field-cover-status" class="cover-preview-status">Loading cover art from SQLite...</p>
+          <p id="field-cover-status" class="cover-preview-status"></p>
         </section>
 
-        <label>
-          <span>Short Description</span>
-          <input id="field-short-description" type="text" />
-        </label>
+        <section class="short-description-shell" aria-label="Short Description">
+          <div class="short-description-head">
+            <span>Short Description</span>
+            <div class="row-actions">
+              <button type="button" id="short-description-edit" class="btn mini ghost" title="Edit short description">
+                <span class="material-symbols-rounded" aria-hidden="true">edit</span>
+              </button>
+              <button type="button" id="short-description-save" class="btn mini hidden" title="Save short description">
+                <span class="material-symbols-rounded" aria-hidden="true">save</span>
+              </button>
+            </div>
+          </div>
+          <div id="field-short-description-view" class="short-description-view">-</div>
+          <input id="field-short-description" class="hidden" type="text" />
+        </section>
 
         <section class="doc-section">
           <div class="section-head">
             <h3>Rulebooks</h3>
-            <button type="button" id="add-rulebook" class="btn mini">Add</button>
+            <button type="button" id="add-rulebook" class="btn mini" title="Add rulebook">
+              <span class="material-symbols-rounded" aria-hidden="true">add</span>
+            </button>
           </div>
           <div id="rulebooks-list" class="doc-list"></div>
         </section>
@@ -105,7 +122,9 @@
         <section class="doc-section">
           <div class="section-head">
             <h3>Supplemental Files</h3>
-            <button type="button" id="add-supplemental" class="btn mini">Add</button>
+            <button type="button" id="add-supplemental" class="btn mini" title="Add supplemental file">
+              <span class="material-symbols-rounded" aria-hidden="true">add</span>
+            </button>
           </div>
           <div id="supplemental-list" class="doc-list"></div>
         </section>
@@ -114,7 +133,9 @@
           <article class="platform-card" data-platform="pc">
             <div class="section-head">
               <h3 class="platform-title"><span class="material-symbols-rounded" aria-hidden="true">desktop_windows</span><span>PC</span></h3>
-              <button type="button" class="btn mini" data-action="add-platform-entry" data-platform="pc">Add</button>
+              <button type="button" class="btn mini" data-action="add-platform-entry" data-platform="pc" title="Add PC entry">
+                <span class="material-symbols-rounded" aria-hidden="true">add</span>
+              </button>
             </div>
             <div class="platform-entry-list" data-platform-list="pc"></div>
           </article>
@@ -122,7 +143,9 @@
           <article class="platform-card" data-platform="android">
             <div class="section-head">
               <h3 class="platform-title"><span class="material-symbols-rounded" aria-hidden="true">android</span><span>Android</span></h3>
-              <button type="button" class="btn mini" data-action="add-platform-entry" data-platform="android">Add</button>
+              <button type="button" class="btn mini" data-action="add-platform-entry" data-platform="android" title="Add Android entry">
+                <span class="material-symbols-rounded" aria-hidden="true">add</span>
+              </button>
             </div>
             <div class="platform-entry-list" data-platform-list="android"></div>
           </article>
@@ -130,7 +153,9 @@
           <article class="platform-card" data-platform="ios">
             <div class="section-head">
               <h3 class="platform-title"><img src="https://cdn.simpleicons.org/apple" alt="Apple" class="platform-logo" loading="lazy" referrerpolicy="no-referrer" /><span>iOS</span></h3>
-              <button type="button" class="btn mini" data-action="add-platform-entry" data-platform="ios">Add</button>
+              <button type="button" class="btn mini" data-action="add-platform-entry" data-platform="ios" title="Add iOS entry">
+                <span class="material-symbols-rounded" aria-hidden="true">add</span>
+              </button>
             </div>
             <div class="platform-entry-list" data-platform-list="ios"></div>
           </article>
@@ -144,36 +169,89 @@
   </main>
 
   <template id="doc-row-template">
-    <div class="doc-row">
+    <div class="doc-row" data-editing="false" data-has-saved="false">
       <input type="text" data-key="name" placeholder="Label (optional)" />
       <input type="url" data-key="url" placeholder="https://..." />
-      <button type="button" class="btn mini danger" data-action="remove">Remove</button>
+      <div class="doc-row-view hidden" data-key="row-view">
+        <div class="doc-row-view-title" data-key="view-name"></div>
+        <div class="doc-row-view-url-row">
+          <div class="doc-row-view-url" data-key="view-url"></div>
+          <a class="row-link row-link-icon hidden" data-key="view-link" href="#" target="_blank" rel="noopener noreferrer" title="Open link" aria-label="Open link">
+            <span class="material-symbols-rounded" aria-hidden="true">public</span>
+          </a>
+        </div>
+      </div>
+      <div class="row-actions">
+        <button type="button" class="btn mini ghost" data-action="edit-row" title="Edit row">
+          <span class="material-symbols-rounded" aria-hidden="true">edit</span>
+        </button>
+        <button type="button" class="btn mini hidden" data-action="save-row" title="Save row">
+          <span class="material-symbols-rounded" aria-hidden="true">save</span>
+        </button>
+        <button type="button" class="btn mini danger" data-action="remove" title="Remove row">
+          <span class="material-symbols-rounded" aria-hidden="true">delete</span>
+        </button>
+      </div>
     </div>
   </template>
 
   <template id="platform-row-template">
-    <div class="platform-row">
-      <div class="platform-row-main">
-        <span class="store-icon-slot" data-key="store-icon" aria-hidden="true"></span>
-        <select data-key="store"></select>
-        <input type="url" data-key="url" placeholder="https://..." />
-        <label class="state-select-wrap">
-          <span>Status</span>
-          <select data-key="state">
-            <option value="">Owned</option>
-            <option value="online">Online</option>
-            <option value="wishlisted">Wishlisted</option>
-            <option value="preordered">Preordered</option>
-            <option value="monthly_subscription">Subscribe</option>
-            <option value="support_app">Support App</option>
-          </select>
+    <div class="platform-row" data-editing="false" data-has-saved="false">
+      <div class="platform-row-edit">
+        <div class="platform-row-main">
+          <span class="store-icon-slot" data-key="store-icon" aria-hidden="true"></span>
+          <select data-key="store"></select>
+          <input type="url" data-key="url" placeholder="https://..." />
+          <label class="state-select-wrap">
+            <span>Status</span>
+            <select data-key="state">
+              <option value="">Owned</option>
+              <option value="online">Online</option>
+              <option value="wishlisted">Wishlisted</option>
+              <option value="preordered">Preordered</option>
+              <option value="monthly_subscription">Subscribe</option>
+              <option value="support_app">Support App</option>
+            </select>
+          </label>
+          <div class="row-actions">
+            <button type="button" class="btn mini ghost" data-action="edit-row" title="Edit row">
+              <span class="material-symbols-rounded" aria-hidden="true">edit</span>
+            </button>
+            <button type="button" class="btn mini hidden" data-action="save-row" title="Save row">
+              <span class="material-symbols-rounded" aria-hidden="true">save</span>
+            </button>
+            <button type="button" class="btn mini danger" data-action="remove" title="Remove row">
+              <span class="material-symbols-rounded" aria-hidden="true">delete</span>
+            </button>
+          </div>
+        </div>
+        <label class="platform-note-wrap">
+          <span>Note</span>
+          <input type="text" data-key="note" placeholder="What the app does..." />
         </label>
-        <button type="button" class="btn mini danger" data-action="remove">Remove</button>
       </div>
-      <label class="platform-note-wrap">
-        <span>Note</span>
-        <input type="text" data-key="note" placeholder="What the app does..." />
-      </label>
+      <div class="platform-row-view hidden" data-key="row-view">
+        <div class="platform-row-view-top">
+          <span class="store-icon-slot" data-key="view-store-icon" aria-hidden="true"></span>
+          <span class="platform-row-view-store" data-key="view-store"></span>
+          <span class="platform-row-view-status" data-key="view-status"></span>
+          <div class="row-actions row-actions-view-inline">
+            <button type="button" class="btn mini ghost" data-action="edit-row" title="Edit row">
+              <span class="material-symbols-rounded" aria-hidden="true">edit</span>
+            </button>
+            <button type="button" class="btn mini danger" data-action="remove" title="Remove row">
+              <span class="material-symbols-rounded" aria-hidden="true">delete</span>
+            </button>
+          </div>
+        </div>
+        <div class="platform-row-view-note hidden" data-key="view-note"></div>
+        <div class="platform-row-view-url-row">
+          <div class="platform-row-view-url" data-key="view-url"></div>
+          <a class="row-link row-link-icon hidden" data-key="view-link" href="#" target="_blank" rel="noopener noreferrer" title="Open link" aria-label="Open link">
+            <span class="material-symbols-rounded" aria-hidden="true">public</span>
+          </a>
+        </div>
+      </div>
     </div>
   </template>
 

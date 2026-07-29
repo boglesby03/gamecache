@@ -5,6 +5,7 @@
     data: { games: {} },
     selectedId: null,
     dirty: false,
+    shortDescriptionEditing: false,
     handle: null,
     coverArtById: {},
     coverArtLoaded: false,
@@ -26,9 +27,11 @@
     editorForm: document.getElementById("editor-form"),
     fieldId: document.getElementById("field-id"),
     fieldName: document.getElementById("field-name"),
+    fieldBggLink: document.getElementById("field-bgg-link"),
     fieldCoverImage: document.getElementById("field-cover-image"),
     fieldCoverFallback: document.getElementById("field-cover-fallback"),
     fieldCoverStatus: document.getElementById("field-cover-status"),
+    fieldSqliteDisplayName: document.getElementById("field-sqlite-display-name"),
     fieldSqliteYear: document.getElementById("field-sqlite-year"),
     fieldSqliteRank: document.getElementById("field-sqlite-rank"),
     fieldSqliteRating: document.getElementById("field-sqlite-rating"),
@@ -37,7 +40,10 @@
     fieldSqliteWeight: document.getElementById("field-sqlite-weight"),
     fieldSqliteNumowned: document.getElementById("field-sqlite-numowned"),
     fieldSqliteNumplays: document.getElementById("field-sqlite-numplays"),
+    fieldShortDescriptionView: document.getElementById("field-short-description-view"),
     fieldShortDescription: document.getElementById("field-short-description"),
+    shortDescriptionEdit: document.getElementById("short-description-edit"),
+    shortDescriptionSave: document.getElementById("short-description-save"),
     rulebooksList: document.getElementById("rulebooks-list"),
     supplementalList: document.getElementById("supplemental-list"),
     addRulebook: document.getElementById("add-rulebook"),
@@ -180,41 +186,43 @@
   function updatePlatformRowIcon(row) {
     if (!row) return;
 
-    const iconSlot = row.querySelector('[data-key="store-icon"]');
     const storeInput = row.querySelector('[data-key="store"]');
     const urlInput = row.querySelector('[data-key="url"]');
-    if (!iconSlot || !storeInput || !urlInput) return;
+    if (!storeInput || !urlInput) return;
 
     const meta = getStoreIconMeta(storeInput.value, urlInput.value);
-    iconSlot.innerHTML = "";
-    iconSlot.classList.remove("store-icon-badge");
 
-    if (!meta) {
-      iconSlot.title = "";
-      iconSlot.removeAttribute("aria-label");
-      return;
-    }
+    row.querySelectorAll('[data-key="store-icon"], [data-key="view-store-icon"]').forEach((iconSlot) => {
+      iconSlot.innerHTML = "";
+      iconSlot.classList.remove("store-icon-badge");
 
-    iconSlot.title = meta.title || "Store";
-    iconSlot.setAttribute("aria-label", meta.title || "Store");
+      if (!meta) {
+        iconSlot.title = "";
+        iconSlot.removeAttribute("aria-label");
+        return;
+      }
 
-    if (meta.iconUrl) {
-      const img = document.createElement("img");
-      img.className = "store-icon-logo";
-      img.src = meta.iconUrl;
-      img.alt = meta.title || "Store icon";
-      img.loading = "lazy";
-      img.referrerPolicy = "no-referrer";
-      img.addEventListener("error", () => {
-        img.remove();
+      iconSlot.title = meta.title || "Store";
+      iconSlot.setAttribute("aria-label", meta.title || "Store");
+
+      if (meta.iconUrl) {
+        const img = document.createElement("img");
+        img.className = "store-icon-logo";
+        img.src = meta.iconUrl;
+        img.alt = meta.title || "Store icon";
+        img.loading = "lazy";
+        img.referrerPolicy = "no-referrer";
+        img.addEventListener("error", () => {
+          img.remove();
+          iconSlot.textContent = meta.label || "D";
+          iconSlot.classList.add("store-icon-badge");
+        });
+        iconSlot.appendChild(img);
+      } else {
         iconSlot.textContent = meta.label || "D";
         iconSlot.classList.add("store-icon-badge");
-      });
-      iconSlot.appendChild(img);
-    } else {
-      iconSlot.textContent = meta.label || "D";
-      iconSlot.classList.add("store-icon-badge");
-    }
+      }
+    });
   }
 
   function ensureGamesContainer(data) {
@@ -415,7 +423,7 @@
   function getCoverThumbnailForList(id) {
     const cover = getCoverInfoForGameId(id);
     if (!cover) return "";
-    return String(cover.thumbnail || cover.image || "").trim();
+    return String(cover.thumbnail || "").trim();
   }
 
   function setSelectedCoverStatus(message) {
@@ -448,6 +456,7 @@
     const cover = getCoverInfoForGameId(id);
 
     if (!cover) {
+      setMetaValue(els.fieldSqliteDisplayName, "-");
       setMetaValue(els.fieldSqliteYear, "-");
       setMetaValue(els.fieldSqliteRank, "-");
       setMetaValue(els.fieldSqliteRating, "-");
@@ -459,6 +468,8 @@
       return;
     }
 
+    const displayName = String(cover.name || "").trim();
+    setMetaValue(els.fieldSqliteDisplayName, displayName || "-");
     setMetaValue(els.fieldSqliteYear, formatIntegerValue(cover.year));
     setMetaValue(els.fieldSqliteRank, formatIntegerValue(cover.rank));
     setMetaValue(els.fieldSqliteRating, formatDecimalValue(cover.rating, 2));
@@ -487,7 +498,7 @@
       els.fieldCoverImage.alt = `${titleName} cover art`;
       els.fieldCoverImage.classList.remove("hidden");
       els.fieldCoverFallback.classList.add("hidden");
-      setSelectedCoverStatus(state.coverArtSource ? `Cover loaded from ${state.coverArtSource}.` : "Cover loaded from SQLite.");
+      setSelectedCoverStatus("");
       return;
     }
 
@@ -599,7 +610,7 @@
       const db = new SQL.Database(dbPayload.bytes);
       const covers = {};
       const statement = db.prepare(`
-        SELECT id, image, thumbnail, year, rank, rating, playing_time, min_age, weight, numowned, numplays
+        SELECT id, name, image, thumbnail, year, rank, rating, playing_time, min_age, weight, numowned, numplays
         FROM games
       `);
 
@@ -610,6 +621,7 @@
         const thumbnail = String(row.thumbnail || "").trim();
         if (!id) continue;
         covers[id] = {
+          name: String(row.name || "").trim(),
           image,
           thumbnail,
           year: row.year,
@@ -713,10 +725,7 @@
     target.innerHTML = "";
 
     for (const doc of docs) {
-      const row = els.docRowTemplate.content.firstElementChild.cloneNode(true);
-      row.querySelector('[data-key="name"]').value = doc.name || "";
-      row.querySelector('[data-key="url"]').value = doc.url || "";
-      target.appendChild(row);
+      addDocRow(target, doc, { editing: false, hasSaved: true });
     }
   }
 
@@ -730,7 +739,7 @@
     if (list.length === 0) return;
 
     for (const entry of list) {
-      addPlatformRow(platform, entry);
+      addPlatformRow(platform, entry, { editing: false, hasSaved: true });
     }
   }
 
@@ -749,11 +758,16 @@
     const rows = target.querySelectorAll(".doc-row");
 
     for (const row of rows) {
-      const name = String(row.querySelector('[data-key="name"]').value || "").trim();
-      const url = String(row.querySelector('[data-key="url"]').value || "").trim();
-      if (!url) continue;
-      const doc = { url };
-      if (name) doc.name = name;
+      if (row.dataset.editing === "true") {
+        if (row.dataset.hasSaved === "true") {
+          const savedDoc = readSavedRowPayload(row);
+          if (savedDoc && savedDoc.url) docs.push(savedDoc);
+        }
+        continue;
+      }
+
+      const doc = readDocRowInputs(row);
+      if (!doc) continue;
       docs.push(doc);
     }
 
@@ -766,35 +780,16 @@
 
     const entries = [];
     target.querySelectorAll('.platform-row').forEach((row) => {
-      const store = String(row.querySelector('[data-key="store"]').value || "").trim();
-      const url = String(row.querySelector('[data-key="url"]').value || "").trim();
-      const state = String(row.querySelector('[data-key="state"]').value || "").trim();
-      const note = String(row.querySelector('[data-key="note"]').value || "").trim();
-
-      // Ignore rows without a URL.
-      if (!url) return;
-
-      const entry = {};
-      if (store) entry.store = store;
-      entry.url = url;
-      if (note) entry.note = note;
-      if (state === "monthly_subscription") {
-        entry.monthly_subscription = true;
-      } else if (state === "support_app") {
-        entry.support_app = true;
-      } else if (state === "wishlisted") {
-        entry.wishlisted = true;
-      } else if (state === "preordered") {
-        entry.preordered = true;
-      } else if (state === "online") {
-        entry.online = true;
-      } else {
-        entry.owned = true;
+      if (row.dataset.editing === "true") {
+        if (row.dataset.hasSaved === "true") {
+          const savedEntry = readSavedRowPayload(row);
+          if (savedEntry && savedEntry.url) entries.push(savedEntry);
+        }
+        return;
       }
 
-      if (Object.keys(entry).length > 0) {
-        entries.push(entry);
-      }
+      const entry = readPlatformRowInputs(row);
+      if (entry) entries.push(entry);
     });
 
     return entries;
@@ -808,6 +803,75 @@
   function showEditor(show) {
     els.emptyState.classList.toggle("hidden", show);
     els.editorForm.classList.toggle("hidden", !show);
+    if (!show && els.fieldBggLink) {
+      els.fieldBggLink.classList.add("hidden");
+      els.fieldBggLink.removeAttribute("href");
+    }
+    if (!show) {
+      state.shortDescriptionEditing = false;
+    }
+  }
+
+  function getSavedShortDescriptionValue() {
+    return String(els.fieldShortDescription?.dataset.savedValue || "").trim();
+  }
+
+  function updateShortDescriptionViewText() {
+    if (!els.fieldShortDescriptionView) return;
+    const savedValue = getSavedShortDescriptionValue();
+    els.fieldShortDescriptionView.textContent = savedValue || "No short description yet.";
+  }
+
+  function setShortDescriptionEditing(editing) {
+    state.shortDescriptionEditing = !!editing;
+
+    if (!els.fieldShortDescription || !els.fieldShortDescriptionView || !els.shortDescriptionEdit || !els.shortDescriptionSave) {
+      return;
+    }
+
+    if (!state.shortDescriptionEditing) {
+      els.fieldShortDescription.value = getSavedShortDescriptionValue();
+    }
+
+    els.fieldShortDescription.disabled = !state.shortDescriptionEditing;
+    els.fieldShortDescription.classList.toggle("hidden", !state.shortDescriptionEditing);
+    els.fieldShortDescriptionView.classList.toggle("hidden", state.shortDescriptionEditing);
+    els.shortDescriptionEdit.classList.toggle("hidden", state.shortDescriptionEditing);
+    els.shortDescriptionSave.classList.toggle("hidden", !state.shortDescriptionEditing);
+
+    updateShortDescriptionViewText();
+  }
+
+  function initializeShortDescription(value) {
+    if (!els.fieldShortDescription) return;
+    const normalized = String(value || "").trim();
+    els.fieldShortDescription.dataset.savedValue = normalized;
+    els.fieldShortDescription.value = normalized;
+    setShortDescriptionEditing(false);
+  }
+
+  function saveShortDescription() {
+    if (!els.fieldShortDescription) return;
+    const normalized = String(els.fieldShortDescription.value || "").trim();
+    els.fieldShortDescription.dataset.savedValue = normalized;
+    setShortDescriptionEditing(false);
+    commitEditorToState();
+  }
+
+  function updateBggDetailLink(id) {
+    if (!els.fieldBggLink) return;
+    const gameId = String(id || "").trim();
+    if (!/^\d+$/.test(gameId)) {
+      els.fieldBggLink.classList.add("hidden");
+      els.fieldBggLink.removeAttribute("href");
+      return;
+    }
+
+    const href = `https://boardgamegeek.com/boardgame/${gameId}`;
+    els.fieldBggLink.href = href;
+    els.fieldBggLink.title = href;
+    els.fieldBggLink.setAttribute("aria-label", `View game ${gameId} on BoardGameGeek`);
+    els.fieldBggLink.classList.remove("hidden");
   }
 
   function populateEditor(id) {
@@ -816,7 +880,8 @@
 
     els.fieldId.value = id;
     els.fieldName.value = entry.name || "";
-    els.fieldShortDescription.value = entry.short_description || "";
+    updateBggDetailLink(id);
+    initializeShortDescription(entry.short_description || "");
     renderSelectedCover(id, entry);
 
     renderDocList(els.rulebooksList, entry.rulebooks || []);
@@ -832,7 +897,7 @@
   function collectEditorEntry() {
     const entry = {
       name: String(els.fieldName.value || "").trim(),
-      short_description: String(els.fieldShortDescription.value || "").trim(),
+      short_description: getSavedShortDescriptionValue(),
       rulebooks: readDocList(els.rulebooksList),
       supplemental_files: readDocList(els.supplementalList),
     };
@@ -983,37 +1048,251 @@
     }
   }
 
-  function addDocRow(target) {
+  function addDocRow(target, entry = {}, options = {}) {
     const row = els.docRowTemplate.content.firstElementChild.cloneNode(true);
+    const editing = options.editing !== false;
+    const hasSaved = options.hasSaved === true;
+
+    row.querySelector('[data-key="name"]').value = entry.name || "";
+    row.querySelector('[data-key="url"]').value = entry.url || "";
+    if (hasSaved) {
+      writeSavedRowPayload(row, readDocRowInputs(row));
+    }
+    row.dataset.hasSaved = hasSaved ? "true" : "false";
+    setRowEditing(row, editing);
+
     target.appendChild(row);
+    return row;
   }
 
-  function addPlatformRow(platform, entry = {}) {
+  function addPlatformRow(platform, entry = {}, options = {}) {
     const target = document.querySelector(`[data-platform-list="${platform}"]`);
     if (!target || !els.platformRowTemplate) return;
 
     const row = els.platformRowTemplate.content.firstElementChild.cloneNode(true);
+    const editing = options.editing !== false;
+    const hasSaved = options.hasSaved === true;
+
     row.dataset.platform = platform;
     populateStoreSelect(row.querySelector('[data-key="store"]'), platform, entry.store || "");
     row.querySelector('[data-key="url"]').value = entry.url || "";
     row.querySelector('[data-key="state"]').value = getPlatformState(entry);
     row.querySelector('[data-key="note"]').value = entry.note || "";
+    if (hasSaved) {
+      writeSavedRowPayload(row, readPlatformRowInputs(row));
+    }
+    row.dataset.hasSaved = hasSaved ? "true" : "false";
     target.appendChild(row);
+    setRowEditing(row, editing);
     updatePlatformRowIcon(row);
+    return row;
+  }
+
+  function writeSavedRowPayload(row, payload) {
+    row.dataset.savedPayload = payload ? JSON.stringify(payload) : "";
+  }
+
+  function readSavedRowPayload(row) {
+    try {
+      return row.dataset.savedPayload ? JSON.parse(row.dataset.savedPayload) : null;
+    } catch (_error) {
+      return null;
+    }
+  }
+
+  function readDocRowInputs(row) {
+    const name = String(row.querySelector('[data-key="name"]').value || "").trim();
+    const url = String(row.querySelector('[data-key="url"]').value || "").trim();
+    if (!url) return null;
+    const doc = { url };
+    if (name) doc.name = name;
+    return doc;
+  }
+
+  function readPlatformRowInputs(row) {
+    const store = String(row.querySelector('[data-key="store"]').value || "").trim();
+    const url = String(row.querySelector('[data-key="url"]').value || "").trim();
+    const stateValue = String(row.querySelector('[data-key="state"]').value || "").trim();
+    const note = String(row.querySelector('[data-key="note"]').value || "").trim();
+
+    if (!url) return null;
+
+    const entry = {};
+    if (store) entry.store = store;
+    entry.url = url;
+    if (note) entry.note = note;
+    if (stateValue === "monthly_subscription") {
+      entry.monthly_subscription = true;
+    } else if (stateValue === "support_app") {
+      entry.support_app = true;
+    } else if (stateValue === "wishlisted") {
+      entry.wishlisted = true;
+    } else if (stateValue === "preordered") {
+      entry.preordered = true;
+    } else if (stateValue === "online") {
+      entry.online = true;
+    } else {
+      entry.owned = true;
+    }
+    return entry;
+  }
+
+  function updateRowLinkPreview(row) {
+    const link = row.querySelector('[data-key="view-link"]');
+    const urlInput = row.querySelector('[data-key="url"]');
+    if (!link || !urlInput) return;
+
+    const value = normalizeUrl(urlInput.value || "");
+    if (!value || row.dataset.editing === "true") {
+      link.classList.add("hidden");
+      link.removeAttribute("href");
+      return;
+    }
+
+    link.href = value;
+    link.title = value;
+    link.setAttribute("aria-label", `Open link: ${value}`);
+    link.classList.remove("hidden");
+  }
+
+  function getStateLabel(stateValue) {
+    const value = String(stateValue || "").trim();
+    if (!value) return "Owned";
+    if (value === "monthly_subscription") return "Subscribe";
+    if (value === "support_app") return "Support App";
+    if (value === "wishlisted") return "Wishlisted";
+    if (value === "preordered") return "Preordered";
+    if (value === "online") return "Online";
+    return value;
+  }
+
+  function updateDocRowView(row) {
+    const nameTarget = row.querySelector('[data-key="view-name"]');
+    const urlTarget = row.querySelector('[data-key="view-url"]');
+    if (!nameTarget || !urlTarget) return;
+
+    const name = String(row.querySelector('[data-key="name"]').value || "").trim();
+    const url = normalizeUrl(row.querySelector('[data-key="url"]').value || "");
+
+    nameTarget.textContent = name || "Document link";
+    urlTarget.textContent = url || "No URL";
+  }
+
+  function updatePlatformRowView(row) {
+    const storeTarget = row.querySelector('[data-key="view-store"]');
+    const statusTarget = row.querySelector('[data-key="view-status"]');
+    const noteTarget = row.querySelector('[data-key="view-note"]');
+    const urlTarget = row.querySelector('[data-key="view-url"]');
+    if (!storeTarget || !statusTarget || !noteTarget || !urlTarget) return;
+
+    const store = String(row.querySelector('[data-key="store"]').value || "").trim();
+    const stateValue = String(row.querySelector('[data-key="state"]').value || "").trim();
+    const note = String(row.querySelector('[data-key="note"]').value || "").trim();
+    const url = normalizeUrl(row.querySelector('[data-key="url"]').value || "");
+
+    storeTarget.textContent = store || "Unspecified Store";
+    statusTarget.textContent = getStateLabel(stateValue);
+    noteTarget.textContent = note;
+    noteTarget.classList.toggle("hidden", !note);
+    urlTarget.textContent = url || "No URL";
+  }
+
+  function updateRowViewPreview(row) {
+    if (row.classList.contains("doc-row")) {
+      updateDocRowView(row);
+      return;
+    }
+    if (row.classList.contains("platform-row")) {
+      updatePlatformRowView(row);
+    }
+  }
+
+  function setRowEditing(row, editing) {
+    row.dataset.editing = editing ? "true" : "false";
+
+    const rowView = row.querySelector('[data-key="row-view"]');
+    if (rowView) {
+      rowView.classList.toggle("hidden", editing);
+    }
+
+    row.querySelectorAll("input, select").forEach((input) => {
+      input.disabled = !editing;
+    });
+
+    row.querySelectorAll('button[data-action="edit-row"]').forEach((button) => {
+      button.classList.toggle("hidden", editing);
+    });
+    row.querySelectorAll('button[data-action="save-row"]').forEach((button) => {
+      button.classList.toggle("hidden", !editing);
+    });
+
+    updateRowViewPreview(row);
+    updateRowLinkPreview(row);
   }
 
   function onDocListClick(event) {
-    const btn = event.target.closest("button[data-action='remove']");
+    const btn = event.target.closest("button[data-action]");
     if (!btn) return;
-    btn.closest(".doc-row").remove();
-    commitEditorToState();
+
+    const row = btn.closest(".doc-row");
+    if (!row) return;
+    const action = btn.dataset.action;
+
+    if (action === "remove") {
+      row.remove();
+      commitEditorToState();
+      return;
+    }
+
+    if (action === "edit-row") {
+      setRowEditing(row, true);
+      return;
+    }
+
+    if (action === "save-row") {
+      const payload = readDocRowInputs(row);
+      if (!payload) {
+        alert("Document rows need a URL before saving.");
+        return;
+      }
+      writeSavedRowPayload(row, payload);
+      row.dataset.hasSaved = "true";
+      setRowEditing(row, false);
+      commitEditorToState();
+    }
   }
 
   function onPlatformListClick(event) {
-    const btn = event.target.closest("button[data-action='remove']");
+    const btn = event.target.closest("button[data-action]");
     if (!btn) return;
-    btn.closest(".platform-row").remove();
-    commitEditorToState();
+
+    const row = btn.closest(".platform-row");
+    if (!row) return;
+    const action = btn.dataset.action;
+
+    if (action === "remove") {
+      row.remove();
+      commitEditorToState();
+      return;
+    }
+
+    if (action === "edit-row") {
+      setRowEditing(row, true);
+      return;
+    }
+
+    if (action === "save-row") {
+      const payload = readPlatformRowInputs(row);
+      if (!payload) {
+        alert("Platform rows need a URL before saving.");
+        return;
+      }
+      writeSavedRowPayload(row, payload);
+      row.dataset.hasSaved = "true";
+      setRowEditing(row, false);
+      updatePlatformRowIcon(row);
+      commitEditorToState();
+    }
   }
 
   function onFormInput(event) {
@@ -1024,8 +1303,20 @@
       return;
     }
 
-    if (target.closest(".platform-row") && (target.matches('[data-key="store"]') || target.matches('[data-key="url"]'))) {
-      updatePlatformRowIcon(target.closest(".platform-row"));
+    if (target === els.fieldShortDescription) {
+      return;
+    }
+
+    const docRow = target.closest(".doc-row");
+    const platformRow = target.closest(".platform-row");
+
+    if (docRow || platformRow) {
+      if (platformRow && (target.matches('[data-key="store"]') || target.matches('[data-key="url"]'))) {
+        updatePlatformRowIcon(platformRow);
+      }
+      updateRowViewPreview(docRow || platformRow);
+      updateRowLinkPreview(docRow || platformRow);
+      return;
     }
 
     commitEditorToState();
@@ -1067,19 +1358,30 @@
     els.deleteGame.addEventListener("click", deleteSelectedGame);
 
     els.addRulebook.addEventListener("click", () => {
-      addDocRow(els.rulebooksList);
-      commitEditorToState();
+      addDocRow(els.rulebooksList, {}, { editing: true, hasSaved: false });
     });
 
+    if (els.shortDescriptionEdit) {
+      els.shortDescriptionEdit.addEventListener("click", () => {
+        setShortDescriptionEditing(true);
+        if (els.fieldShortDescription) {
+          els.fieldShortDescription.focus();
+          els.fieldShortDescription.select();
+        }
+      });
+    }
+
+    if (els.shortDescriptionSave) {
+      els.shortDescriptionSave.addEventListener("click", saveShortDescription);
+    }
+
     els.addSupplemental.addEventListener("click", () => {
-      addDocRow(els.supplementalList);
-      commitEditorToState();
+      addDocRow(els.supplementalList, {}, { editing: true, hasSaved: false });
     });
 
     document.querySelectorAll('button[data-action="add-platform-entry"]').forEach((button) => {
       button.addEventListener('click', () => {
-        addPlatformRow(button.dataset.platform);
-        commitEditorToState();
+        addPlatformRow(button.dataset.platform, {}, { editing: true, hasSaved: false });
       });
     });
 
