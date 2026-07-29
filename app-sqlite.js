@@ -131,6 +131,7 @@ function detectStoreKeyFromUrl(url) {
     if (host.includes('yucata.de')) return 'yucata';
     if (host.includes('vassalengine.org')) return 'vassal';
     if (host.includes('brettspielwelt.de')) return 'brettspielwelt';
+    if (host.includes('boardspace.net')) return 'boardspace';
 
     if (host.includes('boardgamearena')) return 'board game arena';
     if (host.includes('steampowered') || host.includes('steamcommunity')) return 'steam';
@@ -172,6 +173,7 @@ function getDigitalStoreMeta(store, url, platform) {
     'yucata de': { label: 'YUC', title: 'Yucata', iconUrl: 'https://www.yucata.de/favicon.ico' },
     'vassal': { label: 'VAS', title: 'VASSAL', iconUrl: 'https://vassalengine.org/favicon.ico' },
     'brettspielwelt': { label: 'BSW', title: 'BrettspielWelt', iconUrl: 'https://www.brettspielwelt.de/favicon.ico' },
+    'boardspace': { label: 'BSP', title: 'Boardspace', iconUrl: 'https://boardspace.net/favicon.ico' },
     'play store': { label: 'PLAY', title: 'Google Play', iconUrl: getFaviconUrl('play.google.com') },
     'google play': { label: 'PLAY', title: 'Google Play', iconUrl: getFaviconUrl('play.google.com') },
     'app store': { label: 'APPLE', title: 'App Store', iconUrl: getFaviconUrl('apps.apple.com') },
@@ -244,9 +246,10 @@ function normalizeDigitalPlatformEntry(entry) {
   const isYucata = storeKey === 'yucata' || storeKey === 'yucata de' || normalizedUrl.includes('yucata.de');
   const isVassal = storeKey === 'vassal' || normalizedUrl.includes('vassalengine.org');
   const isBrettspielwelt = storeKey === 'brettspielwelt' || normalizedUrl.includes('brettspielwelt.de');
+  const isBoardspace = storeKey === 'boardspace' || normalizedUrl.includes('boardspace.net');
   const isBga = storeKey === 'bga' || storeKey === 'board game arena' || normalizedUrl.includes('boardgamearena.com');
 
-  if (Boolean(entry.online) || entry.state === 'online' || isYucata || isVassal || isBrettspielwelt || isBga) {
+  if (Boolean(entry.online) || entry.state === 'online' || isYucata || isVassal || isBrettspielwelt || isBoardspace || isBga) {
     normalized.online = true;
   }
 

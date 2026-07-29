@@ -29,6 +29,7 @@ TABLETOPIA_CATALOG_API = "https://api.tabletopia.com/games"
 VASSAL_PROJECTS_API = "https://vassalengine.org/api/gls/v1/projects"
 TABLETOP_SIMULATOR_WORKSHOP_SEARCH_URL = "https://steamcommunity.com/workshop/browse/"
 BRETTSPIELWELT_SPIELE_URL = "https://www.brettspielwelt.de/Spiele/"
+BOARDSPACE_INDEX_URL = "https://boardspace.net/english/index.shtml"
 
 # Some Yucata titles don't expose an IdName that matches BGG naming conventions.
 # Use explicit game-id overrides so sync can still add/maintain correct links.
@@ -542,6 +543,78 @@ def load_brettspielwelt_candidates(conn: sqlite3.Connection) -> Dict[str, Dict[s
     return candidates
 
 
+def load_boardspace_candidates(conn: sqlite3.Connection) -> Dict[str, Dict[str, Any]]:
+    """Load games that appear to have Boardspace implementations from SQLite metadata."""
+    cur = conn.cursor()
+    cur.execute(
+        """
+        WITH ranked AS (
+          SELECT
+            id,
+            name,
+            tags,
+            families,
+            alternate_names,
+            ROW_NUMBER() OVER (
+              PARTITION BY id
+              ORDER BY
+                CASE WHEN tags LIKE '%"own"%' THEN 0 ELSE 1 END,
+                CASE WHEN tags LIKE '%"preordered"%' THEN 1 ELSE 2 END,
+                LENGTH(name),
+                name
+            ) AS rn
+          FROM games
+          WHERE id IS NOT NULL AND name IS NOT NULL AND TRIM(name) <> ''
+        )
+        SELECT id, name, families, alternate_names
+        FROM ranked
+        WHERE rn = 1
+        """
+    )
+
+    candidates: Dict[str, Dict[str, Any]] = {}
+    for game_id, name, families_raw, alt_raw in cur.fetchall():
+        has_boardspace_family = False
+        try:
+            families = json.loads(families_raw or "[]")
+            if isinstance(families, list):
+                for family in families:
+                    family_name = ""
+                    if isinstance(family, dict):
+                        family_name = str(family.get("name", ""))
+                    elif isinstance(family, str):
+                        family_name = family
+                    normalized_family = family_name.lower()
+                    if (
+                        "digital implementations: boardspace" in normalized_family
+                        or "digital implementations: boardspace.net" in normalized_family
+                    ):
+                        has_boardspace_family = True
+                        break
+        except Exception:
+            pass
+
+        if not has_boardspace_family:
+            continue
+
+        alt_names: List[str] = []
+        try:
+            parsed_alt = json.loads(alt_raw or "[]")
+            if isinstance(parsed_alt, list):
+                alt_names = [str(item).strip() for item in parsed_alt if str(item).strip()]
+        except Exception:
+            pass
+
+        key = str(int(game_id))
+        candidates[key] = {
+            "id": key,
+            "name": str(name or "").strip(),
+            "alternate_names": alt_names,
+        }
+
+    return candidates
+
+
 def fetch_yucata_game_urls(timeout: float = 20.0) -> Dict[str, str]:
     """Fetch Yucata catalog and map normalized names to GameInfo URLs."""
     payload = b"{}"
@@ -775,6 +848,65 @@ def fetch_brettspielwelt_catalog(timeout: float = 20.0) -> Dict[str, str]:
     return mapping
 
 
+def fetch_boardspace_catalog(timeout: float = 20.0) -> Dict[str, str]:
+    """Fetch Boardspace index and map normalized keys to game info URLs."""
+    req = urllib.request.Request(
+        BOARDSPACE_INDEX_URL,
+        headers={
+            "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+            "User-Agent": "Mozilla/5.0 (GameCache sidecar sync)",
+        },
+    )
+
+    with urllib.request.urlopen(req, timeout=timeout) as resp:
+        body = resp.read().decode("utf-8", errors="replace")
+
+    mapping: Dict[str, str] = {}
+    seen_slugs: Set[str] = set()
+    for match in re.finditer(r'(?:^|["\'/])about_([a-z0-9]+)\.html', body, flags=re.IGNORECASE):
+        slug = str(match.group(1) or "").strip().lower()
+        if not slug or slug in seen_slugs:
+            continue
+        seen_slugs.add(slug)
+
+        game_url = f"https://boardspace.net/english/about_{slug}.html"
+        for key in _boardspace_name_keys(slug):
+            mapping.setdefault(key, game_url)
+
+    return mapping
+
+
+def _boardspace_name_keys(value: str) -> List[str]:
+    """Return conservative keys for Boardspace matching.
+
+    Avoid acronym keys to reduce collisions between unrelated short slugs.
+    """
+    raw = str(value or "").strip()
+    if not raw:
+        return []
+
+    keys: List[str] = []
+    seen: Set[str] = set()
+
+    def add(v: str) -> None:
+        k = _normalize_name(v)
+        if k and k not in seen:
+            seen.add(k)
+            keys.append(k)
+
+    add(raw)
+    add(_split_camel(raw))
+
+    tokens = _tokenize_words(raw)
+    if tokens:
+        add("".join(tokens))
+        no_articles = [t for t in tokens if t not in {"the", "a", "an"}]
+        if no_articles:
+            add("".join(no_articles))
+
+    return keys
+
+
 def _brettspielwelt_name_keys(value: str) -> List[str]:
     """Return conservative keys for BrettspielWelt matching.
 
@@ -974,6 +1106,23 @@ def _find_existing_brettspielwelt_link(entry: Dict[str, Any]) -> Optional[str]:
     return None
 
 
+def _find_existing_boardspace_link(entry: Dict[str, Any]) -> Optional[str]:
+    for platform in ("android", "ios", "pc"):
+        platform_items = entry.get(platform)
+        if isinstance(platform_items, dict):
+            platform_items = [platform_items]
+        if not isinstance(platform_items, list):
+            continue
+        for item in platform_items:
+            if not isinstance(item, dict):
+                continue
+            store = str(item.get("store", "")).strip().lower()
+            url = str(item.get("url", "")).strip().lower()
+            if "boardspace" in store or "boardspace.net" in url:
+                return str(item.get("url", "")).strip()
+    return None
+
+
 def _extract_vassal_slug(url: str) -> str:
     match = re.search(r"vassalengine\.org/library/projects/([^/?#]+)", str(url or ""), flags=re.IGNORECASE)
     if not match:
@@ -1073,6 +1222,8 @@ def _should_mark_online(item: Dict[str, Any], tabletopia_premium_by_short_url: O
     if store_key == "vassal" or "vassalengine.org" in url_lower:
         return True
     if store_key == "brettspielwelt" or "brettspielwelt.de" in url_lower:
+        return True
+    if store_key == "boardspace" or "boardspace.net" in url_lower:
         return True
     if (
         "tabletopsimulator" in store_key
@@ -1637,6 +1788,95 @@ def enrich_brettspielwelt_links(
     return added_links, len(candidates), corrected_links
 
 
+def enrich_boardspace_links(
+    data: Dict[str, Any],
+    candidates: Dict[str, Dict[str, Any]],
+    boardspace_map: Dict[str, str],
+) -> Tuple[int, int, int]:
+    """Upsert Boardspace links to sidecar entries.
+
+    Returns:
+        (added_links, candidate_count, corrected_or_removed_links)
+    """
+    games = data.setdefault("games", {})
+    added_links = 0
+    corrected_links = 0
+
+    for game_id, candidate in candidates.items():
+        entry = games.get(game_id)
+        if not isinstance(entry, dict):
+            continue
+
+        candidate_names = [candidate.get("name", "")] + list(candidate.get("alternate_names", []))
+        match_url = ""
+        for candidate_name in candidate_names:
+            for key in _boardspace_name_keys(str(candidate_name)):
+                if key in boardspace_map:
+                    match_url = boardspace_map[key]
+                    break
+            if match_url:
+                break
+
+        pc_entries = _ensure_platform_list(entry, "pc")
+        existing_indexes: List[int] = []
+        for idx, item in enumerate(pc_entries):
+            if not isinstance(item, dict):
+                continue
+            store = str(item.get("store", "")).strip().lower()
+            url = str(item.get("url", "")).strip().lower()
+            if "boardspace" in store or "boardspace.net" in url:
+                existing_indexes.append(idx)
+
+        if not match_url:
+            for idx in reversed(existing_indexes):
+                pc_entries.pop(idx)
+                corrected_links += 1
+            continue
+
+        payload: Dict[str, Any] = {
+            "store": "Boardspace",
+            "url": match_url,
+            "online": True,
+            "note": str(candidate.get("name", "")).strip(),
+        }
+        if payload.get("note") == "":
+            payload.pop("note", None)
+
+        if not existing_indexes:
+            pc_entries.append(payload)
+            added_links += 1
+            continue
+
+        first_idx = existing_indexes[0]
+        first_item = pc_entries[first_idx]
+        if not isinstance(first_item, dict):
+            pc_entries[first_idx] = payload
+            corrected_links += 1
+        else:
+            changed = False
+            if str(first_item.get("store", "")).strip() != payload["store"]:
+                first_item["store"] = payload["store"]
+                changed = True
+            if str(first_item.get("url", "")).strip() != payload["url"]:
+                first_item["url"] = payload["url"]
+                changed = True
+            if first_item.get("online") is not True:
+                first_item["online"] = True
+                changed = True
+            desired_note = payload.get("note", "")
+            if desired_note and str(first_item.get("note", "")).strip() != desired_note:
+                first_item["note"] = desired_note
+                changed = True
+            if changed:
+                corrected_links += 1
+
+        for idx in reversed(existing_indexes[1:]):
+            pc_entries.pop(idx)
+            corrected_links += 1
+
+    return added_links, len(candidates), corrected_links
+
+
 def load_sidecar(path: Path) -> Dict:
     if not path.exists():
         return {"games": {}}
@@ -1779,6 +2019,17 @@ def main() -> int:
         default=20.0,
         help="Timeout in seconds for BrettspielWelt Spiele catalog request (default: 20).",
     )
+    parser.add_argument(
+        "--skip-boardspace-auto-links",
+        action="store_true",
+        help="Skip automatic Boardspace link enrichment from SQLite + index catalog.",
+    )
+    parser.add_argument(
+        "--boardspace-timeout",
+        type=float,
+        default=20.0,
+        help="Timeout in seconds for Boardspace index request (default: 20).",
+    )
     args = parser.parse_args()
 
     db_path = Path(args.db)
@@ -1797,6 +2048,7 @@ def main() -> int:
         vassal_candidates = load_vassal_candidates(conn)
         tabletop_simulator_candidates = load_tabletop_simulator_candidates(conn)
         brettspielwelt_candidates = load_brettspielwelt_candidates(conn)
+        boardspace_candidates = load_boardspace_candidates(conn)
     finally:
         conn.close()
 
@@ -1808,7 +2060,9 @@ def main() -> int:
     vassal_added = 0
     tabletop_simulator_added = 0
     brettspielwelt_added = 0
+    boardspace_added = 0
     brettspielwelt_corrected = 0
+    boardspace_corrected = 0
     tabletopia_premium_catalog_count = 0
     tabletopia_status_notes_updated = 0
     vassal_status_notes_updated = 0
@@ -1819,11 +2073,13 @@ def main() -> int:
     vassal_candidates_count = len(vassal_candidates)
     tabletop_simulator_candidates_count = len(tabletop_simulator_candidates)
     brettspielwelt_candidates_count = len(brettspielwelt_candidates)
+    boardspace_candidates_count = len(boardspace_candidates)
     yucata_error = ""
     tabletopia_error = ""
     vassal_error = ""
     tabletop_simulator_error = ""
     brettspielwelt_error = ""
+    boardspace_error = ""
     tabletopia_premium_by_short_url: Dict[str, bool] = {}
     tabletopia_name_by_short_url: Dict[str, str] = {}
     vassal_title_by_slug: Dict[str, str] = {}
@@ -1894,6 +2150,17 @@ def main() -> int:
         except Exception as exc:
             brettspielwelt_error = str(exc)
 
+    if not args.skip_boardspace_auto_links and boardspace_candidates_count > 0:
+        try:
+            boardspace_map = fetch_boardspace_catalog(timeout=args.boardspace_timeout)
+            boardspace_added, _, boardspace_corrected = enrich_boardspace_links(
+                data,
+                boardspace_candidates,
+                boardspace_map,
+            )
+        except Exception as exc:
+            boardspace_error = str(exc)
+
     online_statuses_updated = annotate_online_statuses(data, tabletopia_premium_by_short_url=tabletopia_premium_by_short_url)
     owned_removed_from_online = strip_owned_from_online_entries(data)
 
@@ -1906,12 +2173,15 @@ def main() -> int:
         print(f"vassal_candidates={vassal_candidates_count}")
         print(f"tabletop_simulator_candidates={tabletop_simulator_candidates_count}")
         print(f"brettspielwelt_candidates={brettspielwelt_candidates_count}")
+        print(f"boardspace_candidates={boardspace_candidates_count}")
         print(f"would_add_yucata_links={yucata_added}")
         print(f"would_add_tabletopia_links={tabletopia_added}")
         print(f"would_add_vassal_links={vassal_added}")
         print(f"would_add_tabletop_simulator_links={tabletop_simulator_added}")
         print(f"would_add_brettspielwelt_links={brettspielwelt_added}")
+        print(f"would_add_boardspace_links={boardspace_added}")
         print(f"would_correct_brettspielwelt_links={brettspielwelt_corrected}")
+        print(f"would_correct_boardspace_links={boardspace_corrected}")
         print(f"tabletopia_premium_catalog_count={tabletopia_premium_catalog_count}")
         print(f"would_update_tabletopia_statuses_notes={tabletopia_status_notes_updated}")
         print(f"would_update_vassal_statuses_notes={vassal_status_notes_updated}")
@@ -1933,6 +2203,8 @@ def main() -> int:
             print(f"tabletop_simulator_error={tabletop_simulator_error}")
         if brettspielwelt_error:
             print(f"brettspielwelt_error={brettspielwelt_error}")
+        if boardspace_error:
+            print(f"boardspace_error={boardspace_error}")
         print(f"total_after={len(data.get('games', {}))}")
         return 0
 
@@ -1949,12 +2221,15 @@ def main() -> int:
     print(f"vassal_candidates={vassal_candidates_count}")
     print(f"tabletop_simulator_candidates={tabletop_simulator_candidates_count}")
     print(f"brettspielwelt_candidates={brettspielwelt_candidates_count}")
+    print(f"boardspace_candidates={boardspace_candidates_count}")
     print(f"added_yucata_links={yucata_added}")
     print(f"added_tabletopia_links={tabletopia_added}")
     print(f"added_vassal_links={vassal_added}")
     print(f"added_tabletop_simulator_links={tabletop_simulator_added}")
     print(f"added_brettspielwelt_links={brettspielwelt_added}")
+    print(f"added_boardspace_links={boardspace_added}")
     print(f"corrected_brettspielwelt_links={brettspielwelt_corrected}")
+    print(f"corrected_boardspace_links={boardspace_corrected}")
     print(f"tabletopia_premium_catalog_count={tabletopia_premium_catalog_count}")
     print(f"updated_tabletopia_statuses_notes={tabletopia_status_notes_updated}")
     print(f"updated_vassal_statuses_notes={vassal_status_notes_updated}")
@@ -1976,6 +2251,8 @@ def main() -> int:
         print(f"tabletop_simulator_error={tabletop_simulator_error}")
     if brettspielwelt_error:
         print(f"brettspielwelt_error={brettspielwelt_error}")
+    if boardspace_error:
+        print(f"boardspace_error={boardspace_error}")
     print(f"total_sidecar_games={len(data.get('games', {}))}")
     print(f"written={sidecar_path}")
 
