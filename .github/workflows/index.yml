@@ -36,12 +36,12 @@ jobs:
           fi
       - name: Checkout
         if: steps.enabled.outputs.enabled == 'true'
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
       - name: Setup Python
         if: steps.enabled.outputs.enabled == 'true'
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6
         with:
-          python-version: '3.12'
+          python-version: '3.14'
           cache: 'pip'
       - name: Build & index (auto-skip if not enabled)
         if: steps.enabled.outputs.enabled == 'true'
