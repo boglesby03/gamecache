@@ -42,8 +42,21 @@
         <button id="create-game" class="btn">Create / Open</button>
       </section>
 
+      <section class="toolbar missing-games-toolbar">
+        <button id="add-missing-games" class="btn ghost" type="button">Add Missing Database Games</button>
+        <span id="add-missing-games-status" class="actions-status" aria-live="polite"></span>
+      </section>
+
       <section class="search-wrap">
         <input id="search" type="search" placeholder="Search by id or name..." />
+      </section>
+
+      <section class="sort-wrap">
+        <label for="sort-games">Sort games</label>
+        <select id="sort-games">
+          <option value="name">Name</option>
+          <option value="last-added">Last added</option>
+        </select>
       </section>
 
       <section class="store-filter-wrap">

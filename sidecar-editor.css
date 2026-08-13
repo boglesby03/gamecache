@@ -137,8 +137,38 @@ body {
   grid-column: 1 / span 1;
 }
 
+.missing-games-toolbar {
+  grid-template-columns: 1fr;
+  align-items: center;
+}
+
+.missing-games-toolbar .actions-status {
+  min-height: 1.1rem;
+}
+
 .search-wrap {
   margin-bottom: 0.6rem;
+}
+
+.sort-wrap {
+  margin-bottom: 0.7rem;
+}
+
+.sort-wrap label {
+  display: block;
+  margin-bottom: 0.3rem;
+  color: var(--muted);
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.sort-wrap select {
+  width: 100%;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 0.55rem 0.65rem;
+  background: #fff;
+  color: var(--ink);
 }
 
 .store-filter-wrap {

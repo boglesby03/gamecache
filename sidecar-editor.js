@@ -12,6 +12,8 @@
     coverArtSource: "",
     dragContext: null,
     selectedStoreFilters: new Set(),
+    sortMode: "name",
+    addedOrder: [],
     forceSearchInFlight: false,
   };
 
@@ -22,7 +24,10 @@
     savePickedFile: document.getElementById("save-picked-file"),
     newId: document.getElementById("new-id"),
     createGame: document.getElementById("create-game"),
+    addMissingGames: document.getElementById("add-missing-games"),
+    addMissingGamesStatus: document.getElementById("add-missing-games-status"),
     search: document.getElementById("search"),
+    sortGames: document.getElementById("sort-games"),
     storeFilter: document.getElementById("store-filter"),
     clearStoreFilter: document.getElementById("clear-store-filter"),
     gameList: document.getElementById("game-list"),
@@ -485,8 +490,98 @@
     return normalized;
   }
 
+  function getGameIdsFromJsonText(text) {
+    const source = String(text || "");
+    const gamesKey = source.search(/"games"\s*:/);
+    if (gamesKey < 0) return [];
+
+    const openingBrace = source.indexOf("{", gamesKey);
+    if (openingBrace < 0) return [];
+
+    const ids = [];
+    let depth = 0;
+    let inString = false;
+    let escaped = false;
+    for (let index = openingBrace; index < source.length; index += 1) {
+      const character = source[index];
+      if (inString) {
+        if (escaped) {
+          escaped = false;
+        } else if (character === "\\") {
+          escaped = true;
+        } else if (character === '"') {
+          inString = false;
+        }
+        continue;
+      }
+      if (character === '"') {
+        inString = true;
+        if (depth !== 1) continue;
+
+        const keyStart = index + 1;
+        let keyEnd = keyStart;
+        let keyEscaped = false;
+        while (keyEnd < source.length) {
+          if (keyEscaped) {
+            keyEscaped = false;
+          } else if (source[keyEnd] === "\\") {
+            keyEscaped = true;
+          } else if (source[keyEnd] === '"') {
+            break;
+          }
+          keyEnd += 1;
+        }
+        const key = source.slice(keyStart, keyEnd);
+        const remainder = source.slice(keyEnd + 1);
+        if (/^\s*:\s*\{/.test(remainder) && /^\d+$/.test(key)) {
+          ids.push(key);
+        }
+        continue;
+      }
+      if (character === "{") depth += 1;
+      if (character === "}") {
+        depth -= 1;
+        if (depth === 0) break;
+      }
+    }
+    return ids;
+  }
+
+  function setAddedOrder(jsonText) {
+    const ids = getGameIdsFromJsonText(jsonText);
+    const currentIds = Object.keys(state.data.games || {});
+    state.addedOrder = ids.filter((id, index) => currentIds.includes(id) && ids.indexOf(id) === index);
+    for (const id of currentIds) {
+      if (!state.addedOrder.includes(id)) state.addedOrder.push(id);
+    }
+  }
+
+  function getIdsInAddedOrder() {
+    const ids = Object.keys(state.data.games || {});
+    const order = state.addedOrder || [];
+    return [
+      ...order.filter((id) => Object.prototype.hasOwnProperty.call(state.data.games, id)),
+      ...ids.filter((id) => !order.includes(id)),
+    ];
+  }
+
   function getSortedIds() {
     const ids = Object.keys(state.data.games || {});
+    if (state.sortMode === "last-added") {
+      const fallbackOrder = getIdsInAddedOrder().reverse();
+      const fallbackIndex = new Map(fallbackOrder.map((id, index) => [id, index]));
+      ids.sort((a, b) => {
+        const aDate = Date.parse(String((state.coverArtById[a] || {}).last_modified || ""));
+        const bDate = Date.parse(String((state.coverArtById[b] || {}).last_modified || ""));
+        const aHasDate = Number.isFinite(aDate);
+        const bHasDate = Number.isFinite(bDate);
+
+        if (aHasDate && bHasDate && aDate !== bDate) return bDate - aDate;
+        if (aHasDate !== bHasDate) return aHasDate ? -1 : 1;
+        return (fallbackIndex.get(a) || 0) - (fallbackIndex.get(b) || 0);
+      });
+      return ids;
+    }
     ids.sort((a, b) => {
       const aEntry = state.data.games[a] || {};
       const bEntry = state.data.games[b] || {};
@@ -721,7 +816,7 @@
       const db = new SQL.Database(dbPayload.bytes);
       const covers = {};
       const statement = db.prepare(`
-        SELECT id, name, image, thumbnail, year, rank, rating, playing_time, min_age, weight, numowned, numplays
+        SELECT id, name, image, thumbnail, year, rank, rating, playing_time, min_age, weight, numowned, numplays, last_modified
         FROM games
       `);
 
@@ -743,6 +838,7 @@
           weight: row.weight,
           numowned: row.numowned,
           numplays: row.numplays,
+          last_modified: row.last_modified,
         };
       }
 
@@ -1050,11 +1146,39 @@
     const id = String(Number(raw));
     if (!state.data.games[id]) {
       state.data.games[id] = normalizeEntry({ name: "" }, "");
+      state.addedOrder = state.addedOrder || [];
+      state.addedOrder.push(id);
       setDirty(true);
     }
 
     selectGame(id);
     els.newId.value = "";
+  }
+
+  function addMissingDatabaseGames() {
+    if (!state.coverArtLoaded) {
+      if (els.addMissingGamesStatus) els.addMissingGamesStatus.textContent = "Database is still loading...";
+      return;
+    }
+
+    const games = state.data.games || {};
+    const missingIds = Object.keys(state.coverArtById).filter((id) => !Object.prototype.hasOwnProperty.call(games, id));
+    for (const id of missingIds) {
+      const databaseGame = state.coverArtById[id] || {};
+      games[id] = normalizeEntry({ name: databaseGame.name || "" }, "");
+      state.addedOrder = state.addedOrder || [];
+      state.addedOrder.push(id);
+    }
+
+    if (missingIds.length > 0) {
+      setDirty(true);
+      renderGameList();
+    }
+    if (els.addMissingGamesStatus) {
+      els.addMissingGamesStatus.textContent = missingIds.length > 0
+        ? `Added ${missingIds.length} database game${missingIds.length === 1 ? "" : "s"}.`
+        : "No missing database games.";
+    }
   }
 
   async function loadFromDefaultFile(options = {}) {
@@ -1064,8 +1188,10 @@
       if (!resp.ok) {
         throw new Error(`HTTP ${resp.status}`);
       }
-      const data = await resp.json();
+      const text = await resp.text();
+      const data = JSON.parse(text);
       state.data = ensureGamesContainer(data);
+      setAddedOrder(text);
       state.selectedId = null;
       state.handle = null;
       setDirty(false);
@@ -1091,6 +1217,7 @@
     }
 
     state.data = ensureGamesContainer(data);
+    setAddedOrder(text);
     state.selectedId = null;
     state.handle = null;
     setDirty(false);
@@ -1105,7 +1232,7 @@
 
   function exportSortedData() {
     const output = { games: {} };
-    const ids = Object.keys(state.data.games || {}).sort((a, b) => Number(a) - Number(b));
+    const ids = getIdsInAddedOrder();
     for (const id of ids) {
       output.games[id] = normalizeEntry(state.data.games[id], "");
     }
@@ -1117,7 +1244,19 @@
   }
 
   function buildJsonPayload() {
-    return JSON.stringify(exportSortedData(), null, 2) + "\n";
+    const entries = getIdsInAddedOrder().map((id) => {
+      const key = JSON.stringify(id);
+      const value = JSON.stringify(normalizeEntry(state.data.games[id], ""), null, 2)
+        .split("\n")
+        .map((line) => `    ${line}`)
+        .join("\n");
+      return `    ${key}: ${value}`;
+    });
+    return `{
+  "games": {
+${entries.join(",\n")}
+  }
+}\n`;
   }
 
   function triggerJsonDownload() {
@@ -1583,6 +1722,7 @@
     if (!confirm(`Delete entry ${id}?`)) return;
 
     delete state.data.games[id];
+    state.addedOrder = (state.addedOrder || []).filter((addedId) => addedId !== id);
     state.selectedId = null;
     showEditor(false);
     setDirty(true);
@@ -1696,7 +1836,16 @@
     els.downloadJson.addEventListener("click", downloadJson);
     els.savePickedFile.addEventListener("click", saveToPickedFile);
     els.createGame.addEventListener("click", createOrOpenById);
+    if (els.addMissingGames) {
+      els.addMissingGames.addEventListener("click", addMissingDatabaseGames);
+    }
     els.search.addEventListener("input", renderGameList);
+    if (els.sortGames) {
+      els.sortGames.addEventListener("change", () => {
+        state.sortMode = els.sortGames.value === "last-added" ? "last-added" : "name";
+        renderGameList();
+      });
+    }
     if (els.storeFilter) {
       els.storeFilter.addEventListener("change", () => {
         syncSelectedStoreFiltersFromUI();
