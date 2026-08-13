@@ -618,9 +618,9 @@ body {
 }
 
 .digital-version-item.status-monthly-subscription {
-    border-color: rgba(137, 87, 229, 0.45);
-    background: rgba(137, 87, 229, 0.14);
-    color: #5530a6;
+    border-color: rgba(217, 119, 6, 0.55);
+    background: rgba(245, 158, 11, 0.18);
+    color: #92400e;
 }
 
 .digital-version-item.status-online {
