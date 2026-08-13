@@ -85,6 +85,12 @@
           "url": "https://www.brettspielwelt.de/Spiele/Bohnanza/",
           "note": "Bohnanza",
           "online": true
+        },
+        {
+          "store": "Tabletop Simulator",
+          "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=2291768626",
+          "note": "Bohnanza (English version, scripted startup, automation)",
+          "owned": true
         }
       ]
     },
@@ -92,7 +98,15 @@
       "name": "Ra",
       "short_description": "Fancy an auction to acquire ancient monuments, pharaohs, and relics? Invoke Ra!",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "Tabletop Simulator",
+          "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3316310724",
+          "note": "Ra – Pharaoh Edition + Traders Expansion",
+          "online": true
+        }
+      ]
     },
     "13": {
       "name": "Catan",
@@ -192,6 +206,24 @@
           "store": "BrettspielWelt",
           "url": "https://www.brettspielwelt.de/Spiele/Siedler/",
           "note": "Siedler",
+          "online": true
+        },
+        {
+          "store": "Tabletop Simulator",
+          "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=2104528839",
+          "note": "Settlers of Catan + Expansions (Scripted)",
+          "online": true
+        },
+        {
+          "store": "Tabletop Simulator",
+          "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=2031943262",
+          "note": "Catan",
+          "online": true
+        },
+        {
+          "store": "Tabletop Simulator",
+          "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=2241751124",
+          "note": "Settlers of Catan [LoC]",
           "online": true
         }
       ]
@@ -497,6 +529,12 @@
           "url": "https://store.steampowered.com/app/227920/Risk/",
           "note": "Risk (Old)",
           "wishlisted": true
+        },
+        {
+          "store": "Tabletop Simulator",
+          "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=2875284365",
+          "note": "RISK - World Domination",
+          "online": true
         }
       ]
     },
@@ -586,6 +624,12 @@
           "url": "https://store.steampowered.com/app/3073810/Scotland_Yard__Hunting_Mister_X/",
           "note": "Scotland Yard",
           "wishlisted": true
+        },
+        {
+          "store": "Tabletop Simulator",
+          "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3466030653",
+          "note": "Scotland Yard TTS 2025 Revival",
+          "online": true
         }
       ]
     },
@@ -744,6 +788,7 @@
         {
           "store": "Humble",
           "url": "https://www.humblebundle.com/home/library",
+          "note": "Carcassonne [old]",
           "owned": true
         }
       ],
@@ -752,7 +797,7 @@
           "store": "App Store",
           "url": "https://apps.apple.com/us/app/hunters-and-gatherers/id1595663121",
           "note": "Hunters and Gatherers",
-          "wishlisted": true
+          "owned": true
         }
       ],
       "pc": [
@@ -778,6 +823,18 @@
           "store": "BrettspielWelt",
           "url": "https://www.brettspielwelt.de/Spiele/Carcassonne/",
           "note": "Carcassonne",
+          "online": true
+        },
+        {
+          "store": "Tabletop Simulator",
+          "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=2789962232",
+          "note": "Carcassonne All Expansions +AI [Scripted]",
+          "online": true
+        },
+        {
+          "store": "Tabletop Simulator",
+          "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3321393644",
+          "note": "[ULTIMATE] Carcassonne: Big Box (2nd Edition): Themed Room Edition",
           "online": true
         }
       ]
@@ -1168,6 +1225,12 @@
           "store": "Steam",
           "url": "https://store.steampowered.com/app/893050/Hasbros_BATTLESHIP/",
           "owned": true
+        },
+        {
+          "store": "Tabletop Simulator",
+          "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3577192449",
+          "note": "Battleship But Pokemon",
+          "online": true
         }
       ]
     },
@@ -1230,6 +1293,12 @@
           "url": "https://www.brettspielwelt.de/Spiele/Funkenschlag/",
           "note": "Power Grid (Recharged Version)",
           "online": true
+        },
+        {
+          "store": "Tabletop Simulator",
+          "url": "Power Grid [scripted]",
+          "note": "https://steamcommunity.com/sharedfiles/filedetails/?id=2089434416",
+          "online": true
         }
       ]
     },
@@ -1243,6 +1312,12 @@
           "store": "BGA",
           "url": "https://boardgamearena.com/gamepanel?game=survive",
           "note": "BGA Free",
+          "online": true
+        },
+        {
+          "store": "Tabletop Simulator",
+          "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3622141493",
+          "note": "Survive The Island [Scripted]",
           "online": true
         }
       ]
@@ -1635,6 +1710,12 @@
           "note": "BGA Premium - Collection",
           "online": true,
           "monthly_subscription": true
+        },
+        {
+          "store": "Tabletop Simulator",
+          "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3616778847",
+          "note": "Ticket to Ride: Heart Gold Soul Silver",
+          "online": true
         }
       ]
     },
@@ -2390,6 +2471,12 @@
           "url": "https://en.boardgamearena.com/gamepanel?game=raceforthegalaxy",
           "note": "BGA Free",
           "online": true
+        },
+        {
+          "store": "Tabletop Simulator",
+          "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=2811105066",
+          "note": "Race for the Galaxy [Scripted]",
+          "online": true
         }
       ]
     },
@@ -2531,6 +2618,12 @@
           "note": "BGA Premium",
           "online": true,
           "monthly_subscription": true
+        },
+        {
+          "store": "Tabletop Simulator",
+          "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=2679437082",
+          "note": "Agricola [Scripted] (Base+Revised+Expansions+PlayAgricola)",
+          "online": true
         }
       ]
     },
@@ -2573,6 +2666,12 @@
           "url": "https://store.steampowered.com/app/870690/Galaxy_Trucker_Extended_Edition/",
           "note": "Galaxy Trucker",
           "wishlisted": true
+        },
+        {
+          "store": "Tabletop Simulator",
+          "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=2806407077",
+          "note": "Galaxy Trucker Complete [Scripted]",
+          "online": true
         }
       ]
     },
@@ -2786,6 +2885,18 @@
           "url": "https://vassalengine.org/library/projects/Dominion",
           "note": "Dominion",
           "online": true
+        },
+        {
+          "store": "Tabletop Simulator",
+          "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=2974355611",
+          "note": "Dominion — Everything",
+          "online": true
+        },
+        {
+          "store": "Tabletop Simulator",
+          "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3542149160",
+          "note": "Dominion - Everything Scripted",
+          "online": true
         }
       ]
     },
@@ -2994,6 +3105,12 @@
           "store": "VASSAL",
           "url": "https://vassalengine.org/library/projects/Dixit",
           "note": "Dixit",
+          "online": true
+        },
+        {
+          "store": "Tabletop Simulator",
+          "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3354226027",
+          "note": "Dixit: Complete Collection [Scripted]",
           "online": true
         }
       ]
@@ -3585,6 +3702,24 @@
           "url": "https://www.brettspielwelt.de/Spiele/7Wonders/",
           "note": "7 Wonders",
           "online": true
+        },
+        {
+          "store": "Tabletop Simulator",
+          "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=2783670213",
+          "note": "7 Wonders (2nd Ed) [Scripted]",
+          "online": true
+        },
+        {
+          "store": "Tabletopia",
+          "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=2982738799",
+          "note": "7 Wonders (2nd Ed) + Edifice [Scripted]",
+          "online": true
+        },
+        {
+          "store": "Tabletop Simulator",
+          "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3555370689",
+          "note": "7 Wonders Ultimate",
+          "online": true
         }
       ]
     },
@@ -3782,6 +3917,18 @@
           "store": "Steam",
           "url": "https://store.steampowered.com/app/509580/The_Lord_of_the_Rings_Adventure_Card_Game__Definitive_Edition/",
           "owned": true
+        },
+        {
+          "store": "Tabletop Simulator",
+          "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=2482128330",
+          "note": "Lord of the Rings: LCG Complete 4-Player",
+          "online": true
+        },
+        {
+          "store": "Tabletop Simulator",
+          "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=2950283096",
+          "note": "Lord of the Rings: LCG Complete 4-Player Fixed Links",
+          "online": true
         }
       ]
     },
@@ -3913,7 +4060,15 @@
       "name": "Dungeons & Dragons: The Legend of Drizzt",
       "short_description": "The dark elf Drizzt Do'Urden lurks deep within a monster-infested labyrinth maze.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "Tabletop Simulator",
+          "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3350399620",
+          "note": "The Legend of Drizzt Board Game",
+          "online": true
+        }
+      ]
     },
     "92415": {
       "name": "Skull",
@@ -4079,6 +4234,12 @@
           "store": "itch.io",
           "url": "https://retroepic.itch.io/flashpoint",
           "owned": true
+        },
+        {
+          "store": "Tabletop Simulator",
+          "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3343117469",
+          "note": "Flash Point: Fire Rescue + Expansions",
+          "online": true
         }
       ]
     },
@@ -4191,6 +4352,18 @@
           "url": "https://store.steampowered.com/app/477200/Descent_Road_to_Legend/",
           "note": "Road to Legend",
           "support_app": true
+        },
+        {
+          "store": "Tabletop Simulator",
+          "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=2599359537",
+          "note": "Descent: Legends of the Dark (Act 1+2)",
+          "online": true
+        },
+        {
+          "store": "Web",
+          "url": "https://randomboardgame.com/game/descent2ed",
+          "note": "Randomizer",
+          "online": true
         }
       ]
     },
@@ -4530,13 +4703,19 @@
           "store": "Web",
           "url": "https://boardgamehelpers.com/RobinsonCrusoe/Default.aspx",
           "note": "Scenario Selector",
-          "owned": true
+          "support_app": true
         },
         {
           "store": "Tabletopia",
           "url": "https://tabletopia.com/games/robinson-crusoe",
           "note": "Robinson Crusoe: Adventures on the Cursed Island",
           "online": true
+        },
+        {
+          "store": "Web",
+          "url": "https://randomboardgame.com/game/robinson-crusoe",
+          "note": "Randomizer",
+          "support_app": true
         }
       ]
     },
@@ -4735,6 +4914,12 @@
           "note": "BGA Premium",
           "online": true,
           "monthly_subscription": true
+        },
+        {
+          "store": "Tabletop Simulator",
+          "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3644861124",
+          "note": "Concordia Venus [Scripted]",
+          "online": true
         }
       ]
     },
@@ -4761,7 +4946,13 @@
         {
           "store": "Tabletopia",
           "url": "https://tabletopia.com/games/the-gallerist",
-          "note": "Gallerist, The",
+          "note": "The Gallerist",
+          "online": true
+        },
+        {
+          "store": "Tabletop Simulator",
+          "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3558536671",
+          "note": "The Gallerist [Scripted - Scoring Expansion]",
           "online": true
         }
       ]
@@ -4837,7 +5028,15 @@
       "name": "Legends of Andor",
       "short_description": "A group of heroes carefully executes the defense of a besieged kingdom.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "Tabletop Simulator",
+          "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=2436041783",
+          "note": "Andor Deluxe – Scripted",
+          "online": true
+        }
+      ]
     },
     "128271": {
       "name": "Ginkgopolis",
@@ -4982,6 +5181,14 @@
           "note": "Randomizer",
           "support_app": true
         }
+      ],
+      "pc": [
+        {
+          "store": "Tabletop Simulator",
+          "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=2410733963",
+          "note": "Marvel Legendary (Scripted)",
+          "online": true
+        }
       ]
     },
     "129622": {
@@ -5010,6 +5217,12 @@
           "note": "BGA Premium",
           "online": true,
           "monthly_subscription": true
+        },
+        {
+          "store": "Tabletop Simulator",
+          "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3006324209",
+          "note": "Love Letters (2019)",
+          "owned": true
         }
       ]
     },
@@ -5604,6 +5817,12 @@
           "url": "https://boardgamearena.com/gamepanel?game=concept",
           "note": "BGA Free",
           "online": true
+        },
+        {
+          "store": "Tabletop Simulator",
+          "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=935838925",
+          "note": "Concept - Improved",
+          "online": true
         }
       ]
     },
@@ -5714,6 +5933,12 @@
           "store": "BGA",
           "url": "https://en.boardgamearena.com/gamepanel?game=splendor",
           "note": "BGA Premium",
+          "online": true
+        },
+        {
+          "store": "Tabletop Simulator",
+          "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3226059785",
+          "note": "Pokemon Splendor",
           "online": true
         }
       ]
@@ -5876,6 +6101,12 @@
           "store": "BGA",
           "url": "https://boardgamearena.com/gamepanel?game=diamonds",
           "note": "BGA Free",
+          "online": true
+        },
+        {
+          "store": "Tabletop Simulator",
+          "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=2887889060",
+          "note": "Diamonds Second Edition",
           "online": true
         }
       ]
@@ -6417,6 +6648,14 @@
       "short_description": "Become the Overlord or play as Conan and his companions in this action-packed game!",
       "rulebooks": [],
       "supplemental_files": [],
+      "android": [
+        {
+          "store": "BGG",
+          "url": "https://boardgamegeek.com/filepage/325884/conan-solo-tokens-apphelper",
+          "note": "Solo Tokens App/Helper",
+          "support_app": true
+        }
+      ],
       "pc": [
         {
           "store": "VASSAL",
@@ -6882,6 +7121,12 @@
           "store": "Steam",
           "url": "https://store.steampowered.com/app/703980/Star_Wars_Imperial_Assault__Legends_of_the_Alliance/",
           "support_app": true
+        },
+        {
+          "store": "Web",
+          "url": "https://randomboardgame.com/game/imperial-assault",
+          "note": "Randomizer",
+          "support_app": true
         }
       ]
     },
@@ -7024,7 +7269,7 @@
           "store": "Tabletop Simulator",
           "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3316729277",
           "note": "San Juan (Scripted)",
-          "owned": true
+          "online": true
         }
       ]
     },
@@ -7045,6 +7290,30 @@
           "url": "https://store.steampowered.com/app/1343620/Nemesis_Distress/",
           "note": "Nemesis: Distress",
           "owned": true
+        },
+        {
+          "store": "Tabletop Simulator",
+          "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3171849854",
+          "note": "Nemesis Boards (scripted setup, and script assisted)",
+          "online": true
+        },
+        {
+          "store": "Tabletop Simulator",
+          "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=2789919215",
+          "note": "Nemesis (Custom Mod)",
+          "online": true
+        },
+        {
+          "store": "Web",
+          "url": "https://randomboardgame.com/game/nemesis",
+          "note": "Randomizer",
+          "support_app": true
+        },
+        {
+          "store": "Tabletop Simulator",
+          "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3462763348",
+          "note": "Nemesis: Redux",
+          "online": true
         }
       ]
     },
@@ -7115,6 +7384,18 @@
           "note": "BGA Premium",
           "online": true,
           "monthly_subscription": true
+        },
+        {
+          "store": "Tabletop Simulator",
+          "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3302123350",
+          "note": "Terraforming Mars + Expansions (2024)",
+          "online": true
+        },
+        {
+          "store": "Tabletop Simulator",
+          "url": "Terraforming Mars + Expansions (Scripted)",
+          "note": "https://steamcommunity.com/sharedfiles/filedetails/?id=2104525488",
+          "online": true
         }
       ]
     },
@@ -7234,7 +7515,7 @@
           "store": "Tabletop Simulator",
           "url": "https://store.steampowered.com/app/446980/Tabletop_Simulator__Scythe/",
           "note": "Tabletop Simulator DLC",
-          "owned": true
+          "online": true
         },
         {
           "store": "BGA",
@@ -7248,6 +7529,12 @@
           "url": "https://tabletopia.com/games/scythe",
           "note": "Scythe",
           "online": true
+        },
+        {
+          "store": "Web",
+          "url": "https://randomboardgame.com/game/scythe",
+          "note": "Randomizer",
+          "owned": true
         }
       ]
     },
@@ -7354,6 +7641,12 @@
       "supplemental_files": [],
       "pc": [
         {
+          "store": "Steam",
+          "url": "https://store.steampowered.com/app/1015930/Blood_Rage_Digital_Edition/",
+          "note": "with Gods of Asgard, Mythical Monsters, Mystics of Midgard",
+          "owned": true
+        },
+        {
           "store": "Tabletop Simulator",
           "url": "https://store.steampowered.com/app/610700/",
           "note": "Official DLC: Blood Rage",
@@ -7365,12 +7658,6 @@
           "note": "BGA Premium",
           "online": true,
           "monthly_subscription": true
-        },
-        {
-          "store": "Steam",
-          "url": "https://store.steampowered.com/app/1015930/Blood_Rage_Digital_Edition/",
-          "note": "with Gods of Asgard, Mythical Monsters, Mystics of Midgard",
-          "owned": true
         },
         {
           "store": "Tabletop Simulator",
@@ -7389,6 +7676,12 @@
           "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=572913802",
           "note": "Blood Rage",
           "online": true
+        },
+        {
+          "store": "Web",
+          "url": "https://randomboardgame.com/game/blood-rage",
+          "note": "Randomizer",
+          "support_app": true
         }
       ]
     },
@@ -7618,11 +7911,17 @@
           "url": "https://vassalengine.org/library/projects/Burgle_Bros.",
           "note": "Burgle Bros.",
           "online": true
+        },
+        {
+          "store": "Web",
+          "url": "https://randomboardgame.com/game/burgle-bros",
+          "note": "Randomizer",
+          "support_app": true
         }
       ]
     },
     "172242": {
-      "name": "Exploding Kittens: NSFW Deck",
+      "name": "Exploding Kittens",
       "short_description": "Match kittens and avoid explosions. Now with poop jokes!",
       "rulebooks": [],
       "supplemental_files": [],
@@ -7661,6 +7960,12 @@
           "note": "BGA Premium",
           "online": true,
           "monthly_subscription": true
+        },
+        {
+          "store": "Tabletop Simulator",
+          "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=1966315899",
+          "note": "Exploding Kittens & ALL DLCs - Cadrega Edition",
+          "online": true
         }
       ]
     },
@@ -7756,11 +8061,29 @@
       ],
       "pc": [
         {
+          "store": "Web",
+          "url": "https://app.boardandgamer.com/7wonders-duel-solo/",
+          "note": "7 Wonders Duel Solo",
+          "support_app": true
+        },
+        {
           "store": "BGA",
           "url": "https://en.boardgamearena.com/gamepanel?game=sevenwondersduel",
           "note": "BGA Premium",
           "online": true,
           "monthly_subscription": true
+        },
+        {
+          "store": "Tabletop Simulator",
+          "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3368311210",
+          "note": "7 Wonders Duel [ULTIMATE ed.]",
+          "online": true
+        },
+        {
+          "store": "Tabletop Simulator",
+          "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=2115173088",
+          "note": "7 Wonders Duel + Pantheon + Agora + (Automated) Solo Mode",
+          "online": true
         }
       ]
     },
@@ -7811,6 +8134,18 @@
           "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=2954297337",
           "note": "Gloomhaven",
           "online": true
+        },
+        {
+          "store": "Forteller Narratives",
+          "url": "https://fortellergames.com/products/gloomhaven?variant=32321286668427",
+          "note": "Gloomhaven 1st Edition",
+          "monthly_subscription": true
+        },
+        {
+          "store": "Forteller Narratives",
+          "url": "https://fortellergames.com/products/forgotten-circles?variant=40659113050274",
+          "note": "Forgotten Circles",
+          "monthly_subscription": true
         }
       ]
     },
@@ -7848,7 +8183,15 @@
       "name": "Forbidden Stars",
       "short_description": "Assemble your armies, devise your strategy, and wage war across the Herakon Cluster.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "Tabletop Simulator",
+          "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=2726290758",
+          "note": "Forbidden Stars - Galaxy in Flames, Symphony of War, Darkest Dawn and The Dying Light",
+          "online": true
+        }
+      ]
     },
     "175199": {
       "name": "Mottainai",
@@ -7984,6 +8327,12 @@
           "url": "https://vassalengine.org/library/projects/13_Days_The_Cuban_Missile_Crisis",
           "note": "13 Days: The Cuban Missile Crisis, 1962",
           "online": true
+        },
+        {
+          "store": "Tabletop Simulator",
+          "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=733020343",
+          "note": "13 Days: The Cuban Missile Crisis",
+          "online": true
         }
       ]
     },
@@ -8005,6 +8354,12 @@
           "note": "BGA Premium",
           "online": true,
           "monthly_subscription": true
+        },
+        {
+          "store": "Tabletop Simulator",
+          "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=2944957093",
+          "note": "A Feast For Odin w/ All Content [Scripted]",
+          "online": true
         }
       ]
     },
@@ -8280,6 +8635,12 @@
           "url": "https://store.steampowered.com/app/556180/Mysterium_A_Psychic_Clue_Game/",
           "note": "with Hidden Signs, Secrets & Lies",
           "owned": true
+        },
+        {
+          "store": "Tabletop Simulator",
+          "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3339656606",
+          "note": "[ULTIMATE] Mysterium (Complete): Themed Room Edition",
+          "online": true
         }
       ]
     },
@@ -8524,6 +8885,18 @@
           "url": "https://vassalengine.org/library/projects/Deep_Space_D-6",
           "note": "Deep Space D-6",
           "online": true
+        },
+        {
+          "store": "Tabletop Simulator",
+          "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=2069713428",
+          "note": "Deep Space D-6 with Endless Expansion and Elite Dangerous Ships",
+          "online": true
+        },
+        {
+          "store": "Tabletop Simulator",
+          "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=2952333340",
+          "note": "Deep Space D-6 with The Endless and The Long Way Home Expansions + Elite Dangerous Ships",
+          "online": true
         }
       ]
     },
@@ -8650,6 +9023,12 @@
           "store": "Tabletopia",
           "url": "https://tabletopia.com/games/nemo-s-war-second-edition",
           "note": "Nemo's War (Second Edition)",
+          "online": true
+        },
+        {
+          "store": "Tabletop Simulator",
+          "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=1123088298",
+          "note": "Nemo's War (2nd edition)",
           "online": true
         }
       ]
@@ -9074,6 +9453,12 @@
           "url": "https://boardgamearena.com/gamepanel?game=santorini",
           "note": "BGA Free",
           "online": true
+        },
+        {
+          "store": "Tabletop Simulator",
+          "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=2502943997",
+          "note": "Santorini - FULL [updated rules]",
+          "online": true
         }
       ]
     },
@@ -9208,6 +9593,44 @@
           "url": "https://play.google.com/store/apps/details?id=com.cmon.MassiveDarknessCompanion",
           "note": "Companion",
           "support_app": true
+        }
+      ],
+      "pc": [
+        {
+          "store": "Tabletop Simulator",
+          "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=2859561294",
+          "note": "Massive Darkness - Ultimate Set Up (fixed) plus german content",
+          "online": true
+        },
+        {
+          "store": "Tabletop Simulator",
+          "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=2280699575",
+          "note": "Massive Darkness - Ultimate Set Up (fixed)",
+          "online": true
+        },
+        {
+          "store": "Tabletop Simulator",
+          "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=2093826753",
+          "note": "Massive Darkness - Complete",
+          "online": true
+        },
+        {
+          "store": "Tabletop Simulator",
+          "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=1265688419",
+          "note": "Massive Darkness - Dustins Repack",
+          "online": true
+        },
+        {
+          "store": "Tabletop Simulator",
+          "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=1120590342",
+          "note": "Massive Darkness - Ultimate Set Up",
+          "online": true
+        },
+        {
+          "store": "Web",
+          "url": "https://randomboardgame.com/game/massive-darkness",
+          "note": "Randomizer",
+          "owned": true
         }
       ]
     },
@@ -9377,6 +9800,12 @@
           "url": "https://boardgamehelpers.com/HogwartsBattle/Default.aspx",
           "note": "Setup Helper",
           "support_app": true
+        },
+        {
+          "store": "Tabletop Simulator",
+          "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=1349868208",
+          "note": "Harry Potter: Hogwarts Battle & Monsters Box of Monsters & Charms and Potions",
+          "online": true
         }
       ]
     },
@@ -9407,6 +9836,12 @@
           "url": "https://store.steampowered.com/app/965590/Sagrada/?curator_clanid=5557305",
           "note": "Sagrada",
           "owned": true
+        },
+        {
+          "store": "Tabletop Simulator",
+          "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3638358001",
+          "note": "Sagrada [Scripted]",
+          "online": true
         }
       ]
     },
@@ -9454,6 +9889,18 @@
           "store": "Tabletop Simulator",
           "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=1543905219",
           "note": "Everdell: Collector's Edition",
+          "online": true
+        },
+        {
+          "store": "Tabletop Simulator",
+          "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=1929354615",
+          "note": "Everdell [reworked] (All Expansions)",
+          "online": true
+        },
+        {
+          "store": "Tabletop Simulator",
+          "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3089480585",
+          "note": "https://steamcommunity.com/sharedfiles/filedetails/?id=3089480585",
           "online": true
         }
       ]
@@ -9573,7 +10020,13 @@
           "store": "Steam",
           "url": "https://store.steampowered.com/app/1406720/Dire_Wolf_Game_Room/",
           "note": "Dire Wolf Game Room",
-          "owned": true
+          "support_app": true
+        },
+        {
+          "store": "Web",
+          "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3217952555",
+          "note": "Clank! [Scripted+]",
+          "online": true
         }
       ]
     },
@@ -9992,7 +10445,15 @@
       "name": "Rising Sun",
       "short_description": "Lead your clan to victory through negotiation, combat, monsters and favors from Kami.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "Web",
+          "url": "https://randomboardgame.com/game/rising-sun",
+          "note": "Randomizer",
+          "support_app": true
+        }
+      ]
     },
     "206084": {
       "name": "Nautilion",
@@ -10004,7 +10465,33 @@
       "name": "1754: Conquest – The French and Indian War",
       "short_description": "Strategic and operational art come together to decide the fate of North America.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "VASSAL",
+          "url": "https://vassalengine.org/library/projects/13_The_Colonies_in_Revolt",
+          "note": "1754: Conquest – The French and Indian War",
+          "online": true
+        },
+        {
+          "store": "Tabletop Simulator",
+          "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=2228316185",
+          "note": "1754: Conquest",
+          "online": true
+        },
+        {
+          "store": "Tabletop Simulator",
+          "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=2723391124",
+          "note": "Conquest & Consequence",
+          "online": true
+        },
+        {
+          "store": "Tabletop Simulator",
+          "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=2957753319",
+          "note": "Conquest & Consequence",
+          "online": true
+        }
+      ]
     },
     "206480": {
       "name": "Imperial Struggle",
@@ -10277,7 +10764,15 @@
       "name": "Thunderstone Quest",
       "short_description": "Recruit powerful heroes, arm your party and dungeon delve for Thunderstone Shards!",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "Tabletop Simulator",
+          "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=2625094837",
+          "note": "Thunderstone Quest (scripted, quests 1-17)",
+          "online": true
+        }
+      ]
     },
     "215613": {
       "name": "Tao Long: The Way of the Dragon",
@@ -10355,7 +10850,15 @@
       "name": "Tournament at Camelot",
       "short_description": "Legendary Arthurian characters compete in a tactical trick-taking game.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "Tabletop Simulator",
+          "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=2838014922",
+          "note": "Tournament at Camelot + Avalon",
+          "online": true
+        }
+      ]
     },
     "216974": {
       "name": "King's Road",
@@ -10388,6 +10891,12 @@
           "url": "https://boardgamehelpers.com/QuestforElDorado/Default.aspx",
           "note": "Map Builder",
           "owned": true
+        },
+        {
+          "store": "Tabletop Simulator",
+          "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3502991676",
+          "note": "Quest for El Dorado with Expansion Collection (Fully Scripted)",
+          "online": true
         }
       ]
     },
@@ -10439,6 +10948,12 @@
           "url": "https://store.steampowered.com/app/1758080/Empires_of_the_Void_II/",
           "note": "Empires of the Void II",
           "wishlisted": true
+        },
+        {
+          "store": "Tabletop Simulator",
+          "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=2831098015",
+          "note": "Empires of the Void 2",
+          "online": true
         }
       ]
     },
@@ -10811,6 +11326,12 @@
           "url": "https://fantasy-realms.github.io/index.html",
           "note": "Scoring",
           "support_app": true
+        },
+        {
+          "store": "Tabletop Simulator",
+          "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=2497992321",
+          "note": "Fantasy Realms",
+          "online": true
         }
       ]
     },
@@ -11540,6 +12061,18 @@
           "url": "https://falloutbgcompanion.onrender.com/",
           "note": "Companion",
           "support_app": true
+        },
+        {
+          "store": "Tabletop Simulator",
+          "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=1597714163",
+          "note": "Fallout: All Expansions [Scripted]",
+          "online": true
+        },
+        {
+          "store": "Tabletop Simulator",
+          "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=2725295143",
+          "note": "Fallout (Unscripted) EN",
+          "online": true
         }
       ]
     },
@@ -11597,7 +12130,15 @@
       "name": "Fireball Island: The Curse of Vul-Kar",
       "short_description": "Grab some treasure! Dodge fireball marbles! Get off the island before Vul-Kar blows!",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "Tabletop Simulator",
+          "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=2393242375",
+          "note": "Fireball Island (1986)",
+          "online": true
+        }
+      ]
     },
     "233078": {
       "name": "Twilight Imperium: Fourth Edition",
@@ -11610,6 +12151,12 @@
           "url": "https://en.boardgamearena.com/gamepanel?game=twilightimperium",
           "note": "BGA Premium",
           "online": true
+        },
+        {
+          "store": "Web",
+          "url": "https://randomboardgame.com/game/twilight-imperium-4",
+          "note": "Randomizer",
+          "support_app": true
         }
       ]
     },
@@ -11903,6 +12450,24 @@
           "url": "https://store.steampowered.com/app/965580/Root/",
           "note": "with Riverfolk, Clockwork",
           "owned": true
+        },
+        {
+          "store": "Tabletop Simulator",
+          "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=2213350227",
+          "note": "ROOT + All Expansions",
+          "online": true
+        },
+        {
+          "store": "Tabletop Simulator",
+          "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3354438467",
+          "note": "Root - Ultimate Collection - Homeland Expansion (UP TO DATE)",
+          "online": true
+        },
+        {
+          "store": "Web",
+          "url": "https://randomboardgame.com/game/root",
+          "note": "Randomizer",
+          "support_app": true
         }
       ]
     },
@@ -12423,6 +12988,12 @@
           "url": "https://store.steampowered.com/app/3290350/Eclipse__2nd_Dawn_for_the_Galaxy/",
           "note": "Eclipse",
           "wishlisted": true
+        },
+        {
+          "store": "Tabletop Simulator",
+          "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3102125474",
+          "note": "Eclipse: Second Dawn for the Galaxy - Community Edition",
+          "online": true
         }
       ]
     },
@@ -12655,6 +13226,12 @@
           "note": "BGA Premium",
           "online": true,
           "monthly_subscription": true
+        },
+        {
+          "store": "Tabletop Simulator",
+          "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3436064395",
+          "note": "Barrage [Scripted, Pretty, All Content]",
+          "owned": true
         }
       ]
     },
@@ -12787,6 +13364,12 @@
           "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=2133680542",
           "note": "Cthulhu Death May Die Kickstarter Investigator Cards With Backs",
           "online": true
+        },
+        {
+          "store": "Web",
+          "url": "https://randomboardgame.com/game/cthulhu-death-may-die",
+          "note": "Randomizer",
+          "support_app": true
         }
       ]
     },
@@ -12800,6 +13383,12 @@
           "store": "Tabletopia",
           "url": "https://tabletopia.com/games/a-war-of-whispers",
           "note": "War of Whispers, A",
+          "online": true
+        },
+        {
+          "store": "Tabletop Simulator",
+          "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3614956082",
+          "note": "A War of Whispers - Expansion of Influence",
           "online": true
         }
       ]
@@ -12998,7 +13587,15 @@
       "name": "Azul: Stained Glass of Sintra",
       "short_description": "Create beautiful windows with coloured glass more efficiently than anyone else.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "Tabletop Simulator",
+          "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3504427571",
+          "note": "Azul: Stained Glass of Sintra",
+          "online": true
+        }
+      ]
     },
     "256680": {
       "name": "Return to Dark Tower",
@@ -13107,6 +13704,12 @@
           "url": "https://store.steampowered.com/app/840210/Arkham_Horror_Mothers_Embrace/",
           "note": "Arkham Horror: Mother's Embrace",
           "owned": true
+        },
+        {
+          "store": "Tabletop Simulator",
+          "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3521768556",
+          "note": "Arkham Horror 3ed [EN] [Ukr] [scripted] (base + all expansion)",
+          "online": true
         }
       ]
     },
@@ -13246,7 +13849,15 @@
       "name": "Camel Up (Second Edition)",
       "short_description": "Place your bets and bend the odds in this crazy camel-stacking race!",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "Tabletop Simulator",
+          "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=2871818405",
+          "note": "Camel Up 2nd Edition Complete",
+          "owned": true
+        }
+      ]
     },
     "261342": {
       "name": "Old West Empresario",
@@ -13278,6 +13889,12 @@
           "note": "BGA Premium",
           "online": true,
           "monthly_subscription": true
+        },
+        {
+          "store": "Tabletop Simulator",
+          "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3476364670",
+          "note": "Res Arcana [Scripted]",
+          "online": true
         }
       ]
     },
@@ -13511,6 +14128,12 @@
           "note": "BGA Premium",
           "online": true,
           "monthly_subscription": true
+        },
+        {
+          "store": "Web",
+          "url": "https://app.boardandgamer.com/tiny-towns/",
+          "note": "Tiny Towns Helper",
+          "support_app": true
         }
       ]
     },
@@ -13673,7 +14296,15 @@
       "name": "Clank! Legacy: Acquisitions Incorporated",
       "short_description": "\"Go forth, be bold, and ACQUIRE!\" in this campaign version of \"Clank!\"",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "Tabletop Simulator",
+          "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=2100953124",
+          "note": "Clank! Legacy: Acquisitions Incorporated",
+          "online": true
+        }
+      ]
     },
     "266524": {
       "name": "Parks",
@@ -13868,6 +14499,18 @@
           "url": "https://store.steampowered.com/app/1003400/The_Lord_of_the_Rings_Journeys_in_Middleearth/",
           "note": "3 additional missions available",
           "support_app": true
+        },
+        {
+          "store": "Tabletop Simulator",
+          "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=2166579047",
+          "note": "Lord of the Rings: Journeys in Middle Earth (ALL CURRENT EXPANSIONS)",
+          "online": true
+        },
+        {
+          "store": "Tabletop Simulator",
+          "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=1938650480",
+          "note": "Lord of the Rings: Journeys in Middle-Earth ~ Automatic",
+          "online": true
         }
       ]
     },
@@ -13961,6 +14604,12 @@
           "url": "https://store.steampowered.com/app/480640/Pathfinder_Adventures/",
           "note": "Pathfinder Adventures",
           "owned": true
+        },
+        {
+          "store": "Tabletop Simulator",
+          "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=481142009",
+          "note": "Pathfinder Adventure Card Game - Rise of the Runelords",
+          "online": true
         }
       ]
     },
@@ -14000,7 +14649,15 @@
       "name": "Star Wars: Outer Rim",
       "short_description": "Star Wars characters race across the galaxy trying to achieve the most fame!",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "Tabletop Simulator",
+          "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=2820783326",
+          "note": "Star Wars Outer Rim: Unfinished Business (Scripted)",
+          "online": true
+        }
+      ]
     },
     "272738": {
       "name": "Jaws",
@@ -14012,7 +14669,15 @@
       "name": "Iron Helm",
       "short_description": "Fight, loot, make decisions and learn skills on your way to the dungeon's boss.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "Tabletop Simulator",
+          "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3206956398",
+          "note": "Iron Helm - All Expansions",
+          "online": true
+        }
+      ]
     },
     "273284": {
       "name": "Atelier: The Painter's Studio",
@@ -14086,7 +14751,15 @@
       "name": "Valley of the Kings: Premium Edition",
       "short_description": "Prove your worth to the gods by being entombed with the most possessions.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "Tabletop Simulator",
+          "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=2079899984",
+          "note": "Valley of the Kings Premium Edition",
+          "online": true
+        }
+      ]
     },
     "274637": {
       "name": "Unmatched: Battle of Legends, Volume One",
@@ -14371,6 +15044,14 @@
           "store": "Play Store",
           "url": "https://play.google.com/store/apps/details?id=com.foxtrotgames.planet9",
           "support_app": true
+        }
+      ],
+      "pc": [
+        {
+          "store": "Tabletop Simulator",
+          "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=2825851552",
+          "note": "The Search for Planet X (Scripted)",
+          "online": true
         }
       ]
     },
@@ -14717,6 +15398,12 @@
           "url": "https://tabletopia.com/games/kanban-ev",
           "note": "Kanban EV",
           "online": true
+        },
+        {
+          "store": "Tabletop Simulator",
+          "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3589049550",
+          "note": "Kanban EV [ Scripted - All Expansions ]",
+          "online": true
         }
       ]
     },
@@ -14784,7 +15471,15 @@
       "name": "Legendary: James Bond",
       "short_description": "Play through Bond's most memorable films using the famous Legendary game system.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "Tabletop Simulator",
+          "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=2683324549",
+          "note": "Legendary James Bond + Expansions",
+          "online": true
+        }
+      ]
     },
     "285192": {
       "name": "Destinies",
@@ -14803,7 +15498,15 @@
       "name": "Marvel Champions: The Card Game",
       "short_description": "Battle Marvel villains with unique teams of iconic heroes in this LCG.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "Web",
+          "url": "https://randomboardgame.com/game/marvel-champions",
+          "note": "Randomizer",
+          "support_app": true
+        }
+      ]
     },
     "285826": {
       "name": "Ultra Tiny Epic Galaxies",
@@ -14823,7 +15526,15 @@
       "name": "Ankh: Gods of Egypt",
       "short_description": "Take the role of Egyptian gods fighting to survive and be remembered.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "Web",
+          "url": "https://randomboardgame.com/game/ankh-gods-of-egypt",
+          "note": "Randomizer",
+          "support_app": true
+        }
+      ]
     },
     "286063": {
       "name": "7th Citadel, The",
@@ -14875,6 +15586,18 @@
           "url": "https://store.steampowered.com/app/510320/Conflict_of_Heroes_Awakening_the_Bear/",
           "note": "Conflict of Heroes",
           "wishlisted": true
+        },
+        {
+          "store": "Tabletop Simulator",
+          "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=2798338485",
+          "note": "Conflict of Heroes: Awakening the Bear (3rd Ed) [Scripted Setup]",
+          "online": true
+        },
+        {
+          "store": "Tabletop Simulator",
+          "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=2799619489",
+          "note": "Conflict of Heroes: Storms of Steel (3rd Ed) [Scripted Setup]",
+          "online": true
         }
       ]
     },
@@ -14888,7 +15611,15 @@
       "name": "Burgle Bros 2: The Casino Capers",
       "short_description": "Avoid the guards, cameras, and other problems and try to break the casino.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "Web",
+          "url": "https://randomboardgame.com/game/burgle-bros",
+          "note": "Randomizer",
+          "support_app": true
+        }
+      ]
     },
     "286657": {
       "name": "Beasty Bar 3: Born to Be Wild",
@@ -15030,6 +15761,12 @@
       "supplemental_files": [],
       "pc": [
         {
+          "store": "Forteller Narratives",
+          "url": "https://fortellergames.com/products/jaws-of-the-lion?variant=35271531528354",
+          "note": "Jaws of the Lion Narration",
+          "monthly_subscription": true
+        },
+        {
           "store": "Steam",
           "url": "https://store.steampowered.com/app/1809490/Gloomhaven__Jaws_of_the_Lion/",
           "note": "Need the base game first",
@@ -15134,7 +15871,15 @@
       "name": "Tournament at Avalon",
       "short_description": "Medieval legends battle to the death in this chaotic trick-taking tournament.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "Tabletop Simulator",
+          "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=2838014922",
+          "note": "Tournament at Camelot + Avalon",
+          "online": true
+        }
+      ]
     },
     "293014": {
       "name": "Nidavellir",
@@ -15262,6 +16007,24 @@
           "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3349016424",
           "note": "Unmatched Game System",
           "online": true
+        },
+        {
+          "store": "Tabletop Simulator",
+          "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3349016424",
+          "note": "Unmatched: Alien",
+          "online": true
+        },
+        {
+          "store": "Tabletop Simulator",
+          "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3504130456",
+          "note": "Lights, Camera, Scramble!",
+          "online": true
+        },
+        {
+          "store": "Tabletop Simulator",
+          "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3499464644",
+          "note": "Krosuna's Unmatched Table II [Unofficial Content]",
+          "online": true
         }
       ]
     },
@@ -15282,6 +16045,14 @@
           "note": "Lite",
           "support_app": true
         }
+      ],
+      "pc": [
+        {
+          "store": "Forteller Narratives",
+          "url": "https://fortellergames.com/products/frosthaven",
+          "note": "Frosthaven",
+          "support_app": true
+        }
       ]
     },
     "295895": {
@@ -15300,6 +16071,12 @@
         {
           "store": "Tabletopia",
           "url": "https://tabletopia.com/games/distilled-game",
+          "note": "Distilled",
+          "online": true
+        },
+        {
+          "store": "Tabletop Simulator",
+          "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=2065918654",
           "note": "Distilled",
           "online": true
         }
@@ -15358,6 +16135,18 @@
           "url": "https://tabletopia.com/games/cascadia",
           "note": "Cascadia",
           "online": true
+        },
+        {
+          "store": "Tabletop Simulator",
+          "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3554313311",
+          "note": "Cascadia & Cascadia: Landmarks [Scripted]",
+          "online": true
+        },
+        {
+          "store": "Tabletop Simulator",
+          "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=2922111128",
+          "note": "Cascadia - Scripted [2025]",
+          "wishlisted": true
         }
       ]
     },
@@ -15442,6 +16231,12 @@
           "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3764410710",
           "note": "Kemet B&S, Rise of God, Gate of Thonis.",
           "online": true
+        },
+        {
+          "store": "Tabletop Simulator",
+          "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=2729492221",
+          "note": "Kemet: Blood and Sand",
+          "online": true
         }
       ]
     },
@@ -15461,7 +16256,39 @@
       "name": "Marvel United",
       "short_description": "Cooperate as Marvel Superheroes to stop the Villains' master plans!",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "Web",
+          "url": "https://sergiogransol.github.io/marvel-united-randomizer/",
+          "note": "Randomizer",
+          "support_app": true
+        },
+        {
+          "store": "Web",
+          "url": "https://united.nors-jensen.dk/",
+          "note": "United Generator",
+          "support_app": true
+        },
+        {
+          "store": "Web",
+          "url": "https://united-randomizer.netlify.app/",
+          "note": "Marvel United Randomizer",
+          "support_app": true
+        },
+        {
+          "store": "Web",
+          "url": "https://randomboardgame.com/game/marvel-united",
+          "note": "Marvel United Randomizer",
+          "support_app": true
+        },
+        {
+          "store": "Web",
+          "url": "https://perchance.org/vt9rn1kniq",
+          "note": "Random Game Generator",
+          "support_app": true
+        }
+      ]
     },
     "298069": {
       "name": "Cubitos",
@@ -15505,7 +16332,21 @@
       "name": "Clash of Cultures: Monumental Edition",
       "short_description": "Advance your ancient civilization from tiny settlement to mighty empire.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "Tabletop Simulator",
+          "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=2826951574",
+          "note": "Clash of Cultures ME lightweight",
+          "online": true
+        },
+        {
+          "store": "Tabletop Simulator",
+          "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=2651868219",
+          "note": "Clash of Cultures ME (Scripted)",
+          "online": true
+        }
+      ]
     },
     "299702": {
       "name": "Lost Code, The",
@@ -16032,7 +16873,7 @@
       ]
     },
     "311193": {
-      "name": "Anno 1800:",
+      "name": "Anno 1800",
       "short_description": "Fulfill the wishes of your population by producing ever more luxurious goods.",
       "rulebooks": [],
       "supplemental_files": [],
@@ -16041,6 +16882,12 @@
           "store": "Steam",
           "url": "https://store.steampowered.com/app/916440/Anno_1800/",
           "wishlisted": true
+        },
+        {
+          "store": "Tabletop Simulator",
+          "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3379586075",
+          "note": "Anno 1800: The Expansion",
+          "online": true
         }
       ]
     },
@@ -16092,6 +16939,18 @@
           "store": "Yucata",
           "url": "https://www.yucata.de/en/GameInfo/Arnak",
           "note": "Lost Ruins of Arnak",
+          "online": true
+        },
+        {
+          "store": "Tabletop Simulator",
+          "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=2779950344",
+          "note": "Lost Ruins of Arnak [SCRIPTED]",
+          "online": true
+        },
+        {
+          "store": "Tabletop Simulator",
+          "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3282455004",
+          "note": "Lost Ruins of Arnak - COMPLETE",
           "online": true
         }
       ]
@@ -16152,6 +17011,12 @@
           "store": "Tabletopia",
           "url": "https://tabletopia.com/games/meadow",
           "note": "Meadow",
+          "online": true
+        },
+        {
+          "store": "Tabletop Simulator",
+          "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3550090203",
+          "note": "Meadow + Downstream [Scripted]",
           "online": true
         }
       ]
@@ -16220,39 +17085,27 @@
         },
         {
           "store": "Tabletop Simulator",
-          "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=2093826753",
-          "note": "Massive Darkness - Complete",
-          "online": true
-        },
-        {
-          "store": "Tabletop Simulator",
-          "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=1265688419",
-          "note": "Massive Darkness - Dustins Repack",
-          "online": true
-        },
-        {
-          "store": "Tabletop Simulator",
-          "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=1120590342",
-          "note": "Massive Darkness - Ultimate Set Up",
-          "online": true
-        },
-        {
-          "store": "Tabletop Simulator",
-          "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=2280699575",
-          "note": "Massive Darkness - Ultimate Set Up (fixed)",
-          "online": true
-        },
-        {
-          "store": "Tabletop Simulator",
-          "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=2859561294",
-          "note": "Massive Darkness - Ultimate Set Up (fixed) plus german content",
-          "online": true
-        },
-        {
-          "store": "Tabletop Simulator",
           "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3740171322",
           "note": "Massive Darkness 2",
           "online": true
+        },
+        {
+          "store": "Tabletop Simulator",
+          "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=2750029218",
+          "note": "Massive Darkness 2 - COMPLETE",
+          "online": true
+        },
+        {
+          "store": "Tabletop Simulator",
+          "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3415447936",
+          "note": "Massive Darkness 2 - SUPER FULL",
+          "online": true
+        },
+        {
+          "store": "Web",
+          "url": "https://randomboardgame.com/game/massive-darkness-2",
+          "note": "Randomizer",
+          "support_app": true
         }
       ]
     },
@@ -16347,6 +17200,18 @@
           "url": "https://store.steampowered.com/app/1406720/Dire_Wolf_Game_Room/",
           "note": "Dire Wolf Game Room",
           "support_app": true
+        },
+        {
+          "store": "Tabletop Simulator",
+          "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=2354919205",
+          "note": "Dune Imperium + Rise of IX + Immortality (scripted)",
+          "online": true
+        },
+        {
+          "store": "Tabletop Simulator",
+          "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=2702663883",
+          "note": "Dune Imperium + Rise of IX + Immortality (scripted++)",
+          "online": true
         }
       ]
     },
@@ -16739,6 +17604,12 @@
           "url": "https://tabletopia.com/games/successors",
           "note": "Successors (Fourth Edition)",
           "online": true
+        },
+        {
+          "store": "Tabletop Simulator",
+          "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3357018945",
+          "note": "Successors [Scripted]",
+          "online": true
         }
       ]
     },
@@ -16882,7 +17753,15 @@
       "name": "Radlands",
       "short_description": "Post-apocalyptic bands of punks fight to destroy the rival tribe's camps.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "Tabletop Simulator",
+          "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=2863441494",
+          "note": "Radlands [+Cult of Chrome][+Solo vs AI] [Fully Scripted]",
+          "online": true
+        }
+      ]
     },
     "329450": {
       "name": "Equinox",
@@ -16901,6 +17780,12 @@
           "url": "https://tabletopia.com/games/red_rising",
           "note": "Red Rising",
           "online": true
+        },
+        {
+          "store": "Web",
+          "url": "https://www.redrisingcompanion.com/",
+          "note": "Red Rising Companion",
+          "support_app": true
         }
       ]
     },
@@ -17061,6 +17946,12 @@
           "url": "https://tabletopia.com/games/age-of-galaxy",
           "note": "Age of Galaxy",
           "online": true
+        },
+        {
+          "store": "Tabletop Simulator",
+          "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=2867859615",
+          "note": "Age of Galaxy - Complete",
+          "online": true
         }
       ]
     },
@@ -17165,6 +18056,12 @@
           "url": "https://summonerwars.plaidhatgames.com/",
           "note": "Summoner Wars",
           "owned": true
+        },
+        {
+          "store": "Tabletop Simulator",
+          "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3004950832",
+          "note": "Summoner Wars 2nd Edition (Complete)",
+          "online": true
         }
       ]
     },
@@ -17226,6 +18123,12 @@
           "store": "BGA",
           "url": "https://boardgamearena.com/gamepanel?game=fornorthwood",
           "note": "BGA Free",
+          "online": true
+        },
+        {
+          "store": "Tabletop Simulator",
+          "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3369940970",
+          "note": "For Northwood! [Scripted]",
           "online": true
         }
       ]
@@ -17294,6 +18197,12 @@
           "url": "https://store.steampowered.com/app/337150/Sentinels_of_the_Multiverse/",
           "note": "with Shattered Timelines",
           "owned": true
+        },
+        {
+          "store": "Tabletop Simulator",
+          "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=2724841505",
+          "note": "Sentinels of the Multiverse DE (complete)",
+          "online": true
         }
       ]
     },
@@ -17319,7 +18228,15 @@
       "name": "Marvel United: X-Men",
       "short_description": "Co-operate as Marvel Heroes to stop the Villains' master plans!",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "Web",
+          "url": "https://united-randomizer.netlify.app/",
+          "note": "Marvel United Randomizer",
+          "support_app": true
+        }
+      ]
     },
     "336847": {
       "name": "Tyrants of the Underdark",
@@ -17628,7 +18545,15 @@
       "name": "Unfathomable",
       "short_description": "Traitors and Terror. Immerse yourself among the passengers and crew of SS Atlantica.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "Tabletop Simulator",
+          "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=2621238787",
+          "note": "Unfathomable + From the Abyss",
+          "online": true
+        }
+      ]
     },
     "340677": {
       "name": "Bad Company",
@@ -17676,6 +18601,12 @@
           "store": "Tabletopia",
           "url": "https://tabletopia.com/games/the-plum-island-horror",
           "note": "Plum Island Horror, The",
+          "online": true
+        },
+        {
+          "store": "Tabletop Simulator",
+          "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=2930110979",
+          "note": "The Plum Island Horror",
           "online": true
         }
       ]
@@ -17748,6 +18679,12 @@
           "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3430859237",
           "note": "Thunder Road: Vendetta (w. Expansions: Extra Ammo, Big Rig Final 5, Carnage At Devil's Run, Choppe Shoppe)",
           "online": true
+        },
+        {
+          "store": "Tabletop Simulator",
+          "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3290872256",
+          "note": "Thunder Road: Vendetta",
+          "online": true
         }
       ]
     },
@@ -17767,7 +18704,15 @@
       "name": "World of Warcraft: Wrath of the Lich King",
       "short_description": "Survive against hordes of undead on Azeroth to face off against the Lich King.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "Tabletop Simulator",
+          "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=2889832427",
+          "note": "World of Warcraft: Wrath of the Lich King",
+          "online": true
+        }
+      ]
     },
     "342894": {
       "name": "Mythic Mischief",
@@ -17914,7 +18859,15 @@
       "name": "Deep Space D-6: The Long Way Home",
       "short_description": "Make difficult choices as you travel the galaxy to find your way home.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "Tabletop Simulator",
+          "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=2952333340",
+          "note": "Deep Space D-6 with The Endless and The Long Way Home Expansions + Elite Dangerous Ships",
+          "online": true
+        }
+      ]
     },
     "345155": {
       "name": "Bruxelles 1893: Belle Époque",
@@ -17944,6 +18897,12 @@
           "store": "Tabletop Simulator",
           "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=2444234177",
           "note": "Mindbug: First Contact",
+          "online": true
+        },
+        {
+          "store": "Tabletop Simulator",
+          "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3408465721",
+          "note": "Mindbug - All Expansions",
           "online": true
         }
       ]
@@ -18009,7 +18968,15 @@
       "name": "Chronicles of Avel",
       "short_description": "Team up and fight together to save magical land of Avel.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "Tabletop Simulator",
+          "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3567469726",
+          "note": "Chronicles of Avel",
+          "online": true
+        }
+      ]
     },
     "347305": {
       "name": "Inventions: Evolution of Ideas",
@@ -18247,7 +19214,15 @@
       "name": "Marvel Zombies",
       "short_description": "A Zombicide game but with Marvel characters!",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "Web",
+          "url": "https://randomboardgame.com/game/marvel-zombies",
+          "note": "Randomizer",
+          "support_app": true
+        }
+      ]
     },
     "351913": {
       "name": "Tiletum",
@@ -18564,7 +19539,15 @@
       "name": "Sleeping Gods: Distant Skies",
       "short_description": "Journey across a rugged landscape in this sequel to Sleeping Gods.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "Forteller Narratives",
+          "url": "https://fortellergames.com/products/sleeping-gods-distant-skies",
+          "note": "Sleeping Gods: Distant Skies",
+          "monthly_subscription": true
+        }
+      ]
     },
     "358504": {
       "name": "Betrayal at House on the Hill: 3rd Edition",
@@ -18577,6 +19560,20 @@
           "url": "https://apps.apple.com/ca/app/betrayal-official-app/id1488518257",
           "note": "Official Companion App",
           "support_app": true
+        }
+      ],
+      "pc": [
+        {
+          "store": "Tabletop Simulator",
+          "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3345700436",
+          "note": "[ULTIMATE] Betrayal at House on the Hill (3rd Edition): Themed Room Edition + All Expansions",
+          "monthly_subscription": true
+        },
+        {
+          "store": "Tabletop Simulator",
+          "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3352070568",
+          "note": "[ALL EXPANSIONS/SCRIPTED] Betrayal at House On The Hill: 3rd Edition (Third Edition) [ENG - SCRIPTED - ANIMATED] OMM Board 1.0",
+          "online": true
         }
       ]
     },
@@ -18915,6 +19912,12 @@
           "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=2978158211",
           "note": "Splendor Duel",
           "online": true
+        },
+        {
+          "store": "Tabletop Simulator",
+          "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3164531387",
+          "note": "Splendor: Duel(Scripted) Improved CN/ENG",
+          "owned": true
         }
       ]
     },
@@ -19070,6 +20073,24 @@
           "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3771254079",
           "note": "Heat: Pedal to the Metal: Basic Edition",
           "online": true
+        },
+        {
+          "store": "Tabletop Simulator",
+          "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3289413628",
+          "note": "Heat: Pedal to the Metal",
+          "online": true
+        },
+        {
+          "store": "Tabletop Simulator",
+          "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=2911921628",
+          "note": "Heat: Pedal to the Metal [scripted]",
+          "online": true
+        },
+        {
+          "store": "Tabletop Simulator",
+          "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=2911655378",
+          "note": "Heat: Pedal to the Metal",
+          "online": true
         }
       ]
     },
@@ -19121,7 +20142,15 @@
       "name": "Undaunted: Battle of Britain",
       "short_description": "Pit the RAF against the Luftwaffe over the beaches, fields and cities of England.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "Tabletop Simulator",
+          "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3511067946",
+          "note": "Undaunted: Battle of Britain [Scripted Setup]",
+          "online": true
+        }
+      ]
     },
     "367086": {
       "name": "Dragons of Etchinstone",
@@ -19234,7 +20263,15 @@
       "name": "Endeavor: Deep Sea",
       "short_description": "Lead your research institute to explore ocean depths and publish your findings!",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "Tabletop Simulator",
+          "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=2976002512",
+          "note": "Endeavor: Deep Sea",
+          "online": true
+        }
+      ]
     },
     "368017": {
       "name": "Point City",
@@ -19274,6 +20311,12 @@
           "note": "BGA Premium",
           "online": true,
           "monthly_subscription": true
+        },
+        {
+          "store": "Tabletop Simulator",
+          "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=2962010562",
+          "note": "Let's Go! To Japan [Scripted Setup]",
+          "online": true
         }
       ]
     },
@@ -19301,7 +20344,15 @@
       "name": "Heroscape Master Set: Age of Annihilation",
       "short_description": "History, fantasy, and science fiction clash in the battle for all time.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "Tabletop Simulator",
+          "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=372979678",
+          "note": "Heroscape (old version)",
+          "online": true
+        }
+      ]
     },
     "368854": {
       "name": "Crossing Oceans",
@@ -19450,7 +20501,20 @@
         {
           "store": "Steam",
           "url": "https://store.steampowered.com/app/1455840/Dorfromantik/",
+          "note": "Dorfromantik",
           "owned": true
+        },
+        {
+          "store": "Tabletop Simulator",
+          "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3300540410",
+          "note": "Dorfromantik",
+          "online": true
+        },
+        {
+          "store": "Tabletop Simulator",
+          "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3319796991",
+          "note": "Dorfromantik: The Board Game [Scripted]",
+          "online": true
         }
       ]
     },
@@ -19594,7 +20658,15 @@
       "name": "Legendary Encounters: The Matrix",
       "short_description": "Do you know kung fu? Download a winning deck to save humanity.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "Tabletop Simulator",
+          "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3232976645",
+          "note": "Legendary Encounters: The Matrix [Scripted]",
+          "online": true
+        }
+      ]
     },
     "373106": {
       "name": "Sky Team",
@@ -19619,6 +20691,12 @@
           "store": "Tabletop Simulator",
           "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3292331339",
           "note": "Sky Team",
+          "online": true
+        },
+        {
+          "store": "Tabletop Simulator",
+          "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3281909497",
+          "note": "Sky Team (Script)",
           "online": true
         }
       ]
@@ -19934,6 +21012,12 @@
           "url": "https://tabletopia.com/games/cyclades-legendary-edition",
           "note": "Cyclades: Legendary Edition",
           "online": true
+        },
+        {
+          "store": "Tabletop Simulator",
+          "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3475546318",
+          "note": "Cyclades Legendary Edition",
+          "monthly_subscription": true
         }
       ]
     },
@@ -19985,6 +21069,12 @@
           "note": "BGA Premium",
           "online": true,
           "monthly_subscription": true
+        },
+        {
+          "store": "Web",
+          "url": "https://randomboardgame.com/game/nemesis-retaliation",
+          "note": "Randomizer",
+          "online": true
         }
       ]
     },
@@ -20610,7 +21700,15 @@
       "name": "Gloomhaven: Buttons & Bugs",
       "short_description": "Gloomhaven in the palm of your hand!",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "Forteller Narratives",
+          "url": "https://fortellergames.com/products/gloomhaven-buttons-bugs",
+          "note": "Gloomhaven: Buttons & Bugs",
+          "monthly_subscription": true
+        }
+      ]
     },
     "393892": {
       "name": "Rolling Realms Redux",
@@ -20761,6 +21859,24 @@
           "url": "https://store.steampowered.com/app/4598200/Dune_Imperium__Uprising/",
           "note": "DLC for Dune:Imperium",
           "wishlisted": true
+        },
+        {
+          "store": "Tabletop Simulator",
+          "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3522149839",
+          "note": "Dune Uprising Bloodlines scripted",
+          "online": true
+        },
+        {
+          "store": "Tabletop Simulator",
+          "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3106393160",
+          "note": "Dune Uprising scripted++",
+          "online": true
+        },
+        {
+          "store": "Tabletop Simulator",
+          "url": "Dune: Imperium - Uprising + Bloodlines",
+          "note": "https://steamcommunity.com/sharedfiles/filedetails/?id=3068447276",
+          "online": true
         }
       ]
     },
@@ -21064,6 +22180,12 @@
           "url": "https://boardgamearena.com/gamepanel?game=rivervalleyglassworks",
           "note": "BGA Free",
           "online": true
+        },
+        {
+          "store": "Tabletop Simulator",
+          "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3452886156",
+          "note": "River Valley Glassworks [Scripted]",
+          "online": true
         }
       ]
     },
@@ -21097,6 +22219,12 @@
           "store": "Tabletop Simulator",
           "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3090946799",
           "note": "Shackleton Base: A Journey to the Moon",
+          "online": true
+        },
+        {
+          "store": "Tabletop Simulator",
+          "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3090946799",
+          "note": "Shackleton Base",
           "online": true
         }
       ]
@@ -21210,6 +22338,24 @@
           "note": "BGA Premium",
           "online": true,
           "monthly_subscription": true
+        },
+        {
+          "store": "Tabletop Simulator",
+          "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3385562324",
+          "note": "The Gang [Scripted]",
+          "online": true
+        },
+        {
+          "store": "Tabletop Simulator",
+          "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3421187076",
+          "note": "The Gang (8Players)",
+          "online": true
+        },
+        {
+          "store": "Tabletop Simulator",
+          "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3689375010",
+          "note": "The GANG - [Scripted] - 10 Player - Deluxe Edition",
+          "online": true
         }
       ]
     },
@@ -21348,6 +22494,18 @@
           "url": "https://store.steampowered.com/app/358460/Talisman_The_Horus_Heresy_Classic/",
           "note": "Talisman The Horus Heresy Classic",
           "owned": true
+        },
+        {
+          "store": "Tabletop Simulator",
+          "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3309997460",
+          "note": "Talisman 5th Edition: The Magical Quest Board Game",
+          "online": true
+        },
+        {
+          "store": "Web",
+          "url": "https://randomboardgame.com/game/talisman",
+          "note": "4th Edition Randomizer",
+          "support_app": true
         }
       ]
     },
@@ -21412,7 +22570,21 @@
       "name": "SETI: Search for Extraterrestrial Intelligence",
       "short_description": "Search for signs of alien life by launching probes and analyzing distant signals.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "Tabletop Simulator",
+          "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3635270836",
+          "note": "SETI + Space Agencies (ENG)",
+          "online": true
+        },
+        {
+          "store": "Tabletop Simulator",
+          "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3415673254",
+          "note": "SETI: Search for Extraterrestrial Intelligence",
+          "online": true
+        }
+      ]
     },
     "418470": {
       "name": "Endeavor: Deep Sea Deluxe Edition",
@@ -21507,6 +22679,30 @@
           "url": "https://en.boardgamearena.com/gamepanel?game=flipseven",
           "note": "BGA Free",
           "online": true
+        },
+        {
+          "store": "Tabletop Simulator",
+          "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3713353188",
+          "note": "Pokémon Flip 7",
+          "online": true
+        },
+        {
+          "store": "Tabletop Simulator",
+          "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3465756140",
+          "note": "Flip 7 [scripted]",
+          "online": true
+        },
+        {
+          "store": "Tabletop Simulator",
+          "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3328532201",
+          "note": "Flip 7",
+          "online": true
+        },
+        {
+          "store": "Tabletop Simulator",
+          "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3665802379",
+          "note": "Flip 7 (Re-Scripted)",
+          "online": true
         }
       ]
     },
@@ -21552,7 +22748,15 @@
       "name": "Lord of the Rings: Duel for Middle-earth, The",
       "short_description": "Play as the Fellowship or Sauron and attempt to determine the fate of Middle-earth.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "Tabletop Simulator",
+          "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3373321184",
+          "note": "Duel for Middle-Earth + Allies exp.",
+          "online": true
+        }
+      ]
     },
     "421547": {
       "name": "Disney Lorcana: Illumineer's Quest – Deep Trouble",
@@ -21616,6 +22820,12 @@
           "note": "BGA Premium",
           "online": true,
           "monthly_subscription": true
+        },
+        {
+          "store": "Tabletop Simulator",
+          "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3379559726",
+          "note": "King of Tokyo Duel [Scripted]",
+          "online": true
         }
       ]
     },
@@ -21623,13 +22833,29 @@
       "name": "Star Trek: Captain's Chair",
       "short_description": "Step into the shoes of an iconic Star Trek captain and explore the galaxy!",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "Tabletop Simulator",
+          "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3566225950",
+          "note": "Star Trek: Captain's Chair",
+          "online": true
+        }
+      ]
     },
     "422796": {
       "name": "RA and Write",
       "short_description": "Make your mark on Egyptian history!",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "Tabletop Simulator",
+          "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3570990141",
+          "note": "Ra and Write",
+          "online": true
+        }
+      ]
     },
     "422898": {
       "name": "DCeased: Gotham City Outbreak",
@@ -21843,7 +23069,15 @@
       "name": "Lord of the Rings: The Fellowship of the Ring – Trick-Taking Game, The",
       "short_description": "Travel from the Shire and overcome every obstacle as a team.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "Tabletop Simulator",
+          "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3421039318",
+          "note": "The Fellowship of the Ring Trick-Taking Game",
+          "online": true
+        }
+      ]
     },
     "429405": {
       "name": "Orloj: The Prague Astronomical Clock",
@@ -22146,6 +23380,12 @@
           "url": "https://boardgamearena.com/gamepanel?game=fateoffellowship",
           "note": "BGA Free",
           "online": true
+        },
+        {
+          "store": "Tabletop Simulator",
+          "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3483596222",
+          "note": "The Lord of the Rings: Fate of the Fellowship [Scripted]",
+          "monthly_subscription": true
         }
       ]
     },
@@ -22169,38 +23409,8 @@
         },
         {
           "store": "Tabletop Simulator",
-          "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3740171322",
-          "note": "Massive Darkness 2",
-          "online": true
-        },
-        {
-          "store": "Tabletop Simulator",
-          "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=2093826753",
-          "note": "Massive Darkness - Complete",
-          "online": true
-        },
-        {
-          "store": "Tabletop Simulator",
-          "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=1265688419",
-          "note": "Massive Darkness - Dustins Repack",
-          "online": true
-        },
-        {
-          "store": "Tabletop Simulator",
-          "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=1120590342",
-          "note": "Massive Darkness - Ultimate Set Up",
-          "online": true
-        },
-        {
-          "store": "Tabletop Simulator",
-          "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=2280699575",
-          "note": "Massive Darkness - Ultimate Set Up (fixed)",
-          "online": true
-        },
-        {
-          "store": "Tabletop Simulator",
-          "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=2859561294",
-          "note": "Massive Darkness - Ultimate Set Up (fixed) plus german content",
+          "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3426147563",
+          "note": "Massive Darkness: Dungeons of Shadowreach Demo",
           "online": true
         }
       ]
@@ -22227,7 +23437,15 @@
       "name": "Horrified: Dungeons & Dragons",
       "short_description": "Blind the Beholder, expose the Mimic, contain the Beast, and lure & kill the Dragon.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "Tabletop Simulator",
+          "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3573416598",
+          "note": "Horrified Dungeons and Dragons",
+          "online": true
+        }
+      ]
     },
     "438214": {
       "name": "Animal Rescue Team",
@@ -22378,7 +23596,15 @@
       "name": "Star Wars: Battle of Hoth",
       "short_description": "The Empire is invading a Rebel stronghold on Hoth. Who will prevail?",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "Tabletop Simulator",
+          "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3467779810",
+          "note": "Star Wars Battle of Hoth",
+          "online": true
+        }
+      ]
     },
     "446303": {
       "name": "Flintlock!: Global Warfare in 20 Minutes",
@@ -22396,7 +23622,15 @@
       "name": "Hot Streak",
       "short_description": "Which mascot will cross the finish line first? Who will be DQ'd?",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "Tabletop Simulator",
+          "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3543065959",
+          "note": "Hot Streak",
+          "online": true
+        }
+      ]
     },
     "446610": {
       "name": "Flash Point: Golden State Heroes",
@@ -22664,7 +23898,15 @@
       "name": "Magical Athlete",
       "short_description": "Pit a cast of crazy characters against each other in a madcap race to the finish.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "Tabletop Simulator",
+          "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3571528259",
+          "note": "Magical Athlete (2025 Edition) [Scripted]",
+          "online": true
+        }
+      ]
     },
     "454119": {
       "name": "Queen of Spies",
@@ -22783,7 +24025,7 @@
           "store": "Tabletop Simulator",
           "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3772595125",
           "note": "Night at the Zoo [Scripted]",
-          "owned": true
+          "online": true
         }
       ]
     },
