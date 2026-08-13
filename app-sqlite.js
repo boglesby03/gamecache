@@ -132,6 +132,7 @@ function detectStoreKeyFromUrl(url) {
     if (host.includes('vassalengine.org')) return 'vassal';
     if (host.includes('brettspielwelt.de')) return 'brettspielwelt';
     if (host.includes('boardspace.net')) return 'boardspace';
+    if (host.includes('fortellergames.com') || host.includes('forteller.gg')) return 'forteller narratives';
 
     if (host.includes('boardgamearena')) return 'board game arena';
     if (host.includes('steampowered') || host.includes('steamcommunity')) return 'steam';
@@ -174,6 +175,8 @@ function getDigitalStoreMeta(store, url, platform) {
     'vassal': { label: 'VAS', title: 'VASSAL', iconUrl: 'https://vassalengine.org/favicon.ico' },
     'brettspielwelt': { label: 'BSW', title: 'BrettspielWelt', iconUrl: 'https://www.brettspielwelt.de/favicon.ico' },
     'boardspace': { label: 'BSP', title: 'Boardspace', iconUrl: 'https://boardspace.net/favicon.ico' },
+    'forteller narratives': { label: 'FORT', title: 'Forteller Narratives', iconUrl: 'https://fortellergames.com/cdn/shop/files/favicon.svg?crop=center&height=32&v=1687927219&width=32', bgColor: '#5b2aa6' },
+    'forteller': { label: 'FORT', title: 'Forteller Narratives', iconUrl: 'https://fortellergames.com/cdn/shop/files/favicon.svg?crop=center&height=32&v=1687927219&width=32', bgColor: '#5b2aa6' },
     'play store': { label: 'PLAY', title: 'Google Play', iconUrl: getFaviconUrl('play.google.com') },
     'google play': { label: 'PLAY', title: 'Google Play', iconUrl: getFaviconUrl('play.google.com') },
     'app store': { label: 'APPLE', title: 'App Store', iconUrl: getFaviconUrl('apps.apple.com') },
@@ -425,6 +428,12 @@ function renderDigitalVersionsSection(clone, game) {
         title: (item.storeMeta && item.storeMeta.title) || item.store || '',
         'aria-label': (item.storeMeta && item.storeMeta.title) || item.store || 'Store'
       });
+
+      if (item.storeMeta && item.storeMeta.bgColor) {
+        storeIconWrapper.style.background = String(item.storeMeta.bgColor);
+        storeIconWrapper.style.borderRadius = '6px';
+        storeIconWrapper.style.padding = '2px';
+      }
 
       if (item.storeMeta && item.storeMeta.iconUrl) {
         const storeIcon = createElement('img', {
