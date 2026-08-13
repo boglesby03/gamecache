@@ -26,7 +26,7 @@
     --wl-border-hover: rgba(0, 0, 255, 0.4);
     --wl-text: #003366;
     --wl-text-hover: #001a33;
-    --unowned-bg: rgba(205, 205, 205, 0.9);
+    --unowned-bg: #e5e7eb;
 }
 
 body {
@@ -624,9 +624,9 @@ body {
 }
 
 .digital-version-item.status-online {
-    border-color: rgba(0, 140, 100, 0.45);
-    background: rgba(0, 176, 120, 0.14);
-    color: #0f6b4f;
+    border-color: rgba(2, 132, 199, 0.5);
+    background: rgba(14, 165, 233, 0.14);
+    color: #075985;
 }
 
 .digital-version-item.status-support-app {
