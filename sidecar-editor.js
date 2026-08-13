@@ -65,7 +65,7 @@
   const PLATFORM_STORE_OPTIONS = {
     android: ["Play Store", "BGG", "Humble", "Amazon Appstore", "Samsung Galaxy Store", "itch.io"],
     ios: ["App Store", "TestFlight", "itch.io"],
-    pc: ["Steam", "Web", "Tabletop Simulator", "Tabletopia", "Yucata", "VASSAL", "BrettspielWelt", "Boardspace", "BGA", "Epic", "EA app", "Ubisoft Connect", "GOG", "Microsoft Store", "itch.io", "Humble", "Amazon"],
+    pc: ["Steam", "Web", "Tabletop Simulator", "Tabletopia", "Yucata", "VASSAL", "BrettspielWelt", "Boardspace", "Forteller Narratives", "BGA", "Epic", "EA app", "Ubisoft Connect", "GOG", "Microsoft Store", "itch.io", "Humble", "Amazon"],
   };
 
   const GLOBE_ICON_URL = `data:image/svg+xml;utf8,${encodeURIComponent(
@@ -211,6 +211,7 @@
       if (host.includes("vassalengine.org")) return "vassal";
       if (host.includes("brettspielwelt.de")) return "brettspielwelt";
       if (host.includes("boardspace.net")) return "boardspace";
+      if (host.includes("fortellergames.com") || host.includes("forteller.gg")) return "forteller narratives";
       if (host.includes("boardgamearena")) return "board game arena";
       if (host.includes("steampowered") || host.includes("steamcommunity")) return "steam";
       if (host.includes("epicgames")) return "epic";
@@ -251,6 +252,8 @@
       "vassal": { label: "VAS", title: "VASSAL", iconUrl: "https://vassalengine.org/favicon.ico" },
       "brettspielwelt": { label: "BSW", title: "BrettspielWelt", iconUrl: "https://www.brettspielwelt.de/favicon.ico" },
       "boardspace": { label: "BSP", title: "Boardspace", iconUrl: "https://boardspace.net/favicon.ico" },
+      "forteller narratives": { label: "FORT", title: "Forteller Narratives", iconUrl: "https://fortellergames.com/cdn/shop/files/favicon.svg?crop=center&height=32&v=1687927219&width=32", bgColor: "#5b2aa6" },
+      "forteller": { label: "FORT", title: "Forteller Narratives", iconUrl: "https://fortellergames.com/cdn/shop/files/favicon.svg?crop=center&height=32&v=1687927219&width=32", bgColor: "#5b2aa6" },
       "play store": { label: "PLAY", title: "Google Play", iconUrl: getFaviconUrl("play.google.com") },
       "google play": { label: "PLAY", title: "Google Play", iconUrl: getFaviconUrl("play.google.com") },
       "app store": { label: "APPLE", title: "App Store", iconUrl: getFaviconUrl("apps.apple.com") },
@@ -294,11 +297,20 @@
     row.querySelectorAll('[data-key="store-icon"], [data-key="view-store-icon"]').forEach((iconSlot) => {
       iconSlot.innerHTML = "";
       iconSlot.classList.remove("store-icon-badge");
+      iconSlot.style.background = "";
+      iconSlot.style.borderRadius = "";
+      iconSlot.style.padding = "";
 
       if (!meta) {
         iconSlot.title = "";
         iconSlot.removeAttribute("aria-label");
         return;
+      }
+
+      if (meta.bgColor) {
+        iconSlot.style.background = String(meta.bgColor);
+        iconSlot.style.borderRadius = "6px";
+        iconSlot.style.padding = "2px";
       }
 
       iconSlot.title = meta.title || "Store";

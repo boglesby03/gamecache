@@ -34,6 +34,7 @@ TABLETOP_SIMULATOR_DLC_CATALOG_API = "https://store.steampowered.com/api/dlcfora
 TABLETOP_SIMULATOR_APP_ID = "286160"
 BRETTSPIELWELT_SPIELE_URL = "https://www.brettspielwelt.de/Spiele/"
 BOARDSPACE_INDEX_URL = "https://boardspace.net/english/index.shtml"
+FORTELLER_NARRATIVES_COLLECTION_URL = "https://fortellergames.com/collections/all-narrative-companions"
 
 # Some Yucata titles don't expose an IdName that matches BGG naming conventions.
 # Use explicit game-id overrides so sync can still add/maintain correct links.
@@ -1004,6 +1005,49 @@ def fetch_boardspace_catalog(timeout: float = 20.0) -> Dict[str, str]:
         game_url = f"https://boardspace.net/english/about_{slug}.html"
         for key in _boardspace_name_keys(slug):
             mapping.setdefault(key, game_url)
+
+    return mapping
+
+
+def fetch_forteller_narratives_catalog(timeout: float = 20.0) -> Dict[str, str]:
+    """Fetch Forteller narrative companions and map normalized titles to URLs."""
+    api_url = f"{FORTELLER_NARRATIVES_COLLECTION_URL}/products.json?limit=250"
+    req = urllib.request.Request(
+        api_url,
+        headers={
+            "Accept": "application/json,*/*;q=0.8",
+            "User-Agent": "Mozilla/5.0 (GameCache sidecar sync)",
+        },
+    )
+
+    with urllib.request.urlopen(req, timeout=timeout) as resp:
+        body = resp.read().decode("utf-8", errors="replace")
+
+    payload = json.loads(body)
+    products = payload.get("products", []) if isinstance(payload, dict) else []
+
+    mapping: Dict[str, str] = {}
+    seen_urls: Set[str] = set()
+    for product in products:
+        if not isinstance(product, dict):
+            continue
+        title = html.unescape(str(product.get("title", "") or "").strip())
+        handle = str(product.get("handle", "") or "").strip()
+        if not title or not handle:
+            continue
+
+        title = re.sub(r"\s+", " ", title).strip()
+        if not title:
+            continue
+
+        abs_url = urllib.parse.urljoin("https://fortellergames.com", f"/products/{handle}")
+        if abs_url in seen_urls:
+            continue
+        seen_urls.add(abs_url)
+
+        key = _normalize_name(title)
+        if key:
+            mapping.setdefault(key, abs_url)
 
     return mapping
 
@@ -2969,6 +3013,79 @@ def enrich_boardspace_links(
     return added_links, len(candidates), corrected_links
 
 
+def _find_existing_forteller_link(entry: Dict[str, Any]) -> Optional[str]:
+    for platform in ("android", "ios", "pc"):
+        platform_items = entry.get(platform)
+        if isinstance(platform_items, dict):
+            platform_items = [platform_items]
+        if not isinstance(platform_items, list):
+            continue
+        for item in platform_items:
+            if not isinstance(item, dict):
+                continue
+            store = str(item.get("store", "")).strip().lower()
+            url = str(item.get("url", "")).strip().lower()
+            if "forteller" in store or "fortellergames.com" in url:
+                return str(item.get("url", "")).strip()
+    return None
+
+
+def enrich_forteller_narratives_links(
+    data: Dict[str, Any],
+    all_name_candidates: Dict[str, Dict[str, Any]],
+    forteller_map: Dict[str, str],
+) -> Tuple[int, int]:
+    """Add Forteller narrative companion links as Subscribe entries.
+
+    Returns:
+        (added_links, unmatched_catalog_items)
+    """
+    games = data.setdefault("games", {})
+    added_links = 0
+    unmatched = 0
+
+    exact_index = _build_exact_name_index(all_name_candidates)
+
+    for normalized_title, url in forteller_map.items():
+        matched_ids = list(exact_index.get(normalized_title, []))
+        if len(matched_ids) > 1:
+            primary_exact = [
+                gid
+                for gid in matched_ids
+                if _normalize_name(str(all_name_candidates.get(gid, {}).get("name", ""))) == normalized_title
+            ]
+            if len(primary_exact) == 1:
+                matched_ids = primary_exact
+
+        if len(matched_ids) != 1:
+            unmatched += 1
+            continue
+
+        game_id = matched_ids[0]
+        entry = games.get(game_id)
+        if not isinstance(entry, dict):
+            continue
+
+        if _find_existing_forteller_link(entry):
+            continue
+
+        canonical_note = str(all_name_candidates.get(game_id, {}).get("name", "")).strip()
+        payload: Dict[str, Any] = {
+            "store": "Forteller Narratives",
+            "url": str(url).strip(),
+            "monthly_subscription": True,
+            "note": canonical_note,
+        }
+        if not payload.get("note"):
+            payload.pop("note", None)
+
+        pc_entries = _ensure_platform_list(entry, "pc")
+        pc_entries.append(payload)
+        added_links += 1
+
+    return added_links, unmatched
+
+
 def load_sidecar(path: Path) -> Dict:
     if not path.exists():
         return {"games": {}}
@@ -3122,6 +3239,17 @@ def main() -> int:
         default=20.0,
         help="Timeout in seconds for Boardspace index request (default: 20).",
     )
+    parser.add_argument(
+        "--skip-forteller-auto-links",
+        action="store_true",
+        help="Skip automatic Forteller Narratives link enrichment from catalog.",
+    )
+    parser.add_argument(
+        "--forteller-timeout",
+        type=float,
+        default=20.0,
+        help="Timeout in seconds for Forteller catalog request (default: 20).",
+    )
     args = parser.parse_args()
 
     db_path = Path(args.db)
@@ -3161,8 +3289,10 @@ def main() -> int:
     tabletop_simulator_sidecar_candidate_promotions = 0
     brettspielwelt_added = 0
     boardspace_added = 0
+    forteller_added = 0
     brettspielwelt_corrected = 0
     boardspace_corrected = 0
+    forteller_unmatched = 0
     tabletopia_premium_catalog_count = 0
     tabletopia_status_notes_updated = 0
     vassal_status_notes_updated = 0
@@ -3180,6 +3310,7 @@ def main() -> int:
     tabletop_simulator_error = ""
     brettspielwelt_error = ""
     boardspace_error = ""
+    forteller_error = ""
     tabletopia_premium_by_short_url: Dict[str, bool] = {}
     tabletopia_name_by_short_url: Dict[str, str] = {}
     vassal_title_by_slug: Dict[str, str] = {}
@@ -3285,6 +3416,17 @@ def main() -> int:
         except Exception as exc:
             boardspace_error = str(exc)
 
+    if not args.skip_forteller_auto_links:
+        try:
+            forteller_map = fetch_forteller_narratives_catalog(timeout=args.forteller_timeout)
+            forteller_added, forteller_unmatched = enrich_forteller_narratives_links(
+                data,
+                all_name_candidates,
+                forteller_map,
+            )
+        except Exception as exc:
+            forteller_error = str(exc)
+
     online_statuses_updated = annotate_online_statuses(data, tabletopia_premium_by_short_url=tabletopia_premium_by_short_url)
     owned_removed_from_online = strip_owned_from_online_entries(data)
 
@@ -3311,8 +3453,10 @@ def main() -> int:
         print(f"would_correct_tabletop_simulator_links={tabletop_simulator_corrected}")
         print(f"would_add_brettspielwelt_links={brettspielwelt_added}")
         print(f"would_add_boardspace_links={boardspace_added}")
+        print(f"would_add_forteller_links={forteller_added}")
         print(f"would_correct_brettspielwelt_links={brettspielwelt_corrected}")
         print(f"would_correct_boardspace_links={boardspace_corrected}")
+        print(f"would_unmatched_forteller_catalog_items={forteller_unmatched}")
         print(f"tabletopia_premium_catalog_count={tabletopia_premium_catalog_count}")
         print(f"would_update_tabletopia_statuses_notes={tabletopia_status_notes_updated}")
         print(f"would_update_vassal_statuses_notes={vassal_status_notes_updated}")
@@ -3336,6 +3480,8 @@ def main() -> int:
             print(f"brettspielwelt_error={brettspielwelt_error}")
         if boardspace_error:
             print(f"boardspace_error={boardspace_error}")
+        if forteller_error:
+            print(f"forteller_error={forteller_error}")
         print(f"total_after={len(data.get('games', {}))}")
         return 0
 
@@ -3366,8 +3512,10 @@ def main() -> int:
     print(f"corrected_tabletop_simulator_links={tabletop_simulator_corrected}")
     print(f"added_brettspielwelt_links={brettspielwelt_added}")
     print(f"added_boardspace_links={boardspace_added}")
+    print(f"added_forteller_links={forteller_added}")
     print(f"corrected_brettspielwelt_links={brettspielwelt_corrected}")
     print(f"corrected_boardspace_links={boardspace_corrected}")
+    print(f"unmatched_forteller_catalog_items={forteller_unmatched}")
     print(f"tabletopia_premium_catalog_count={tabletopia_premium_catalog_count}")
     print(f"updated_tabletopia_statuses_notes={tabletopia_status_notes_updated}")
     print(f"updated_vassal_statuses_notes={vassal_status_notes_updated}")
@@ -3391,6 +3539,8 @@ def main() -> int:
         print(f"brettspielwelt_error={brettspielwelt_error}")
     if boardspace_error:
         print(f"boardspace_error={boardspace_error}")
+    if forteller_error:
+        print(f"forteller_error={forteller_error}")
     print(f"total_sidecar_games={len(data.get('games', {}))}")
     print(f"written={sidecar_path}")
 

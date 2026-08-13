@@ -25,12 +25,14 @@ from scripts.sync_game_sidecar import (
     annotate_yucata_notes,
     enrich_boardspace_links,
     enrich_brettspielwelt_links,
+    enrich_forteller_narratives_links,
     enrich_tabletopia_links,
     enrich_tabletop_simulator_links,
     enrich_vassal_links,
     enrich_yucata_links,
     fetch_boardspace_catalog,
     fetch_brettspielwelt_catalog,
+    fetch_forteller_narratives_catalog,
     fetch_tabletopia_game_catalog,
     fetch_vassal_project_catalog,
     fetch_yucata_game_urls,
@@ -186,6 +188,12 @@ def force_search_game(
         enrich_boardspace_links(data, single_candidate, boardspace_map)
     except Exception as exc:
         source_errors["boardspace"] = str(exc)
+
+    try:
+        forteller_map = fetch_forteller_narratives_catalog(timeout=timeout)
+        enrich_forteller_narratives_links(data, single_candidate, forteller_map)
+    except Exception as exc:
+        source_errors["forteller"] = str(exc)
 
     try:
         annotate_online_statuses(data, tabletopia_premium_by_short_url=tabletopia_premium_by_short_url)
