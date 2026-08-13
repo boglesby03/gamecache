@@ -56,4 +56,4 @@ jobs:
           fi
           python -m pip install --upgrade pip
           pip install -r scripts/requirements.txt
-          python scripts/download_and_index.py --debug
+          python scripts/download_and_index.py
