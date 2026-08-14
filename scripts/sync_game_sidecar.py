@@ -1298,6 +1298,8 @@ def _tts_generic_suffix_tokens() -> Set[str]:
         "eighth",
         "ninth",
         "tenth",
+        "scripted",
+        "prototype",
     }
 
 
@@ -1453,6 +1455,12 @@ def _tts_query_names(candidate: Dict[str, Any]) -> List[str]:
             if alt_text.lower() == base.strip().lower():
                 continue
 
+        # Curated sidecar notes often include workshop qualifiers such as
+        # "(Scripted+)" or "[Prototype]". Query their conservative base form
+        # before the noisy full title so the useful manual alias is not lost
+        # when the request budget is limited.
+        for prefix in _tts_candidate_prefixes(alt_text)[1:]:
+            add(prefix)
         add(alt_text)
 
     return names

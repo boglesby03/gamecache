@@ -565,6 +565,13 @@
     ];
   }
 
+  function getIdsInIdOrder() {
+    return getIdsInAddedOrder().sort((a, b) => {
+      const numericDifference = Number(a) - Number(b);
+      return numericDifference || String(a).localeCompare(String(b));
+    });
+  }
+
   function getSortedIds() {
     const ids = Object.keys(state.data.games || {});
     if (state.sortMode === "last-added") {
@@ -1232,7 +1239,7 @@
 
   function exportSortedData() {
     const output = { games: {} };
-    const ids = getIdsInAddedOrder();
+    const ids = getIdsInIdOrder();
     for (const id of ids) {
       output.games[id] = normalizeEntry(state.data.games[id], "");
     }
@@ -1244,13 +1251,14 @@
   }
 
   function buildJsonPayload() {
-    const entries = getIdsInAddedOrder().map((id) => {
+    const entries = getIdsInIdOrder().map((id) => {
       const key = JSON.stringify(id);
-      const value = JSON.stringify(normalizeEntry(state.data.games[id], ""), null, 2)
-        .split("\n")
-        .map((line) => `    ${line}`)
-        .join("\n");
-      return `    ${key}: ${value}`;
+      const valueLines = JSON.stringify(normalizeEntry(state.data.games[id], ""), null, 2).split("\n");
+      const value = [
+        `    ${key}: ${valueLines[0]}`,
+        ...valueLines.slice(1).map((line) => `    ${line}`),
+      ].join("\n");
+      return value;
     });
     return `{
   "games": {
