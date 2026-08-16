@@ -960,6 +960,32 @@
     }
   }
 
+  function refreshDuplicatePlatformUrls() {
+    const rows = Array.from(els.editorForm.querySelectorAll(".platform-row"));
+    const rowsByUrl = new Map();
+
+    for (const row of rows) {
+      const input = row.querySelector('[data-key="url"]');
+      const url = normalizeUrl(input?.value || "").toLowerCase();
+      if (!url) continue;
+      const matchingRows = rowsByUrl.get(url) || [];
+      matchingRows.push(row);
+      rowsByUrl.set(url, matchingRows);
+    }
+
+    for (const row of rows) {
+      const input = row.querySelector('[data-key="url"]');
+      const url = normalizeUrl(input?.value || "").toLowerCase();
+      const duplicate = Boolean(url && (rowsByUrl.get(url) || []).length > 1);
+      row.classList.toggle("duplicate-url", duplicate);
+      if (input) {
+        input.classList.toggle("duplicate-url", duplicate);
+        input.setAttribute("aria-invalid", duplicate ? "true" : "false");
+        input.title = duplicate ? "This URL is used more than once for this game." : "";
+      }
+    }
+  }
+
   function getPlatformState(entry) {
     if (!entry || typeof entry !== "object") return "";
     if (entry.monthly_subscription === true) return "monthly_subscription";
@@ -1107,6 +1133,7 @@
     for (const platform of PLATFORM_KEYS) {
       renderPlatformList(platform, normalizePlatformEntries(entry[platform]));
     }
+    refreshDuplicatePlatformUrls();
 
     showEditor(true);
   }
@@ -1621,6 +1648,7 @@ ${entries.join(",\n")}
     if (action === "move-up" || action === "move-down") {
       const moved = moveRow(row, action === "move-up" ? "up" : "down");
       if (moved) {
+        refreshDuplicatePlatformUrls();
         commitEditorToState();
       }
       return;
@@ -1628,6 +1656,7 @@ ${entries.join(",\n")}
 
     if (action === "remove") {
       row.remove();
+      refreshDuplicatePlatformUrls();
       commitEditorToState();
       return;
     }
@@ -1687,6 +1716,7 @@ ${entries.join(",\n")}
       row.dataset.hasSaved = "true";
       setRowEditing(row, false);
       updatePlatformRowIcon(row);
+      refreshDuplicatePlatformUrls();
       commitEditorToState();
     }
   }
@@ -1710,6 +1740,7 @@ ${entries.join(",\n")}
       if (platformRow && (target.matches('[data-key="store"]') || target.matches('[data-key="url"]'))) {
         updatePlatformRowIcon(platformRow);
       }
+      if (platformRow) refreshDuplicatePlatformUrls();
       updateRowViewPreview(docRow || platformRow);
       updateRowLinkPreview(docRow || platformRow);
       return;

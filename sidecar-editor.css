@@ -851,6 +851,19 @@ button[data-action="save-row"] {
   min-width: 0;
 }
 
+.platform-row.duplicate-url .platform-row-main {
+  padding: 0.35rem;
+  border: 1px solid var(--danger);
+  border-radius: 10px;
+  background: rgba(166, 27, 41, 0.08);
+}
+
+.platform-row input[data-key="url"].duplicate-url {
+  border-color: var(--danger);
+  background: #fff1f2;
+  box-shadow: 0 0 0 2px rgba(166, 27, 41, 0.14);
+}
+
 .platform-row button[data-action="remove"] {
   justify-self: end;
   white-space: nowrap;

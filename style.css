@@ -630,9 +630,9 @@ body {
 }
 
 .digital-version-item.status-support-app {
-    border-color: rgba(184, 104, 0, 0.45);
-    background: rgba(255, 177, 66, 0.14);
-    color: #8a5200;
+    border-color: rgba(190, 24, 93, 0.5);
+    background: rgba(236, 72, 153, 0.14);
+    color: #9d174d;
 }
 
 .digital-version-item.status-wishlisted {
