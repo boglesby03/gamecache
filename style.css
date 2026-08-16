@@ -618,9 +618,9 @@ body {
 }
 
 .digital-version-item.status-monthly-subscription {
-    border-color: rgba(217, 119, 6, 0.55);
-    background: rgba(245, 158, 11, 0.18);
-    color: #92400e;
+    border-color: rgba(190, 24, 93, 0.5);
+    background: rgba(236, 72, 153, 0.14);
+    color: #9d174d;
 }
 
 .digital-version-item.status-online {
@@ -630,9 +630,9 @@ body {
 }
 
 .digital-version-item.status-support-app {
-    border-color: rgba(190, 24, 93, 0.5);
-    background: rgba(236, 72, 153, 0.14);
-    color: #9d174d;
+    border-color: rgba(217, 119, 6, 0.55);
+    background: rgba(245, 158, 11, 0.18);
+    color: #92400e;
 }
 
 .digital-version-item.status-wishlisted {

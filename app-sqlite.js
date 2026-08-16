@@ -297,11 +297,12 @@ function renderDigitalVersionsSection(clone, game) {
 
   const entry = readDigitalEntry(game);
   const platformMeta = {
+    online: { label: 'Online', icon: 'public' },
     android: { label: 'Android', icon: 'android' },
     ios: { label: 'iOS', iconUrl: 'https://cdn.simpleicons.org/apple' },
     pc: { label: 'PC', icon: 'desktop_windows' },
   };
-  const platformDisplayOrder = ['pc', 'android', 'ios'];
+  const platformDisplayOrder = ['online', 'pc', 'android', 'ios'];
 
   function getDigitalItemPriority(item) {
     if (item.owned) return 0;
@@ -314,7 +315,7 @@ function renderDigitalVersionsSection(clone, game) {
   }
 
   const itemsByPlatform = {};
-  platformDisplayOrder.forEach((platform) => {
+  DIGITAL_PLATFORMS.forEach((platform) => {
     const entries = entry.platforms[platform] || [];
     itemsByPlatform[platform] = entries
       .map((service) => ({
@@ -323,7 +324,7 @@ function renderDigitalVersionsSection(clone, game) {
         label: platformMeta[platform].label,
         icon: platformMeta[platform].icon,
         store: String(service.store || '').trim(),
-        note: String(service.note || '').trim(),
+        note: String(service.note || game.name || '').trim(),
         owned: Boolean(service.owned),
         wishlisted: Boolean(service.wishlisted),
         preordered: Boolean(service.preordered),
@@ -343,6 +344,15 @@ function renderDigitalVersionsSection(clone, game) {
 
         return String(a.note || '').toLowerCase().localeCompare(String(b.note || '').toLowerCase());
       });
+  });
+
+  itemsByPlatform.online = DIGITAL_PLATFORMS.flatMap((platform) =>
+    (itemsByPlatform[platform] || [])
+      .filter((item) => item.online)
+      .map((item) => ({ ...item, platform: 'online', label: 'Online' }))
+  );
+  DIGITAL_PLATFORMS.forEach((platform) => {
+    itemsByPlatform[platform] = (itemsByPlatform[platform] || []).filter((item) => !item.online);
   });
 
   const hasItems = platformDisplayOrder.some((platform) => (itemsByPlatform[platform] || []).length > 0);
@@ -1408,7 +1418,7 @@ function gameDigitalFlags(game) {
   DIGITAL_PLATFORMS.forEach((platform) => {
     const platformEntries = entry.platforms[platform] || [];
     platforms[platform] = {
-      any: platformEntries.length > 0,
+      any: platformEntries.some(item => !item.online),
       owned: platformEntries.some(item => Boolean(item.owned)),
       wishlisted: platformEntries.some(item => Boolean(item.wishlisted)),
       preordered: platformEntries.some(item => Boolean(item.preordered)),
@@ -1418,7 +1428,10 @@ function gameDigitalFlags(game) {
     };
   });
 
-  const hasAnyPlatform = DIGITAL_PLATFORMS.some(platform => platforms[platform].any);
+  const hasOnline = DIGITAL_PLATFORMS.some(platform =>
+    (entry.platforms[platform] || []).some(item => Boolean(item.online))
+  );
+  const hasAnyPlatform = DIGITAL_PLATFORMS.some(platform => platforms[platform].any) || hasOnline;
   const hasOwned = DIGITAL_PLATFORMS.some(platform => platforms[platform].owned);
   const hasWishlisted = DIGITAL_PLATFORMS.some(platform => platforms[platform].wishlisted);
   const hasPreordered = DIGITAL_PLATFORMS.some(platform => platforms[platform].preordered);
@@ -1434,12 +1447,13 @@ function gameDigitalFlags(game) {
     hasMonthlySubscription,
     hasSupportApp,
     hasLink,
+    hasOnline,
     hasAny: hasAnyPlatform,
   };
 }
 
 function setupDigitalFilter() {
-  const counts = { any: 0 };
+  const counts = { any: 0, online: 0 };
   DIGITAL_PLATFORMS.forEach((platform) => {
     counts[platform] = 0;
     counts[`${platform}-owned`] = 0;
@@ -1452,6 +1466,7 @@ function setupDigitalFilter() {
   allGames.forEach(game => {
     const flags = gameDigitalFlags(game);
     if (flags.hasAny) counts.any += 1;
+    if (flags.hasOnline) counts.online += 1;
     DIGITAL_PLATFORMS.forEach((platform) => {
       const platformFlags = flags.platforms[platform];
       if (platformFlags.any) counts[platform] += 1;
@@ -1465,6 +1480,7 @@ function setupDigitalFilter() {
 
   const platformLabels = { pc: 'PC', android: 'Android', ios: 'iOS' };
   const items = [{ label: 'All Digital Games', value: 'any', count: counts.any }];
+  items.push({ label: 'Online', value: 'online', count: counts.online });
   DIGITAL_PLATFORMS.forEach((platform) => {
     items.push({ label: platformLabels[platform], value: platform, count: counts[platform] });
     items.push({ label: `${platformLabels[platform]} Owned`, value: `${platform}-owned`, count: counts[`${platform}-owned`] });
@@ -2478,6 +2494,8 @@ function filterGames(gamesToFilter, filters) {
         switch (sel) {
           case 'any':
             return flags.hasAny;
+          case 'online':
+            return flags.hasOnline;
           case 'android':
             return flags.platforms.android.any;
           case 'ios':

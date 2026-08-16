@@ -48,6 +48,8 @@
     fieldSqlitePlayingTime: document.getElementById("field-sqlite-playing-time"),
     fieldSqliteMinAge: document.getElementById("field-sqlite-min-age"),
     fieldSqliteWeight: document.getElementById("field-sqlite-weight"),
+    fieldSqliteStatus: document.getElementById("field-sqlite-status"),
+    fieldSqliteWishlist: document.getElementById("field-sqlite-wishlist"),
     fieldSqliteNumowned: document.getElementById("field-sqlite-numowned"),
     fieldSqliteNumplays: document.getElementById("field-sqlite-numplays"),
     fieldShortDescriptionView: document.getElementById("field-short-description-view"),
@@ -660,6 +662,24 @@
     return numberValue.toFixed(digits);
   }
 
+  function formatDatabaseStatus(rawTags) {
+    let tags = rawTags;
+    if (typeof rawTags === "string") {
+      try {
+        tags = JSON.parse(rawTags);
+      } catch (_error) {
+        tags = rawTags.split(",");
+      }
+    }
+    const normalizedTags = Array.isArray(tags)
+      ? tags.map((tag) => String(tag || "").toLowerCase())
+      : [];
+    if (normalizedTags.includes("own")) return "Owned";
+    if (normalizedTags.includes("preordered")) return "Preordered";
+    if (normalizedTags.includes("unowned")) return "Digital Only";
+    return "-";
+  }
+
   function setMetaValue(element, value) {
     if (!element) return;
     element.textContent = value;
@@ -676,6 +696,8 @@
       setMetaValue(els.fieldSqlitePlayingTime, "-");
       setMetaValue(els.fieldSqliteMinAge, "-");
       setMetaValue(els.fieldSqliteWeight, "-");
+      setMetaValue(els.fieldSqliteStatus, "-");
+      setMetaValue(els.fieldSqliteWishlist, "-");
       setMetaValue(els.fieldSqliteNumowned, "-");
       setMetaValue(els.fieldSqliteNumplays, "-");
       return;
@@ -694,6 +716,8 @@
     setMetaValue(els.fieldSqliteMinAge, minAge === "-" ? "-" : `${minAge}+`);
 
     setMetaValue(els.fieldSqliteWeight, formatDecimalValue(cover.weight, 2));
+    setMetaValue(els.fieldSqliteStatus, formatDatabaseStatus(cover.tags));
+    setMetaValue(els.fieldSqliteWishlist, String(cover.wishlist_priority || "-").trim() || "-");
     setMetaValue(els.fieldSqliteNumowned, formatIntegerValue(cover.numowned));
     setMetaValue(els.fieldSqliteNumplays, formatIntegerValue(cover.numplays));
   }
@@ -823,7 +847,7 @@
       const db = new SQL.Database(dbPayload.bytes);
       const covers = {};
       const statement = db.prepare(`
-        SELECT id, name, image, thumbnail, year, rank, rating, playing_time, min_age, weight, numowned, numplays, last_modified
+        SELECT id, name, image, thumbnail, year, rank, rating, playing_time, min_age, weight, tags, wishlist_priority, numowned, numplays, last_modified
         FROM games
       `);
 
@@ -843,6 +867,8 @@
           playing_time: row.playing_time,
           min_age: row.min_age,
           weight: row.weight,
+          tags: row.tags,
+          wishlist_priority: row.wishlist_priority,
           numowned: row.numowned,
           numplays: row.numplays,
           last_modified: row.last_modified,
@@ -946,7 +972,7 @@
     }
   }
 
-  function renderPlatformList(platform, entries) {
+  function renderPlatformList(platform, entries, defaultNote = "") {
     const target = document.querySelector(`[data-platform-list="${platform}"]`);
     if (!target || !els.platformRowTemplate) return;
 
@@ -956,7 +982,7 @@
     if (list.length === 0) return;
 
     for (const entry of list) {
-      addPlatformRow(platform, entry, { editing: false, hasSaved: true });
+      addPlatformRow(platform, entry, { editing: false, hasSaved: true, defaultNote });
     }
   }
 
@@ -1131,7 +1157,7 @@
     renderDocList(els.supplementalList, entry.supplemental_files || []);
 
     for (const platform of PLATFORM_KEYS) {
-      renderPlatformList(platform, normalizePlatformEntries(entry[platform]));
+      renderPlatformList(platform, normalizePlatformEntries(entry[platform]), entry.name);
     }
     refreshDuplicatePlatformUrls();
 
@@ -1369,7 +1395,7 @@ ${entries.join(",\n")}
     populateStoreSelect(row.querySelector('[data-key="store"]'), platform, entry.store || "");
     row.querySelector('[data-key="url"]').value = entry.url || "";
     row.querySelector('[data-key="state"]').value = getPlatformState(entry);
-    row.querySelector('[data-key="note"]').value = entry.note || "";
+    row.querySelector('[data-key="note"]').value = entry.note || options.defaultNote || "";
     if (hasSaved) {
       writeSavedRowPayload(row, readPlatformRowInputs(row));
     }
@@ -1932,7 +1958,10 @@ ${entries.join(",\n")}
 
     document.querySelectorAll('button[data-action="add-platform-entry"]').forEach((button) => {
       button.addEventListener('click', () => {
-        addPlatformRow(button.dataset.platform, {}, { editing: true, hasSaved: false });
+        const gameName = state.selectedId && state.data.games[state.selectedId]
+          ? String(state.data.games[state.selectedId].name || '').trim()
+          : '';
+        addPlatformRow(button.dataset.platform, {}, { editing: true, hasSaved: false, defaultNote: gameName });
       });
     });
 
