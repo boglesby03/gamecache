@@ -57,10 +57,6 @@
       "name": "Keyflower: Keyside"
     },
     {
-      "id": 233818,
-      "name": "Keyflower: Pig Shelter"
-    },
-    {
       "id": 147380,
       "name": "Keyflower: Storyteller"
     },
@@ -87,6 +83,15 @@
     {
       "id": 472325,
       "name": "Zombie Princess: Little Mermaid"
+    },
+    {
+      "id": 180037,
+      "name": "Keyflower: Pig Shelter"
+    },
+    {
+      "id": 231231,
+      "name": "7 Wonders: Leaders – Phryne Alternate Art Card",
+      "comment": "Not sure this will work for accessories"
     }
   ],
   "not_promos": [
