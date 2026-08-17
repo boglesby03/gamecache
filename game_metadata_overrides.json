@@ -11,6 +11,12 @@
           "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3092114473",
           "note": "Die Macher New Edition 2019",
           "online": true
+        },
+        {
+          "store": "VASSAL",
+          "url": "https://vassalengine.org/library/projects/Die_Macher",
+          "online": true,
+          "note": "Die Macher"
         }
       ]
     },
@@ -104,7 +110,7 @@
           "store": "Tabletop Simulator",
           "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=2291768626",
           "note": "Bohnanza (English version, scripted startup, automation)",
-          "owned": true
+          "online": true
         },
         {
           "store": "Tabletop Simulator",
@@ -123,7 +129,7 @@
         {
           "store": "Tabletop Simulator",
           "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3316310724",
-          "note": "Ra – Pharaoh Edition + Traders Expansion",
+          "note": "Ra \u2013 Pharaoh Edition + Traders Expansion",
           "online": true
         }
       ]
@@ -487,7 +493,7 @@
           "store": "Tabletop Simulator",
           "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3396672912",
           "note": "Condottiere (Classic)",
-          "owned": true
+          "online": true
         },
         {
           "store": "Tabletop Simulator",
@@ -816,7 +822,7 @@
     },
     "348": {
       "name": "Merchants of the Middle Ages",
-      "short_description": "Negotiate the best routes to trade your goods in Medieval Europe (Die Händler)",
+      "short_description": "Negotiate the best routes to trade your goods in Medieval Europe (Die H\u00e4ndler)",
       "rulebooks": [],
       "supplemental_files": [],
       "pc": [
@@ -966,6 +972,12 @@
           "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3245424147",
           "note": "Diplomacy: Ancient Mediterranean",
           "online": true
+        },
+        {
+          "store": "VASSAL",
+          "url": "https://vassalengine.org/library/projects/Diplomacy",
+          "online": true,
+          "note": "Diplomacy"
         }
       ]
     },
@@ -1073,7 +1085,7 @@
     },
     "700": {
       "name": "Battle Masters",
-      "short_description": "A massive fantasy minis battle where cards dictate your army’s moves and attacks on a giant mat.",
+      "short_description": "A massive fantasy minis battle where cards dictate your army\u2019s moves and attacks on a giant mat.",
       "rulebooks": [],
       "supplemental_files": [],
       "pc": [
@@ -1639,7 +1651,7 @@
     },
     "1982": {
       "name": "Black Spy",
-      "short_description": "A noir Hearts-style trick-taker where black spies score you points—so avoid them and aim for the lowest total.",
+      "short_description": "A noir Hearts-style trick-taker where black spies score you points\u2014so avoid them and aim for the lowest total.",
       "rulebooks": [],
       "supplemental_files": []
     },
@@ -1687,7 +1699,7 @@
           "store": "Tabletop Simulator",
           "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3378322526",
           "note": "UNO Waddingtons Deck (1989)",
-          "owned": true
+          "online": true
         },
         {
           "store": "Tabletop Simulator",
@@ -1728,7 +1740,7 @@
         {
           "store": "Tabletop Simulator",
           "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3098842105",
-          "note": "UNO Show´Em No Mercy (Scripted)",
+          "note": "UNO Show\u00b4Em No Mercy (Scripted)",
           "online": true
         }
       ]
@@ -2006,6 +2018,12 @@
           "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3339972396",
           "note": "Puerto Rico - Scripted (2024)",
           "online": true
+        },
+        {
+          "store": "BrettspielWelt",
+          "url": "https://www.brettspielwelt.de/Spiele/PuertoRico/",
+          "online": true,
+          "note": "Puerto Rico"
         }
       ]
     },
@@ -2081,6 +2099,12 @@
           "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3485769797",
           "note": "Age of Steam: Deluxe",
           "online": true
+        },
+        {
+          "store": "VASSAL",
+          "url": "https://vassalengine.org/library/projects/Age_Of_Steam",
+          "online": true,
+          "note": "Age of Steam"
         }
       ]
     },
@@ -2225,7 +2249,7 @@
         {
           "store": "Tabletop Simulator",
           "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=2604177707",
-          "note": "Monopoly Gamer: Pokémon (Custom)",
+          "note": "Monopoly Gamer: Pok\u00e9mon (Custom)",
           "online": true
         },
         {
@@ -2453,13 +2477,13 @@
           "store": "Tabletop Simulator",
           "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=2464089532",
           "note": "Ticket to Ride: Poland",
-          "owned": true
+          "online": true
         },
         {
           "store": "Tabletop Simulator",
           "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=2461573022",
           "note": "Ticket to Ride: The Heart of Africa",
-          "owned": true
+          "online": true
         },
         {
           "store": "Tabletop Simulator",
@@ -2655,13 +2679,13 @@
         {
           "store": "Tabletop Simulator",
           "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=2386218843",
-          "note": "Mémoire 44 - FR/ENG - Full script",
+          "note": "M\u00e9moire 44 - FR/ENG - Full script",
           "online": true
         },
         {
           "store": "Tabletop Simulator",
           "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3417764311",
-          "note": "Mémoire 44 [FR]",
+          "note": "M\u00e9moire 44 [FR]",
           "online": true
         }
       ]
@@ -2803,6 +2827,12 @@
           "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3022403977",
           "note": "The Downfall of Pompeii [FIXED]",
           "online": true
+        },
+        {
+          "store": "VASSAL",
+          "url": "https://vassalengine.org/library/projects/The_Downfall_of_Pompeii",
+          "online": true,
+          "note": "The Downfall of Pompeii"
         }
       ]
     },
@@ -2989,7 +3019,7 @@
         {
           "store": "Tabletop Simulator",
           "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3271173273",
-          "note": "Diamant édition 20 ans (2024)",
+          "note": "Diamant \u00e9dition 20 ans (2024)",
           "online": true
         }
       ]
@@ -3011,6 +3041,12 @@
           "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=2794562109",
           "note": "Arkham Horror v2 + Expansions",
           "online": true
+        },
+        {
+          "store": "VASSAL",
+          "url": "https://vassalengine.org/library/projects/Arkham_Horror",
+          "online": true,
+          "note": "Arkham Horror (2005)"
         }
       ]
     },
@@ -3171,13 +3207,13 @@
         {
           "store": "Tabletopia",
           "url": "https://tabletopia.com/games/neuroshima-hex-3-0",
-          "note": "Neuroshima Hex! 3.0",
+          "note": "Neuroshima Hex!: The Year of Moloch",
           "online": true
         }
       ]
     },
     "21348": {
-      "name": "Ticket to Ride: Märklin",
+      "name": "Ticket to Ride: M\u00e4rklin",
       "short_description": "Build railroad routes across Germany to try to connect valuable destinations.",
       "rulebooks": [],
       "supplemental_files": []
@@ -3338,7 +3374,7 @@
       ]
     },
     "25758": {
-      "name": "Trüffel-Schnüffel",
+      "name": "Tr\u00fcffel-Schn\u00fcffel",
       "short_description": "Will you find the golden truffle?",
       "rulebooks": [],
       "supplemental_files": []
@@ -3833,7 +3869,7 @@
           "store": "Tabletop Simulator",
           "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3620224614",
           "note": "Ra: The Dice Game [Scripted]",
-          "owned": true
+          "online": true
         },
         {
           "store": "Tabletop Simulator",
@@ -3964,7 +4000,7 @@
         {
           "store": "Tabletop Simulator",
           "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=2974355611",
-          "note": "Dominion — Everything",
+          "note": "Dominion \u2014 Everything",
           "online": true
         },
         {
@@ -4044,6 +4080,12 @@
           "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3760902391",
           "note": "Yet Another Battlestar Galactica Mod (All Expansions)",
           "online": true
+        },
+        {
+          "store": "VASSAL",
+          "url": "https://vassalengine.org/library/projects/Battlestar_Galactica_The_Board_Game",
+          "online": true,
+          "note": "Battlestar Galactica: The Board Game"
         }
       ]
     },
@@ -4272,13 +4314,13 @@
           "store": "Tabletop Simulator",
           "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3353178198",
           "note": "Dixit Cards... and More!",
-          "owned": true
+          "online": true
         },
         {
           "store": "Tabletop Simulator",
           "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3655134800",
           "note": "Dixit: All Expansions Included!*",
-          "owned": true
+          "online": true
         }
       ]
     },
@@ -4305,7 +4347,7 @@
         {
           "store": "Tabletop Simulator",
           "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=2965189335",
-          "note": "Monopoly Deal 中文",
+          "note": "Monopoly Deal \u4e2d\u6587",
           "online": true
         },
         {
@@ -4690,6 +4732,12 @@
           "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=2133667088",
           "note": "Macao (English version, scripted startup, automation)",
           "online": true
+        },
+        {
+          "store": "Yucata",
+          "url": "https://www.yucata.de/en/GameInfo/Macao",
+          "online": true,
+          "note": "Macao"
         }
       ]
     },
@@ -4701,7 +4749,7 @@
     },
     "59946": {
       "name": "Dungeons & Dragons: Castle Ravenloft",
-      "short_description": "The master of Ravenloft is having guests for dinner – and you are invited!",
+      "short_description": "The master of Ravenloft is having guests for dinner \u2013 and you are invited!",
       "rulebooks": [],
       "supplemental_files": [],
       "pc": [
@@ -4806,7 +4854,7 @@
       ]
     },
     "62227": {
-      "name": "Labyrinth: The War on Terror, 2001 – ?",
+      "name": "Labyrinth: The War on Terror, 2001 \u2013 ?",
       "short_description": "Jihad is no longer a world away. Can the West react in time to win the war on terror?",
       "rulebooks": [],
       "supplemental_files": [],
@@ -4939,7 +4987,7 @@
     },
     "66588": {
       "name": "Wits & Wagers Family",
-      "short_description": "Trivia where you guess and bet on who’s likely to guess closest to the correct answer",
+      "short_description": "Trivia where you guess and bet on who\u2019s likely to guess closest to the correct answer",
       "rulebooks": [],
       "supplemental_files": []
     },
@@ -5019,7 +5067,7 @@
         {
           "store": "Tabletopia",
           "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=2982738799",
-          "note": "7 Wonders (2nd Ed) + Edifice [Scripted]",
+          "note": "7 Wonders",
           "online": true
         },
         {
@@ -5177,7 +5225,7 @@
       ]
     },
     "71721": {
-      "name": "Space Hulk: Death Angel – The Card Game",
+      "name": "Space Hulk: Death Angel \u2013 The Card Game",
       "short_description": "Clear a spacecraft of alien swarms in this card-based take on the classic Space Hulk.",
       "rulebooks": [],
       "supplemental_files": [],
@@ -5236,6 +5284,12 @@
           "store": "Tabletop Simulator",
           "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3364919218",
           "note": "The Networks (Complete)",
+          "online": true
+        },
+        {
+          "store": "Tabletopia",
+          "url": "https://tabletopia.com/games/the-networks",
+          "note": "he Networks: Primetime",
           "online": true
         }
       ]
@@ -5492,6 +5546,12 @@
           "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=2476169802",
           "note": "Andean Abyss [Enhanced Setup]",
           "online": true
+        },
+        {
+          "store": "VASSAL",
+          "url": "https://vassalengine.org/library/projects/Andean_Abyss",
+          "online": true,
+          "note": "Andean Abyss"
         }
       ]
     },
@@ -5545,7 +5605,7 @@
           "store": "Tabletop Simulator",
           "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3469628533",
           "note": "Skull [Scripted]",
-          "owned": true
+          "online": true
         }
       ]
     },
@@ -5756,7 +5816,7 @@
     },
     "102144": {
       "name": "Perplexus Epic",
-      "short_description": "A tougher solo 3D marble maze with 125 obstacles—one slip can send you back to a checkpoint or the start.",
+      "short_description": "A tougher solo 3D marble maze with 125 obstacles\u2014one slip can send you back to a checkpoint or the start.",
       "rulebooks": [],
       "supplemental_files": []
     },
@@ -5805,7 +5865,7 @@
     },
     "103343": {
       "name": "Game of Thrones: (Second Edition), A",
-      "short_description": "Make alliances—and break them!—as you strive to both unite and conquer Westeros.",
+      "short_description": "Make alliances\u2014and break them!\u2014as you strive to both unite and conquer Westeros.",
       "rulebooks": [],
       "supplemental_files": [],
       "android": [
@@ -5961,6 +6021,12 @@
           "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3338139447",
           "note": "Thunder Alley",
           "online": true
+        },
+        {
+          "store": "Tabletopia",
+          "url": "https://tabletopia.com/games/thunder-alley",
+          "note": "Thunder Alley",
+          "monthly_subscription": true
         }
       ]
     },
@@ -6147,7 +6213,7 @@
     },
     "118695": {
       "name": "Riff Raff",
-      "short_description": "Make sure your gear doesn’t topple overboard, and be ready to catch it if it does.",
+      "short_description": "Make sure your gear doesn\u2019t topple overboard, and be ready to catch it if it does.",
       "rulebooks": [],
       "supplemental_files": []
     },
@@ -6292,7 +6358,7 @@
     },
     "121921": {
       "name": "Robinson Crusoe: Adventures on the Cursed Island",
-      "short_description": "Work together — with friends or with Friday — to survive on a deserted island.",
+      "short_description": "Work together \u2014 with friends or with Friday \u2014 to survive on a deserted island.",
       "rulebooks": [],
       "supplemental_files": [],
       "android": [
@@ -6582,7 +6648,7 @@
         {
           "store": "Tabletopia",
           "url": "https://tabletopia.com/games/the-gallerist",
-          "note": "The Gallerist",
+          "note": "Gallerist, The",
           "online": true
         },
         {
@@ -6695,7 +6761,7 @@
         {
           "store": "Tabletop Simulator",
           "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=2436041783",
-          "note": "Andor Deluxe – Scripted",
+          "note": "Andor Deluxe \u2013 Scripted",
           "online": true
         },
         {
@@ -6728,7 +6794,7 @@
     },
     "128882": {
       "name": "Resistance: Avalon, The",
-      "short_description": "Who can you trust? A game of social deduction set in King Arthur’s legendary realm.",
+      "short_description": "Who can you trust? A game of social deduction set in King Arthur\u2019s legendary realm.",
       "rulebooks": [],
       "supplemental_files": [],
       "android": [
@@ -6892,7 +6958,7 @@
         {
           "store": "Tabletop Simulator",
           "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=2925251537",
-          "note": "Tapple! ( 한글 / 스크립트 )",
+          "note": "Tapple! ( \ud55c\uae00 / \uc2a4\ud06c\ub9bd\ud2b8 )",
           "online": true
         }
       ]
@@ -6928,7 +6994,7 @@
           "store": "Tabletop Simulator",
           "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3006324209",
           "note": "Love Letters (2019)",
-          "owned": true
+          "online": true
         },
         {
           "store": "Tabletop Simulator",
@@ -7241,6 +7307,12 @@
           "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=2956946735",
           "note": "Lewis & Clark: The Expedition [scripted]",
           "online": true
+        },
+        {
+          "store": "Tabletopia",
+          "url": "https://tabletopia.com/games/lewis-clark",
+          "note": "Lewis & Clark: The Expedition",
+          "online": true
         }
       ]
     },
@@ -7524,7 +7596,7 @@
       "supplemental_files": []
     },
     "145645": {
-      "name": "Le Fantôme de l'Opéra",
+      "name": "Le Fant\u00f4me de l'Op\u00e9ra",
       "short_description": "A duel between the Phantom and the detective. Will the primadonna leave in a fright?",
       "rulebooks": [],
       "supplemental_files": []
@@ -7994,7 +8066,7 @@
           "store": "Tabletop Simulator",
           "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=2656834499",
           "note": "Pandemic: The Cure (and low-quality Experimental Meds)",
-          "owned": true
+          "online": true
         }
       ]
     },
@@ -8018,7 +8090,7 @@
     },
     "152162": {
       "name": "Diamonds",
-      "short_description": "Every trick is a chance to grab jewels…or swipe them from your rivals!",
+      "short_description": "Every trick is a chance to grab jewels\u2026or swipe them from your rivals!",
       "rulebooks": [],
       "supplemental_files": [],
       "pc": [
@@ -8184,7 +8256,7 @@
     },
     "155362": {
       "name": "Ca$h 'n Guns: Second Edition",
-      "short_description": "A band of gangsters splits its loot — but guns speak louder than money.",
+      "short_description": "A band of gangsters splits its loot \u2014 but guns speak louder than money.",
       "rulebooks": [],
       "supplemental_files": []
     },
@@ -8324,7 +8396,7 @@
     },
     "155994": {
       "name": "Movie Plotz: 10 Year Anniversary Edition",
-      "short_description": "You never know… Your next crazy plot line may become the next blockbuster!",
+      "short_description": "You never know\u2026 Your next crazy plot line may become the next blockbuster!",
       "rulebooks": [],
       "supplemental_files": []
     },
@@ -8399,7 +8471,7 @@
           "store": "Tabletop Simulator",
           "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3672303523",
           "note": "Onirim + Expansions + Promos [Scripted]",
-          "owned": true
+          "online": true
         }
       ]
     },
@@ -8410,7 +8482,7 @@
       "supplemental_files": []
     },
     "156689": {
-      "name": "Legendary: Marvel – Villains",
+      "name": "Legendary: Marvel \u2013 Villains",
       "short_description": "Dodge and demolish high-minded heroes to establish yourself as the leading villain.",
       "rulebooks": [],
       "supplemental_files": []
@@ -8518,7 +8590,7 @@
       ]
     },
     "157820": {
-      "name": "Escape: The Curse of the Temple – Big Box",
+      "name": "Escape: The Curse of the Temple \u2013 Big Box",
       "short_description": "Experience the frantic dice-rolling temple run with seven expansions included.",
       "rulebooks": [],
       "supplemental_files": []
@@ -8718,7 +8790,7 @@
     },
     "160441": {
       "name": "Set Dice",
-      "short_description": "Roll-and-spot sets: form “all-same or all-different” dice trios across three games.",
+      "short_description": "Roll-and-spot sets: form \u201call-same or all-different\u201d dice trios across three games.",
       "rulebooks": [],
       "supplemental_files": []
     },
@@ -8824,7 +8896,7 @@
       ]
     },
     "160958": {
-      "name": "DC Deck-Building Game: Rivals – Batman vs The Joker",
+      "name": "DC Deck-Building Game: Rivals \u2013 Batman vs The Joker",
       "short_description": "Batman confronts the Joker in a deck-building duel.",
       "rulebooks": [],
       "supplemental_files": []
@@ -9286,15 +9358,15 @@
       ]
     },
     "164928": {
-      "name": "Orléans: Deluxified",
-      "short_description": "Craftsmen, scholars & monks can help you reign supreme—but who will turn up to help?",
+      "name": "Orl\u00e9ans: Deluxified",
+      "short_description": "Craftsmen, scholars & monks can help you reign supreme\u2014but who will turn up to help?",
       "rulebooks": [],
       "supplemental_files": [],
       "pc": [
         {
           "store": "Tabletopia",
           "url": "https://tabletopia.com/games/orleans",
-          "note": "Orléans: Deluxified",
+          "note": "Orl\u00e9ans: Deluxified",
           "monthly_subscription": true
         }
       ]
@@ -9629,7 +9701,7 @@
           "store": "Tabletop Simulator",
           "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3689005611",
           "note": "Terraforming Mars + Expansions (Optimized & Scripted Improved)",
-          "owned": true
+          "online": true
         },
         {
           "store": "Tabletop Simulator",
@@ -9920,7 +9992,7 @@
     },
     "170216": {
       "name": "Blood Rage",
-      "short_description": "Ragnarök has come! Secure your place in Valhalla in epic Viking battles.",
+      "short_description": "Ragnar\u00f6k has come! Secure your place in Valhalla in epic Viking battles.",
       "rulebooks": [],
       "supplemental_files": [],
       "pc": [
@@ -10196,8 +10268,8 @@
       ]
     },
     "171905": {
-      "name": "Orléans: Deluxe Edition",
-      "short_description": "Craftsmen, scholars & monks can help you reign supreme—but who will turn up to help?",
+      "name": "Orl\u00e9ans: Deluxe Edition",
+      "short_description": "Craftsmen, scholars & monks can help you reign supreme\u2014but who will turn up to help?",
       "rulebooks": [],
       "supplemental_files": [],
       "pc": [
@@ -11020,7 +11092,7 @@
     },
     "180050": {
       "name": "Star Wars Death Star Perplexus",
-      "short_description": "A 360° rolling marble maze with 115 obstacles—easy to start, tough to master.",
+      "short_description": "A 360\u00b0 rolling marble maze with 115 obstacles\u2014easy to start, tough to master.",
       "rulebooks": [],
       "supplemental_files": []
     },
@@ -11332,7 +11404,7 @@
     },
     "182214": {
       "name": "Gremlins, Inc.",
-      "short_description": "Steampunk Gremlins: Build, Steal, Sabotage—Score the Most Prestige.",
+      "short_description": "Steampunk Gremlins: Build, Steal, Sabotage\u2014Score the Most Prestige.",
       "rulebooks": [],
       "supplemental_files": [],
       "pc": [
@@ -11622,7 +11694,7 @@
     },
     "186461": {
       "name": "Hunt: The Unknown Quarry",
-      "short_description": "Mansion deduction brawl: one player is the hidden monster, the rest hunt before they’re picked off.",
+      "short_description": "Mansion deduction brawl: one player is the hidden monster, the rest hunt before they\u2019re picked off.",
       "rulebooks": [],
       "supplemental_files": [],
       "pc": [
@@ -11676,7 +11748,7 @@
     },
     "187645": {
       "name": "Star Wars: Rebellion",
-      "short_description": "Strike from your hidden base as the Rebels—or find and destroy it as the Empire.",
+      "short_description": "Strike from your hidden base as the Rebels\u2014or find and destroy it as the Empire.",
       "rulebooks": [],
       "supplemental_files": [],
       "android": [
@@ -11712,7 +11784,7 @@
           "store": "Tabletop Simulator",
           "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3709346671",
           "note": "Star Wars: Rebellion de-Scripted (with RotE)",
-          "owned": true
+          "online": true
         }
       ]
     },
@@ -12090,7 +12162,7 @@
       "supplemental_files": []
     },
     "193739": {
-      "name": "Jórvík",
+      "name": "J\u00f3rv\u00edk",
       "short_description": "Teach your Vikings to stand in line and await their turn in a tight auction game.",
       "rulebooks": [],
       "supplemental_files": []
@@ -12103,7 +12175,7 @@
     },
     "194034": {
       "name": "Fire! Fire! Fire Fighters!",
-      "short_description": "Race your firetruck through town to reach the blaze first—load the right firefighters fast, dodge hazards, and arrive without losing your crew.",
+      "short_description": "Race your firetruck through town to reach the blaze first\u2014load the right firefighters fast, dodge hazards, and arrive without losing your crew.",
       "rulebooks": [],
       "supplemental_files": []
     },
@@ -12375,7 +12447,7 @@
     },
     "197065": {
       "name": "Valley of the Kings: Last Rites",
-      "short_description": "Build your tomb by buying pyramid-offering cards and entombing them for points—because treasures only score once they’re laid to rest.",
+      "short_description": "Build your tomb by buying pyramid-offering cards and entombing them for points\u2014because treasures only score once they\u2019re laid to rest.",
       "rulebooks": [],
       "supplemental_files": []
     },
@@ -12497,7 +12569,7 @@
     },
     "197760": {
       "name": "Ghost Blitz: Spooky Doo",
-      "short_description": "A lightning-fast reflex game of spotting the right object from color clues—now with a fez.",
+      "short_description": "A lightning-fast reflex game of spotting the right object from color clues\u2014now with a fez.",
       "rulebooks": [],
       "supplemental_files": []
     },
@@ -12577,7 +12649,7 @@
     },
     "198961": {
       "name": "Yeti in My Spaghetti",
-      "short_description": "Pull spaghetti one-handed without dropping the yeti—topple it and you lose.",
+      "short_description": "Pull spaghetti one-handed without dropping the yeti\u2014topple it and you lose.",
       "rulebooks": [],
       "supplemental_files": []
     },
@@ -13500,7 +13572,7 @@
       ]
     },
     "206150": {
-      "name": "1754: Conquest – The French and Indian War",
+      "name": "1754: Conquest \u2013 The French and Indian War",
       "short_description": "Strategic and operational art come together to decide the fate of North America.",
       "rulebooks": [],
       "supplemental_files": [],
@@ -13508,7 +13580,7 @@
         {
           "store": "VASSAL",
           "url": "https://vassalengine.org/library/projects/13_The_Colonies_in_Revolt",
-          "note": "1754: Conquest – The French and Indian War",
+          "note": "1754: Conquest \u2013 The French and Indian War",
           "online": true
         },
         {
@@ -13568,6 +13640,12 @@
           "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=2535208184",
           "note": "Bayonets & Tomahawks (Full Campaign)",
           "online": true
+        },
+        {
+          "store": "VASSAL",
+          "url": "https://vassalengine.org/library/projects/Bayonets__Tomahawks",
+          "online": true,
+          "note": "Bayonets & Tomahawks"
         }
       ]
     },
@@ -13752,7 +13830,7 @@
       ]
     },
     "213893": {
-      "name": "Yamataï",
+      "name": "Yamata\u00ef",
       "short_description": "Sail through this beautiful archipelago, build vast palaces, and hire specialists.",
       "rulebooks": [],
       "supplemental_files": [],
@@ -13760,7 +13838,7 @@
         {
           "store": "Tabletop Simulator",
           "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3007005878",
-          "note": "Yamataï [Scripted]",
+          "note": "Yamata\u00ef [Scripted]",
           "online": true
         }
       ]
@@ -13816,7 +13894,7 @@
       ]
     },
     "214887": {
-      "name": "CO₂: Second Chance",
+      "name": "CO\u2082: Second Chance",
       "short_description": "Work together to create green energy sources to reduce the global carbon footprint.",
       "rulebooks": [],
       "supplemental_files": [],
@@ -13824,7 +13902,7 @@
         {
           "store": "Tabletopia",
           "url": "https://tabletopia.com/games/co2-second-edition",
-          "note": "CO₂: Second Chance",
+          "note": "CO\u2082: Second Chance",
           "online": true
         }
       ]
@@ -14168,7 +14246,7 @@
       ]
     },
     "219513": {
-      "name": "Bärenpark",
+      "name": "B\u00e4renpark",
       "short_description": "Build a bear park on personal boards by carefully placing polyominoes.",
       "rulebooks": [],
       "supplemental_files": [],
@@ -14294,7 +14372,7 @@
       "supplemental_files": []
     },
     "220775": {
-      "name": "Codenames: Disney – Family Edition",
+      "name": "Codenames: Disney \u2013 Family Edition",
       "short_description": "Use a one word clue that magically points your team to the right Disney character(s).",
       "rulebooks": [],
       "supplemental_files": [],
@@ -14343,7 +14421,7 @@
     },
     "221107": {
       "name": "Pandemic Legacy: Season 2",
-      "short_description": "The world is a mystery after a devastating pandemic—where will your team go?",
+      "short_description": "The world is a mystery after a devastating pandemic\u2014where will your team go?",
       "rulebooks": [],
       "supplemental_files": [],
       "pc": [
@@ -14357,7 +14435,7 @@
     },
     "221368": {
       "name": "DC Deck-Building Game: Confrontations",
-      "short_description": "It’s heroes vs. villains in this team-based edition of the DC deck-building system.",
+      "short_description": "It\u2019s heroes vs. villains in this team-based edition of the DC deck-building system.",
       "rulebooks": [],
       "supplemental_files": []
     },
@@ -14369,7 +14447,7 @@
     },
     "221965": {
       "name": "Fox in the Forest, The",
-      "short_description": "In this trick-taking game for 2, you must win more than your rival—but not too much!",
+      "short_description": "In this trick-taking game for 2, you must win more than your rival\u2014but not too much!",
       "rulebooks": [],
       "supplemental_files": [],
       "android": [
@@ -14565,7 +14643,8 @@
           "store": "Web",
           "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=2506518070",
           "note": "Antaris N.I.A. Database",
-          "support_app": true
+          "support_app": true,
+          "online": true
         },
         {
           "store": "Tabletopia",
@@ -14650,7 +14729,7 @@
       ]
     },
     "224316": {
-      "name": "Unlock!: Escape Adventures – The Elite",
+      "name": "Unlock!: Escape Adventures \u2013 The Elite",
       "short_description": "A 20-card Unlock! mini escape-room mystery in a hotel.",
       "rulebooks": [],
       "supplemental_files": [],
@@ -14983,7 +15062,8 @@
           "store": "Tabletop Simulator",
           "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3363709037",
           "note": "Set A Watch (Scripted - Includes OR, SotC, FI, and DR expansions)",
-          "wishlisted": true
+          "wishlisted": true,
+          "online": true
         }
       ]
     },
@@ -14994,13 +15074,13 @@
       "supplemental_files": []
     },
     "229218": {
-      "name": "Game of Thrones: Catan – Brotherhood of the Watch, A",
+      "name": "Game of Thrones: Catan \u2013 Brotherhood of the Watch, A",
       "short_description": "Take the Black, defend Westeros, become the Lord Commander in Catan-style game.",
       "rulebooks": [],
       "supplemental_files": []
     },
     "229598": {
-      "name": "Unlock!: Escape Adventures – Doo-Arann Dungeon",
+      "name": "Unlock!: Escape Adventures \u2013 Doo-Arann Dungeon",
       "short_description": "Find the treasure and escape the dungeon before time runs out.",
       "rulebooks": [],
       "supplemental_files": [],
@@ -15013,7 +15093,7 @@
       ]
     },
     "229632": {
-      "name": "Unlock!: Escape Adventures – 5th Avenue",
+      "name": "Unlock!: Escape Adventures \u2013 5th Avenue",
       "short_description": "A 25-card Unlock! mini escape-room heist in 1931 New York that uses the companion app.",
       "rulebooks": [],
       "supplemental_files": [],
@@ -15100,7 +15180,7 @@
       "supplemental_files": []
     },
     "230430": {
-      "name": "Unlock!: Escape Adventures – Temple of Ra",
+      "name": "Unlock!: Escape Adventures \u2013 Temple of Ra",
       "short_description": "A mini Unlock! escape-room adventure: sneak into the newly unearthed Temple of Ra to hunt for treasure.",
       "rulebooks": [],
       "supplemental_files": [],
@@ -16137,7 +16217,7 @@
     },
     "242343": {
       "name": "Siege Storm",
-      "short_description": "Two armies rush forward on two Tracks, crashing into one another’s defenses.",
+      "short_description": "Two armies rush forward on two Tracks, crashing into one another\u2019s defenses.",
       "rulebooks": [],
       "supplemental_files": []
     },
@@ -16315,7 +16395,7 @@
       ]
     },
     "244522": {
-      "name": "Ganz Schön Clever",
+      "name": "Ganz Sch\u00f6n Clever",
       "short_description": "Draft dice to mark numbers on your scoresheet, comboing bonuses to power your points.",
       "rulebooks": [],
       "supplemental_files": [],
@@ -16323,7 +16403,7 @@
         {
           "store": "Play Store",
           "url": "https://play.google.com/store/apps/details?id=de.brettspielwelt.ganzschoenclever&hl=en_US",
-          "note": "Ganz Schön Clever",
+          "note": "Ganz Sch\u00f6n Clever",
           "wishlisted": true
         }
       ],
@@ -16331,7 +16411,7 @@
         {
           "store": "App Store",
           "url": "https://apps.apple.com/us/app/thats-pretty-clever/id1411348057",
-          "note": "Ganz Schön Clever",
+          "note": "Ganz Sch\u00f6n Clever",
           "wishlisted": true
         }
       ],
@@ -16339,13 +16419,13 @@
         {
           "store": "Web",
           "url": "https://www.schmidtspiele.de/static/onlinespiele/ganz-schoen-clever/",
-          "note": "Ganz Schön Clever",
+          "note": "Ganz Sch\u00f6n Clever",
           "owned": true
         },
         {
           "store": "BrettspielWelt",
           "url": "https://www.brettspielwelt.de/Spiele/GanzSchoenClever/",
-          "note": "Ganz Schön Clever",
+          "note": "Ganz Sch\u00f6n Clever",
           "online": true
         }
       ]
@@ -16777,7 +16857,7 @@
       ]
     },
     "250458": {
-      "name": "Gùgōng: Deluxe",
+      "name": "G\u00f9g\u014dng: Deluxe",
       "short_description": "Exchange gifts, send servants, and visit the Emperor in a luscious 1570 China.",
       "rulebooks": [],
       "supplemental_files": [],
@@ -16793,7 +16873,7 @@
         {
           "store": "Tabletopia",
           "url": "https://tabletopia.com/games/gugong",
-          "note": "Gùgōng: Deluxe",
+          "note": "G\u00f9g\u014dng: Deluxe",
           "online": true
         }
       ]
@@ -16932,13 +17012,13 @@
       "supplemental_files": []
     },
     "252576": {
-      "name": "DC Deck-Building Game: Rivals – Green Lantern vs Sinestro",
+      "name": "DC Deck-Building Game: Rivals \u2013 Green Lantern vs Sinestro",
       "short_description": "An arch-nemesis deck clash between Green Lantern and Sinestro.",
       "rulebooks": [],
       "supplemental_files": []
     },
     "252693": {
-      "name": "Batman: The Animated Series – Gotham City Under Siege",
+      "name": "Batman: The Animated Series \u2013 Gotham City Under Siege",
       "short_description": "Gotham City's most infamous villains have put the city into peril once again!",
       "rulebooks": [],
       "supplemental_files": [],
@@ -16946,7 +17026,7 @@
         {
           "store": "Tabletop Simulator",
           "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3769537751",
-          "note": "Batman: The Animated Series Adventures – FULL expansions complete",
+          "note": "Batman: The Animated Series Adventures \u2013 FULL expansions complete",
           "online": true
         },
         {
@@ -17157,7 +17237,7 @@
     },
     "254394": {
       "name": "Banned Books",
-      "short_description": "How can people be inspired by your story if it’s on the banned books list?",
+      "short_description": "How can people be inspired by your story if it\u2019s on the banned books list?",
       "rulebooks": [],
       "supplemental_files": []
     },
@@ -17195,7 +17275,7 @@
     },
     "254708": {
       "name": "Roll Player Adventures",
-      "short_description": "Choose wisely in this RPG style adventure — every decision has lasting consequences.",
+      "short_description": "Choose wisely in this RPG style adventure \u2014 every decision has lasting consequences.",
       "rulebooks": [],
       "supplemental_files": [],
       "pc": [
@@ -17204,11 +17284,17 @@
           "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=2124575203",
           "note": "Roll Player Adventures",
           "online": true
+        },
+        {
+          "store": "Tabletopia",
+          "url": "https://tabletopia.com/games/roll-player-adventures",
+          "note": "Roll Player Adventures",
+          "online": true
         }
       ]
     },
     "255262": {
-      "name": "Agricola: Special Edition – All Creatures Big and Small",
+      "name": "Agricola: Special Edition \u2013 All Creatures Big and Small",
       "short_description": "Two animal farmers expand their farms to breed the most sheep, pigs, cows and horses.",
       "rulebooks": [],
       "supplemental_files": []
@@ -17249,7 +17335,7 @@
     },
     "255674": {
       "name": "Imhotep: The Duel",
-      "short_description": "Unload building materials from ships, but your opponent’s plans might mess up yours.",
+      "short_description": "Unload building materials from ships, but your opponent\u2019s plans might mess up yours.",
       "rulebooks": [],
       "supplemental_files": [],
       "pc": [
@@ -17516,7 +17602,7 @@
       "supplemental_files": []
     },
     "257707": {
-      "name": "Unlock!: Escape Adventures – In Pursuit of Cabrakan",
+      "name": "Unlock!: Escape Adventures \u2013 In Pursuit of Cabrakan",
       "short_description": "Find a sacred statuette in a temple full of traps before time runs out.",
       "rulebooks": [],
       "supplemental_files": [],
@@ -17536,7 +17622,7 @@
     },
     "258036": {
       "name": "Between Two Castles of Mad King Ludwig",
-      "short_description": "Help your 2 neighboring players build the wackiest—but highest scoring—castles.",
+      "short_description": "Help your 2 neighboring players build the wackiest\u2014but highest scoring\u2014castles.",
       "rulebooks": [],
       "supplemental_files": [],
       "pc": [
@@ -17639,7 +17725,7 @@
           "store": "Tabletop Simulator",
           "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=2784546848",
           "note": "Pandemic: Fall of Rome (ENG)",
-          "owned": true
+          "online": true
         }
       ]
     },
@@ -17653,7 +17739,7 @@
           "store": "Tabletop Simulator",
           "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=2871818405",
           "note": "Camel Up 2nd Edition Complete",
-          "owned": true
+          "online": true
         },
         {
           "store": "Tabletop Simulator",
@@ -17724,7 +17810,7 @@
     },
     "262941": {
       "name": "Dominant Species: Marine",
-      "short_description": "Dominate your aquatic foes or you’ll be sleeping with the fishes.",
+      "short_description": "Dominate your aquatic foes or you\u2019ll be sleeping with the fishes.",
       "rulebooks": [],
       "supplemental_files": [],
       "pc": [
@@ -17837,7 +17923,7 @@
     },
     "264055": {
       "name": "Draftosaurus",
-      "short_description": "A dinosaur park will always attract tourists – if you can place your species right.",
+      "short_description": "A dinosaur park will always attract tourists \u2013 if you can place your species right.",
       "rulebooks": [],
       "supplemental_files": [],
       "pc": [
@@ -18245,7 +18331,7 @@
     },
     "266830": {
       "name": "QE",
-      "short_description": "Bid ANYTHING to bail out companies, but just don’t bid the MOST!",
+      "short_description": "Bid ANYTHING to bail out companies, but just don\u2019t bid the MOST!",
       "rulebooks": [],
       "supplemental_files": []
     },
@@ -18652,7 +18738,7 @@
           "store": "Tabletop Simulator",
           "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=2953573640",
           "note": "Jaws 3D",
-          "owned": true
+          "online": true
         }
       ]
     },
@@ -18672,7 +18758,7 @@
           "store": "Tabletop Simulator",
           "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3543678161",
           "note": "Iron Helm - All Expansions 2025 [Scripted]",
-          "owned": true
+          "online": true
         }
       ]
     },
@@ -18944,7 +19030,7 @@
       ]
     },
     "276498": {
-      "name": "Paris: La Cité de la Lumière",
+      "name": "Paris: La Cit\u00e9 de la Lumi\u00e8re",
       "short_description": "Players compete for their moment in the light by placing oddly shaped building tiles.",
       "rulebooks": [],
       "supplemental_files": [],
@@ -18952,7 +19038,7 @@
         {
           "store": "Yucata",
           "url": "https://www.yucata.de/en/GameInfo/Paris",
-          "note": "Paris: La Cité de la Lumière",
+          "note": "Paris: La Cit\u00e9 de la Lumi\u00e8re",
           "online": true
         }
       ]
@@ -18973,7 +19059,7 @@
     },
     "277085": {
       "name": "Love Letter: Sender",
-      "short_description": "Help sneakily maneuver your love letter to the Princess—or to those closest to her.",
+      "short_description": "Help sneakily maneuver your love letter to the Princess\u2014or to those closest to her.",
       "rulebooks": [],
       "supplemental_files": [],
       "pc": [
@@ -19171,6 +19257,12 @@
           "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=2484572525",
           "note": "Cape May",
           "online": true
+        },
+        {
+          "store": "Tabletopia",
+          "url": "https://tabletopia.com/games/cape-may",
+          "note": "Cape May",
+          "online": true
         }
       ]
     },
@@ -19190,6 +19282,12 @@
           "store": "Tabletop Simulator",
           "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3007404054",
           "note": "Sub Terra (All Expansions) Scripted",
+          "online": true
+        },
+        {
+          "store": "Tabletopia",
+          "url": "https://tabletopia.com/games/sub-terra-ii-inferno-s-edge",
+          "note": "Sub Terra II: Inferno's Edge",
           "online": true
         }
       ]
@@ -19258,7 +19356,13 @@
         {
           "store": "Tabletop Simulator",
           "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3444821039",
-          "note": "Ghosts Of Christmas（CN/EN）",
+          "note": "Ghosts Of Christmas\uff08CN/EN\uff09",
+          "online": true
+        },
+        {
+          "store": "Tabletopia",
+          "url": "https://tabletopia.com/games/ghosts-of-christmas",
+          "note": "Ghosts of Christmas",
           "online": true
         }
       ]
@@ -19589,7 +19693,7 @@
       "supplemental_files": []
     },
     "284653": {
-      "name": "Mind MGMT: The Psychic Espionage “Game.”",
+      "name": "Mind MGMT: The Psychic Espionage \u201cGame.\u201d",
       "short_description": "Psychic rogue agents team up to track down the Recruiter in Zanzibar.",
       "rulebooks": [],
       "supplemental_files": [],
@@ -19619,7 +19723,7 @@
         {
           "store": "Tabletopia",
           "url": "https://tabletopia.com/games/mind-mgmt",
-          "note": "Mind MGMT: The Psychic Espionage “Game.”",
+          "note": "Mind MGMT: The Psychic Espionage \u201cGame.\u201d",
           "online": true
         },
         {
@@ -19637,13 +19741,13 @@
       "supplemental_files": []
     },
     "284777": {
-      "name": "Unmatched: Jurassic Park – InGen vs Raptors",
+      "name": "Unmatched: Jurassic Park \u2013 InGen vs Raptors",
       "short_description": "Hold onto your butts, it's dinos vs. the world's greatest hunter.",
       "rulebooks": [],
       "supplemental_files": []
     },
     "284778": {
-      "name": "Unmatched: Jurassic Park – Dr. Sattler vs. T. Rex",
+      "name": "Unmatched: Jurassic Park \u2013 Dr. Sattler vs. T. Rex",
       "short_description": "Scientific vacation turned deadly hunt. Surely Dr. Sattler is no match for a T. Rex?",
       "rulebooks": [],
       "supplemental_files": []
@@ -19981,7 +20085,7 @@
     },
     "286428": {
       "name": "Wits & Wagers: It's Vegas, Baby!",
-      "short_description": "Trivia where you guess and bet on who’s likely to guess closest to the correct answer",
+      "short_description": "Trivia where you guess and bet on who\u2019s likely to guess closest to the correct answer",
       "rulebooks": [],
       "supplemental_files": []
     },
@@ -20033,7 +20137,7 @@
           "store": "Tabletop Simulator",
           "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=2309759806",
           "note": "Oriflamme [FR]",
-          "owned": true
+          "online": true
         }
       ]
     },
@@ -20288,6 +20392,12 @@
           "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=2063307113",
           "note": "Excavation Earth",
           "online": true
+        },
+        {
+          "store": "Tabletopia",
+          "url": "https://tabletopia.com/games/excavation-earth-it-belongs-in-a-museum",
+          "note": "Excavation Earth",
+          "online": true
         }
       ]
     },
@@ -20322,7 +20432,7 @@
     },
     "293112": {
       "name": "White Eagle Defiant: Poland 1939",
-      "short_description": "Germany’s blitzkrieg into Poland, with chit events and an uncertain Russian response.",
+      "short_description": "Germany\u2019s blitzkrieg into Poland, with chit events and an uncertain Russian response.",
       "rulebooks": [],
       "supplemental_files": []
     },
@@ -20356,12 +20466,12 @@
     },
     "293468": {
       "name": "Halls of Montezuma, The",
-      "short_description": "Card-driven 2‑player (or solo) Mexican–American War game: U.S. invasion vs Mexico’s defense.",
+      "short_description": "Card-driven 2\u2011player (or solo) Mexican\u2013American War game: U.S. invasion vs Mexico\u2019s defense.",
       "rulebooks": [],
       "supplemental_files": []
     },
     "293835": {
-      "name": "Oltréé",
+      "name": "Oltr\u00e9\u00e9",
       "short_description": "Rangers help local communities and defend their Kingdom in order to restore hope.",
       "rulebooks": [],
       "supplemental_files": []
@@ -20400,7 +20510,7 @@
     },
     "294788": {
       "name": "Conqueror: Final Conquest",
-      "short_description": "6 ancient nations collide to build the world’s most formidable empire.",
+      "short_description": "6 ancient nations collide to build the world\u2019s most formidable empire.",
       "rulebooks": [],
       "supplemental_files": [],
       "pc": [
@@ -20423,6 +20533,12 @@
           "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=2804149704",
           "note": "Almoravid: Reconquista and Riposte in Spain, 1085-1086",
           "online": true
+        },
+        {
+          "store": "VASSAL",
+          "url": "https://vassalengine.org/library/projects/Abaddon",
+          "online": true,
+          "note": "Almoravid: Reconquista and Riposte in Spain 1085-1086"
         }
       ]
     },
@@ -20691,7 +20807,7 @@
           "store": "Tabletop Simulator",
           "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3644861124",
           "note": "Assisted Frosthaven",
-          "owned": true
+          "online": true
         }
       ]
     },
@@ -20786,7 +20902,8 @@
           "store": "Tabletop Simulator",
           "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=2922111128",
           "note": "Cascadia - Scripted [2025]",
-          "wishlisted": true
+          "wishlisted": true,
+          "online": true
         },
         {
           "store": "Tabletop Simulator",
@@ -21095,7 +21212,7 @@
       "supplemental_files": []
     },
     "300192": {
-      "name": "Twilight Struggle: Red Sea – Conflict in the Horn of Africa",
+      "name": "Twilight Struggle: Red Sea \u2013 Conflict in the Horn of Africa",
       "short_description": "The USA and USSR vie for control of the Red Sea during the Cold War.",
       "rulebooks": [],
       "supplemental_files": [],
@@ -21149,7 +21266,7 @@
     },
     "300523": {
       "name": "Biblios: Quill and Parchment",
-      "short_description": "Roll dice and score points doing a monk’s work: study, pray and do good deeds.",
+      "short_description": "Roll dice and score points doing a monk\u2019s work: study, pray and do good deeds.",
       "rulebooks": [],
       "supplemental_files": []
     },
@@ -21169,6 +21286,12 @@
           "store": "Tabletop Simulator",
           "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3073207911",
           "note": "Paleo English",
+          "online": true
+        },
+        {
+          "store": "Tabletopia",
+          "url": "https://tabletopia.com/games/paleo",
+          "note": "Paleo",
           "online": true
         }
       ]
@@ -21220,7 +21343,7 @@
       "supplemental_files": []
     },
     "301665": {
-      "name": "DC Deck-Building Game: Dark Nights – Metal",
+      "name": "DC Deck-Building Game: Dark Nights \u2013 Metal",
       "short_description": "Avoid capture and subdue evil Batmen summoned by mysterious metals.",
       "rulebooks": [],
       "supplemental_files": []
@@ -21266,21 +21389,21 @@
       ]
     },
     "301919": {
-      "name": "Pandemic: Hot Zone – North America",
-      "short_description": "30 minutes to save North America from a viral pandemic — all in a day's work.",
+      "name": "Pandemic: Hot Zone \u2013 North America",
+      "short_description": "30 minutes to save North America from a viral pandemic \u2014 all in a day's work.",
       "rulebooks": [],
       "supplemental_files": [],
       "pc": [
         {
           "store": "Tabletopia",
           "url": "https://tabletopia.com/games/pandemic-north-america",
-          "note": "Pandemic: Hot Zone – North America",
+          "note": "Pandemic: Hot Zone \u2013 North America",
           "online": true
         },
         {
           "store": "Tabletop Simulator",
           "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=2173597763",
-          "note": "Pandemic: Hot Zone – North America",
+          "note": "Pandemic: Hot Zone \u2013 North America",
           "online": true
         },
         {
@@ -21515,7 +21638,7 @@
           "store": "Tabletop Simulator",
           "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=2503965828",
           "note": "Regicide (2020)",
-          "owned": true
+          "online": true
         },
         {
           "store": "Tabletop Simulator",
@@ -21532,7 +21655,7 @@
       "supplemental_files": []
     },
     "307155": {
-      "name": "Timeline: Classic – Print & Play Demo",
+      "name": "Timeline: Classic \u2013 Print & Play Demo",
       "short_description": "Free 30-card print-and-play demo: place events and inventions in chronological order.",
       "rulebooks": [],
       "supplemental_files": []
@@ -21550,7 +21673,7 @@
       "supplemental_files": []
     },
     "308388": {
-      "name": "Egizia: Shifting Sands – Kickstarter Edition",
+      "name": "Egizia: Shifting Sands \u2013 Kickstarter Edition",
       "short_description": "Struggle against the Nile's current to construct Egypt's iconic monuments.",
       "rulebooks": [],
       "supplemental_files": []
@@ -21647,7 +21770,7 @@
     },
     "309857": {
       "name": "Funkoverse: Tim Burton's The Nightmare Before Christmas 100",
-      "short_description": "What’s this? It’s Jack Skellington in Funkoverse, ready for spooky showdowns!",
+      "short_description": "What\u2019s this? It\u2019s Jack Skellington in Funkoverse, ready for spooky showdowns!",
       "rulebooks": [],
       "supplemental_files": []
     },
@@ -21732,7 +21855,7 @@
       "supplemental_files": []
     },
     "311475": {
-      "name": "Masters of the Universe: – Clash for Eternia",
+      "name": "Masters of the Universe: \u2013 Clash for Eternia",
       "short_description": "Skeletor and He-Man clash on your tabletop version of Eternia.",
       "rulebooks": [],
       "supplemental_files": [],
@@ -21769,7 +21892,7 @@
           "store": "Tabletop Simulator",
           "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3124586384",
           "note": "Votes for Women",
-          "owned": true
+          "online": true
         }
       ]
     },
@@ -21853,7 +21976,8 @@
           "store": "Tabletop Simulator",
           "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3749085952",
           "note": "French Toast [Scripted]",
-          "wishlisted": true
+          "wishlisted": true,
+          "online": true
         }
       ]
     },
@@ -21954,7 +22078,7 @@
       "supplemental_files": []
     },
     "314735": {
-      "name": "Cortiça",
+      "name": "Corti\u00e7a",
       "short_description": "A miniature worker placement game about harvesting cork!",
       "rulebooks": [],
       "supplemental_files": []
@@ -22165,7 +22289,7 @@
     },
     "317030": {
       "name": "Quest: Avalon Big Box Edition",
-      "short_description": "Who can you trust? A game of social deduction set in King Arthur’s legendary realm.",
+      "short_description": "Who can you trust? A game of social deduction set in King Arthur\u2019s legendary realm.",
       "rulebooks": [],
       "supplemental_files": []
     },
@@ -22304,7 +22428,7 @@
       ]
     },
     "319196": {
-      "name": "Gùgōng: Deluxe Big Box",
+      "name": "G\u00f9g\u014dng: Deluxe Big Box",
       "short_description": "Exchange gifts, send servants, and visit the Emperor in a luscious 1570 China.",
       "rulebooks": [],
       "supplemental_files": []
@@ -22403,7 +22527,7 @@
     },
     "322289": {
       "name": "Darwin's Journey",
-      "short_description": "Retrace Darwin’s journey to the Galapagos in a worker-placement adventure.",
+      "short_description": "Retrace Darwin\u2019s journey to the Galapagos in a worker-placement adventure.",
       "rulebooks": [],
       "supplemental_files": [],
       "pc": [
@@ -22465,6 +22589,18 @@
           "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=2197390661",
           "note": "Red Dust Rebellion",
           "online": true
+        },
+        {
+          "store": "Tabletopia",
+          "url": "https://tabletopia.com/games/red-dust-rebellion",
+          "note": "Red Dust Rebellion",
+          "online": true
+        },
+        {
+          "store": "VASSAL",
+          "url": "https://vassalengine.org/library/projects/Red_Dust_Rebellion",
+          "online": true,
+          "note": "Red Dust Rebellion"
         }
       ]
     },
@@ -22482,7 +22618,7 @@
     },
     "322697": {
       "name": "Revolver Noir",
-      "short_description": "You ain't alone, and only one of you is leavin’ this place alive.",
+      "short_description": "You ain't alone, and only one of you is leavin\u2019 this place alive.",
       "rulebooks": [],
       "supplemental_files": [],
       "pc": [
@@ -22513,7 +22649,7 @@
       "supplemental_files": []
     },
     "322705": {
-      "name": "Hórreos",
+      "name": "H\u00f3rreos",
       "short_description": "Can you build the longest, most ornate structure that keeps the mice out?",
       "rulebooks": [],
       "supplemental_files": []
@@ -22571,7 +22707,7 @@
       "supplemental_files": []
     },
     "324513": {
-      "name": "Batman: The Dark Knight Returns – The Game",
+      "name": "Batman: The Dark Knight Returns \u2013 The Game",
       "short_description": "Frank Miller's The Dark Knight Returns gets adapted for the tabletop.",
       "rulebooks": [],
       "supplemental_files": []
@@ -22927,7 +23063,7 @@
     },
     "329500": {
       "name": "Unconscious Mind",
-      "short_description": "As one of Freud's followers, delve into clients’ unconscious minds to bring healing.",
+      "short_description": "As one of Freud's followers, delve into clients\u2019 unconscious minds to bring healing.",
       "rulebooks": [],
       "supplemental_files": [],
       "pc": [
@@ -22998,15 +23134,15 @@
       "supplemental_files": []
     },
     "329670": {
-      "name": "Pandemic: Hot Zone – Europe",
-      "short_description": "30 minutes to save Europe from a viral pandemic — it's all in a day's work.",
+      "name": "Pandemic: Hot Zone \u2013 Europe",
+      "short_description": "30 minutes to save Europe from a viral pandemic \u2014 it's all in a day's work.",
       "rulebooks": [],
       "supplemental_files": [],
       "pc": [
         {
           "store": "Tabletopia",
           "url": "https://tabletopia.com/games/pandemic-hot-zone-europe",
-          "note": "Pandemic: Hot Zone – Europe",
+          "note": "Pandemic: Hot Zone \u2013 Europe",
           "online": true
         }
       ]
@@ -23038,7 +23174,7 @@
       ]
     },
     "329841": {
-      "name": "Ticket to Ride: Europe – 15th Anniversary",
+      "name": "Ticket to Ride: Europe \u2013 15th Anniversary",
       "short_description": "Ride the rails across Europe to reach valuable cities with deluxe components.",
       "rulebooks": [],
       "supplemental_files": []
@@ -23157,7 +23293,7 @@
       "supplemental_files": []
     },
     "331398": {
-      "name": "Mythic Battles: Ragnarök",
+      "name": "Mythic Battles: Ragnar\u00f6k",
       "short_description": "Take control of Norse divinities and command their forces in the ultimate conflict!",
       "rulebooks": [
         {
@@ -23383,8 +23519,8 @@
       ]
     },
     "334931": {
-      "name": "Robinson Crusoe: Adventures on the Cursed Island – Collector's Edition (Gamefound Edition)",
-      "short_description": "Work together — with friends or with Friday — to survive on a deserted island.",
+      "name": "Robinson Crusoe: Adventures on the Cursed Island \u2013 Collector's Edition (Gamefound Edition)",
+      "short_description": "Work together \u2014 with friends or with Friday \u2014 to survive on a deserted island.",
       "rulebooks": [],
       "supplemental_files": [],
       "android": [
@@ -23561,7 +23697,7 @@
           "store": "Tabletop Simulator",
           "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=2888946687",
           "note": "Flamecraft (TTS Deluxe Edition + Dragons & Dragons)",
-          "owned": true
+          "online": true
         }
       ]
     },
@@ -23730,7 +23866,7 @@
       "supplemental_files": []
     },
     "338834": {
-      "name": "MicroMacro: Crime City – Full House",
+      "name": "MicroMacro: Crime City \u2013 Full House",
       "short_description": "Find the small traces to solve the big cases.",
       "rulebooks": [],
       "supplemental_files": []
@@ -23850,7 +23986,7 @@
     },
     "339532": {
       "name": "Battlecrest: Fellwoods Base Game",
-      "short_description": "Master the potential of your hero’s crests and prove that you are a true champion.",
+      "short_description": "Master the potential of your hero\u2019s crests and prove that you are a true champion.",
       "rulebooks": [],
       "supplemental_files": []
     },
@@ -24023,6 +24159,12 @@
           "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3761899516",
           "note": "Super Mega Lucky Box [Scripted]",
           "online": true
+        },
+        {
+          "store": "BrettspielWelt",
+          "url": "https://www.brettspielwelt.de/Spiele/SuperMegaLuckyBox/",
+          "online": true,
+          "note": "Super Mega Lucky Box"
         }
       ]
     },
@@ -24040,7 +24182,7 @@
     },
     "341963": {
       "name": "Tides",
-      "short_description": "The tide is always changing; you never know what you’ll find on the beach!",
+      "short_description": "The tide is always changing; you never know what you\u2019ll find on the beach!",
       "rulebooks": [],
       "supplemental_files": []
     },
@@ -24092,7 +24234,15 @@
       "name": "ROVE: Results-Oriented Versatile Explorer",
       "short_description": "In the far reaches of space where humankind still dares not go, a ROVE is deployed.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "Forteller Narratives",
+          "url": "https://fortellergames.com/products/rove",
+          "monthly_subscription": true,
+          "note": "ROVE: Results-Oriented Versatile Explorer"
+        }
+      ]
     },
     "342848": {
       "name": "World of Warcraft: Wrath of the Lich King",
@@ -24308,7 +24458,7 @@
       ]
     },
     "344872": {
-      "name": "À la Food Cart",
+      "name": "\u00c0 la Food Cart",
       "short_description": "Grab your chef's apron because here comes the lunch rush!",
       "rulebooks": [],
       "supplemental_files": []
@@ -24328,7 +24478,7 @@
       ]
     },
     "345155": {
-      "name": "Bruxelles 1893: Belle Époque",
+      "name": "Bruxelles 1893: Belle \u00c9poque",
       "short_description": "Manage your workers to help usher in a new era of culture and progress in Brussels.",
       "rulebooks": [],
       "supplemental_files": []
@@ -24375,7 +24525,7 @@
           "store": "Tabletop Simulator",
           "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3467497917",
           "note": "Mindbug: Complete Edition [Scripted]",
-          "owned": true
+          "online": true
         }
       ]
     },
@@ -24516,7 +24666,7 @@
     },
     "347755": {
       "name": "Making Manhattan",
-      "short_description": "It's time to share your vision for New York City’s most notable borough.",
+      "short_description": "It's time to share your vision for New York City\u2019s most notable borough.",
       "rulebooks": [],
       "supplemental_files": []
     },
@@ -24575,7 +24725,7 @@
         {
           "store": "Tabletop Simulator",
           "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=2748084972",
-          "note": "Tin Helm by Krákeder (v.2022-1-1)",
+          "note": "Tin Helm by Kr\u00e1keder (v.2022-1-1)",
           "online": true
         }
       ]
@@ -24653,7 +24803,7 @@
       ]
     },
     "349067": {
-      "name": "Lord of the Rings: The Card Game – Revised Core Set, The",
+      "name": "Lord of the Rings: The Card Game \u2013 Revised Core Set, The",
       "short_description": "Revised core set repackages the original with support for 1-4p and a new campaign.",
       "rulebooks": [],
       "supplemental_files": []
@@ -24855,6 +25005,12 @@
           "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=2940610914",
           "note": "Tiletum [+ Expansion]",
           "online": true
+        },
+        {
+          "store": "Yucata",
+          "url": "https://www.yucata.de/en/GameInfo/Tiletum",
+          "online": true,
+          "note": "Tiletum"
         }
       ]
     },
@@ -24980,8 +25136,8 @@
       ]
     },
     "353470": {
-      "name": "Star Wars: Jabba's Palace – A Love Letter Game",
-      "short_description": "Danger and deception await you in the lair of the galaxy’s most notorious gangster.",
+      "name": "Star Wars: Jabba's Palace \u2013 A Love Letter Game",
+      "short_description": "Danger and deception await you in the lair of the galaxy\u2019s most notorious gangster.",
       "rulebooks": [],
       "supplemental_files": [],
       "pc": [
@@ -24989,7 +25145,7 @@
           "store": "Tabletop Simulator",
           "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=2842683559",
           "note": "Star Wars: Jabba's Palace - A Love Letter game",
-          "owned": true
+          "online": true
         }
       ]
     },
@@ -25131,7 +25287,7 @@
       "supplemental_files": []
     },
     "355997": {
-      "name": "Thunder Road: Vendetta – Maximum Chrome",
+      "name": "Thunder Road: Vendetta \u2013 Maximum Chrome",
       "short_description": "Crews race and shoot to be the last car standing.",
       "rulebooks": [],
       "supplemental_files": []
@@ -25505,7 +25661,7 @@
       "supplemental_files": []
     },
     "360932": {
-      "name": "DC Deck-Building Game: Rivals – The Flash vs Reverse-Flash",
+      "name": "DC Deck-Building Game: Rivals \u2013 The Flash vs Reverse-Flash",
       "short_description": "The Flash and Reverse-Flash try to outrace each other in a deck-building battle.",
       "rulebooks": [],
       "supplemental_files": []
@@ -25752,13 +25908,13 @@
           "store": "Tabletop Simulator",
           "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3164531387",
           "note": "Splendor: Duel(Scripted) Improved CN/ENG",
-          "owned": true
+          "online": true
         },
         {
           "store": "Tabletop Simulator",
           "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3762821923",
           "note": "Splendor Duel: The Counterfeiters",
-          "owned": true
+          "online": true
         },
         {
           "store": "Tabletop Simulator",
@@ -25813,7 +25969,7 @@
       ]
     },
     "364766": {
-      "name": "MicroMacro: Crime City – All In",
+      "name": "MicroMacro: Crime City \u2013 All In",
       "short_description": "Once more you solve murder cases in crime city.",
       "rulebooks": [],
       "supplemental_files": []
@@ -25843,7 +25999,7 @@
       "supplemental_files": []
     },
     "365128": {
-      "name": "Paper Tales: Édition intégrale",
+      "name": "Paper Tales: \u00c9dition int\u00e9grale",
       "short_description": "Fight for dominance across four generations by mobilising the best fighters.",
       "rulebooks": [],
       "supplemental_files": []
@@ -25904,7 +26060,7 @@
     },
     "366013": {
       "name": "Heat: Pedal to the Metal",
-      "short_description": "Push your car to the limit in the pursuit of victory, but don’t overheat!",
+      "short_description": "Push your car to the limit in the pursuit of victory, but don\u2019t overheat!",
       "rulebooks": [],
       "supplemental_files": [],
       "pc": [
@@ -26248,7 +26404,7 @@
     },
     "368061": {
       "name": "Zoo Vadis",
-      "short_description": "Merit your way into the zoo’s star exhibit through crafty politicking.",
+      "short_description": "Merit your way into the zoo\u2019s star exhibit through crafty politicking.",
       "rulebooks": [],
       "supplemental_files": [],
       "pc": [
@@ -26416,6 +26572,12 @@
           "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3353255907",
           "note": "After Us",
           "online": true
+        },
+        {
+          "store": "Tabletopia",
+          "url": "https://tabletopia.com/games/after-us",
+          "note": "After Us",
+          "online": true
         }
       ]
     },
@@ -26575,7 +26737,7 @@
     },
     "370913": {
       "name": "Star Wars: The Clone Wars",
-      "short_description": "Use your Jedi powers to fight off the Separatist threat — Pandemic-style.",
+      "short_description": "Use your Jedi powers to fight off the Separatist threat \u2014 Pandemic-style.",
       "rulebooks": [],
       "supplemental_files": [],
       "pc": [
@@ -26799,7 +26961,7 @@
       ]
     },
     "373600": {
-      "name": "Cthulhu: Death May Die – Fear of the Unknown",
+      "name": "Cthulhu: Death May Die \u2013 Fear of the Unknown",
       "short_description": "Face new monsters, insanities, and rules in this standalone core box.",
       "rulebooks": [],
       "supplemental_files": []
@@ -26856,7 +27018,7 @@
     },
     "374541": {
       "name": "Numbsters",
-      "short_description": "Om nom nom… Numbsters are hungry!",
+      "short_description": "Om nom nom\u2026 Numbsters are hungry!",
       "rulebooks": [],
       "supplemental_files": []
     },
@@ -26938,7 +27100,7 @@
           "store": "Tabletop Simulator",
           "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3199207805",
           "note": "My Lil' Everdell",
-          "owned": true
+          "online": true
         }
       ]
     },
@@ -26998,13 +27160,13 @@
     },
     "377224": {
       "name": "Battlecrest: Metronn Base Game",
-      "short_description": "Master the potential of your hero’s crests and prove that you are a true champion.",
+      "short_description": "Master the potential of your hero\u2019s crests and prove that you are a true champion.",
       "rulebooks": [],
       "supplemental_files": []
     },
     "377704": {
       "name": "Tales of the Arthurian Knights",
-      "short_description": "Gather around King Arthur’s table as you embark on the ultimate quest for glory!",
+      "short_description": "Gather around King Arthur\u2019s table as you embark on the ultimate quest for glory!",
       "rulebooks": [],
       "supplemental_files": []
     },
@@ -27044,7 +27206,7 @@
           "store": "Tabletop Simulator",
           "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3501474231",
           "note": "Marvel United Multiverse Core Set + Equipment for S1 and S2 Characters",
-          "owned": true
+          "online": true
         },
         {
           "store": "Tabletop Simulator",
@@ -27076,7 +27238,7 @@
           "store": "Tabletop Simulator",
           "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=2841757555",
           "note": "Inventors of the South Tigris",
-          "owned": true
+          "online": true
         }
       ]
     },
@@ -27330,7 +27492,7 @@
       ]
     },
     "381715": {
-      "name": "Teotihuacan: City of Gods – Deluxe Master Set",
+      "name": "Teotihuacan: City of Gods \u2013 Deluxe Master Set",
       "short_description": "Raise the legendary Pyramid of the Sun.",
       "rulebooks": [],
       "supplemental_files": [],
@@ -27338,7 +27500,7 @@
         {
           "store": "Tabletop Simulator",
           "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3484062246",
-          "note": "Teotihuacan: City of Gods – Deluxe Master Set",
+          "note": "Teotihuacan: City of Gods \u2013 Deluxe Master Set",
           "online": true
         },
         {
@@ -27402,7 +27564,7 @@
       ]
     },
     "383010": {
-      "name": "Clank! Legacy 2: Acquisitions Incorporated – Darkest Magic",
+      "name": "Clank! Legacy 2: Acquisitions Incorporated \u2013 Darkest Magic",
       "short_description": "Fight bosses, avoid the dragon, and collect loot with or against fellow employees!",
       "rulebooks": [],
       "supplemental_files": [],
@@ -27532,7 +27694,7 @@
     },
     "383481": {
       "name": "Catan: Starfarers Duel",
-      "short_description": "Explore space, discover planets, and found colonies — all while warding off pirates.",
+      "short_description": "Explore space, discover planets, and found colonies \u2014 all while warding off pirates.",
       "rulebooks": [],
       "supplemental_files": []
     },
@@ -27647,7 +27809,7 @@
       ]
     },
     "385610": {
-      "name": "Kutná Hora: The City of Silver",
+      "name": "Kutn\u00e1 Hora: The City of Silver",
       "short_description": "Smelt precious silver, develop a medieval city, but mind the ever-changing economy!",
       "rulebooks": [],
       "supplemental_files": [],
@@ -27655,13 +27817,13 @@
         {
           "store": "Tabletop Simulator",
           "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3052637448",
-          "note": "Kutná Hora: The City of Silver",
+          "note": "Kutn\u00e1 Hora: The City of Silver",
           "online": true
         },
         {
           "store": "Tabletop Simulator",
           "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3248549816",
-          "note": "Kutná Hora: The City of Silver [Improved]",
+          "note": "Kutn\u00e1 Hora: The City of Silver [Improved]",
           "online": true
         }
       ]
@@ -28140,7 +28302,7 @@
       ]
     },
     "393385": {
-      "name": "DC Deck-Building Game: Rivals – Shazam! vs Black Adam",
+      "name": "DC Deck-Building Game: Rivals \u2013 Shazam! vs Black Adam",
       "short_description": "Head to head competitive game between Shazam and Black Adam.",
       "rulebooks": [],
       "supplemental_files": []
@@ -28236,7 +28398,7 @@
       ]
     },
     "394960": {
-      "name": "Legendary: Marvel – Marvel Studios' What If...?",
+      "name": "Legendary: Marvel \u2013 Marvel Studios' What If...?",
       "short_description": "Explore the endless possibilities of Marvel's Multiverse to defeat evil!",
       "rulebooks": [],
       "supplemental_files": []
@@ -28301,7 +28463,7 @@
     },
     "396341": {
       "name": "Shakespeare's First Folio",
-      "short_description": "Compete to assemble and print Shakespeare’s First Folio.",
+      "short_description": "Compete to assemble and print Shakespeare\u2019s First Folio.",
       "rulebooks": [],
       "supplemental_files": []
     },
@@ -28322,6 +28484,18 @@
           "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3020794567",
           "note": "Nucleum",
           "online": true
+        },
+        {
+          "store": "Yucata",
+          "url": "https://www.yucata.de/en/GameInfo/Nucleum",
+          "online": true,
+          "note": "Nucleum"
+        },
+        {
+          "store": "Tabletopia",
+          "url": "https://tabletopia.com/games/nucleum-2023",
+          "note": "Nucleum",
+          "monthly_subscription": true
         }
       ]
     },
@@ -28381,7 +28555,7 @@
     },
     "397385": {
       "name": "Pirates of Maracaibo",
-      "short_description": "Set sail for an adventurous raid…for perhaps it will be your last!",
+      "short_description": "Set sail for an adventurous raid\u2026for perhaps it will be your last!",
       "rulebooks": [],
       "supplemental_files": [],
       "pc": [
@@ -28412,7 +28586,7 @@
       "supplemental_files": []
     },
     "397598": {
-      "name": "Dune: Imperium – Uprising",
+      "name": "Dune: Imperium \u2013 Uprising",
       "short_description": "Deploy agents, build your deck, and engage in strategic battles to control Arrakis.",
       "rulebooks": [],
       "supplemental_files": [],
@@ -28470,7 +28644,7 @@
       ]
     },
     "398162": {
-      "name": "MicroMacro: Crime City – Showdown",
+      "name": "MicroMacro: Crime City \u2013 Showdown",
       "short_description": "Numerous new crimes in the city.",
       "rulebooks": [],
       "supplemental_files": []
@@ -28664,7 +28838,7 @@
     },
     "402003": {
       "name": "Guesswork",
-      "short_description": "Read your friends’ minds as they fill in the blank on questions.",
+      "short_description": "Read your friends\u2019 minds as they fill in the blank on questions.",
       "rulebooks": [],
       "supplemental_files": []
     },
@@ -28790,7 +28964,7 @@
     },
     "404923": {
       "name": "Operation Barclay",
-      "short_description": "The Allies and Abwehrr tangle to hide—or reveal—invasion information.",
+      "short_description": "The Allies and Abwehrr tangle to hide\u2014or reveal\u2014invasion information.",
       "rulebooks": [],
       "supplemental_files": []
     },
@@ -28972,7 +29146,7 @@
     },
     "408828": {
       "name": "Casinopolis",
-      "short_description": "Go for broke as you revitalize this gambler’s haven with new casinos.",
+      "short_description": "Go for broke as you revitalize this gambler\u2019s haven with new casinos.",
       "rulebooks": [],
       "supplemental_files": []
     },
@@ -28990,13 +29164,13 @@
     },
     "408837": {
       "name": "ROVE Jr: Results-Oriented Versatile Explorer",
-      "short_description": "Master the basics of ROVE’s modules with this introductory training course.",
+      "short_description": "Master the basics of ROVE\u2019s modules with this introductory training course.",
       "rulebooks": [],
       "supplemental_files": []
     },
     "408838": {
       "name": "Battlecrest: Deadrock Base Game",
-      "short_description": "Master the potential of your hero’s crests and prove that you are a true champion.",
+      "short_description": "Master the potential of your hero\u2019s crests and prove that you are a true champion.",
       "rulebooks": [],
       "supplemental_files": []
     },
@@ -29048,7 +29222,7 @@
           "store": "Tabletop Simulator",
           "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3408307169",
           "note": "Quacks of Quedlinburg: The Duel",
-          "owned": true
+          "online": true
         }
       ]
     },
@@ -29137,13 +29311,13 @@
       ]
     },
     "411860": {
-      "name": "Unmatched: The Witcher – Steel and Silver",
+      "name": "Unmatched: The Witcher \u2013 Steel and Silver",
       "short_description": "Three Heroes from the Witcher universe join Unmatched.",
       "rulebooks": [],
       "supplemental_files": []
     },
     "411861": {
-      "name": "Unmatched: The Witcher – Realms Fall",
+      "name": "Unmatched: The Witcher \u2013 Realms Fall",
       "short_description": "Heroes from the Witcher universe join Unmatched.",
       "rulebooks": [],
       "supplemental_files": []
@@ -29260,11 +29434,17 @@
           "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3329848449",
           "note": "Citizens of the Spark",
           "online": true
+        },
+        {
+          "store": "Tabletopia",
+          "url": "https://tabletopia.com/games/citizens-of-the-spark",
+          "note": "Citizens of the Spark",
+          "online": true
         }
       ]
     },
     "415550": {
-      "name": "Talisman: The Magical Quest Game – 5th Edition",
+      "name": "Talisman: The Magical Quest Game \u2013 5th Edition",
       "short_description": "Explore the lands, dethrone the Elder Dragon and claim the Crown of Command.",
       "rulebooks": [],
       "supplemental_files": [],
@@ -29450,7 +29630,7 @@
     },
     "418542": {
       "name": "Rome: Fate of an Empire",
-      "short_description": "Lead Rome to glory—or obscurity—as you develop and operate your empire!",
+      "short_description": "Lead Rome to glory\u2014or obscurity\u2014as you develop and operate your empire!",
       "rulebooks": [],
       "supplemental_files": []
     },
@@ -29561,7 +29741,7 @@
         {
           "store": "Tabletop Simulator",
           "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3713353188",
-          "note": "Pokémon Flip 7",
+          "note": "Pok\u00e9mon Flip 7",
           "online": true
         },
         {
@@ -29691,7 +29871,7 @@
       ]
     },
     "421547": {
-      "name": "Disney Lorcana: Illumineer's Quest – Deep Trouble",
+      "name": "Disney Lorcana: Illumineer's Quest \u2013 Deep Trouble",
       "short_description": "Ursula is rising to seize power over Lorcana! Stand against her to save the realm.",
       "rulebooks": [],
       "supplemental_files": []
@@ -29720,7 +29900,13 @@
           "store": "Tabletop Simulator",
           "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3245936985",
           "note": "Emerald Skulls",
-          "owned": true
+          "online": true
+        },
+        {
+          "store": "Tabletopia",
+          "url": "https://tabletopia.com/games/emerald-skulls",
+          "note": "Emerald Skulls",
+          "online": true
         }
       ]
     },
@@ -29733,6 +29919,12 @@
         {
           "store": "Tabletop Simulator",
           "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3211663772",
+          "note": "Shadow Moon Syndicates",
+          "online": true
+        },
+        {
+          "store": "Tabletopia",
+          "url": "https://tabletopia.com/games/shadow-moon-syndicates",
           "note": "Shadow Moon Syndicates",
           "online": true
         }
@@ -29763,7 +29955,7 @@
       "supplemental_files": []
     },
     "422332": {
-      "name": "Star Wars: The Deckbuilding Game – Clone Wars Edition",
+      "name": "Star Wars: The Deckbuilding Game \u2013 Clone Wars Edition",
       "short_description": "The Republic and Separatists go head-to-head to eliminate one another's bases.",
       "rulebooks": [],
       "supplemental_files": [],
@@ -30006,7 +30198,7 @@
       "supplemental_files": []
     },
     "426945": {
-      "name": "Baseball Highlights: 2045 – Bases Loaded Edition",
+      "name": "Baseball Highlights: 2045 \u2013 Bases Loaded Edition",
       "short_description": "Build a championship baseball team filled with Naturals, Cyborgs, and Robots.",
       "rulebooks": [],
       "supplemental_files": []
@@ -30094,7 +30286,7 @@
       "supplemental_files": []
     },
     "429293": {
-      "name": "Lord of the Rings: The Fellowship of the Ring – Trick-Taking Game, The",
+      "name": "Lord of the Rings: The Fellowship of the Ring \u2013 Trick-Taking Game, The",
       "short_description": "Travel from the Shire and overcome every obstacle as a team.",
       "rulebooks": [],
       "supplemental_files": [],
@@ -30115,7 +30307,7 @@
     },
     "429405": {
       "name": "Orloj: The Prague Astronomical Clock",
-      "short_description": "Become part of Prague’s legacy by assembling the majestic and intricate Orloj.",
+      "short_description": "Become part of Prague\u2019s legacy by assembling the majestic and intricate Orloj.",
       "rulebooks": [],
       "supplemental_files": [],
       "pc": [
@@ -30163,7 +30355,7 @@
     },
     "429962": {
       "name": "Pax Porfiriana: Ultimate Edition",
-      "short_description": "Build a business empire of ranches, mines, rails, and banks in Porfirio Díaz era.",
+      "short_description": "Build a business empire of ranches, mines, rails, and banks in Porfirio D\u00edaz era.",
       "rulebooks": [],
       "supplemental_files": [],
       "pc": [
@@ -30253,7 +30445,7 @@
     },
     "432033": {
       "name": "One Hour World War II",
-      "short_description": "World War II in… you guessed it… one hour!",
+      "short_description": "World War II in\u2026 you guessed it\u2026 one hour!",
       "rulebooks": [],
       "supplemental_files": [],
       "pc": [
@@ -30318,7 +30510,7 @@
       ]
     },
     "433640": {
-      "name": "Cthulhu: Death May Die – Forbidden Reaches",
+      "name": "Cthulhu: Death May Die \u2013 Forbidden Reaches",
       "short_description": "Death May Die is back, pushing fear to new limits by introducing a new game mode.",
       "rulebooks": [],
       "supplemental_files": []
@@ -30483,7 +30675,7 @@
     },
     "436217": {
       "name": "Lord of the Rings: Fate of the Fellowship, The",
-      "short_description": "As members of The Fellowship, embark on a journey to save—or doom—Middle-earth.",
+      "short_description": "As members of The Fellowship, embark on a journey to save\u2014or doom\u2014Middle-earth.",
       "rulebooks": [],
       "supplemental_files": [],
       "pc": [
@@ -30509,7 +30701,7 @@
     },
     "436446": {
       "name": "DC Super Heroes United: Batman Hush",
-      "short_description": "Unmask Batman’s elusive enemy in this corebox inspired by the Hush arc.",
+      "short_description": "Unmask Batman\u2019s elusive enemy in this corebox inspired by the Hush arc.",
       "rulebooks": [],
       "supplemental_files": []
     },
@@ -30528,6 +30720,12 @@
         {
           "store": "Tabletop Simulator",
           "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3261102732",
+          "note": "Timber Town",
+          "online": true
+        },
+        {
+          "store": "Tabletopia",
+          "url": "https://tabletopia.com/games/timber-town",
           "note": "Timber Town",
           "online": true
         }
@@ -30596,7 +30794,7 @@
         {
           "store": "Tabletop Simulator",
           "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3629188523",
-          "note": "La Bohème / Bohemians",
+          "note": "La Boh\u00e8me / Bohemians",
           "online": true
         }
       ]
@@ -30853,6 +31051,12 @@
           "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3701808976",
           "note": "Flockers [Scripted]",
           "online": true
+        },
+        {
+          "store": "Tabletopia",
+          "url": "https://tabletopia.com/games/flockers",
+          "note": "Flockers",
+          "online": true
         }
       ]
     },
@@ -30965,7 +31169,7 @@
       ]
     },
     "448086": {
-      "name": "Star Trek: Captain's Chair – To Boldly Go",
+      "name": "Star Trek: Captain's Chair \u2013 To Boldly Go",
       "short_description": "Step into the shoes of an iconic Star Trek captain and explore the galaxy!",
       "rulebooks": [],
       "supplemental_files": [],
@@ -30979,7 +31183,7 @@
       ]
     },
     "448271": {
-      "name": "Lord of the Rings: The Two Towers – Trick-Taking Game, The",
+      "name": "Lord of the Rings: The Two Towers \u2013 Trick-Taking Game, The",
       "short_description": "Continue the ring's journey to Mordor.",
       "rulebooks": [],
       "supplemental_files": []
@@ -31025,7 +31229,7 @@
     },
     "449472": {
       "name": "Blood Rage: Valhalla",
-      "short_description": "Ragnarök has ended the world, but new battles await.",
+      "short_description": "Ragnar\u00f6k has ended the world, but new battles await.",
       "rulebooks": [],
       "supplemental_files": []
     },
@@ -31048,7 +31252,7 @@
       "supplemental_files": []
     },
     "450088": {
-      "name": "DC Deck-Building Game: Rivals – Superman vs. Lex Luthor",
+      "name": "DC Deck-Building Game: Rivals \u2013 Superman vs. Lex Luthor",
       "short_description": "The Man of Steel faces off against his arch-nemesis.",
       "rulebooks": [],
       "supplemental_files": []
@@ -31118,7 +31322,7 @@
         {
           "store": "Tabletop Simulator",
           "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3761010183",
-          "note": "Galileo's Truth – Official Preview Module",
+          "note": "Galileo's Truth \u2013 Official Preview Module",
           "online": true
         }
       ]
@@ -31379,7 +31583,7 @@
     },
     "455906": {
       "name": "Fox in the Forest Deluxe, The",
-      "short_description": "In this trick-taking game for 2, you must win more than your rival—but not too much!",
+      "short_description": "In this trick-taking game for 2, you must win more than your rival\u2014but not too much!",
       "rulebooks": [],
       "supplemental_files": []
     },
@@ -31417,7 +31621,7 @@
     },
     "457552": {
       "name": "Daily Weather, The",
-      "short_description": "As The Daily Weather’s newest meteorologist, get the weather report ready.",
+      "short_description": "As The Daily Weather\u2019s newest meteorologist, get the weather report ready.",
       "rulebooks": [],
       "supplemental_files": []
     },
@@ -31537,7 +31741,7 @@
     },
     "459450": {
       "name": "Crime Sprawl",
-      "short_description": "It’s time for the supervillains to seize the city.",
+      "short_description": "It\u2019s time for the supervillains to seize the city.",
       "rulebooks": [],
       "supplemental_files": []
     },
@@ -31557,7 +31761,7 @@
           "store": "Tabletop Simulator",
           "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3378263212",
           "note": "Towers of Sifnos",
-          "owned": true
+          "online": true
         }
       ]
     },
@@ -31569,7 +31773,7 @@
     },
     "460097": {
       "name": "Rurik: Second Edition",
-      "short_description": "Engage in strategic battles and alliances to become the next ruler of Kyivan Rus’.",
+      "short_description": "Engage in strategic battles and alliances to become the next ruler of Kyivan Rus\u2019.",
       "rulebooks": [],
       "supplemental_files": [],
       "pc": [
@@ -31609,13 +31813,14 @@
           "store": "Tabletop Simulator",
           "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3764926895",
           "note": "Citadels Duel [Scripted]",
-          "wishlisted": true
+          "wishlisted": true,
+          "online": true
         }
       ]
     },
     "462464": {
       "name": "First Giants",
-      "short_description": "Dinosaurs, flying reptiles & giant mammals — create the most prestigious exhibition!",
+      "short_description": "Dinosaurs, flying reptiles & giant mammals \u2014 create the most prestigious exhibition!",
       "rulebooks": [],
       "supplemental_files": [],
       "pc": [
@@ -31643,7 +31848,7 @@
       ]
     },
     "462678": {
-      "name": "LEGO: NINJAGO – Destiny's Bounty Adventures",
+      "name": "LEGO: NINJAGO \u2013 Destiny's Bounty Adventures",
       "short_description": "Cooperate, defeat villains, and upgrade your ninja minifigure with cool gear.",
       "rulebooks": [],
       "supplemental_files": []
@@ -31753,7 +31958,7 @@
       ]
     },
     "465735": {
-      "name": "King of Tokyo: Duel – Tokyo Bay",
+      "name": "King of Tokyo: Duel \u2013 Tokyo Bay",
       "short_description": "New map, new rules, more chaos!",
       "rulebooks": [],
       "supplemental_files": []
@@ -31835,7 +32040,7 @@
       "supplemental_files": []
     },
     "468829": {
-      "name": "Horrified: Dungeons & Dragons – Ravenloft",
+      "name": "Horrified: Dungeons & Dragons \u2013 Ravenloft",
       "short_description": "Disassemble Carrionette, fell Gulthias Tree, bring down Baba Lysaga, & take on Strahd",
       "rulebooks": [],
       "supplemental_files": []
@@ -31874,7 +32079,15 @@
       "name": "Wingspan Pocket",
       "short_description": "Swiftly build and activate a row of colorful birds.",
       "rulebooks": [],
-      "supplemental_files": []
+      "supplemental_files": [],
+      "pc": [
+        {
+          "store": "Tabletopia",
+          "url": "https://tabletopia.com/games/wingspan-pocket",
+          "note": "Wingspan Pocket",
+          "online": true
+        }
+      ]
     },
     "473739": {
       "name": "FlipToons: Season 2",
@@ -31891,7 +32104,7 @@
       ]
     },
     "473897": {
-      "name": "Kingdom Come: Deliverance –",
+      "name": "Kingdom Come: Deliverance \u2013",
       "short_description": "Develop your character, fulfill quests, and shape history in 15th-century Bohemia.",
       "rulebooks": [],
       "supplemental_files": []
@@ -31905,6 +32118,18 @@
     "475315": {
       "name": "DC Deck-Building Game: The Adventures of Supergirl & Lobo",
       "short_description": "Journey through space defeating threats both big and small!",
+      "rulebooks": [],
+      "supplemental_files": []
+    },
+    "475323": {
+      "name": "Infamous Traffic: Second Edition, An",
+      "short_description": "",
+      "rulebooks": [],
+      "supplemental_files": []
+    },
+    "475344": {
+      "name": "Mercenaries Wanted",
+      "short_description": "",
       "rulebooks": [],
       "supplemental_files": []
     }
