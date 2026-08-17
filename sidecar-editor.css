@@ -24,7 +24,7 @@ body {
   font-family: "Avenir Next", "Segoe UI", "Trebuchet MS", sans-serif;
   height: 100svh;
   display: grid;
-  grid-template-rows: auto minmax(0, 1fr);
+  grid-template-rows: auto auto minmax(0, 1fr);
   overflow: hidden;
 }
 
@@ -69,6 +69,297 @@ body {
 .topbar p {
   margin: 0.2rem 0 0;
   color: var(--muted);
+}
+
+.editor-tabs {
+  grid-row: 2;
+  position: relative;
+  z-index: 5;
+  display: flex;
+  gap: 0.4rem;
+  padding: 0 1rem 0.8rem;
+}
+
+.editor-tab {
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.75);
+  color: var(--muted);
+  padding: 0.55rem 0.8rem;
+  cursor: pointer;
+}
+
+.editor-tab.active {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+
+.override-panel {
+  grid-row: 3;
+  margin: 0 1rem 1rem;
+  padding: 1rem;
+  min-height: 0;
+  overflow: auto;
+}
+
+#games-tab-panel {
+  grid-row: 3;
+}
+
+.override-panel .section-head {
+  align-items: flex-start;
+}
+
+.panel-help {
+  margin: 0.25rem 0 0;
+  color: var(--muted);
+}
+
+.overrides-editor {
+  display: grid;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.override-section {
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.65);
+  padding: 0.8rem;
+}
+
+.override-section-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.override-section h3 {
+  margin: 0;
+}
+
+.override-title-group {
+  display: grid;
+  gap: 0.15rem;
+}
+
+.override-title-line {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.override-section-description {
+  flex-basis: 100%;
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.78rem;
+  font-weight: 400;
+}
+
+.override-list {
+  display: grid;
+  gap: 0.5rem;
+  margin-top: 0.65rem;
+}
+
+.override-columns {
+  display: grid;
+  gap: 0.45rem;
+  margin-top: 0.65rem;
+  padding: 0 0.55rem;
+  color: var(--muted);
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+.override-row {
+  display: grid;
+  gap: 0.45rem;
+  align-items: center;
+  padding: 0.55rem;
+  border: 1px solid rgba(216, 210, 199, 0.9);
+  border-radius: 8px;
+  background: #fff;
+}
+
+.override-actions {
+  grid-column: -1;
+  grid-row: 1;
+}
+
+.override-comment {
+  grid-column: 1 / -2;
+  grid-row: 2;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 0.45rem;
+  align-items: center;
+  color: var(--muted);
+  font-size: 0.78rem;
+}
+
+.override-comment > span:first-child {
+  display: none;
+}
+
+.override-comment-value {
+  display: none;
+  color: var(--muted);
+  font-style: italic;
+  font-weight: 400;
+}
+
+.override-row[data-editing="false"] .override-comment-input {
+  display: none;
+}
+
+.override-row[data-editing="false"] .override-comment-value:not(.hidden) {
+  display: block;
+}
+
+.override-row[data-editing="false"] input {
+  border-color: transparent;
+  background: transparent;
+  color: var(--ink);
+  cursor: default;
+}
+
+.override-id-link {
+  display: none;
+  color: var(--accent);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.override-id-link:hover {
+  text-decoration: underline;
+}
+
+.override-header-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.15rem;
+  height: 2.15rem;
+  color: var(--accent);
+  text-decoration: none;
+}
+
+.override-header-link:hover {
+  text-decoration: underline;
+}
+
+.override-row[data-editing="false"] input + .override-id-link {
+  display: inline;
+}
+
+.override-row[data-editing="false"] .override-id-input {
+  display: none;
+}
+
+.override-row[data-editing="false"] input[type="checkbox"] {
+  accent-color: var(--accent);
+}
+
+.override-row[data-editing="false"] label {
+  color: var(--muted);
+}
+
+.override-row[data-editing="true"] .override-edit,
+.override-row[data-editing="false"] .override-save {
+  display: none !important;
+}
+
+.override-fields-1 {
+  grid-template-columns: minmax(0, 1fr) max-content;
+}
+
+.override-fields-2 {
+  grid-template-columns: minmax(110px, 0.75fr) minmax(180px, 2fr) max-content;
+}
+
+.override-fields-3 {
+  grid-template-columns: minmax(110px, 0.8fr) minmax(160px, 1.5fr) minmax(130px, 1fr) max-content;
+}
+
+.override-fields-4 {
+  grid-template-columns: minmax(100px, 0.75fr) minmax(150px, 1.35fr) minmax(100px, 0.75fr) minmax(150px, 1.35fr) max-content;
+}
+
+.override-fields-5 {
+  grid-template-columns: minmax(90px, 0.7fr) minmax(135px, 1.2fr) minmax(90px, 0.7fr) minmax(135px, 1.2fr) minmax(80px, 0.6fr) max-content;
+}
+
+.override-columns.override-fields-1,
+.override-columns.override-fields-2,
+.override-columns.override-fields-3,
+.override-columns.override-fields-4,
+.override-columns.override-fields-5 {
+  padding-right: 3.25rem;
+}
+
+.override-remove {
+  width: 2.15rem;
+  height: 2.15rem;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.override-actions {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.override-remove .material-symbols-rounded {
+  font-size: 1.1rem;
+}
+
+.override-edit,
+.override-save {
+  width: 2.15rem;
+  height: 2.15rem;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@media (max-width: 760px) {
+  .override-columns {
+    display: none;
+  }
+
+  .override-fields-1,
+  .override-fields-2,
+  .override-fields-3,
+  .override-fields-4,
+  .override-fields-5 {
+    grid-template-columns: minmax(0, 1fr) max-content;
+  }
+}
+
+.override-row label {
+  display: grid;
+  gap: 0.2rem;
+  align-items: center;
+  color: var(--muted);
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+
+.override-row label > span {
+  display: none;
+}
+
+.override-row input,
+.override-id-link {
+  align-self: center;
 }
 
 .status-wrap {

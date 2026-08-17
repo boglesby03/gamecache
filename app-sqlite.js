@@ -302,7 +302,7 @@ function renderDigitalVersionsSection(clone, game) {
     ios: { label: 'iOS', iconUrl: 'https://cdn.simpleicons.org/apple' },
     pc: { label: 'PC', icon: 'desktop_windows' },
   };
-  const platformDisplayOrder = ['online', 'pc', 'android', 'ios'];
+  const platformDisplayOrder = ['pc', 'android', 'ios', 'online'];
 
   function getDigitalItemPriority(item) {
     if (item.owned) return 0;

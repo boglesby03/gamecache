@@ -223,6 +223,14 @@ class SidecarEditorHandler(SimpleHTTPRequestHandler):
     def __init__(self, *args: Any, **kwargs: Any) -> None:
         super().__init__(*args, directory=str(ROOT_DIR), **kwargs)
 
+    def end_headers(self) -> None:
+        # The editor is frequently changed during local development; avoid a
+        # stale browser copy hiding new tabs or form controls.
+        if self.path.split("?", 1)[0].endswith((".html", ".css", ".js", ".json")):
+            self.send_header("Cache-Control", "no-store, no-cache, must-revalidate")
+            self.send_header("Pragma", "no-cache")
+        super().end_headers()
+
     def _send_json(self, payload: Dict[str, Any], status: int = HTTPStatus.OK) -> None:
         body = json.dumps(payload, ensure_ascii=True).encode("utf-8")
         self.send_response(status)

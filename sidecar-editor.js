@@ -15,6 +15,10 @@
     sortMode: "name",
     addedOrder: [],
     forceSearchInFlight: false,
+    overridesDirty: false,
+    overridesHandle: null,
+    overrideData: {},
+    overrideCatalog: { games: {}, expansions: {}, accessories: {}, collections: {} },
   };
 
   const els = {
@@ -65,6 +69,15 @@
     deleteGame: document.getElementById("delete-game"),
     docRowTemplate: document.getElementById("doc-row-template"),
     platformRowTemplate: document.getElementById("platform-row-template"),
+    gamesTab: document.getElementById("games-tab"),
+    overridesTab: document.getElementById("overrides-tab"),
+    gamesTabPanel: document.getElementById("games-tab-panel"),
+    overridesTabPanel: document.getElementById("overrides-tab-panel"),
+    reloadOverrides: document.getElementById("reload-overrides"),
+    saveOverrides: document.getElementById("save-overrides"),
+    downloadOverrides: document.getElementById("download-overrides"),
+    overridesStatus: document.getElementById("overrides-status"),
+    overridesEditor: document.getElementById("overrides-editor"),
   };
 
   const PLATFORM_KEYS = ["android", "ios", "pc"];
@@ -74,6 +87,17 @@
     ios: ["App Store", "TestFlight", "itch.io"],
     pc: ["Steam", "Web", "Tabletop Simulator", "Tabletopia", "Yucata", "VASSAL", "BrettspielWelt", "Boardspace", "Forteller Narratives", "BGA", "Epic", "EA app", "Ubisoft Connect", "GOG", "Microsoft Store", "itch.io", "Humble", "Amazon"],
   };
+
+  const OVERRIDE_SECTIONS = [
+    { key: "promos", title: "Promo Items", description: "These are items that should be labeled as Promos", fields: [["id", "BGG ID", "number"], ["name", "Name", "text"]] },
+    { key: "not_promos", title: "Not Promos", description: "These are items that are incorrectly being identified as Promos", fields: [["id", "BGG ID", "number"], ["name", "Game Name", "text"]] },
+    { key: "custom_integrates", title: "Custom Integrations", description: "Adds or corrects a game's general \"integrates with\" relationship.", fields: [["id", "Source ID", "number"], ["name", "Source Name", "text"], ["baseId", "Target ID", "number"], ["baseName", "Target Name", "text"], ["inbound", "Inbound", "checkbox"]] },
+    { key: "custom_integrates_copy", title: "Copy Integration Rules", description: "These are items that should integrate with other versions of the same item", fields: [["id", "Source ID", "number"], ["name", "Source Name", "text"], ["baseId", "Target ID", "number"], ["baseName", "Target Name", "text"], ["inbound", "Inbound", "checkbox"]] },
+    { key: "base_game_ids", title: "Base Game IDs", description: "These are expansions that should be treated like base games", fields: [["id", "BGG ID", "number"], ["name", "Name", "text"]] },
+    { key: "accessory_mappings", title: "Accessory Mappings", description: "These are custom mappings of accessories to base games", fields: [["id", "Accessory ID", "number"], ["name", "Accessory Name", "text"], ["baseId", "Base Game ID", "number"], ["baseName", "Base Game Name", "text"]] },
+    { key: "expansion_mappings", title: "Expansion Mappings", description: "These are custom mappings of expansions to base games", fields: [["id", "Expansion ID", "number"], ["name", "Expansion Name", "text"], ["baseId", "Base Game ID", "number"], ["baseName", "Base Game Name", "text"]] },
+    { key: "unpublished_collection_ids", title: "Unpublished Collection Links", description: "These are custom mappings to link Unpublished Game links as expansions to other existing games", fields: [["gameId", "Game ID", "number"], ["name", "Game Name", "text"], ["collectionId", "Collection ID", "number"], ["customName", "Custom Name", "text"]] },
+  ];
 
   const GLOBE_ICON_URL = `data:image/svg+xml;utf8,${encodeURIComponent(
     "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><defs><radialGradient id='o' cx='35%' cy='30%' r='70%'><stop offset='0%' stop-color='#8fe3ff'/><stop offset='100%' stop-color='#1e88e5'/></radialGradient></defs><circle cx='32' cy='32' r='30' fill='url(#o)'/><path fill='#43a047' d='M14 22c5-7 12-10 18-10 2 3 4 5 7 6 3 1 8 1 11 4 2 2 1 5-1 7-2 2-5 2-7 5-1 2 0 4-2 6-3 2-7 0-10-2-3-2-4-6-8-7-4-1-8 2-10-1-2-3 0-6 2-8z'/><path fill='#66bb6a' d='M21 46c3 2 7 5 12 5 6 0 11-3 15-7-1-2-2-5-5-6-4-1-7 2-10 3-5 2-8 1-12-2-3-2-6-1-8 1 1 2 4 4 8 6z'/><circle cx='22' cy='20' r='3' fill='#81c784'/></svg>"
@@ -847,7 +871,7 @@
       const db = new SQL.Database(dbPayload.bytes);
       const covers = {};
       const statement = db.prepare(`
-        SELECT id, name, image, thumbnail, year, rank, rating, playing_time, min_age, weight, tags, wishlist_priority, numowned, numplays, last_modified
+        SELECT collection_id, id, name, image, thumbnail, year, rank, rating, playing_time, min_age, weight, tags, wishlist_priority, expansions, accessories, wl_exp, wl_acc, po_exp, po_acc, numowned, numplays, last_modified
         FROM games
       `);
 
@@ -857,6 +881,30 @@
         const image = String(row.image || "").trim();
         const thumbnail = String(row.thumbnail || "").trim();
         if (!id) continue;
+        const gameName = String(row.name || "").trim();
+        if (gameName) state.overrideCatalog.games[id] = gameName;
+        if (row.collection_id !== undefined && row.collection_id !== null) {
+          state.overrideCatalog.collections[String(row.collection_id)] = gameName;
+        }
+        for (const [column, catalog] of [
+          ["expansions", state.overrideCatalog.expansions],
+          ["wl_exp", state.overrideCatalog.expansions],
+          ["po_exp", state.overrideCatalog.expansions],
+          ["accessories", state.overrideCatalog.accessories],
+          ["wl_acc", state.overrideCatalog.accessories],
+          ["po_acc", state.overrideCatalog.accessories],
+        ]) {
+          try {
+            const related = JSON.parse(row[column] || "[]");
+            if (Array.isArray(related)) {
+              for (const item of related) {
+                if (item && item.id && item.name) catalog[String(item.id)] = String(item.name);
+              }
+            }
+          } catch (_error) {
+            // Ignore malformed relationship metadata.
+          }
+        }
         covers[id] = {
           name: String(row.name || "").trim(),
           image,
@@ -883,6 +931,7 @@
       state.coverArtLoaded = true;
 
       renderGameList();
+      if (Object.keys(state.overrideData).length > 0) renderOverridesEditor();
       if (state.selectedId) {
         renderSelectedCover(state.selectedId, getSelectedEntry());
       }
@@ -1288,6 +1337,443 @@
 
   function downloadJson() {
     triggerJsonDownload();
+  }
+
+  function setOverridesStatus(message, kind = "") {
+    if (!els.overridesStatus) return;
+    els.overridesStatus.textContent = String(message || "");
+    els.overridesStatus.classList.remove("success", "error");
+    if (kind === "success" || kind === "error") {
+      els.overridesStatus.classList.add(kind);
+    }
+  }
+
+  function setOverridesDirty(dirty) {
+    state.overridesDirty = Boolean(dirty);
+    if (state.overridesDirty) {
+      setOverridesStatus("Unsaved override changes.", "error");
+    } else {
+      setOverridesStatus("Overrides loaded.", "success");
+    }
+  }
+
+  async function loadOverrides() {
+    try {
+      const response = await fetch("scripts/gamecache/custom_overrides.json", { cache: "no-store" });
+      if (!response.ok) throw new Error(`HTTP ${response.status}`);
+      const data = await response.json();
+      state.overrideData = data && typeof data === "object" ? data : {};
+      renderOverridesEditor();
+      state.overridesHandle = null;
+      setOverridesDirty(false);
+    } catch (error) {
+      setOverridesStatus(`Could not load custom_overrides.json: ${error.message}`, "error");
+    }
+  }
+
+  function renderOverridesEditor() {
+    els.overridesEditor.innerHTML = "";
+    for (const section of OVERRIDE_SECTIONS) {
+      const wrapper = document.createElement("section");
+      wrapper.className = "override-section";
+      wrapper.dataset.overrideKey = section.key;
+      const head = document.createElement("div");
+      head.className = "override-section-head";
+      const title = document.createElement("h3");
+      title.textContent = section.title;
+      const description = document.createElement("p");
+      description.className = "override-section-description";
+      description.textContent = section.description;
+      const add = document.createElement("button");
+      add.type = "button";
+      add.className = "btn mini";
+      add.dataset.action = "add-override";
+      add.textContent = "Add";
+      const titleGroup = document.createElement("div");
+      titleGroup.className = "override-title-group";
+      const titleLine = document.createElement("div");
+      titleLine.className = "override-title-line";
+      titleLine.appendChild(title);
+      if (section.key === "unpublished_collection_ids") {
+        const unpublishedLink = document.createElement("a");
+        unpublishedLink.className = "override-header-link";
+        unpublishedLink.href = "https://boardgamegeek.com/boardgame/18291/unpublished-prototype/mygames/collection";
+        unpublishedLink.target = "_blank";
+        unpublishedLink.rel = "noopener noreferrer";
+        unpublishedLink.title = "Open unpublished game on BoardGameGeek";
+        unpublishedLink.setAttribute("aria-label", "Open unpublished game on BoardGameGeek");
+        const icon = document.createElement("span");
+        icon.className = "material-symbols-rounded";
+        icon.setAttribute("aria-hidden", "true");
+        icon.textContent = "public";
+        unpublishedLink.appendChild(icon);
+        titleLine.append(unpublishedLink);
+      }
+      titleGroup.append(titleLine, description);
+      head.append(titleGroup, add);
+      const columns = document.createElement("div");
+      columns.className = `override-columns override-fields-${section.fields.length}`;
+      for (const [_key, label] of section.fields) {
+        const column = document.createElement("span");
+        column.textContent = label;
+        columns.appendChild(column);
+      }
+      columns.appendChild(document.createElement("span"));
+      const list = document.createElement("div");
+      list.className = "override-list";
+      const values = Array.isArray(state.overrideData[section.key]) ? [...state.overrideData[section.key]] : [];
+      values.sort((left, right) => {
+        const leftName = typeof left === "object"
+          ? String(left.customName || left.name || left.baseName || "")
+          : "";
+        const rightName = typeof right === "object"
+          ? String(right.customName || right.name || right.baseName || "")
+          : "";
+        const nameOrder = leftName.localeCompare(rightName, undefined, { sensitivity: "base" });
+        if (nameOrder !== 0) return nameOrder;
+        const leftId = typeof left === "object" ? Number(left.id ?? left.gameId ?? left.collectionId) : Number(left);
+        const rightId = typeof right === "object" ? Number(right.id ?? right.gameId ?? right.collectionId) : Number(right);
+        return leftId - rightId;
+      });
+      values.forEach((value) => list.appendChild(createOverrideRow(section, value, false)));
+      wrapper.append(head, columns, list);
+      els.overridesEditor.appendChild(wrapper);
+    }
+  }
+
+  function getOverrideIdCatalog(section, key) {
+    let catalog;
+    if (["promos", "not_promos", "base_game_ids"].includes(section.key)) catalog = state.overrideCatalog.expansions;
+    else if (section.key === "expansion_mappings" && key === "id") catalog = state.overrideCatalog.expansions;
+    else if (section.key === "accessory_mappings" && key === "id") catalog = state.overrideCatalog.accessories;
+    else if (section.key === "unpublished_collection_ids" && key === "collectionId") catalog = state.overrideCatalog.collections;
+    else catalog = state.overrideCatalog.games;
+
+    const merged = { ...catalog };
+    const idField = key === "baseId" ? "baseId" : key === "collectionId" ? "collectionId" : key === "gameId" ? "gameId" : "id";
+    const nameField = key === "baseId" ? "baseName" : "customName" === key ? "customName" : "name";
+    for (const item of state.overrideData[section.key] || []) {
+      if (item && item[idField] !== undefined && item[nameField]) {
+        merged[String(item[idField])] = String(item[nameField]);
+      }
+    }
+    return merged;
+  }
+
+  function getOverrideNameField(section, key) {
+    if (section.key === "unpublished_collection_ids" && key === "gameId") return "name";
+    if (key === "baseId") return "baseName";
+    return "name";
+  }
+
+  function getOverrideNameCatalog(section, key) {
+    if (["promos", "not_promos", "base_game_ids"].includes(section.key)) return state.overrideCatalog.expansions;
+    const idField = key === "baseName"
+      ? "baseId"
+      : section.key === "unpublished_collection_ids" && key === "name"
+        ? "gameId"
+        : "id";
+    return getOverrideIdCatalog(section, idField);
+  }
+
+  function createOverrideRow(section, value = {}, editing = false) {
+    if (section.key === "base_game_ids" && (typeof value !== "object" || value === null)) {
+      value = { id: value };
+    }
+    const row = document.createElement("div");
+    row.className = `override-row override-fields-${section.fields.length}`;
+    row.dataset.overrideKey = section.key;
+    row.dataset.editing = editing ? "true" : "false";
+    for (const [key, label, type] of section.fields) {
+      const field = document.createElement("label");
+      const fieldLabel = document.createElement("span");
+      fieldLabel.textContent = label;
+      const input = document.createElement("input");
+      input.type = type === "checkbox" ? "checkbox" : type;
+      input.dataset.field = key;
+      input.setAttribute("aria-label", label);
+      if (type === "checkbox") input.checked = Boolean(value[key]);
+      else input.value = value[key] ?? "";
+      if (type === "number") {
+        const catalog = getOverrideIdCatalog(section, key);
+        const datalistId = `override-${section.key}-${key}-ids`;
+        let datalist = document.getElementById(datalistId);
+        if (!datalist) {
+          datalist = document.createElement("datalist");
+          datalist.id = datalistId;
+          document.body.appendChild(datalist);
+        }
+        datalist.innerHTML = "";
+        for (const [id, name] of Object.entries(catalog)) {
+          const option = document.createElement("option");
+          option.value = id;
+          option.label = name;
+          datalist.appendChild(option);
+        }
+        input.setAttribute("list", datalistId);
+        input.addEventListener("input", () => {
+          const name = catalog[input.value];
+          if (!name) return;
+          const nameInput = row.querySelector(`[data-field="${getOverrideNameField(section, key)}"]`);
+          if (nameInput && !nameInput.value.trim()) nameInput.value = name;
+        });
+      } else if (type === "text" && ["name", "baseName"].includes(key)) {
+        const catalog = getOverrideNameCatalog(section, key);
+        const datalistId = `override-${section.key}-${key}-names`;
+        let datalist = document.getElementById(datalistId);
+        if (!datalist) {
+          datalist = document.createElement("datalist");
+          datalist.id = datalistId;
+          document.body.appendChild(datalist);
+        }
+        datalist.innerHTML = "";
+        const seenNames = new Set();
+        for (const name of Object.values(catalog)) {
+          if (seenNames.has(name)) continue;
+          seenNames.add(name);
+          const option = document.createElement("option");
+          option.value = name;
+          datalist.appendChild(option);
+        }
+        input.setAttribute("list", datalistId);
+        input.addEventListener("input", () => {
+          const match = Object.entries(catalog).find(([_id, name]) => name.toLowerCase() === input.value.trim().toLowerCase());
+          if (!match) return;
+          const idField = key === "baseName"
+            ? "baseId"
+            : section.key === "unpublished_collection_ids" && key === "name"
+              ? "gameId"
+              : "id";
+          const idInput = row.querySelector(`[data-field="${idField}"]`);
+          if (idInput && !idInput.value.trim()) idInput.value = match[0];
+        });
+      }
+      if (type === "number" && ["id", "baseId", "gameId"].includes(key)) {
+        input.classList.add("override-id-input");
+      }
+      field.append(fieldLabel, input);
+      if (type === "number" && ["id", "baseId", "gameId"].includes(key)) {
+        const link = document.createElement("a");
+        link.className = "override-id-link";
+        link.href = getOverrideIdUrl(section, key, input.value);
+        link.target = "_blank";
+        link.rel = "noopener noreferrer";
+        link.textContent = input.value || "-";
+        link.title = "Open on BoardGameGeek";
+        link.setAttribute("aria-label", `Open BGG ID ${input.value}`);
+        field.appendChild(link);
+      }
+      row.appendChild(field);
+    }
+    const comment = document.createElement("label");
+    comment.className = "override-comment";
+    const commentLabel = document.createElement("span");
+    commentLabel.textContent = "Comment";
+    const commentInput = document.createElement("input");
+    commentInput.className = "override-comment-input";
+    commentInput.type = "text";
+    commentInput.value = value.comment || "";
+    commentInput.placeholder = "Comment (optional)";
+    commentInput.setAttribute("aria-label", "Comment");
+    const commentValue = document.createElement("span");
+    commentValue.className = "override-comment-value";
+    commentValue.textContent = value.comment || "";
+    comment.append(commentLabel, commentInput, commentValue);
+    row.appendChild(comment);
+    const remove = document.createElement("button");
+    remove.type = "button";
+    remove.className = "btn mini danger override-remove";
+    remove.dataset.action = "remove-override";
+    remove.title = "Remove override";
+    remove.setAttribute("aria-label", "Remove override");
+    const removeIcon = document.createElement("span");
+    removeIcon.className = "material-symbols-rounded";
+    removeIcon.setAttribute("aria-hidden", "true");
+    removeIcon.textContent = "delete";
+    remove.appendChild(removeIcon);
+    const edit = document.createElement("button");
+    edit.type = "button";
+    edit.className = "btn mini ghost override-edit";
+    edit.dataset.action = "edit-override";
+    edit.title = "Edit override";
+    edit.setAttribute("aria-label", "Edit override");
+    const editIcon = document.createElement("span");
+    editIcon.className = "material-symbols-rounded";
+    editIcon.setAttribute("aria-hidden", "true");
+    editIcon.textContent = "edit";
+    edit.appendChild(editIcon);
+
+    const save = document.createElement("button");
+    save.type = "button";
+    save.className = "btn mini override-save";
+    save.dataset.action = "save-override";
+    save.title = "Save override";
+    save.setAttribute("aria-label", "Save override");
+    const saveIcon = document.createElement("span");
+    saveIcon.className = "material-symbols-rounded";
+    saveIcon.setAttribute("aria-hidden", "true");
+    saveIcon.textContent = "save";
+    save.appendChild(saveIcon);
+
+    const actions = document.createElement("div");
+    actions.className = "override-actions";
+    actions.append(edit, save, remove);
+    row.appendChild(actions);
+    setOverrideRowEditing(row, editing);
+    return row;
+  }
+
+  function getOverrideIdUrl(section, key, value) {
+    const resource = section.key === "expansion_mappings" && key === "id"
+      ? "boardgameexpansion"
+      : "boardgame";
+    return `https://boardgamegeek.com/${resource}/${encodeURIComponent(value)}`;
+  }
+
+  function setOverrideRowEditing(row, editing) {
+    row.dataset.editing = editing ? "true" : "false";
+    row.querySelectorAll("input").forEach((input) => {
+      input.disabled = !editing;
+      if (input.classList.contains("override-id-input")) {
+        const link = input.parentElement.querySelector(".override-id-link");
+        if (link && input.value) {
+          const definition = OVERRIDE_SECTIONS.find((item) => item.key === row.dataset.overrideKey);
+          link.href = getOverrideIdUrl(definition, input.dataset.field, input.value);
+          link.textContent = input.value;
+          link.setAttribute("aria-label", `Open BGG ID ${input.value}`);
+        }
+      }
+    });
+    const commentInput = row.querySelector(".override-comment-input");
+    const commentValue = row.querySelector(".override-comment-value");
+    if (commentInput && commentValue) {
+      commentInput.disabled = !editing;
+      commentValue.textContent = commentInput.value.trim();
+      commentValue.classList.toggle("hidden", editing || !commentInput.value.trim());
+    }
+    row.querySelector('[data-action="edit-override"]').classList.toggle("hidden", editing);
+    row.querySelector('[data-action="save-override"]').classList.toggle("hidden", !editing);
+  }
+
+  function collectOverrides() {
+    const output = {};
+    for (const section of OVERRIDE_SECTIONS) {
+      const wrapper = els.overridesEditor.querySelector(`[data-override-key="${section.key}"]`);
+      const rows = Array.from(wrapper.querySelectorAll(".override-row"));
+      output[section.key] = rows.map((row) => {
+        if (section.key === "base_game_ids") {
+          const item = { id: Number(row.querySelector('[data-field="id"]').value) };
+          const name = row.querySelector('[data-field="name"]')?.value.trim();
+          if (name) item.name = name;
+          const comment = row.querySelector(".override-comment-input").value.trim();
+          if (comment) item.comment = comment;
+          return item;
+        }
+        const value = {};
+        for (const [key, _label, type] of section.fields) {
+          const input = row.querySelector(`[data-field="${key}"]`);
+          if (type === "checkbox") value[key] = input.checked;
+          else if (type === "number") value[key] = Number(input.value);
+          else if (input.value.trim()) value[key] = input.value.trim();
+        }
+        const comment = row.querySelector(".override-comment-input").value.trim();
+        if (comment) value.comment = comment;
+        return value;
+      });
+    }
+    return output;
+  }
+
+  function getOverridesPayload() {
+    try {
+      const data = collectOverrides();
+      for (const section of OVERRIDE_SECTIONS) {
+        for (const item of data[section.key]) {
+          const fields = section.key === "base_game_ids"
+            ? [typeof item === "object" ? item.id : item]
+            : section.fields.filter((field) => field[2] === "number").map((field) => item[field[0]]);
+          if (fields.some((value) => !Number.isInteger(value) || value <= 0)) {
+            throw new Error(`Invalid numeric ID in ${section.title}`);
+          }
+        }
+      }
+      return `${JSON.stringify(data, null, 2)}\n`;
+    } catch (error) {
+      setOverridesStatus(error.message, "error");
+      return null;
+    }
+  }
+
+  function downloadOverrides() {
+    const payload = getOverridesPayload();
+    if (!payload) return;
+    const blob = new Blob([payload], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
+    const anchor = document.createElement("a");
+    anchor.href = url;
+    anchor.download = "custom_overrides.json";
+    document.body.appendChild(anchor);
+    anchor.click();
+    anchor.remove();
+    URL.revokeObjectURL(url);
+    setOverridesDirty(false);
+  }
+
+  async function saveOverrides() {
+    const payload = getOverridesPayload();
+    if (!payload) return;
+    if (!window.showSaveFilePicker) {
+      downloadOverrides();
+      return;
+    }
+
+    try {
+      if (!state.overridesHandle) {
+        state.overridesHandle = await window.showSaveFilePicker({
+          suggestedName: "custom_overrides.json",
+          types: [{ description: "JSON", accept: { "application/json": [".json"] } }],
+        });
+      }
+      const writable = await state.overridesHandle.createWritable();
+      await writable.write(payload);
+      await writable.close();
+      setOverridesDirty(false);
+    } catch (error) {
+      if (error && error.name === "AbortError") return;
+      setOverridesStatus(`Could not save overrides: ${error.message}`, "error");
+      downloadOverrides();
+    }
+  }
+
+  function setEditorTab(tab) {
+    const overridesActive = tab === "overrides";
+    els.gamesTab.classList.toggle("active", !overridesActive);
+    els.overridesTab.classList.toggle("active", overridesActive);
+    els.gamesTabPanel.classList.toggle("hidden", overridesActive);
+    els.overridesTabPanel.classList.toggle("hidden", !overridesActive);
+  }
+
+  function onOverridesEditorClick(event) {
+    const button = event.target.closest("button[data-action]");
+    if (!button) return;
+    const section = button.closest(".override-section");
+    if (!section) return;
+    const key = section.dataset.overrideKey;
+    const definition = OVERRIDE_SECTIONS.find((item) => item.key === key);
+    if (!definition) return;
+
+    if (button.dataset.action === "add-override") {
+      section.querySelector(".override-list").appendChild(createOverrideRow(definition, {}, true));
+      setOverridesDirty(true);
+    } else if (button.dataset.action === "edit-override") {
+      setOverrideRowEditing(button.closest(".override-row"), true);
+    } else if (button.dataset.action === "save-override") {
+      setOverrideRowEditing(button.closest(".override-row"), false);
+      setOverridesDirty(true);
+    } else if (button.dataset.action === "remove-override") {
+      button.closest(".override-row").remove();
+      setOverridesDirty(true);
+    }
   }
 
   function exportSortedData() {
@@ -1973,8 +2459,16 @@ ${entries.join(",\n")}
     els.editorForm.addEventListener("input", onFormInput);
     els.editorForm.addEventListener("change", onFormInput);
 
+    els.gamesTab.addEventListener("click", () => setEditorTab("games"));
+    els.overridesTab.addEventListener("click", () => setEditorTab("overrides"));
+    els.reloadOverrides.addEventListener("click", loadOverrides);
+    els.saveOverrides.addEventListener("click", saveOverrides);
+    els.downloadOverrides.addEventListener("click", downloadOverrides);
+    els.overridesEditor.addEventListener("click", onOverridesEditorClick);
+    els.overridesEditor.addEventListener("input", () => setOverridesDirty(true));
+
     window.addEventListener("beforeunload", (event) => {
-      if (!state.dirty) return;
+      if (!state.dirty && !state.overridesDirty) return;
       event.preventDefault();
       event.returnValue = "";
     });
@@ -1990,6 +2484,7 @@ ${entries.join(",\n")}
     refreshForceSearchAvailability();
     await Promise.all([
       loadFromDefaultFile({ silent: true }),
+      loadOverrides(),
       loadCoverArtIndexFromSqlite(),
     ]);
   }

@@ -1,0 +1,368 @@
+{
+  "promos": [
+    {
+      "id": 375371,
+      "name": "Cthulhu: Death May Die - Bonus Relic Cards"
+    },
+    {
+      "id": 416819,
+      "name": "Dominion: Farming - Really an alt artwork accessory"
+    },
+    {
+      "id": 372781,
+      "name": "Iron Maiden Pack #1"
+    },
+    {
+      "id": 372782,
+      "name": "Iron Maiden Pack #2"
+    },
+    {
+      "id": 372783,
+      "name": "Iron Maiden Pack #3"
+    },
+    {
+      "id": 448443,
+      "name": "Keyflower: Boat 8"
+    },
+    {
+      "id": 261369,
+      "name": "Keyflower: Developer"
+    },
+    {
+      "id": 141816,
+      "name": "Keyflower: Emporium & Monument"
+    },
+    {
+      "id": 426426,
+      "name": "Keyflower: Glade in Winter, The"
+    },
+    {
+      "id": 402078,
+      "name": "Keyflower: Glade, The"
+    },
+    {
+      "id": 140936,
+      "name": "Keyflower: Key Celeste"
+    },
+    {
+      "id": 140936,
+      "name": "Keyflower: Key Celeste"
+    },
+    {
+      "id": 205504,
+      "name": "Keyflower: Keymelequin"
+    },
+    {
+      "id": 426427,
+      "name": "Keyflower: Keyside"
+    },
+    {
+      "id": 233818,
+      "name": "Keyflower: Pig Shelter"
+    },
+    {
+      "id": 147380,
+      "name": "Keyflower: Storyteller"
+    },
+    {
+      "id": 393513,
+      "name": "Keyflower: Talton Lodge"
+    },
+    {
+      "id": 402078,
+      "name": "Keyflower: The Glade"
+    },
+    {
+      "id": 163742,
+      "name": "Keyflower: Trader"
+    },
+    {
+      "id": 448455,
+      "name": "Keyflower: Vault"
+    },
+    {
+      "id": 426614,
+      "name": "Marvel United: Symbiote Companion Decks"
+    },
+    {
+      "id": 472325,
+      "name": "Zombie Princess: Little Mermaid"
+    }
+  ],
+  "not_promos": [
+    {
+      "id": 425907,
+      "name": "DC United: Gamefound Promos Box"
+    },
+    {
+      "id": 386892,
+      "name": "Marvel United: Kickstarter Promos Box"
+    }
+  ],
+  "custom_integrates": [],
+  "custom_integrates_copy": [
+    {
+      "id": 268620,
+      "name": "Similo",
+      "baseId": 268620,
+      "baseName": "Similo",
+      "inbound": false
+    }
+  ],
+  "base_game_ids": [
+    {
+      "id": 155192,
+      "name": "Knightmare Chess (Third Edition)",
+      "comment": "Knightmare Chess should be treated as a base game."
+    }
+  ],
+  "accessory_mappings": [
+    {
+      "id": 266277,
+      "name": "GeekUp Bit Set",
+      "baseId": 171905,
+      "baseName": "Orléans: Deluxe Edition",
+      "comment": "Geek Bits can be used with the Deluxe Edition"
+    },
+    {
+      "id": 283524,
+      "name": "GeekUp Bits",
+      "baseId": 354568,
+      "baseName": "Amun-Re: 20th Anniversary Edition",
+      "comment": "They don't match in art, but GeekUp Bits can be used with new Amun-Re"
+    },
+    {
+      "id": 265033,
+      "name": "Ice Cool 2 Promos",
+      "baseId": 177524,
+      "baseName": "ICECOOL"
+    },
+    {
+      "id": 297562,
+      "name": "Kemet Accessories",
+      "baseId": 127023,
+      "baseName": "Kemet"
+    },
+    {
+      "id": 359371,
+      "name": "Libertalia Coins",
+      "baseId": 125618,
+      "baseName": "Libertalia",
+      "comment": "new Libertalia Coins can be used with the original version of the game"
+    }
+  ],
+  "expansion_mappings": [
+    {
+      "id": 213282,
+      "name": "Camel Up Cards: Catch'Up Trophies",
+      "baseId": 153938,
+      "baseName": "Camel Up"
+    },
+    {
+      "id": 213282,
+      "name": "Camel Up Cards: Catch'Up Trophies",
+      "baseId": 260605,
+      "baseName": "Camel Up (Second Edition)"
+    },
+    {
+      "id": 329903,
+      "name": "Captain Sonar: Bermuda Triangle Map",
+      "baseId": 231819,
+      "baseName": "Sonar"
+    },
+    {
+      "id": 207122,
+      "name": "Captain Sonar: Chicago Map",
+      "baseId": 231819,
+      "baseName": "Sonar"
+    },
+    {
+      "id": 206873,
+      "name": "Captain Sonar: Foxtrot Map",
+      "baseId": 231819,
+      "baseName": "Sonar"
+    },
+    {
+      "id": 207123,
+      "name": "Captain Sonar: New York Map",
+      "baseId": 231819,
+      "baseName": "Sonar"
+    },
+    {
+      "id": 291518,
+      "name": "Carcassonne Map Chips",
+      "baseId": 822,
+      "baseName": "Carcassonne"
+    },
+    {
+      "id": 70704,
+      "name": "Hive: The Ladybug",
+      "baseId": 154597,
+      "baseName": "Hive Pocket"
+    },
+    {
+      "id": 30323,
+      "name": "Hive: The Mosquito",
+      "baseId": 154597,
+      "baseName": "Hive Pocket"
+    },
+    {
+      "id": 313475,
+      "name": "Kemet: Book of the Dead",
+      "baseId": 127023,
+      "baseName": "Kemet"
+    },
+    {
+      "id": 313481,
+      "name": "Kemet: Sacred Bull",
+      "baseId": 127023,
+      "baseName": "Kemet"
+    },
+    {
+      "id": 313480,
+      "name": "Kemet: Sand Worm",
+      "baseId": 127023,
+      "baseName": "Kemet"
+    },
+    {
+      "id": 424595,
+      "name": "Kemet: The Baboon",
+      "baseId": 127023,
+      "baseName": "Kemet"
+    },
+    {
+      "id": 424596,
+      "name": "Kemet: The Hippopotamus",
+      "baseId": 127023,
+      "baseName": "Kemet"
+    },
+    {
+      "id": 436805,
+      "name": "Monopoly Expansion: Buy Everything",
+      "baseId": 7098,
+      "baseName": "Monopoly Deluxe Edition"
+    },
+    {
+      "id": 436806,
+      "name": "Monopoly Expansion: Free Parking Jackpot",
+      "baseId": 7098,
+      "baseName": "Monopoly Deluxe Edition"
+    },
+    {
+      "id": 436810,
+      "name": "Monopoly Expansion: Go to Jail",
+      "baseId": 7098,
+      "baseName": "Monopoly: Deluxe Edition"
+    },
+    {
+      "id": 436998,
+      "name": "Monster Pack",
+      "baseId": 2653,
+      "baseName": "Survive: Escape from Atlantis!"
+    },
+    {
+      "id": 147101,
+      "name": "Original Tuscany",
+      "baseId": 183394,
+      "baseName": "Viticulture Essential Edition"
+    },
+    {
+      "id": 147827,
+      "name": "Poison Expansion",
+      "baseId": 165469,
+      "baseName": "Council of Verona (Second Edition)"
+    },
+    {
+      "id": 443292,
+      "name": "Rebel Princess 2",
+      "baseId": 418556,
+      "baseName": "Rebel Princess: Deluxe Edition"
+    },
+    {
+      "id": 131188,
+      "name": "TTR: Africa",
+      "baseId": 14996,
+      "baseName": "Ticket to Ride: Europe"
+    },
+    {
+      "id": 131188,
+      "name": "TTR: Africa",
+      "baseId": 225244,
+      "baseName": "Ticket to Ride: Germany"
+    },
+    {
+      "id": 18291,
+      "name": "Unpublished Expansion",
+      "baseId": 126042,
+      "baseName": "Nations"
+    },
+    {
+      "id": 18291,
+      "name": "Unpublished Expansion",
+      "baseId": 177736,
+      "baseName": "Feast for Odin, A"
+    },
+    {
+      "id": 18291,
+      "name": "Unpublished Expansion",
+      "baseId": 178550,
+      "baseName": "Spheres of Influence"
+    },
+    {
+      "id": 18291,
+      "name": "Unpublished Expansion",
+      "baseId": 319966,
+      "baseName": "King Is Dead: Second Edition, The"
+    },
+    {
+      "id": 18291,
+      "name": "Unpublished Expansion",
+      "baseId": 119506,
+      "baseName": "Freedom: The Underground Railroad"
+    },
+    {
+      "id": 229967,
+      "name": "Vegas Wits & Wagers",
+      "baseId": 286428,
+      "baseName": "Wits & Wagers: It's Vegas, Baby!"
+    },
+    {
+      "id": 140045,
+      "name": "Viticulture Promo Cards",
+      "baseId": 183394,
+      "baseName": "Viticulture Essential Edition"
+    }
+  ],
+  "unpublished_collection_ids": [
+    {
+      "gameId": 119506,
+      "name": "Freedom: The Underground Railroad",
+      "collectionId": 134702681,
+      "customName": "Freedom: The Underground Railroad - Chronicles of Bravery"
+    },
+    {
+      "gameId": 126042,
+      "name": "Nations",
+      "collectionId": 45853902,
+      "customName": "Nations: 2nd Expansion"
+    },
+    {
+      "gameId": 178550,
+      "name": "Spheres of Influence",
+      "collectionId": 73699094,
+      "customName": "Spheres of Influence: Expansion"
+    },
+    {
+      "gameId": 177736,
+      "name": "Feast for Odin, A",
+      "collectionId": 66917665,
+      "customName": "The Danes/The Swedes/The Ancestors"
+    },
+    {
+      "gameId": 319966,
+      "name": "King Is Dead: Second Edition, The",
+      "collectionId": 89022895,
+      "customName": "The King Is Dead: Second Edition - Vikings Expansion"
+    }
+  ]
+}

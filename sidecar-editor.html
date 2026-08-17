@@ -24,7 +24,12 @@
     </div>
   </header>
 
-  <main class="layout">
+  <nav class="editor-tabs" aria-label="Editor sections">
+    <button id="games-tab" class="editor-tab active" type="button">Games</button>
+    <button id="overrides-tab" class="editor-tab" type="button">Custom Overrides</button>
+  </nav>
+
+  <main id="games-tab-panel" class="layout">
     <aside class="panel left">
       <section class="toolbar">
         <button id="load-default" class="btn">Reload</button>
@@ -192,6 +197,22 @@
       </form>
     </section>
   </main>
+
+  <section id="overrides-tab-panel" class="panel override-panel hidden">
+    <div class="section-head">
+      <div>
+        <h2>Custom Overrides</h2>
+        <p class="panel-help">Manage promo, integration, expansion, accessory, and unpublished-game correlations.</p>
+      </div>
+      <div class="row-actions">
+        <button id="reload-overrides" class="btn ghost" type="button">Reload</button>
+        <button id="save-overrides" class="btn" type="button">Save JSON As...</button>
+        <button id="download-overrides" class="btn ghost" type="button">Download JSON</button>
+      </div>
+    </div>
+    <div id="overrides-editor" class="overrides-editor"></div>
+    <p id="overrides-status" class="actions-status" aria-live="polite"></p>
+  </section>
 
   <template id="doc-row-template">
     <div class="doc-row" data-editing="false" data-has-saved="false">

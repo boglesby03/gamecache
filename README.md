@@ -274,6 +274,17 @@ Create a beautiful, searchable website for your BoardGameGeek collection! This p
    python scripts/sync_game_sidecar.py --dry-run
    ```
 
+   **Custom promo classification**:
+   Edit `scripts/gamecache/custom_overrides.json` when BGG has classified an
+   item incorrectly. Add records to `promos` to force promo status, or
+   to `not_promos` to force normal-item status. Each entry includes a readable
+   `name` next to its BGG `id`. Custom integration rules can be added to
+   `custom_integrates` and `custom_integrates_copy`. Expansion and accessory
+   remappings belong in `expansion_mappings` and `accessory_mappings`; special
+   base-game and unpublished-copy rules use `base_game_ids` and
+   `unpublished_collection_ids`. The overrides are applied by the indexer on
+   the next database update.
+
 8. **(Optional) Discover rulebook URLs**:
    ```bash
    python scripts/discover_rulebooks.py --only-missing

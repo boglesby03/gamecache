@@ -1,8 +1,10 @@
 from decimal import Decimal
 # from datetime import datetime
 import html
+import json
 import unicodedata
 import re
+from pathlib import Path
 
 articles = ['A', 'An', 'The']
 
@@ -10,42 +12,45 @@ articles = ['A', 'An', 'The']
 # Allow special characters - add any additional ones as they come available
 latin_pattern = re.compile(r'^[a-zA-Zà-ÿÀ-ßĀ-ž0-9\:\-\%\&—–\,\'\`\"\$\(\)\.\!\/\\\s\₂]+$')
 
-# there's still some that BGG has mislabeled promos
-not_promos = [
-    386892,  # Marvel United: Kickstarter Promos Box
-    425907,  # DC United: Gamefound Promos Box
-]
+CUSTOM_OVERRIDES_PATH = Path(__file__).with_name("custom_overrides.json")
 
-promos = [
-    426614,   # Symbiote Companion Decks
-    372781,   # Iron Maiden Pack #1
-    372782,   # Iron Maiden Pack #2
-    372783,   # Iron Maiden Pack #3
-    375371,   # Cthulhu: Death May Die - Bonus Relic Cards
-    416819,   # Dominion: Farming - Really an alt artwork accessory
-]
+
+def _load_custom_overrides():
+    try:
+        with CUSTOM_OVERRIDES_PATH.open("r", encoding="utf-8") as overrides_file:
+            raw = json.load(overrides_file)
+    except (OSError, json.JSONDecodeError):
+        raw = {}
+
+    def read_ids(key):
+        values = raw.get(key, []) if isinstance(raw, dict) else []
+        ids = set()
+        for value in values:
+            value = value.get("id") if isinstance(value, dict) else value
+            if str(value).isdigit():
+                ids.add(int(value))
+        return ids
+
+    return raw, read_ids("promos"), read_ids("not_promos")
+
+
+CUSTOM_OVERRIDES, promos, not_promos = _load_custom_overrides()
+
+
+def _override_ids(key):
+    values = CUSTOM_OVERRIDES.get(key, [])
+    return {
+        int(value.get("id")) if isinstance(value, dict) else int(value)
+        for value in values
+        if str(value.get("id") if isinstance(value, dict) else value).isdigit()
+    }
 
 # Add custom integrate mapping entries here.
 # Each mapping links `id` (source game) to `baseId` (target integrate game).
 # Optional target fields can be provided either as direct keys (`name`, `year`, ...)
 # or as `base_` keys (`base_name`, `base_year`, ...).
-DEFAULT_CUSTOM_INTEGRATES_MAPPINGS = [
-    # Example:
-    # {"id": 12345, "baseId": 67890, "inbound": False, "base_name": "Target Name"},
-]
-
-# Add custom integrate copy rules here.
-# Each rule links source game ID -> target game ID, and the downloader will add
-# target integrations for owned copies of that target ID.
-# Supported formats:
-# - {"id": SOURCE_ID, "baseId": TARGET_ID}
-# - {"searchId": SOURCE_ID, "integrateId": TARGET_ID}
-DEFAULT_CUSTOM_INTEGRATES_COPY_MAPPINGS = [
-    # Similo: each owned copy integrates with other owned Similo copies.
-    {"id": 268620, "baseId": 268620, "inbound": False},
-    # Example:
-    # {"id": 11111, "baseId": 22222, "inbound": False},
-]
+DEFAULT_CUSTOM_INTEGRATES_MAPPINGS = CUSTOM_OVERRIDES.get("custom_integrates", [])
+DEFAULT_CUSTOM_INTEGRATES_COPY_MAPPINGS = CUSTOM_OVERRIDES.get("custom_integrates_copy", [])
 
 CUSTOM_INTEGRATE_OPTIONAL_FIELDS = (
     "name",
@@ -245,7 +250,7 @@ class BoardGame:
 
     def is_promo(self):
         # NOTE: This could also potentially look for 'Magazine', which is normally a promo as well
-        cat_match = any(item["name"].split(':', 1)[0] == 'Promotional' for item in self.families)
+        cat_match = any(item["name"].split(':', 1)[0] in ('Promotional', 'Magazine') for item in self.families)
         # TODO should record the ones that are name match, but not category match to fix BGG
         name_match = re.search(r'\bPromo(tion(al)?)?s?\b(?!\s*Box\b)', self.name, re.IGNORECASE) is not None
 

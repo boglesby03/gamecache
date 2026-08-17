@@ -4,7 +4,7 @@ from decimal import Decimal
 
 from gamecache.bgg_client import BGGClient
 from gamecache.bgg_client import CacheBackendSqlite
-from gamecache.models import BoardGame
+from gamecache.models import BoardGame, CUSTOM_OVERRIDES, _override_ids
 
 from datetime import datetime
 from multidict import MultiDict
@@ -15,7 +15,7 @@ CACHE_TTL_SECONDS = 60 * 60 * 24 * 7
 EXTRA_EXPANSIONS_GAME_ID=81913
 UNPUBLISHED_PROTOTYPE=18291
 BOX_OF_PROMOS=39378
-BASE_GAME_OVERRIDES = {155192}
+BASE_GAME_OVERRIDES = _override_ids("base_game_ids")
 
 class Downloader():
     def __init__(self, cache_bgg, debug=False, token=None):
@@ -428,19 +428,7 @@ def apply_integrates_copy_rules(games):
     return games
 
 def custom_accessories_mapping(accessories):
-
-    acc_map = [
-        # new Libertalia Coins can be used with the original version of the game
-        {"id": 359371, "baseId": 125618},
-        # They don't match in art, but GeekUp Bits can be used with new Amun-Re
-        {"id": 283524, "baseId": 354568},
-        # Ice Cool2 Promos to Ice Cool
-        {"id": 265033, "baseId": 177524},
-        # Geek Bits can be used with the Deluxe Edition
-        {"id": 266277, "baseId": 171905},
-         # Kemet
-        {"id": 297562, "baseId": 127023},
-    ]
+    acc_map = CUSTOM_OVERRIDES.get("accessory_mappings", [])
 
     for new_acc in acc_map:
         for acc in accessories:
@@ -453,11 +441,9 @@ def custom_accessories_mapping(accessories):
 # The game should also be mapped to Unpub expansion
 # game.id : expansion.collection_id
 unpub_map = {
-    126042: 45853902,  # Nations
-    177736: 66917665,  # A Feast for Odin,
-    178550: 73699094,  # Spheres of Influence
-    319966: 89022895,  # King Is Dead
-    119506: 134702681, # Freedom - Bravery
+    item["gameId"]: item["collectionId"]
+    for item in CUSTOM_OVERRIDES.get("unpublished_collection_ids", [])
+    if "gameId" in item and "collectionId" in item
 }
 
 def filter_unpublished_expansions(game):
@@ -496,65 +482,9 @@ def filter_games_by_collection_id(games):
 
     return filtered_games
 
-# TODO These mappings should be configurable
 def custom_expansion_mappings(expansions):
     """add custom expansions mappings, because sometimes BGG is wrong"""
-
-    exp_map = [
-        # Original Tuscany should be an expansion for Viticulture Essential Edition (even if there is overlap)
-        {"id": 147101, "baseId": 183394},
-        # Viticulture Promo Cards to Viticulture EE
-        {"id": 140045, "baseId": 183394},
-        # Poison Expansion for Council of Verona
-        {"id": 147827, "baseId": 165469},
-        # Map the Carcassonne Map Chips to Carcassonne
-        {"id": 291518, "baseId": 822},
-        # Africa mapped to TtR: Europe
-        {"id": 131188, "baseId": 14996},
-        {"id": 131188, "baseId": 225244}, # TrR: Germany
-        # Vegas Wits & Wager -> Wits & Wagers It's Vegas Baby
-        {"id": 229967, "baseId": 286428},
-        # Hive pocket includes these
-        {"id": 30323, "baseId": 154597},
-        {"id": 70704, "baseId": 154597},
-        # Survive the Island Monster pack
-        {"id": 436998, "baseId": 2653},
-        # Kemet expansions to original version
-        {"id": 313475, "baseId": 127023},
-        {"id": 313480, "baseId": 127023},
-        {"id": 313481, "baseId": 127023},
-        {"id": 424595, "baseId": 127023},
-        {"id": 424596, "baseId": 127023},
-        # Sonar/Captain Sonar Expansions
-        {"id": 206873, "baseId": 231819},
-        {"id": 207122, "baseId": 231819},
-        {"id": 207123, "baseId": 231819},
-        {"id": 329903, "baseId": 231819},
-        # Agricola Cards
-        # {"did": 263965, "baseId": 31260},
-        # Camel Up Cards Trophies in Camel UP
-        {"id": 213282, "baseId": 153938},
-        {"id": 213282, "baseId": 260605}, # Camel Up 2nd Edition
-
-        # Rebel Princess 2 to Rebel Princess Deluxe
-        {"id": 443292, "baseId": 418556},
-
-        # Monopoly expansions for Monopoly Deluxe Edition
-        {"id": 436810, "baseId": 7098},
-        {"id": 436806, "baseId": 7098},
-        {"id": 436805, "baseId": 7098},
-
-        # Unpublished Nations 2nd Expansion
-        {"id": UNPUBLISHED_PROTOTYPE, "baseId": 126042},
-        # Unpublished Feast for Odin Expansions
-        {"id": UNPUBLISHED_PROTOTYPE, "baseId": 177736},
-        # Unpublished Spheres of Influence
-        {"id": UNPUBLISHED_PROTOTYPE, "baseId": 178550},
-        # Unpublished King is Dead Vikings
-        {"id": UNPUBLISHED_PROTOTYPE, "baseId": 319966},
-        # Unpublished Freedom Expansion
-        {"id": UNPUBLISHED_PROTOTYPE, "baseId": 119506},
-    ]
+    exp_map = CUSTOM_OVERRIDES.get("expansion_mappings", [])
 
     for exp in exp_map:
         expansions[exp["id"]]["expansions"].append({"id": exp["baseId"], "inbound": True})
