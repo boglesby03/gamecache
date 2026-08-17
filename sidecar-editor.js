@@ -85,7 +85,8 @@
   const PLATFORM_STORE_OPTIONS = {
     android: ["Play Store", "BGG", "Humble", "Amazon Appstore", "Samsung Galaxy Store", "itch.io"],
     ios: ["App Store", "TestFlight", "itch.io"],
-    pc: ["Steam", "Web", "Tabletop Simulator", "Tabletopia", "Yucata", "VASSAL", "BrettspielWelt", "Boardspace", "Forteller Narratives", "BGA", "Epic", "EA app", "Ubisoft Connect", "GOG", "Microsoft Store", "itch.io", "Humble", "Amazon"],
+    pc: ["Steam", "Web", "Tabletopia", "Yucata", "VASSAL", "BrettspielWelt", "Boardspace", "Forteller Narratives", "BGA", "Epic", "EA app", "Ubisoft Connect", "GOG", "Microsoft Store", "itch.io", "Humble", "Amazon"],
+    online: ["Tabletop Simulator", "Tabletopia", "Board Game Arena", "Yucata", "VASSAL", "BrettspielWelt", "Boiteajeux", "Subscrybe", "Boardspace"],
   };
 
   const OVERRIDE_SECTIONS = [
@@ -105,6 +106,13 @@
 
   function getFaviconUrl(domain) {
     return `https://www.google.com/s2/favicons?domain=${encodeURIComponent(domain)}&sz=64`;
+  }
+
+  function isValidUrl(urlStr) {
+    try {
+      new URL(urlStr);
+      return true;
+    } catch { return false; }
   }
 
   function normalizeStoreKey(value) {
@@ -203,6 +211,16 @@
     if (/^https?:\/\//i.test(trimmed)) return trimmed;
     if (/^www\./i.test(trimmed)) return `https://${trimmed}`;
     return trimmed;
+  }
+
+  function isValidUrl(urlStr) {
+    if (!urlStr || typeof urlStr !== "string") return false;
+    try {
+      new URL(normalizeUrl(urlStr));
+      return true;
+    } catch {
+      return false;
+    }
   }
 
   function isOnlineEntry(raw, store, url, note) {
@@ -729,7 +747,7 @@
 
     const displayName = String(cover.name || "").trim();
     setMetaValue(els.fieldSqliteDisplayName, displayName || "-");
-    setMetaValue(els.fieldSqliteYear, formatIntegerValue(cover.year));
+    setMetaValue(els.fieldSqliteYear, cover.year ? String(Math.round(cover.year)) : "-");
     setMetaValue(els.fieldSqliteRank, formatIntegerValue(cover.rank));
     setMetaValue(els.fieldSqliteRating, formatDecimalValue(cover.rating, 2));
 
@@ -1042,6 +1060,15 @@
     for (const row of rows) {
       const input = row.querySelector('[data-key="url"]');
       const url = normalizeUrl(input?.value || "").toLowerCase();
+
+      // Check URL validity
+      if (input && input.value.trim()) {
+        const isValid = isValidUrl(input.value.trim());
+        input.classList.toggle("error-malformed", !isValid);
+      } else {
+        input?.classList.remove("error-malformed");
+      }
+
       if (!url) continue;
       const matchingRows = rowsByUrl.get(url) || [];
       matchingRows.push(row);
@@ -1461,6 +1488,7 @@
   }
 
   function getOverrideNameField(section, key) {
+    if (section.key === "digital_implementations") return "Digital Implementations";
     if (section.key === "unpublished_collection_ids" && key === "gameId") return "name";
     if (key === "baseId") return "baseName";
     return "name";
@@ -1869,6 +1897,10 @@ ${entries.join(",\n")}
     return row;
   }
 
+  function getPlatformDefaultEntry() {
+    return { name: "Tabletop Simulator", url: "", store: "Tabletop Simulator", state: "online" };
+  }
+
   function addPlatformRow(platform, entry = {}, options = {}) {
     const target = document.querySelector(`[data-platform-list="${platform}"]`);
     if (!target || !els.platformRowTemplate) return;
@@ -2218,6 +2250,18 @@ ${entries.join(",\n")}
       return;
     }
 
+    if (action === "swap-fields") {
+      const noteInput = row.querySelector('[data-key="note"]');
+      const urlInput = row.querySelector('[data-key="url"]');
+      if (noteInput && urlInput) {
+        const tmp = noteInput.value;
+        noteInput.value = urlInput.value;
+        urlInput.value = tmp;
+        refreshDuplicatePlatformUrls();
+      }
+      return;
+    }
+
     if (action === "save-row") {
       const payload = readPlatformRowInputs(row);
       if (!payload) {
@@ -2447,7 +2491,7 @@ ${entries.join(",\n")}
         const gameName = state.selectedId && state.data.games[state.selectedId]
           ? String(state.data.games[state.selectedId].name || '').trim()
           : '';
-        addPlatformRow(button.dataset.platform, {}, { editing: true, hasSaved: false, defaultNote: gameName });
+        addPlatformRow(button.dataset.platform, getPlatformDefaultEntry(), { editing: true, hasSaved: false, defaultNote: gameName });
       });
     });
 

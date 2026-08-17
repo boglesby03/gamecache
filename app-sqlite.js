@@ -3721,8 +3721,12 @@ function renderGameCard(game) {
 
   const statusStat = clone.querySelector('.status-stat');
   statusStat.style.display = 'flex';
-  clone.querySelector('.status-value').textContent = formatStatusLabel(game.tags[0] || '');
-  if (game.wishlist_priority) {
+  const statusLabel = formatStatusLabel(game.tags[0] || '');
+  clone.querySelector('.status-value').textContent = statusLabel;
+
+  if (statusLabel === 'Digital Only') {
+    createHoverTooltip(statusStat, 'This game is only available in digital format.', 4);
+  } else if (game.wishlist_priority) {
     createHoverTooltip(statusStat, game.wishlist_priority, 4);
   }
 

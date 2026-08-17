@@ -607,7 +607,7 @@ textarea:focus {
 }
 
 .hidden {
-  display: none;
+  display: none !important;
 }
 
 .editor {
@@ -1080,6 +1080,14 @@ button[data-action="save-row"] {
   align-items: center;
 }
 
+.url-input-group {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 28px;
+  gap: 0.45rem;
+  align-items: center;
+  grid-column: 3;
+}
+
 .store-icon-slot {
   width: 18px;
   height: 18px;
@@ -1142,6 +1150,12 @@ button[data-action="save-row"] {
   min-width: 0;
 }
 
+.platform-row input[data-key="url"].error-malformed {
+  border-color: #d4731c;
+  background: #fff7f0;
+  box-shadow: 0 0 0 2px rgba(212, 115, 28, 0.14);
+}
+
 .platform-row.duplicate-url .platform-row-main {
   padding: 0.35rem;
   border: 1px solid var(--danger);
@@ -1153,6 +1167,15 @@ button[data-action="save-row"] {
   border-color: var(--danger);
   background: #fff1f2;
   box-shadow: 0 0 0 2px rgba(166, 27, 41, 0.14);
+}
+
+.platform-row button[data-action="swap-fields"] {
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .platform-row button[data-action="remove"] {
@@ -1169,6 +1192,7 @@ button[data-action="save-row"] {
   display: flex;
   flex-direction: column;
   gap: 0.25rem;
+  margin-top: -0.3rem;
 }
 
 .platform-note-wrap input[data-key="note"] {

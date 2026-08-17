@@ -256,7 +256,12 @@
         <div class="platform-row-main">
           <span class="store-icon-slot" data-key="store-icon" aria-hidden="true"></span>
           <select data-key="store"></select>
-          <input type="url" data-key="url" placeholder="https://..." />
+          <div class="url-input-group">
+            <input type="url" data-key="url" placeholder="https://..." />
+            <button type="button" class="btn mini ghost swap-btn" data-action="swap-fields" title="Swap Display Name and URL" aria-label="Swap Display Name and URL">
+              <span class="material-symbols-rounded" aria-hidden="true">swap_horiz</span>
+            </button>
+          </div>
           <label class="state-select-wrap">
             <span>Status</span>
             <select data-key="state">
