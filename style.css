@@ -209,6 +209,19 @@ body {
     flex-grow: 1;
 }
 
+.digital-only-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35em;
+    margin-right: 1em;
+    white-space: nowrap;
+    font-size: 0.9em;
+}
+
+.digital-only-toggle input {
+    accent-color: #b71c1c;
+}
+
 #search-input {
     width: 100%;
     padding: 0.5em;
@@ -1360,6 +1373,10 @@ a.accessory-tile.wl-accessory-chip {
     .search-box {
         flex: 1 1 12em;
         max-width: none;
+        margin-right: 0;
+    }
+
+    .digital-only-toggle {
         margin-right: 0;
     }
 

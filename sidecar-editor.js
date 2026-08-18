@@ -122,6 +122,14 @@
       .trim();
   }
 
+  function normalizeSearchText(value) {
+    return String(value || "")
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, "");
+  }
+
   function toStoreFilterLabel(key) {
     const parts = String(key || "").split(" ").filter(Boolean);
     if (parts.length === 0) return "Unknown";
@@ -975,7 +983,7 @@
   }
 
   function renderGameList() {
-    const term = String(els.search.value || "").trim().toLowerCase();
+    const term = normalizeSearchText(els.search.value);
     const ids = getSortedIds();
 
     renderStoreFilterOptions();
@@ -987,7 +995,7 @@
       const entry = normalizeEntry(state.data.games[id], "");
       if (!gameMatchesStoreFilter(entry)) continue;
       const name = entry.name || "(unnamed)";
-      const haystack = `${id} ${name}`.toLowerCase();
+      const haystack = normalizeSearchText(`${id} ${name}`);
       if (term && !haystack.includes(term)) continue;
 
       const li = document.createElement("li");
