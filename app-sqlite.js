@@ -853,6 +853,7 @@ function setupFilters() {
   setupStatusFilter();
   setupWishlistFilter();
   setupDigitalFilter();
+  setupDigitalOnlyToggle();
   setupAgeRangeFilter();
   setupClearAllButton();
 
@@ -1501,6 +1502,12 @@ function setupDigitalFilter() {
   }
 }
 
+function setupDigitalOnlyToggle() {
+  const toggle = document.getElementById('hide-digital-only');
+  if (!toggle) return;
+  toggle.addEventListener('change', () => onFilterChange());
+}
+
 function createSliderRefinementFilter(facetId, title, min, max) {
   const container = document.getElementById(facetId);
   if (!container) return;
@@ -1907,6 +1914,7 @@ function updateClearButtonVisibility(filters) {
     selectedStatus,
     selectedWishlist,
     selectedDigital,
+    hideDigitalOnly,
     selectedAgeRange,
     selectedUseCommunityAge
   } = filters;
@@ -1930,6 +1938,7 @@ function updateClearButtonVisibility(filters) {
     (selectedStatus && selectedStatus.length > 0) ||
     (selectedWishlist && selectedWishlist.length > 0) ||
     (selectedDigital && selectedDigital.length > 0) ||
+    hideDigitalOnly ||
     selectedUseCommunityAge ||
     (selectedAgeRange && selectedAgeRange.min > ageSlider.min_init) ||
     (selectedAgeRange && selectedAgeRange.max < ageSlider.max_init);
@@ -2123,6 +2132,7 @@ function getFiltersFromURL() {
     selectedStatus: params.get('status')?.split(',').filter(Boolean) || [],
     selectedWishlist: params.get('wishlist')?.split(',').filter(Boolean) || [],
     selectedDigital: params.get('digital')?.split(',').filter(Boolean) || [],
+    hideDigitalOnly: params.get('hide_digital') === '1',
     selectedAgeRange: ageRangeParam ? { min: Number(ageRangeParam.split('-')[0]), max: Number(ageRangeParam.split('-')[1]) } : null,
     selectedUseCommunityAge: params.get('age_source') === 'community',
     sortBy: params.get('sort') || 'name',
@@ -2147,6 +2157,7 @@ function getFiltersFromUI() {
   const selectedStatus = getSelectedValues('status');
   const selectedWishlist = getSelectedValues('wishlist');
   const selectedDigital = getSelectedValues('digital');
+  const hideDigitalOnly = Boolean(document.getElementById('hide-digital-only')?.checked);
   const selectedAgeRange = getSelectedSlider('facet-age-range');
   const selectedUseCommunityAge = Boolean(document.getElementById('age-community-toggle')?.checked);
   const sortBy = document.getElementById('sort-select')?.value || 'name';
@@ -2168,6 +2179,7 @@ function getFiltersFromUI() {
     selectedStatus,
     selectedWishlist,
     selectedDigital,
+    hideDigitalOnly,
     selectedAgeRange,
     selectedUseCommunityAge,
     sortBy,
@@ -2194,6 +2206,7 @@ function updateURLWithFilters(filters) {
   if (filters.selectedStatus?.length) params.set('status', filters.selectedStatus.join(','));
   if (filters.selectedWishlist?.length) params.set('wishlist', filters.selectedWishlist.join(','));
   if (filters.selectedDigital?.length) params.set('digital', filters.selectedDigital.join(','));
+  if (filters.hideDigitalOnly) params.set('hide_digital', '1');
   if (filters.selectedAgeRange) params.set('age', `${filters.selectedAgeRange.min}-${filters.selectedAgeRange.max}`);
   if (filters.selectedUseCommunityAge) params.set('age_source', 'community');
   if (filters.sortBy && filters.sortBy !== 'name') params.set('sort', filters.sortBy);
@@ -2205,6 +2218,8 @@ function updateURLWithFilters(filters) {
 
 function updateUIFromState(state) {
   document.getElementById('search-input').value = state.query;
+  const digitalOnlyToggle = document.getElementById('hide-digital-only');
+  if (digitalOnlyToggle) digitalOnlyToggle.checked = Boolean(state.hideDigitalOnly);
 
   // Update the clear button visibility based on the input value
   const clearButton = document.getElementById("clear-button");
@@ -2349,6 +2364,7 @@ function filterGames(gamesToFilter, filters) {
     selectedStatus,
     selectedWishlist,
     selectedDigital,
+    hideDigitalOnly,
     selectedAgeRange,
     selectedUseCommunityAge
   } = filters;
@@ -2359,6 +2375,9 @@ function filterGames(gamesToFilter, filters) {
   }
 
   return gamesToFilter.filter(game => {
+    if (hideDigitalOnly && game.tags.includes('unowned')) {
+      return false;
+    }
 
     if (query) {
       if (!ftsQueryResults.includes(game.id)) {
