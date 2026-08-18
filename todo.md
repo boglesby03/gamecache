@@ -47,11 +47,11 @@
 - [X] Should I continue to split out Expansions without games into 3 entries?
 - [X] Fix duplicate preorder/wishlist items
 - [X] Search box needs a clear X in it
-- [ ] Is there anyway to improve search - soundex, search more fields, score searches (e.g. Inis) - fd5?
-- [ ] How about just updating the database rather than starting from scratch every time?
-  - [ ] Also cache detail requests since I re-need details for cover arts now
+- [X] Is there anyway to improve search - soundex, search more fields, score searches (e.g. Inis) - fd5?
+- [X] How about just updating the database rather than starting from scratch every time?
+  - [X] Also cache detail requests since I re-need details for cover arts now
   - [X] How can I bulk load implements, expansions, etc. Rather than grab them individually
-- [ ] Add the BGG Logo (per the new API requirements)
+- [X] Add the BGG Logo (per the new API requirements)
 - [X] Add full size cover on hover of the thumbnail in the GameCard
   - [ ] Probably should add name or other details to this hover as well
 - [ ] Edge case - allow for custom Publisher (publisher on item that isn't on thing) - example Academy Games on Unpublished prototypes
