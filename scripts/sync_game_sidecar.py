@@ -20,6 +20,7 @@ import re
 import time
 import urllib.request
 import urllib.parse
+import unicodedata
 from pathlib import Path
 from typing import Dict, Tuple, List, Any, Optional, Set
 
@@ -56,6 +57,7 @@ YUCATA_GAME_ID_OVERRIDES: Dict[str, str] = {
     "312484": "https://www.yucata.de/en/GameInfo/Arnak",  # Lost Ruins of Arnak
     "318553": "https://www.yucata.de/en/GameInfo/RajasDice",  # Rajas of the Ganges: The Dice Charmers
     "144733": "https://www.yucata.de/en/GameInfo/RRR2",  # Russian Railroads
+    "46255": "https://www.yucata.de/en/GameInfo/CampaignManager",  # Campaign Manager 2008
 }
 
 # Some BrettspielWelt slugs are localized or product-line based and don't
@@ -1496,8 +1498,8 @@ def _tts_title_language_allowed(result_title: str) -> bool:
     """Allow titles that are English, language-independent, or untagged.
 
     Policy details:
-    - Reject explicit non-English language markers.
-    - Allow explicit English markers.
+    - Allow explicit English markers, including mixed-language tags such as EN-TR.
+    - Reject titles with only non-English language markers.
     - Allow explicit language-independent markers.
     - If no language markers are present, treat as untagged and allow.
     """
@@ -1579,10 +1581,10 @@ def _tts_title_language_allowed(result_title: str) -> bool:
     has_language_independent = any(phrase in lowered for phrase in language_independent_phrases)
     has_non_english = bool(tokens.intersection(non_english_tokens))
 
-    if has_non_english:
-        return False
     if has_english or has_language_independent:
         return True
+    if has_non_english:
+        return False
 
     # Untagged titles are kept; strict language rejection only applies when a
     # specific non-English language tag is present in the title.
@@ -1829,7 +1831,10 @@ def _tts_note_aliases_from_entry(entry: Dict[str, Any]) -> List[str]:
             note = re.sub(r"\s+", " ", str(item.get("note", "") or "").strip())
             if not note:
                 continue
-            if re.search(r"[^\x00-\x7F]", note):
+            if any(
+                char.isalpha() and "LATIN" not in unicodedata.name(char, "")
+                for char in note
+            ):
                 continue
             tokens = _tokenize_words(note)
             if len(tokens) < 2 and len(note) < 8:
@@ -2782,14 +2787,15 @@ def enrich_tabletop_simulator_links(
                 candidate_names = merged
         matched_results: Dict[str, Tuple[int, str]] = {}
 
-        # Query only first few distinct names to control request volume.
+        # Query several distinct names so curated sidecar aliases can improve
+        # recall without turning every workshop note into a request.
         queried_names: List[str] = []
         for candidate_name in candidate_names:
             query_name = str(candidate_name or "").strip()
             if not query_name or query_name in queried_names:
                 continue
             queried_names.append(query_name)
-            if len(queried_names) > 3:
+            if len(queried_names) > 6:
                 break
 
             try:
