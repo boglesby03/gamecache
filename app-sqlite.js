@@ -422,8 +422,8 @@ function renderDigitalVersionsSection(clone, game) {
       const hasVisibleLabel = Boolean(item.note || item.storeMeta || item.store);
       const attrs = {
         className: `digital-version-item ${statusClass}${item.url ? '' : ' no-link'}${hasVisibleLabel ? ' has-label' : ''}`,
-        title: `${item.label}${item.store ? ` • ${item.store}` : ''}${statusText ? ` • ${statusText}` : ''}${item.note ? ` • Display Name: ${item.note}` : ''}`,
-        'aria-label': `${item.label}${item.store ? ` ${item.store}` : ''}${statusText ? ` ${statusText}` : ''}${item.note ? ` Display Name ${item.note}` : ''}`
+        title: `${item.store || ''}${item.store && statusText ? ' • ' : ''}${statusText || ''}`,
+        'aria-label': `${item.store || ''}${item.store && statusText ? ' ' : ''}${statusText || ''}`
       };
       if (item.url) {
         attrs.href = item.url;
@@ -1454,7 +1454,7 @@ function gameDigitalFlags(game) {
 }
 
 function setupDigitalFilter() {
-  const counts = { any: 0, online: 0 };
+  const counts = { any: 0, online: 0, 'support-app': 0 };
   DIGITAL_PLATFORMS.forEach((platform) => {
     counts[platform] = 0;
     counts[`${platform}-owned`] = 0;
@@ -1468,6 +1468,7 @@ function setupDigitalFilter() {
     const flags = gameDigitalFlags(game);
     if (flags.hasAny) counts.any += 1;
     if (flags.hasOnline) counts.online += 1;
+    if (flags.hasSupportApp) counts['support-app'] += 1;
     DIGITAL_PLATFORMS.forEach((platform) => {
       const platformFlags = flags.platforms[platform];
       if (platformFlags.any) counts[platform] += 1;
@@ -1482,6 +1483,7 @@ function setupDigitalFilter() {
   const platformLabels = { pc: 'PC', android: 'Android', ios: 'iOS' };
   const items = [{ label: 'All Digital Games', value: 'any', count: counts.any }];
   items.push({ label: 'Online', value: 'online', count: counts.online });
+  items.push({ label: 'Support Apps', value: 'support-app', count: counts['support-app'] });
   DIGITAL_PLATFORMS.forEach((platform) => {
     items.push({ label: platformLabels[platform], value: platform, count: counts[platform] });
     items.push({ label: `${platformLabels[platform]} Owned`, value: `${platform}-owned`, count: counts[`${platform}-owned`] });
@@ -1675,7 +1677,7 @@ function createRefinementFilter(facetId, title, items, attributeName, isRadio = 
       .filter(item => {
         // Exclude items with count === 0
         const count = (typeof item === 'object' && item.count !== undefined) ? item.count : null;
-        return count !== 0; // Filter out items with count === 0
+        return count !== 0 || (attributeName === 'digital' && item.value === 'support-app');
       })
       .map(item => {
         const value = (typeof item === 'object' && item.value !== undefined) ? item.value : (typeof item === 'object' && item.min !== undefined ? `${item.min}-${item.max}` : item);
@@ -1724,6 +1726,7 @@ function createRefinementFilter(facetId, title, items, attributeName, isRadio = 
   const details = clone.querySelector('details');
   details.id = facetId;
   clone.querySelector('.filter-title').textContent = title;
+  let clearDigitalButton = null;
 
   // Add search box only if `enableSearch` is true
   const searchBoxId = `${facetId}-search`; // Dynamic ID based on facetId
@@ -1738,6 +1741,23 @@ function createRefinementFilter(facetId, title, items, attributeName, isRadio = 
     : '';
 
   clone.querySelector('.filter-dropdown-content').innerHTML = searchBoxHtml + filterItemsHtml;
+  if (facetId === 'facet-digital') {
+    clearDigitalButton = document.createElement('button');
+    clearDigitalButton.type = 'button';
+    clearDigitalButton.className = 'clear-button facet-clear-button';
+    clearDigitalButton.textContent = 'Clear Digital Filter';
+    clearDigitalButton.hidden = true;
+    clearDigitalButton.addEventListener('click', (event) => {
+      event.preventDefault();
+      event.stopPropagation();
+      newContainer.querySelectorAll('input[name="digital"]').forEach(input => {
+        input.checked = false;
+      });
+      onFilterChange();
+      clearDigitalButton.hidden = true;
+    });
+    clone.querySelector('.filter-dropdown-content').appendChild(clearDigitalButton);
+  }
   container.replaceWith(clone);
 
   const newContainer = document.getElementById(facetId);
@@ -1764,7 +1784,7 @@ function createRefinementFilter(facetId, title, items, attributeName, isRadio = 
 
         // Hide zero-count options only when they are not currently selected.
         // Selected zero-count options remain visible so they can be unselected.
-        if (count === '0' && !input.checked) {
+        if (count === '0' && !input.checked && !(attributeName === 'digital' && input.value === 'support-app')) {
           item.style.display = 'none';
           return;
         }
@@ -1776,6 +1796,12 @@ function createRefinementFilter(facetId, title, items, attributeName, isRadio = 
           item.style.display = 'none';
         }
       });
+
+      if (attributeName === 'digital') {
+        const supportAppsItem = filterItems.find(item => item.querySelector('input[value="support-app"]'));
+        if (supportAppsItem) supportAppsItem.style.display = 'flex';
+        clearDigitalButton.hidden = !filterItems.some(item => item.querySelector('input[name="digital"]')?.checked);
+      }
 
       // Keep selected options grouped at the top while preserving original order.
       const sortedFilterItems = [...filterItems].sort((a, b) => {
@@ -2227,6 +2253,7 @@ function updateUIFromState(state) {
 
 
   document.querySelectorAll('input[type="checkbox"]').forEach(cb => cb.checked = false);
+  document.querySelectorAll('input[type="radio"][name="digital"]').forEach(radio => radio.checked = false);
 
   const checkboxFilters = {
     'categories': state.selectedCategories,
@@ -2515,6 +2542,8 @@ function filterGames(gamesToFilter, filters) {
             return flags.hasAny;
           case 'online':
             return flags.hasOnline;
+          case 'support-app':
+            return flags.hasSupportApp;
           case 'android':
             return flags.platforms.android.any;
           case 'ios':
@@ -2620,7 +2649,8 @@ function updateCountsInDOM(facetId, counts, showZero = false) {
         }
       } else {
         // Normal handling for other filters
-        if (newCount === 0 && !input.checked && !showZero) {
+        const keepDigitalSupportAppVisible = facetId === 'facet-digital' && value === 'support-app';
+        if (newCount === 0 && !input.checked && !showZero && !keepDigitalSupportAppVisible) {
           item.style.display = 'none';
         } else {
           item.style.display = 'flex';
@@ -2845,22 +2875,28 @@ function updateAllFilterCounts(filters) {
     selectedDigital: []
   };
   const gamesForDigitalCount = filterGames(allGames, digitalFilters);
-  const digitalCounts = { any: 0 };
+  const digitalCounts = { any: 0, online: 0, 'support-app': 0 };
   DIGITAL_PLATFORMS.forEach((platform) => {
     digitalCounts[platform] = 0;
     digitalCounts[`${platform}-owned`] = 0;
     digitalCounts[`${platform}-wishlisted`] = 0;
     digitalCounts[`${platform}-preordered`] = 0;
+    digitalCounts[`${platform}-monthly-subscription`] = 0;
+    digitalCounts[`${platform}-support-app`] = 0;
   });
   gamesForDigitalCount.forEach(game => {
     const flags = gameDigitalFlags(game);
     if (flags.hasAny) digitalCounts.any += 1;
+    if (flags.hasOnline) digitalCounts.online += 1;
+    if (flags.hasSupportApp) digitalCounts['support-app'] += 1;
     DIGITAL_PLATFORMS.forEach((platform) => {
       const platformFlags = flags.platforms[platform];
       if (platformFlags.any) digitalCounts[platform] += 1;
       if (platformFlags.owned) digitalCounts[`${platform}-owned`] += 1;
       if (platformFlags.wishlisted) digitalCounts[`${platform}-wishlisted`] += 1;
       if (platformFlags.preordered) digitalCounts[`${platform}-preordered`] += 1;
+      if (platformFlags.monthlySubscription) digitalCounts[`${platform}-monthly-subscription`] += 1;
+      if (platformFlags.supportApp) digitalCounts[`${platform}-support-app`] += 1;
     });
   });
   updateCountsInDOM('facet-digital', digitalCounts);
