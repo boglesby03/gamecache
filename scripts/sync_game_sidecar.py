@@ -7,11 +7,14 @@ entry in the sidecar file under `games` with at least:
 - short_description
 - rulebooks
 - supplemental_files
+- crowdfunding_links
 
 Existing entries are preserved and only missing keys are added.
 """
 
 import argparse
+import ast
+from concurrent.futures import ThreadPoolExecutor, as_completed
 import html
 import json
 import socket
@@ -36,6 +39,28 @@ TABLETOP_SIMULATOR_APP_ID = "286160"
 BRETTSPIELWELT_SPIELE_URL = "https://www.brettspielwelt.de/Spiele/"
 BOARDSPACE_INDEX_URL = "https://boardspace.net/english/index.shtml"
 FORTELLER_NARRATIVES_COLLECTION_URL = "https://fortellergames.com/collections/all-narrative-companions"
+BGG_GAME_URL = "https://boardgamegeek.com/boardgame/{game_id}"
+SUPPORTED_CROWDFUNDING_HOSTS = {
+    "gamefound.com": "Gamefound",
+    "kickstarter.com": "Kickstarter",
+    "backerkit.com": "BackerKit",
+    "gmtgames.com": "GMT P500",
+    "indiegogo.com": "Indiegogo",
+    "gameontabletop.com": "Game On Tabletop",
+    "verkami.com": "Verkami",
+    "spieleschmiede.com": "Spieleschmiede",
+    "zagramw.to": "zagramw.to",
+    "wspieram.to": "Wspieram",
+    "ulule.com": "Ulule",
+    "giochistarter.it": "Giochistarter",
+    "zeczec.com": "Zeczec",
+    "modian.com": "Modian",
+    "catarse.me": "Catarse",
+    "tumblbug.com": "Tumblbug",
+}
+GMT_P500_CATALOG_URL = "https://www.gmtgames.com/s-2-p500.aspx"
+GMT_PRODUCT_SEARCH_URL = "https://www.gmtgames.com/ISearch2/Search"
+GMT_PRODUCT_PAGE_SIZE = 50
 
 # Some Yucata titles don't expose an IdName that matches BGG naming conventions.
 # Use explicit game-id overrides so sync can still add/maintain correct links.
@@ -750,6 +775,59 @@ def load_boardspace_candidates(conn: sqlite3.Connection) -> Dict[str, Dict[str, 
     return candidates
 
 
+def load_gmt_candidates(conn: sqlite3.Connection) -> Dict[str, Dict[str, Any]]:
+    """Load games whose publisher or family metadata identifies GMT Games."""
+    candidates: Dict[str, Dict[str, Any]] = {}
+    cur = conn.execute(
+        """
+        SELECT id, name, alternate_names
+        FROM games
+        WHERE id IS NOT NULL AND name IS NOT NULL
+          AND (
+            LOWER(publishers) LIKE '%gmt%'
+            OR LOWER(families) LIKE '%gmt%'
+            OR LOWER(name) LIKE '%gmt%'
+          )
+        """
+    )
+    for game_id, name, alternate_raw in cur.fetchall():
+        alternate_names: List[str] = []
+        try:
+            values = json.loads(alternate_raw or "[]")
+            if isinstance(values, list):
+                alternate_names = [str(value).strip() for value in values if str(value).strip()]
+        except Exception:
+            pass
+        candidates[str(int(game_id))] = {
+            "id": str(int(game_id)),
+            "name": str(name or "").strip(),
+            "alternate_names": alternate_names,
+        }
+    return candidates
+
+
+def load_crowdfunding_candidates(conn: sqlite3.Connection) -> List[Tuple[int, str]]:
+    """Load only games tagged with a BGG crowdfunding family."""
+    candidates: List[Tuple[int, str]] = []
+    for game_id, name, families_raw in conn.execute("SELECT id, name, families FROM games WHERE id IS NOT NULL AND name IS NOT NULL"):
+        try:
+            families = json.loads(families_raw or "[]")
+        except (TypeError, ValueError):
+            families = []
+        family_names: List[str] = []
+        for family in families if isinstance(families, list) else []:
+            if isinstance(family, dict):
+                family_names.append(str(family.get("name", "")))
+            elif isinstance(family, str):
+                try:
+                    family_names.append(str(ast.literal_eval(family).get("name", "")))
+                except (SyntaxError, ValueError, AttributeError):
+                    family_names.append(family)
+        if any("crowdfunding:" in family.lower() for family in family_names):
+            candidates.append((int(game_id), str(name).strip()))
+    return candidates
+
+
 def fetch_yucata_game_urls(timeout: float = 20.0) -> Dict[str, str]:
     """Fetch Yucata catalog and map normalized names to GameInfo URLs."""
     payload = b"{}"
@@ -1052,6 +1130,248 @@ def fetch_forteller_narratives_catalog(timeout: float = 20.0) -> Dict[str, str]:
             mapping.setdefault(key, abs_url)
 
     return mapping
+
+
+def _crowdfunding_platform(url: str) -> str:
+    host = urllib.parse.urlparse(url).hostname or ""
+    host = host.lower().removeprefix("www.")
+    for domain, label in SUPPORTED_CROWDFUNDING_HOSTS.items():
+        if host == domain or host.endswith(f".{domain}"):
+            return label
+    return ""
+
+
+def _normalize_crowdfunding_url(url: str) -> str:
+    """Remove query-string tracking and private pledge parameters."""
+    parsed = urllib.parse.urlsplit(str(url or "").strip())
+    if not parsed.scheme or not parsed.netloc:
+        return str(url or "").strip()
+    return urllib.parse.urlunsplit((parsed.scheme, parsed.netloc, parsed.path.rstrip("/"), "", ""))
+
+
+def _find_existing_crowdfunding_links(entry: Dict[str, Any]) -> Set[str]:
+    links: Set[str] = set()
+    for item in entry.get("crowdfunding_links", []) if isinstance(entry, dict) else []:
+        if isinstance(item, str):
+            url = item.strip()
+        elif isinstance(item, dict):
+            url = str(item.get("url", "")).strip()
+        else:
+            url = ""
+        if url:
+            links.add(_normalize_crowdfunding_url(url).lower())
+    return links
+
+
+def fetch_gmt_p500_catalog(timeout: float = 20.0) -> Dict[str, Dict[str, str]]:
+    """Fetch active and historical GMT P500 products by normalized title."""
+    catalog: Dict[str, Dict[str, str]] = {}
+
+    def add_products(body: str, title_tag: str, require_p500: bool = False) -> None:
+        pattern = (
+            rf"<a\s+href=[\"']([^\"']*/p-[^\"']+)[\"'][^>]*>"
+            rf"(.*?){title_tag}[^>]*>(.*?)</{title_tag}>(.*?)</a>"
+        )
+        for match in re.finditer(pattern, body, flags=re.IGNORECASE | re.DOTALL):
+            href, before_title, raw_title, after_title = match.groups()
+            product_html = f"{before_title}{raw_title}{after_title}"
+            if require_p500 and not re.search(r"\bP500\b", product_html, flags=re.IGNORECASE):
+                continue
+            url = urllib.parse.urljoin("https://www.gmtgames.com/", href)
+            title = " ".join(html.unescape(re.sub(r"<[^>]+>", " ", raw_title)).split())
+            if not title:
+                continue
+            add_title(title, url)
+
+    def add_title(title: str, url: str) -> None:
+        if not title:
+            return
+        variants = [title]
+        without_status = re.sub(r"\s+P500\b.*$", "", title, flags=re.IGNORECASE)
+        variants.append(without_status)
+        variants.append(
+            re.sub(
+                r",?\s+(?:\d+(?:st|nd|rd|th)?\s+)?(?:printing|edition)\b.*$",
+                "",
+                without_status,
+                flags=re.IGNORECASE,
+            )
+        )
+        for variant in variants:
+            key = _normalize_name(variant)
+            if key:
+                catalog.setdefault(key, {"url": url, "title": title})
+
+    request = urllib.request.Request(
+        GMT_P500_CATALOG_URL,
+        headers={"User-Agent": "Mozilla/5.0 (GameCache sidecar sync)"},
+    )
+    with urllib.request.urlopen(request, timeout=timeout) as response:
+        add_products(response.read().decode("utf-8", errors="replace"), "h3")
+
+    for page_number in range(0, 20):
+        query = urllib.parse.urlencode({
+            "AjaxSearch": "true",
+            "CurrentEntityType": "Manufacturer",
+            "CurrentEntityID": "2",
+            "CurrentAffiliateID": "0",
+            "PageNumber": str(page_number),
+            "PageSize": str(GMT_PRODUCT_PAGE_SIZE),
+            "PageSort": "Name",
+            "DisplayType": "Grid",
+            "stockFilter": "on",
+            "Filter": "undefined",
+        })
+        request = urllib.request.Request(
+            f"{GMT_PRODUCT_SEARCH_URL}?{query}",
+            headers={
+                "User-Agent": "Mozilla/5.0 (GameCache sidecar sync)",
+                "X-Requested-With": "XMLHttpRequest",
+            },
+        )
+        with urllib.request.urlopen(request, timeout=timeout) as response:
+            body = response.read().decode("utf-8", errors="replace")
+        before = len(catalog)
+        add_products(body, "h2")
+        if not re.search(r"/p-\d+-", body) or len(catalog) == before and page_number > 0:
+            break
+    return catalog
+
+
+def enrich_gmt_p500_links(
+    data: Dict[str, Any],
+    candidates: Dict[str, Dict[str, Any]],
+    catalog: Dict[str, Dict[str, str]],
+) -> int:
+    """Add confident GMT P500 links to existing GMT game sidecar entries."""
+    added = 0
+    games = data.setdefault("games", {})
+    assigned_urls = _find_existing_crowdfunding_links({
+        "crowdfunding_links": [
+            item
+            for entry in games.values()
+            if isinstance(entry, dict)
+            for item in entry.get("crowdfunding_links", [])
+        ]
+    })
+    for game_id, candidate in candidates.items():
+        entry = games.get(game_id)
+        if not isinstance(entry, dict):
+            continue
+        existing = _find_existing_crowdfunding_links(entry)
+        match = None
+        candidate_names = [candidate.get("name", "")] + list(candidate.get("alternate_names", []))
+        for candidate_name in candidate_names:
+            key = _normalize_name(str(candidate_name))
+            if key in catalog:
+                match = catalog[key]
+                break
+            if match:
+                break
+        if not match:
+            continue
+        url = match["url"]
+        normalized_url = url.lower().rstrip("/")
+        if normalized_url in assigned_urls:
+            continue
+        if url.lower().rstrip("/") in existing:
+            for item in entry.get("crowdfunding_links", []):
+                if isinstance(item, dict) and str(item.get("url", "")).lower().rstrip("/") == url.lower().rstrip("/"):
+                    item["name"] = match["title"]
+                    item["site"] = "GMT P500"
+                    item.pop("display_name", None)
+            continue
+        entry.setdefault("crowdfunding_links", []).append({
+            "name": match["title"],
+            "site": "GMT P500",
+            "url": url,
+        })
+        assigned_urls.add(normalized_url)
+        added += 1
+    return added
+
+
+def fetch_bgg_crowdfunding_links(game_id: int, timeout: float = 20.0) -> List[Dict[str, str]]:
+    """Extract supported crowdfunding campaign links from a BGG game page."""
+    request = urllib.request.Request(
+        BGG_GAME_URL.format(game_id=game_id),
+        headers={"User-Agent": "Mozilla/5.0 (GameCache sidecar sync)"},
+    )
+    with urllib.request.urlopen(request, timeout=timeout) as response:
+        body = response.read().decode("utf-8", errors="replace")
+
+    found: List[Dict[str, str]] = []
+    seen: Set[str] = set()
+    href_urls = re.findall(r"href\s*=\s*['\"]([^'\"]+)['\"]", body, flags=re.IGNORECASE)
+    crowdfunding_domains = "|".join(re.escape(domain) for domain in SUPPORTED_CROWDFUNDING_HOSTS)
+    embedded_urls = re.findall(
+        rf"https?[^\"'<>\s]*(?:{crowdfunding_domains})[^\"'<>\s]+",
+        body,
+        flags=re.IGNORECASE,
+    )
+    for raw_url in href_urls + embedded_urls:
+        url = html.unescape(raw_url).strip()
+        url = url.replace("\\/", "/")
+        if url.startswith("//"):
+            url = f"https:{url}"
+        url = _normalize_crowdfunding_url(url)
+        if not url.startswith(("http://", "https://")):
+            continue
+        platform = _crowdfunding_platform(url)
+        if not platform:
+            continue
+        parsed = urllib.parse.urlparse(url)
+        path = parsed.path.lower()
+        if platform == "Kickstarter" and "/projects/" not in path:
+            continue
+        if platform == "Gamefound" and "/projects/" not in path:
+            continue
+        key = url.lower().rstrip("/")
+        if key in seen:
+            continue
+        seen.add(key)
+        found.append({"name": platform, "url": url})
+    return found
+
+
+def enrich_crowdfunding_links(
+    data: Dict[str, Any], rows: List[Tuple[int, str]], timeout: float = 20.0, workers: int = 12
+) -> Tuple[int, int]:
+    """Add supported crowdfunding links found on each game's BGG page."""
+    added = 0
+    checked = 0
+    def discover(row: Tuple[int, str]) -> Tuple[int, List[Dict[str, str]]]:
+        game_id, _name = row
+        try:
+            return game_id, fetch_bgg_crowdfunding_links(game_id, timeout=timeout)
+        except Exception:
+            return game_id, []
+
+    with ThreadPoolExecutor(max_workers=max(1, min(workers, len(rows) or 1))) as executor:
+        discovered_rows = executor.map(discover, rows)
+        for game_id, discovered in discovered_rows:
+            game_name = next((name for candidate_id, name in rows if candidate_id == game_id), "")
+            entry = data.get("games", {}).get(str(game_id), {})
+            if not isinstance(entry, dict):
+                continue
+            checked += 1
+            existing = _find_existing_crowdfunding_links(entry)
+            links = entry.setdefault("crowdfunding_links", [])
+            if not isinstance(links, list):
+                links = []
+                entry["crowdfunding_links"] = links
+            for item in discovered:
+                key = _normalize_crowdfunding_url(item["url"]).lower()
+                if key in existing:
+                    continue
+                links.append({
+                    "name": game_name,
+                    "site": item.get("name", ""),
+                    "url": item["url"],
+                })
+                existing.add(key)
+                added += 1
+    return added, checked
 
 
 def _boardspace_name_keys(value: str) -> List[str]:
@@ -3131,6 +3451,7 @@ def sync_sidecar(data: Dict, rows: List[Tuple[int, str]]) -> Tuple[Dict, int, in
                 "short_description": "",
                 "rulebooks": [],
                 "supplemental_files": [],
+                "crowdfunding_links": [],
             }
             added += 1
             continue
@@ -3142,6 +3463,7 @@ def sync_sidecar(data: Dict, rows: List[Tuple[int, str]]) -> Tuple[Dict, int, in
                 "short_description": "",
                 "rulebooks": [],
                 "supplemental_files": [],
+                "crowdfunding_links": [],
             }
             updated_existing += 1
             continue
@@ -3151,6 +3473,7 @@ def sync_sidecar(data: Dict, rows: List[Tuple[int, str]]) -> Tuple[Dict, int, in
         entry.setdefault("short_description", "")
         entry.setdefault("rulebooks", [])
         entry.setdefault("supplemental_files", [])
+        entry.setdefault("crowdfunding_links", [])
         if entry != before:
             updated_existing += 1
 
@@ -3197,6 +3520,22 @@ def main() -> int:
         "--report-yucata-misses",
         action="store_true",
         help="Print unresolved Yucata candidates after matching so overrides can be added.",
+    )
+    parser.add_argument(
+        "--skip-crowdfunding-auto-links",
+        action="store_true",
+        help="Skip crowdfunding link discovery from BoardGameGeek game pages.",
+    )
+    parser.add_argument(
+        "--crowdfunding-timeout",
+        type=float,
+        default=10.0,
+        help="Timeout in seconds for each BGG crowdfunding page request (default: 10).",
+    )
+    parser.add_argument(
+        "--skip-gmt-p500-auto-links",
+        action="store_true",
+        help="Skip GMT Games P500 catalog matching.",
     )
     parser.add_argument(
         "--skip-tabletopia-auto-links",
@@ -3277,6 +3616,7 @@ def main() -> int:
     conn = sqlite3.connect(str(db_path))
     try:
         rows = choose_canonical_names(conn)
+        crowdfunding_rows = load_crowdfunding_candidates(conn)
         all_name_candidates = load_all_name_candidates(conn)
         yucata_candidates = load_yucata_candidates(conn)
         tabletopia_candidates = load_tabletopia_candidates(conn)
@@ -3284,6 +3624,7 @@ def main() -> int:
         tabletop_simulator_candidates = load_tabletop_simulator_candidates(conn)
         brettspielwelt_candidates = load_brettspielwelt_candidates(conn)
         boardspace_candidates = load_boardspace_candidates(conn)
+        gmt_candidates = load_gmt_candidates(conn)
     finally:
         conn.close()
 
@@ -3307,6 +3648,9 @@ def main() -> int:
     brettspielwelt_corrected = 0
     boardspace_corrected = 0
     forteller_unmatched = 0
+    crowdfunding_added = 0
+    crowdfunding_checked = 0
+    gmt_p500_added = 0
     tabletopia_premium_catalog_count = 0
     tabletopia_status_notes_updated = 0
     vassal_status_notes_updated = 0
@@ -3441,6 +3785,21 @@ def main() -> int:
         except Exception as exc:
             forteller_error = str(exc)
 
+    if not args.skip_crowdfunding_auto_links:
+        try:
+            crowdfunding_added, crowdfunding_checked = enrich_crowdfunding_links(
+                data, crowdfunding_rows, timeout=args.crowdfunding_timeout
+            )
+        except Exception as exc:
+            print(f"crowdfunding_error={exc}")
+
+    if not args.skip_gmt_p500_auto_links:
+        try:
+            gmt_catalog = fetch_gmt_p500_catalog(timeout=args.crowdfunding_timeout)
+            gmt_p500_added = enrich_gmt_p500_links(data, gmt_candidates, gmt_catalog)
+        except Exception as exc:
+            print(f"gmt_p500_error={exc}")
+
     online_statuses_updated = annotate_online_statuses(data, tabletopia_premium_by_short_url=tabletopia_premium_by_short_url)
     owned_removed_from_online = strip_owned_from_online_entries(data)
 
@@ -3471,6 +3830,10 @@ def main() -> int:
         print(f"would_correct_brettspielwelt_links={brettspielwelt_corrected}")
         print(f"would_correct_boardspace_links={boardspace_corrected}")
         print(f"would_unmatched_forteller_catalog_items={forteller_unmatched}")
+        print(f"would_add_crowdfunding_links={crowdfunding_added}")
+        print(f"crowdfunding_family_candidates={len(crowdfunding_rows)}")
+        print(f"crowdfunding_pages_checked={crowdfunding_checked}")
+        print(f"would_add_gmt_p500_links={gmt_p500_added}")
         print(f"tabletopia_premium_catalog_count={tabletopia_premium_catalog_count}")
         print(f"would_update_tabletopia_statuses_notes={tabletopia_status_notes_updated}")
         print(f"would_update_vassal_statuses_notes={vassal_status_notes_updated}")
@@ -3501,7 +3864,7 @@ def main() -> int:
 
     sidecar_path.parent.mkdir(parents=True, exist_ok=True)
     with sidecar_path.open("w", encoding="utf-8") as f:
-        json.dump(data, f, indent=2, ensure_ascii=True)
+        json.dump(data, f, indent=2, ensure_ascii=False)
         f.write("\n")
 
     print(f"rows_seen={len(rows)}")
@@ -3530,6 +3893,10 @@ def main() -> int:
     print(f"corrected_brettspielwelt_links={brettspielwelt_corrected}")
     print(f"corrected_boardspace_links={boardspace_corrected}")
     print(f"unmatched_forteller_catalog_items={forteller_unmatched}")
+    print(f"added_crowdfunding_links={crowdfunding_added}")
+    print(f"crowdfunding_family_candidates={len(crowdfunding_rows)}")
+    print(f"crowdfunding_pages_checked={crowdfunding_checked}")
+    print(f"added_gmt_p500_links={gmt_p500_added}")
     print(f"tabletopia_premium_catalog_count={tabletopia_premium_catalog_count}")
     print(f"updated_tabletopia_statuses_notes={tabletopia_status_notes_updated}")
     print(f"updated_vassal_statuses_notes={vassal_status_notes_updated}")

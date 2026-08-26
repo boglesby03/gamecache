@@ -721,6 +721,13 @@ textarea:focus {
   font-weight: 600;
 }
 
+.detail-link-icon {
+  width: 16px;
+  height: 16px;
+  object-fit: contain;
+  flex: 0 0 auto;
+}
+
 .detail-link:hover {
   background: rgba(0, 109, 119, 0.08);
   text-decoration: none;
@@ -805,12 +812,40 @@ label span {
 }
 
 .doc-row-view-title {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
   font-weight: 600;
   font-size: 0.9rem;
   color: var(--ink);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+.crowdfunding-source-field {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  min-width: 0;
+}
+
+.crowdfunding-source-field select {
+  min-width: 0;
+  width: 100%;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: #fff;
+  color: var(--ink);
+  padding: 0.55rem 0.65rem;
+  font: inherit;
+}
+
+.crowdfunding-source-icon {
+  width: 1.15rem;
+  height: 1.15rem;
+  flex: 0 0 auto;
+  border-radius: 0.25rem;
 }
 
 .doc-row-view-url {
@@ -820,6 +855,13 @@ label span {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+.doc-row-view-display-name {
+  margin-top: 0.3rem;
+  color: var(--muted);
+  font-size: 0.82rem;
+  font-weight: 600;
 }
 
 .doc-row-view-url-row,
@@ -1078,6 +1120,96 @@ button[data-action="save-row"] {
   grid-template-columns: 22px minmax(95px, 130px) minmax(0, 2.7fr) minmax(105px, 130px) max-content;
   gap: 0.45rem;
   align-items: center;
+}
+
+.crowdfunding-row {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  width: 100%;
+  min-width: 0;
+  border: 0 !important;
+  padding: 0 !important;
+  background: transparent !important;
+}
+
+.crowdfunding-row .platform-row-edit {
+  display: block;
+  width: 100%;
+  min-width: 0;
+}
+
+.crowdfunding-row .platform-row-main {
+  width: 100%;
+  min-width: 0;
+  grid-template-columns: 22px minmax(95px, 130px) minmax(0, 1fr) max-content;
+}
+
+.crowdfunding-row .platform-row-main > .row-actions {
+  grid-column: 4;
+}
+
+.crowdfunding-row select[data-key="name-select"] {
+  width: 100%;
+  min-width: 0;
+}
+
+.crowdfunding-row .platform-row-view {
+  display: block;
+  width: 100%;
+  min-width: 0;
+  border: 1px solid rgba(216, 210, 199, 0.9);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.9);
+  padding: 0.5rem 0.6rem;
+}
+
+.crowdfunding-row .platform-row-view-top {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  min-width: 0;
+}
+
+.crowdfunding-row .platform-row-view-top .row-actions-view-inline {
+  margin-left: auto;
+}
+
+.crowdfunding-row .platform-row-view-store {
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.crowdfunding-row .platform-row-view-note {
+  margin-top: 0.35rem;
+  color: var(--muted);
+  font-size: 0.82rem;
+  font-weight: 600;
+}
+
+.crowdfunding-row .platform-row-view-url {
+  margin-top: 0.1rem;
+  color: var(--muted);
+  font-size: 0.78rem;
+}
+
+.crowdfunding-row[data-editing="true"] .platform-row-view,
+.crowdfunding-row[data-editing="true"] .row-actions-view-inline {
+  display: none;
+}
+
+.crowdfunding-row[data-editing="false"] .platform-row-edit,
+.crowdfunding-row[data-editing="false"] button[data-action="save-row"] {
+  display: none;
+}
+
+.crowdfunding-row[data-editing="false"] .platform-row-view,
+.crowdfunding-row[data-editing="false"] .row-actions-view-inline {
+  display: inline-flex;
+}
+
+.crowdfunding-row[data-editing="false"] .platform-row-view {
+  display: block;
 }
 
 .url-input-group {

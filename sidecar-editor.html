@@ -113,6 +113,7 @@
               <div class="cover-meta-row"><dt>Plays</dt><dd id="field-sqlite-numplays">-</dd></div>
             </dl>
             <a id="field-bgg-link" class="detail-link hidden" href="#" target="_blank" rel="noopener noreferrer">
+              <img class="detail-link-icon" src="https://www.google.com/s2/favicons?domain=boardgamegeek.com&sz=64" alt="" aria-hidden="true">
               View on BoardGameGeek
             </a>
           </div>
@@ -153,6 +154,16 @@
             </button>
           </div>
           <div id="supplemental-list" class="doc-list"></div>
+        </section>
+
+        <section class="doc-section">
+          <div class="section-head">
+            <h3>Crowdfunding Links</h3>
+            <button type="button" id="add-crowdfunding" class="btn mini" title="Add crowdfunding link">
+              <span class="material-symbols-rounded" aria-hidden="true">add</span>
+            </button>
+          </div>
+          <div id="crowdfunding-list" class="doc-list"></div>
         </section>
 
         <section class="platform-grid">
@@ -246,6 +257,57 @@
         <button type="button" class="btn mini danger" data-action="remove" title="Remove row">
           <span class="material-symbols-rounded" aria-hidden="true">delete</span>
         </button>
+      </div>
+    </div>
+  </template>
+
+  <template id="crowdfunding-row-template">
+    <div class="doc-row crowdfunding-row" data-editing="false" data-has-saved="false">
+      <div class="platform-row-edit">
+        <div class="platform-row-main">
+          <span class="store-icon-slot" data-key="source-icon-slot" aria-hidden="true"><img class="store-icon-logo" data-key="source-icon" alt="" /></span>
+          <select data-key="name-select" aria-label="Crowdfunding source"></select>
+          <div class="url-input-group">
+            <input type="url" data-key="url" placeholder="https://..." />
+            <button type="button" class="btn mini ghost swap-btn" data-action="swap-fields" title="Swap Display Name and URL" aria-label="Swap Display Name and URL">
+              <span class="material-symbols-rounded" aria-hidden="true">swap_horiz</span>
+            </button>
+          </div>
+          <div class="row-actions">
+            <button type="button" class="btn mini ghost drag-handle" data-action="drag-handle" title="Drag to reorder" draggable="true">
+              <span class="material-symbols-rounded" aria-hidden="true">drag_indicator</span>
+            </button>
+            <button type="button" class="btn mini ghost" data-action="move-up" title="Move up"><span class="material-symbols-rounded" aria-hidden="true">keyboard_arrow_up</span></button>
+            <button type="button" class="btn mini ghost" data-action="move-down" title="Move down"><span class="material-symbols-rounded" aria-hidden="true">keyboard_arrow_down</span></button>
+            <button type="button" class="btn mini ghost" data-action="edit-row" title="Edit row"><span class="material-symbols-rounded" aria-hidden="true">edit</span></button>
+            <button type="button" class="btn mini hidden" data-action="save-row" title="Save row"><span class="material-symbols-rounded" aria-hidden="true">save</span></button>
+            <button type="button" class="btn mini danger" data-action="remove" title="Remove row"><span class="material-symbols-rounded" aria-hidden="true">delete</span></button>
+          </div>
+        </div>
+        <label class="platform-note-wrap">
+          <span>Display Name</span>
+          <input type="text" data-key="display-name" placeholder="Shown name for this campaign..." />
+        </label>
+      </div>
+      <div class="platform-row-view hidden" data-key="row-view">
+        <div class="platform-row-view-top">
+          <span class="store-icon-slot" data-key="view-source-icon" aria-hidden="true"><img class="store-icon-logo" data-key="view-source-icon-image" alt="" /></span>
+          <span class="platform-row-view-store" data-key="view-name"></span>
+          <div class="row-actions row-actions-view-inline">
+            <button type="button" class="btn mini ghost drag-handle" data-action="drag-handle" title="Drag to reorder" draggable="true"><span class="material-symbols-rounded" aria-hidden="true">drag_indicator</span></button>
+            <button type="button" class="btn mini ghost" data-action="move-up" title="Move up"><span class="material-symbols-rounded" aria-hidden="true">keyboard_arrow_up</span></button>
+            <button type="button" class="btn mini ghost" data-action="move-down" title="Move down"><span class="material-symbols-rounded" aria-hidden="true">keyboard_arrow_down</span></button>
+            <button type="button" class="btn mini ghost" data-action="edit-row" title="Edit row"><span class="material-symbols-rounded" aria-hidden="true">edit</span></button>
+            <button type="button" class="btn mini danger" data-action="remove" title="Remove row"><span class="material-symbols-rounded" aria-hidden="true">delete</span></button>
+          </div>
+        </div>
+        <div class="platform-row-view-note" data-key="view-display-name"></div>
+        <div class="platform-row-view-url-row">
+          <div class="platform-row-view-url" data-key="view-url"></div>
+          <a class="row-link row-link-icon hidden" data-key="view-link" href="#" target="_blank" rel="noopener noreferrer" title="Open link" aria-label="Open link">
+            <span class="material-symbols-rounded" aria-hidden="true">public</span>
+          </a>
+        </div>
       </div>
     </div>
   </template>

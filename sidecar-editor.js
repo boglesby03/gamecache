@@ -62,12 +62,15 @@
     shortDescriptionSave: document.getElementById("short-description-save"),
     rulebooksList: document.getElementById("rulebooks-list"),
     supplementalList: document.getElementById("supplemental-list"),
+    crowdfundingList: document.getElementById("crowdfunding-list"),
     addRulebook: document.getElementById("add-rulebook"),
     addSupplemental: document.getElementById("add-supplemental"),
+    addCrowdfunding: document.getElementById("add-crowdfunding"),
     forceSearchDigital: document.getElementById("force-search-digital"),
     forceSearchStatus: document.getElementById("force-search-status"),
     deleteGame: document.getElementById("delete-game"),
     docRowTemplate: document.getElementById("doc-row-template"),
+    crowdfundingRowTemplate: document.getElementById("crowdfunding-row-template"),
     platformRowTemplate: document.getElementById("platform-row-template"),
     gamesTab: document.getElementById("games-tab"),
     overridesTab: document.getElementById("overrides-tab"),
@@ -88,6 +91,23 @@
     pc: ["Steam", "Web", "Tabletopia", "Yucata", "VASSAL", "BrettspielWelt", "Boardspace", "Forteller Narratives", "BGA", "Epic", "EA app", "Ubisoft Connect", "GOG", "Microsoft Store", "itch.io", "Humble", "Amazon"],
     online: ["Tabletop Simulator", "Tabletopia", "Board Game Arena", "Yucata", "VASSAL", "BrettspielWelt", "Boiteajeux", "Subscrybe", "Boardspace"],
   };
+  const CROWDFUNDING_SOURCES = [
+    { value: "Gamefound", domain: "gamefound.com" },
+    { value: "Kickstarter", domain: "kickstarter.com" },
+    { value: "BackerKit", domain: "backerkit.com" },
+    { value: "GMT P500", domain: "gmtgames.com" },
+    { value: "Indiegogo", domain: "indiegogo.com" },
+    { value: "Game On Tabletop", domain: "gameontabletop.com" },
+    { value: "Verkami", domain: "verkami.com" },
+    { value: "Spieleschmiede", domain: "spieleschmiede.com" },
+    { value: "Wspieram", domain: "wspieram.to" },
+    { value: "Ulule", domain: "ulule.com" },
+    { value: "Giochistarter", domain: "giochistarter.it" },
+    { value: "Zeczec", domain: "zeczec.com" },
+    { value: "Modian", domain: "modian.com" },
+    { value: "Catarse", domain: "catarse.me" },
+    { value: "Tumblbug", domain: "tumblbug.com" },
+  ];
 
   const OVERRIDE_SECTIONS = [
     { key: "promos", title: "Promo Items", description: "These are items that should be labeled as Promos", fields: [["id", "BGG ID", "number"], ["name", "Name", "text"]] },
@@ -106,6 +126,44 @@
 
   function getFaviconUrl(domain) {
     return `https://www.google.com/s2/favicons?domain=${encodeURIComponent(domain)}&sz=64`;
+  }
+
+  function getCrowdfundingSource(url) {
+    const hostname = String(url || "").toLowerCase();
+    return CROWDFUNDING_SOURCES.find((source) => hostname.includes(source.domain))?.value || "";
+  }
+
+  function populateCrowdfundingSourceSelect(select, currentValue) {
+    if (!select) return;
+    select.innerHTML = "";
+    const placeholder = document.createElement("option");
+    placeholder.value = "";
+    placeholder.textContent = "Select source...";
+    select.appendChild(placeholder);
+    for (const source of CROWDFUNDING_SOURCES) {
+      const option = document.createElement("option");
+      option.value = source.value;
+      option.textContent = source.value;
+      select.appendChild(option);
+    }
+    const value = String(currentValue || "").trim();
+    if (value && !CROWDFUNDING_SOURCES.some((source) => source.value === value)) {
+      const custom = document.createElement("option");
+      custom.value = value;
+      custom.textContent = value;
+      select.appendChild(custom);
+    }
+    select.value = value;
+  }
+
+  function updateCrowdfundingSourceIcon(row) {
+    const icon = row.querySelector('[data-key="source-icon"]');
+    const select = row.querySelector('[data-key="name-select"]');
+    if (!icon || !select) return;
+    const source = CROWDFUNDING_SOURCES.find((item) => item.value === select.value);
+    icon.src = source ? getFaviconUrl(source.domain) : "";
+    icon.classList.toggle("hidden", !source);
+    icon.alt = source ? `${source.value} icon` : "";
   }
 
   function isValidUrl(urlStr) {
@@ -423,6 +481,9 @@
       if (!url) continue;
       const doc = { url };
       if (name) doc.name = name;
+      if (item && typeof item === "object" && item.display_name) {
+        doc.display_name = String(item.display_name).trim();
+      }
       docs.push(doc);
     }
 
@@ -524,12 +585,14 @@
     const shortDescription = String(entry.short_description || "").trim();
     const rulebooks = normalizeDocuments(entry.rulebooks);
     const supplementalFiles = normalizeDocuments(entry.supplemental_files);
+    const crowdfundingLinks = normalizeCrowdfundingLinks(entry.crowdfunding_links, name);
 
     const normalized = {
       name,
       short_description: shortDescription,
       rulebooks,
       supplemental_files: supplementalFiles,
+      crowdfunding_links: crowdfundingLinks,
     };
 
     for (const platform of PLATFORM_KEYS) {
@@ -540,6 +603,20 @@
     }
 
     return normalized;
+  }
+
+  function normalizeCrowdfundingLinks(raw, fallbackGameName = "") {
+    if (!Array.isArray(raw)) return [];
+    return raw.flatMap((item) => {
+      const source = item && typeof item === "object" ? String(item.site || item.name || "").trim() : "";
+      const url = typeof item === "string" ? item.trim() : String(item?.url || "").trim();
+      if (!url) return [];
+      const title = item && typeof item === "object"
+        ? String(item.name && item.site ? item.name : item.display_name || (source && !item.site ? fallbackGameName : item.name) || fallbackGameName).trim()
+        : fallbackGameName;
+      const link = { name: title || fallbackGameName, site: source, url };
+      return link.name || link.site ? [link] : [];
+    });
   }
 
   function getGameIdsFromJsonText(text) {
@@ -1112,6 +1189,11 @@
 
     for (const row of rows) {
       if (row.dataset.editing === "true") {
+        const currentDoc = readDocRowInputs(row);
+        if (currentDoc) {
+          docs.push(currentDoc);
+          continue;
+        }
         if (row.dataset.hasSaved === "true") {
           const savedDoc = readSavedRowPayload(row);
           if (savedDoc && savedDoc.url) docs.push(savedDoc);
@@ -1239,6 +1321,7 @@
 
     renderDocList(els.rulebooksList, entry.rulebooks || []);
     renderDocList(els.supplementalList, entry.supplemental_files || []);
+    renderDocList(els.crowdfundingList, entry.crowdfunding_links || []);
 
     for (const platform of PLATFORM_KEYS) {
       renderPlatformList(platform, normalizePlatformEntries(entry[platform]), entry.name);
@@ -1254,6 +1337,7 @@
       short_description: getSavedShortDescriptionValue(),
       rulebooks: readDocList(els.rulebooksList),
       supplemental_files: readDocList(els.supplementalList),
+      crowdfunding_links: readDocList(els.crowdfundingList),
     };
 
     for (const platform of PLATFORM_KEYS) {
@@ -1888,12 +1972,24 @@ ${entries.join(",\n")}
   }
 
   function addDocRow(target, entry = {}, options = {}) {
-    const row = els.docRowTemplate.content.firstElementChild.cloneNode(true);
     const editing = options.editing !== false;
     const hasSaved = options.hasSaved === true;
+    const isCrowdfunding = target.id === "crowdfunding-list";
+    const template = isCrowdfunding ? els.crowdfundingRowTemplate : els.docRowTemplate;
+    const row = template.content.firstElementChild.cloneNode(true);
+    row.dataset.docKind = isCrowdfunding ? "crowdfunding" : "document";
 
-    row.querySelector('[data-key="name"]').value = entry.name || "";
+    if (isCrowdfunding) {
+      const sourceSelect = row.querySelector('[data-key="name-select"]');
+      const sourceName = entry.site || getCrowdfundingSource(entry.url);
+      populateCrowdfundingSourceSelect(sourceSelect, sourceName);
+      row.querySelector('[data-key="display-name"]').value = entry.name || "";
+      sourceSelect.addEventListener("change", () => updateCrowdfundingSourceIcon(row));
+    } else {
+      row.querySelector('[data-key="name"]').value = entry.name || "";
+    }
     row.querySelector('[data-key="url"]').value = entry.url || "";
+    updateCrowdfundingSourceIcon(row);
     if (hasSaved) {
       writeSavedRowPayload(row, readDocRowInputs(row));
     }
@@ -1946,11 +2042,19 @@ ${entries.join(",\n")}
   }
 
   function readDocRowInputs(row) {
-    const name = String(row.querySelector('[data-key="name"]').value || "").trim();
+    const nameInput = row.querySelector('[data-key="name"]');
+    const sourceSelect = row.querySelector('[data-key="name-select"]');
+    const name = row.dataset.docKind === "crowdfunding"
+      ? String(row.querySelector('[data-key="display-name"]')?.value || "").trim()
+      : String(nameInput?.value || "").trim();
     const url = String(row.querySelector('[data-key="url"]').value || "").trim();
     if (!url) return null;
     const doc = { url };
     if (name) doc.name = name;
+    if (row.dataset.docKind === "crowdfunding") {
+      const site = String(sourceSelect?.value || "").trim();
+      if (site) doc.site = site;
+    }
     return doc;
   }
 
@@ -2016,11 +2120,27 @@ ${entries.join(",\n")}
     const urlTarget = row.querySelector('[data-key="view-url"]');
     if (!nameTarget || !urlTarget) return;
 
-    const name = String(row.querySelector('[data-key="name"]').value || "").trim();
+    const name = row.dataset.docKind === "crowdfunding"
+      ? String(row.querySelector('[data-key="display-name"]')?.value || "").trim()
+      : String(row.querySelector('[data-key="name"]').value || "").trim();
     const url = normalizeUrl(row.querySelector('[data-key="url"]').value || "");
+    const displayName = String(row.querySelector('[data-key="display-name"]')?.value || "").trim();
 
     nameTarget.textContent = name || "Document link";
     urlTarget.textContent = url || "No URL";
+    const displayNameTarget = row.querySelector('[data-key="view-display-name"]');
+    if (displayNameTarget) {
+      displayNameTarget.textContent = displayName;
+      displayNameTarget.classList.toggle("hidden", row.dataset.docKind !== "crowdfunding" || !displayName);
+    }
+    const sourceIcon = row.querySelector('[data-key="view-source-icon-image"]');
+    const sourceName = String(row.querySelector('[data-key="name-select"]')?.value || "").trim();
+    const source = CROWDFUNDING_SOURCES.find((item) => item.value === sourceName);
+    if (sourceIcon) {
+      sourceIcon.src = source ? getFaviconUrl(source.domain) : "";
+      sourceIcon.classList.toggle("hidden", row.dataset.docKind !== "crowdfunding" || !source);
+      sourceIcon.alt = source ? `${source.value} icon` : "";
+    }
   }
 
   function updatePlatformRowView(row) {
@@ -2210,6 +2330,18 @@ ${entries.join(",\n")}
       row.remove();
       refreshDuplicatePlatformUrls();
       commitEditorToState();
+      return;
+    }
+
+    if (action === "swap-fields" && row.dataset.docKind === "crowdfunding") {
+      const displayNameInput = row.querySelector('[data-key="display-name"]');
+      const urlInput = row.querySelector('[data-key="url"]');
+      if (displayNameInput && urlInput) {
+        const tmp = displayNameInput.value;
+        displayNameInput.value = urlInput.value;
+        urlInput.value = tmp;
+        updateRowViewPreview(row);
+      }
       return;
     }
 
@@ -2494,6 +2626,10 @@ ${entries.join(",\n")}
       addDocRow(els.supplementalList, {}, { editing: true, hasSaved: false });
     });
 
+    els.addCrowdfunding.addEventListener("click", () => {
+      addDocRow(els.crowdfundingList, {}, { editing: true, hasSaved: false });
+    });
+
     document.querySelectorAll('button[data-action="add-platform-entry"]').forEach((button) => {
       button.addEventListener('click', () => {
         const gameName = state.selectedId && state.data.games[state.selectedId]
@@ -2505,6 +2641,7 @@ ${entries.join(",\n")}
 
     els.rulebooksList.addEventListener("click", onDocListClick);
     els.supplementalList.addEventListener("click", onDocListClick);
+    els.crowdfundingList.addEventListener("click", onDocListClick);
     document.querySelectorAll('[data-platform-list]').forEach((target) => {
       target.addEventListener('click', onPlatformListClick);
     });
