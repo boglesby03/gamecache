@@ -1,0 +1,2155 @@
+{
+  "source": "https://gamefound.com/en/users/yourprojects",
+  "captured_count": 307,
+  "projects": [
+    {
+      "name": "Herobound [Solo Game of the Month]",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/gabe-barrett/herobound-solo-game-of-the-month",
+      "project_id": 11861,
+      "phase": "Upcoming"
+    },
+    {
+      "name": "Call of Cthulhu: Old Ones Origins",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/chaosium/call-of-cthulhu-old-ones-origins",
+      "project_id": 8534,
+      "phase": "Upcoming"
+    },
+    {
+      "name": "The Danes - A Feast for Odin game",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/feuerland/the-danes---a-feast-for-odin-game",
+      "project_id": 11361,
+      "phase": "Upcoming"
+    },
+    {
+      "name": "Tend: Hive & Cellar Expansions",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/iv-studio/tend-expansions",
+      "project_id": 11718,
+      "phase": "Upcoming"
+    },
+    {
+      "name": "Defenders of the Realm: Definitive Edition",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/greater-than-games/defenders-of-the-realm",
+      "project_id": 11703,
+      "phase": "Upcoming"
+    },
+    {
+      "name": "Lorenzo il Magnifico - A New Renaissance",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/cranio-creations/lorenzo-il-magnifico-a-new-renaissance",
+      "project_id": 11629,
+      "phase": "Upcoming"
+    },
+    {
+      "name": "FIEF France 45th Anniversary Edition",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/international-team/fief-france-new-edition",
+      "project_id": 11835,
+      "phase": "Upcoming"
+    },
+    {
+      "name": "Arkham Horror Remastered - Vault Series",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/asmodee/arkham-horror",
+      "project_id": 11582,
+      "phase": "Upcoming"
+    },
+    {
+      "name": "Bride of Spooktacular",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/level-99-games/bride-of-spooktacular",
+      "project_id": 6291,
+      "phase": "Upcoming"
+    },
+    {
+      "name": "Galileo's Truth",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/awaken-realms/galileo",
+      "project_id": 6045,
+      "phase": "Crowdfunding - Funded"
+    },
+    {
+      "name": "Cirque",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/lithic-studios/cirque",
+      "project_id": 10059,
+      "phase": "Crowdfunding"
+    },
+    {
+      "name": "The Mix",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/guime/the-mix",
+      "project_id": 4238,
+      "phase": "Pledge manager - Limited"
+    },
+    {
+      "name": "Showrunner [Solo Game of the Month]",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/gabe-barrett/showrunner-solo-game-of-the-month",
+      "project_id": 11662,
+      "phase": "Crowdfunding - Funded"
+    },
+    {
+      "name": "Incarnation",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/monolith-board-games-sarl/incarnation",
+      "project_id": 11336,
+      "phase": "Upcoming"
+    },
+    {
+      "name": "Garden Dragons",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/ba-games-co/garden-dragons",
+      "project_id": 8047,
+      "phase": "Crowdfunding"
+    },
+    {
+      "name": "Colonial 1700-1800",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/juegos_mosquete/colonial_1700-1800",
+      "project_id": 3299,
+      "phase": "Pledge manager - Open for all"
+    },
+    {
+      "name": "Slavmortis",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/portalgames/slavmortis",
+      "project_id": 11369,
+      "phase": "Upcoming"
+    },
+    {
+      "name": "Sovereign: Shōgun",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/phalanx/shogun",
+      "project_id": 8200,
+      "phase": "Crowdfunding - Funded"
+    },
+    {
+      "name": "Ironmasters of Yorkshire",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/michal-jarzembowski/ironmasters-of-yorkshire",
+      "project_id": 8273,
+      "phase": "Upcoming"
+    },
+    {
+      "name": "Phantom Epoch: Last Chance + Localization",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/doteira-games/phantom-epoch-last-chance--localization",
+      "project_id": 11308,
+      "phase": "Upcoming"
+    },
+    {
+      "name": "Entropy",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/board-and-dice/entropy",
+      "project_id": 10010,
+      "phase": "Crowdfunding - Funded"
+    },
+    {
+      "name": "Age of Comics: The Vault Collection (Expansion)",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/liriusgames/age-of-comics-the-vault-collection",
+      "project_id": 11420,
+      "phase": "Crowdfunding - Funded"
+    },
+    {
+      "name": "The Outpost at Meerbridge: 1490 DOOM Starter Set",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/buer-games/1490doomstarterset",
+      "project_id": 11436,
+      "phase": "Express crowdfunding"
+    },
+    {
+      "name": "Whispers of the Deep + New Solo Expansion",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/black-site-studios/whispers-of-the-deep",
+      "project_id": 10052,
+      "phase": "Crowdfunding - Funded"
+    },
+    {
+      "name": "Opera Magna",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/LMS/operamagna",
+      "project_id": 9792,
+      "phase": "Upcoming"
+    },
+    {
+      "name": "Concordia Special Edition",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/awaken-realms/concordia-special-edition",
+      "project_id": 8525,
+      "phase": "Pledge manager - Open for all"
+    },
+    {
+      "name": "Siege Perilous",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/play-to-z/siege-perilous",
+      "project_id": 8264,
+      "phase": "Late Pledge - Open for all"
+    },
+    {
+      "name": "Stonesaga Second Printing",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/oomm-games/stonesaga-second-printing",
+      "project_id": 9678,
+      "phase": "Pledge manager - Open for all"
+    },
+    {
+      "name": "Ronin's Revenge",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/dragori-games/ronins-revenge",
+      "project_id": 5640,
+      "phase": "Late Pledge - Open for all"
+    },
+    {
+      "name": "Witch Hunter [Solo Game of the Month]",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/gabe-barrett/witch-hunter-solo-game-of-the-month",
+      "project_id": 9803,
+      "phase": "Pledge manager - Open for all"
+    },
+    {
+      "name": "The Great Library by Vital Lacerda with Art by Ian O'Toole",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/eagle-gryphon-games/the-great-library",
+      "project_id": 6802,
+      "phase": "Pledge manager - Limited"
+    },
+    {
+      "name": "Scoundrels",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/awaken-realms/scoundrels",
+      "project_id": 8527,
+      "phase": "Upcoming"
+    },
+    {
+      "name": "20 Strong: Nemesis, Tainted Grail, & Etherfields",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/chip-theory-games/20-strong-awaken-realms-nemesis",
+      "project_id": 8333,
+      "phase": "Pledge manager - Closed"
+    },
+    {
+      "name": "Claustrophobia 1692",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/devir/claustrophobia-1692",
+      "project_id": 6571,
+      "phase": "Late Pledge - Open for all"
+    },
+    {
+      "name": "Flatout Games - 2026 Releases",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/flatout-games/2026-releases",
+      "project_id": 8609,
+      "phase": "Pledge manager - Open for all"
+    },
+    {
+      "name": "Brass: Pittsburgh",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/roxley/Brass-Pittsburgh",
+      "project_id": 6169,
+      "phase": "Pledge manager - Open for all"
+    },
+    {
+      "name": "Batman: Gotham City Chronicles - Season 4",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/monolith-board-games-sarl/batman-gotham-city-chronicles---season-4",
+      "project_id": 8595,
+      "phase": "Upcoming"
+    },
+    {
+      "name": "Kemet: The Gates of Thonis",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/kolossal-games/kemet-the-gates-of-thonis",
+      "project_id": 8309,
+      "phase": "Crowdfunding - Funded"
+    },
+    {
+      "name": "Bloodstone",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/druid-city-games/bloodstone",
+      "project_id": 8454,
+      "phase": "Pledge manager - Open for all"
+    },
+    {
+      "name": "Astra Imperium [Solo Game of the Month]",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/gabe-barrett/astra-imperium-solo-game-of-the-month",
+      "project_id": 8296,
+      "phase": "Pledge manager - Open for all"
+    },
+    {
+      "name": "Nemesis Legacy",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/awaken-realms/nemesis-legacy",
+      "project_id": 8524,
+      "phase": "Upcoming"
+    },
+    {
+      "name": "Rurik Second Edition",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/fantasia-games/rurik-2nd-edition",
+      "project_id": 6103,
+      "phase": "Late Pledge - Open for all"
+    },
+    {
+      "name": "Dice Tower Pledge Drive 2026",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/dice-tower/dice-tower-pledge-drive-2026",
+      "project_id": 6820,
+      "phase": "Pledge manager - Open for all"
+    },
+    {
+      "name": "Pasteles & Conservas: Exotic Tides",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/saltandpepper/pasteles--conservas-exotic-tides",
+      "project_id": 8150,
+      "phase": "Pledge manager - Limited"
+    },
+    {
+      "name": "Dust in the Wind",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/phalanx/dust-in-the-wind",
+      "project_id": 8199,
+      "phase": "Upcoming"
+    },
+    {
+      "name": "Flockers",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/odd-bird/flockers",
+      "project_id": 6013,
+      "phase": "Pledge manager - Open for all"
+    },
+    {
+      "name": "Marco Polo Deluxe Master Set",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/board-and-dice/marco-polo-deluxe-master-set",
+      "project_id": 8165,
+      "phase": "Upcoming"
+    },
+    {
+      "name": "Zombicide: Dead Men Tales",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/asmodee/dead-men-tales",
+      "project_id": 8203,
+      "phase": "Pledge manager - Open for all"
+    },
+    {
+      "name": "Hitman: The Board Game",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/mood-publishing/hitman-the-board-game",
+      "project_id": 6626,
+      "phase": "Pledge manager - Open for all"
+    },
+    {
+      "name": "7 Wonders - Deluxe Series",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/reposproduction/7-wonders-deluxe-series",
+      "project_id": 8262,
+      "phase": "Upcoming"
+    },
+    {
+      "name": "Small Time Heroes Reprint and Expansion [Solo Game of the Month]",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/gabe-barrett/small-time-heroes-reprint-and-expansion-solo-game-of-the-month",
+      "project_id": 6817,
+      "phase": "Pledge manager - Open for all"
+    },
+    {
+      "name": "Room 25 : 5th edition",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/matagot/room-25--5th-edition",
+      "project_id": 6942,
+      "phase": "Upcoming"
+    },
+    {
+      "name": "Snowdonia: Grand Tour + Special Edition",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/naylorgames/snowdonia-grand-tour",
+      "project_id": 5150,
+      "phase": "Late Pledge - Open for all"
+    },
+    {
+      "name": "Queen of Spies",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/saltandpepper/queen-of-spies",
+      "project_id": 6392,
+      "phase": "Pledge manager - Limited"
+    },
+    {
+      "name": "Colt Express: The Complete Collection",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/tabletop-tycoon/colt-express-the-complete-collection",
+      "project_id": 6853,
+      "phase": "Pledge manager - Open for all"
+    },
+    {
+      "name": "Byzantion",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/meeple-pug/byzantion",
+      "project_id": 6117,
+      "phase": "Pledge manager - Closed"
+    },
+    {
+      "name": "Radiance [Solo Game of the Month]",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/gabe-barrett/radiance-solo-game-of-the-month",
+      "project_id": 6513,
+      "phase": "Pledge manager - Open for all"
+    },
+    {
+      "name": "Button Shy Reprint Campaign - Late 2025",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/button-shy-games/reprintcampaignlate2025",
+      "project_id": 6528,
+      "phase": "Pledge manager - Closed"
+    },
+    {
+      "name": "Terraforming Mars: The Legacy of Mars",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/stronghold-games/terraforming-mars-the-legacy-of--mars",
+      "project_id": 6631,
+      "phase": "Late Pledge - Open for all"
+    },
+    {
+      "name": "Goa",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/quined-games/goa",
+      "project_id": 6271,
+      "phase": "Pledge manager - Open for all"
+    },
+    {
+      "name": "The Hunters A. D. 1492 2nd Edition and Borderlands Expansion",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/officina-monstrorum/the-hunters-a-d-1492-2nd-edition-and-borderlands-expansion",
+      "project_id": 6493,
+      "phase": "Late Pledge - Ended"
+    },
+    {
+      "name": "Shadows of Authority - A Hegemony Expansion",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/hegemonic-project-games/hegemony-shadows-of-authority",
+      "project_id": 6503,
+      "phase": "Upcoming"
+    },
+    {
+      "name": "Inferno 1348 Deluxe & Inferno Deluxe Reprint",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/red-mojo-games/inferno-1348-deluxe-edition",
+      "project_id": 6459,
+      "phase": "Pledge manager - Open for all"
+    },
+    {
+      "name": "Quake The Board Game",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/archon-studio/quake-the-board-game",
+      "project_id": 6517,
+      "phase": "Upcoming"
+    },
+    {
+      "name": "VANEA: Guardians of the Eldertree",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/forgotten-tales/vanea",
+      "project_id": 5217,
+      "phase": "Crowdfunding - Canceled"
+    },
+    {
+      "name": "Terra Mystica Special Edition",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/steamforged-games/terra-mystica",
+      "project_id": 6236,
+      "phase": "Crowdfunding - Funded"
+    },
+    {
+      "name": "ARK NOVA - 3DITION",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/kekpop-spiele/ark-nova",
+      "project_id": 4873,
+      "phase": "Late Pledge - Open for all"
+    },
+    {
+      "name": "The Gilded Realms: International Print & Expansion",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/sandtime/the-gilded-realms-international-print--expansion",
+      "project_id": 5422,
+      "phase": "Late Pledge - Open for all"
+    },
+    {
+      "name": "Storybook Saga [Solo Game of the Month]",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/gabe-barrett/storybook-saga-solo-game-of-the-month",
+      "project_id": 6225,
+      "phase": "Pledge manager - Closed"
+    },
+    {
+      "name": "Dogs of War",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/play-to-z/dogs-of-war",
+      "project_id": 6244,
+      "phase": "Pledge manager - Open for all"
+    },
+    {
+      "name": "The Voynich Puzzle",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/saltandpepper/the-voynich-puzzle",
+      "project_id": 5397,
+      "phase": "Pledge manager - Closed"
+    },
+    {
+      "name": "Blood Rage: Valhalla",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/tabletop-tycoon/blood-rage-valhalla",
+      "project_id": 5997,
+      "phase": "Pledge manager - Closed"
+    },
+    {
+      "name": "Cretaceous Rails Reprint and Cretaceous Seas Expansion",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/spielcraft-games/cretaceous-rails-reprint-and-cretaceous-seas-expansion",
+      "project_id": 6005,
+      "phase": "Pledge manager - Open for all"
+    },
+    {
+      "name": "Badgers",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/interhuman-games/badgers",
+      "project_id": 5603,
+      "phase": "Pledge manager - Open for all"
+    },
+    {
+      "name": "Dungeons & Lasers VIII: Duskhollow",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/archon-studio/duskhollow",
+      "project_id": 6078,
+      "phase": "Upcoming"
+    },
+    {
+      "name": "Song of Silveranth",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/red-raven-games/song-of-silveranth",
+      "project_id": 5930,
+      "phase": "Pledge manager - Open for all"
+    },
+    {
+      "name": "Lone Wolf: Vengeance of the Kai",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/holmgard-games/lone-wolf-vengeance-of-the-kai",
+      "project_id": 5922,
+      "phase": "Pledge manager - Limited"
+    },
+    {
+      "name": "The Old King's Crown Second Printing & New Songs of Home Expansion",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/eerie-idol-games/the-old-kings-crown",
+      "project_id": 2895,
+      "phase": "Pledge manager - Open for all"
+    },
+    {
+      "name": "ARCTICA",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/thisway/arctica",
+      "project_id": 5954,
+      "phase": "Upcoming"
+    },
+    {
+      "name": "Here to Slay DUNGEONS",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/unstable-games/here-to-slay-dungeons",
+      "project_id": 6025,
+      "phase": "Pledge manager - Limited"
+    },
+    {
+      "name": "Mystic Moon",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/unstable-games/mystic-moon",
+      "project_id": 6024,
+      "phase": "Pledge manager - Limited"
+    },
+    {
+      "name": "The Witcher: Legacy",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/Go-on-Board/the-witcher-legacy",
+      "project_id": 6154,
+      "phase": "Pledge manager - Open for all"
+    },
+    {
+      "name": "Rome: Fate of an Empire (DELUXE) [Solo Game of the Month]",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/gabe-barrett/rome-fate-of-an-empire-deluxe-solo-game-of-the-month",
+      "project_id": 5198,
+      "phase": "Pledge manager - Closed"
+    },
+    {
+      "name": "Dragons of Etchinstone",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/chip-theory-games/dragons-of-etchinstone",
+      "project_id": 4475,
+      "phase": "Pledge manager - Closed"
+    },
+    {
+      "name": "Gabe Barrett - Store",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/gabe-barrett/gabe-barrett-store",
+      "project_id": 4574,
+      "phase": "Store"
+    },
+    {
+      "name": "The Lord of the Rings: The Confrontation Ultimate Edition",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/ghost-galaxy-games/lord-of-the-rings-the-confrontation-ultimate-edition",
+      "project_id": 4404,
+      "phase": "Pledge manager - Closed"
+    },
+    {
+      "name": "Star Realms Conquest",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/wise-wizard-games/star-realms-conquest",
+      "project_id": 5140,
+      "phase": "Late Pledge - Open for all"
+    },
+    {
+      "name": "Ascension 15th Anniversary",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/stoneblade/ascension-15th-anniversary",
+      "project_id": 5719,
+      "phase": "Pledge manager - Limited"
+    },
+    {
+      "name": "Agricola Special Edition",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/awaken-realms/agricola-special-edition",
+      "project_id": 5381,
+      "phase": "Pledge manager - Closed"
+    },
+    {
+      "name": "Colosseum: The Grand Spectacle",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/fantasia-games/colosseum",
+      "project_id": 3551,
+      "phase": "Pledge manager - Open for all"
+    },
+    {
+      "name": "The battle of the Divas",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/saltandpepper/the-battle-of-the-divas",
+      "project_id": 5348,
+      "phase": "Pledge manager - Closed"
+    },
+    {
+      "name": "Sky Empire",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/greymarsh-games-preben/sky-empire",
+      "project_id": 4402,
+      "phase": "Crowdfunding - Canceled"
+    },
+    {
+      "name": "Conquest of Paradise",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/phalanx/conquest-of-paradise",
+      "project_id": 5496,
+      "phase": "Pledge manager - Open for all"
+    },
+    {
+      "name": "Fauna - The Animal Trivia Game",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/rathskellers/fauna-the-animal-trivia-game",
+      "project_id": 5738,
+      "phase": "Pledge manager - Closed"
+    },
+    {
+      "name": "Dicemancy [Solo Game of the Month]",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/gabe-barrett/dicemancy",
+      "project_id": 5536,
+      "phase": "Pledge manager - Closed"
+    },
+    {
+      "name": "Neuroshima Hex",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/baked-games/neuroshima-hex",
+      "project_id": 5604,
+      "phase": "Crowdfunding - Canceled"
+    },
+    {
+      "name": "HOOD: Troubles in Sherwood",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/phalanx/hood",
+      "project_id": 5497,
+      "phase": "Pledge manager - Open for all"
+    },
+    {
+      "name": "Trismegistus: New Special Edition by Board&Dice",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/board-and-dice/trismegistus-2nd-edition",
+      "project_id": 5588,
+      "phase": "Pledge manager - Closed"
+    },
+    {
+      "name": "Paperback Adventures: Volume 2",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/tim-fowers/paperback-adventures-volume-2",
+      "project_id": 5481,
+      "phase": "Pledge manager - Open for all"
+    },
+    {
+      "name": "Sniper Elite: Operation Kraken & Reprint",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/rebellionunplugged/sniper-elite-operation-kraken",
+      "project_id": 5356,
+      "phase": "Pledge manager - Limited"
+    },
+    {
+      "name": "Borderlands: Mister Torgue's Arena of Badassery 2",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/monster-fight-club/borderlands-mister-torgues-arena-of-badassery-2",
+      "project_id": 5560,
+      "phase": "Late Pledge - Open for all"
+    },
+    {
+      "name": "Terrorscape 2",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/ice-makes/terrorscape-2",
+      "project_id": 5586,
+      "phase": "Pledge manager - Limited"
+    },
+    {
+      "name": "Andromeda's Edge: Genesis",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/cardboard-alchemy/andromedas-edge-genesis",
+      "project_id": 5605,
+      "phase": "Pledge manager - Limited"
+    },
+    {
+      "name": "Dale of Merchants: 10-year Anniversary",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/snowdale/dale-of-merchants-10-year-anniversary",
+      "project_id": 5240,
+      "phase": "Upcoming"
+    },
+    {
+      "name": "Flatout Games - 2025 Releases",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/flatout-games/2025-releases",
+      "project_id": 5172,
+      "phase": "Pledge manager - Closed"
+    },
+    {
+      "name": "The Adventurers",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/cmon/adventurers",
+      "project_id": 5367,
+      "phase": "Preorder"
+    },
+    {
+      "name": "Champions of Rokugan",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/monolith-board-games-sarl/champions-of-rokugan",
+      "project_id": 5312,
+      "phase": "Pledge manager - Limited"
+    },
+    {
+      "name": "Berserk: The Board Game",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/monolith-board-games-sarl/berserk-the-board-game",
+      "project_id": 5313,
+      "phase": "Pledge manager - Limited"
+    },
+    {
+      "name": "Mythic Battles: The Roleplaying Games",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/monolith-board-games-sarl/mythic-battles---the-roleplaying-game",
+      "project_id": 5314,
+      "phase": "Pledge manager - Open for all"
+    },
+    {
+      "name": "G.I. JOE: Operation Cobra",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/ocgames/gi-joe-operation-cobra",
+      "project_id": 4411,
+      "phase": "Pledge manager - Limited"
+    },
+    {
+      "name": "Dragon Eclipse: The Grand Quest",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/awaken-realms/dragon-eclipse-the-grand-quest",
+      "project_id": 5385,
+      "phase": "Pledge manager - Open for all"
+    },
+    {
+      "name": "Labyrinth Chronicles",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/awaken-realms/labyrinth",
+      "project_id": 5354,
+      "phase": "Pledge manager - Closed"
+    },
+    {
+      "name": "Tainted Grail: The Fall of Avalon - Digital Game Collector's Edition",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/awaken-realms/tainted-grail-the-fall-of-avalon---pc-game-collectors-edition",
+      "project_id": 5383,
+      "phase": "Preorder"
+    },
+    {
+      "name": "Agricola: Dead Harvest",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/awaken-realms/agricola-dead-harvest",
+      "project_id": 5382,
+      "phase": "Upcoming"
+    },
+    {
+      "name": "This War of Mine Second Edition",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/awaken-realms/this-war-of-mine-second-edition",
+      "project_id": 5386,
+      "phase": "Pledge manager - Closed"
+    },
+    {
+      "name": "Nanty Narking: The Rise of Cthulhu",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/phalanx/nanty-narking-cthulhu",
+      "project_id": 5131,
+      "phase": "Pledge manager - Open for all"
+    },
+    {
+      "name": "Reichbusters: Reloaded",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/monolith-board-games-sarl/reichbusters-reloaded",
+      "project_id": 5238,
+      "phase": "Pledge manager - Limited"
+    },
+    {
+      "name": "Massive Darkness: Dungeons of Shadowreach",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/cmon/massivedarkness-shadowreach",
+      "project_id": 4987,
+      "phase": "Pledge manager - Closed"
+    },
+    {
+      "name": "Karma Games PM - Clans of Caledonia: Industria, Thiefdom,  Millennia: Tracks of Time, Peninsula",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/juma/karma-games-2025",
+      "project_id": 5074,
+      "phase": "Pledge manager - Closed"
+    },
+    {
+      "name": "Race to Berlin",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/portalgames/race-to-berlin",
+      "project_id": 5133,
+      "phase": "Pledge manager - Closed"
+    },
+    {
+      "name": "The Dice Tower Gamefound 2025",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/dice-tower/the-dice-tower-gamefound-2025",
+      "project_id": 4908,
+      "phase": "Pledge manager - Closed"
+    },
+    {
+      "name": "Root: The Homeland Expansion",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/ledergames/root-the-homeland-expansion",
+      "project_id": 4904,
+      "phase": "Pledge manager - Limited"
+    },
+    {
+      "name": "Black Orchestra: Resistance Expansion, and Valkyrie Stand-Alone Game",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/tabletop-tycoon/black-orchestra-resistance-expansion-and-valkyrie-stand-alone-game",
+      "project_id": 4845,
+      "phase": "Pledge manager - Closed"
+    },
+    {
+      "name": "Vestige",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/orange-nebula/vestige",
+      "project_id": 4664,
+      "phase": "Pledge manager - Closed"
+    },
+    {
+      "name": "Cthulhu: Death May Die - Forbidden Reaches",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/asmodee/dmd-forbidden-reaches",
+      "project_id": 4792,
+      "phase": "Pledge manager - Closed"
+    },
+    {
+      "name": "Teotihuacan: City of Gods Deluxe Master Set 2nd print",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/board-and-dice/teotihuacan-city-of-gods-deluxe-master-set-2nd-edition",
+      "project_id": 4846,
+      "phase": "Pledge manager - Closed"
+    },
+    {
+      "name": "Speakeasy - By Vital Lacerda with Artwork by Ian O'Toole",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/eagle-gryphon-games/speakeasy",
+      "project_id": 4690,
+      "phase": "Pledge manager - Closed"
+    },
+    {
+      "name": "Batman: Gotham City Chronicles - RPG : Skyline Edition",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/monolith-board-games-sarl/batman-gotham-city-chronicles---rpg--skyline-edition",
+      "project_id": 4748,
+      "phase": "Pledge manager - Limited"
+    },
+    {
+      "name": "Onoda",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/saltandpepper/onoda",
+      "project_id": 4435,
+      "phase": "Pledge manager - Closed"
+    },
+    {
+      "name": "Tales of the Arabian Nights 40th Anniversary Edition",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/play-to-z/tales-of-arabian-nights-40th-anniversary-edition",
+      "project_id": 4759,
+      "phase": "Pledge manager - Limited"
+    },
+    {
+      "name": "Circle The Wagons: Second Shot",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/button-shy-games/circle-the-wagons-second-shot",
+      "project_id": 4797,
+      "phase": "Pledge manager - Closed"
+    },
+    {
+      "name": "Chicago 1875: City of the Big Shoulders",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/quined-games/chicago-1875-city-of-the-big-shoulders",
+      "project_id": 4384,
+      "phase": "Preorder"
+    },
+    {
+      "name": "Theocratia",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/mojito-studios/theocratia",
+      "project_id": 4331,
+      "phase": "Crowdfunding - Canceled"
+    },
+    {
+      "name": "Rise of Myths: Cthulhu",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/synergic-games/rise-of-myths-cthulhu",
+      "project_id": 4510,
+      "phase": "Pledge manager - Limited"
+    },
+    {
+      "name": "Dungeons & Lasers VII: Porthaven",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/archon-studio/dnl7-porthaven",
+      "project_id": 4616,
+      "phase": "Pledge manager - Limited"
+    },
+    {
+      "name": "Tatsumi",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/adams-apple-games/tatsumi",
+      "project_id": 4507,
+      "phase": "Pledge manager - Closed"
+    },
+    {
+      "name": "Super Fantasy Brawl: Reborn",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/cmon/super-fantasy-brawl-reborn",
+      "project_id": 4634,
+      "phase": "Preorder"
+    },
+    {
+      "name": "7th Inning Stretch [Solo Game of the Month]",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/gabe-barrett/7th-inning-stretch",
+      "project_id": 4459,
+      "phase": "Pledge manager - Closed"
+    },
+    {
+      "name": "Mythic Battles: Isfet",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/monolith-board-games-sarl/mythic-battles-isfet",
+      "project_id": 4352,
+      "phase": "Pledge manager - Closed"
+    },
+    {
+      "name": "The Cats of Mont Saint Michel",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/rayboxgames/the-cats-of-mont-saint-michel",
+      "project_id": 3748,
+      "phase": "Pledge manager - Closed"
+    },
+    {
+      "name": "Button Shy Reprint Campaign Summer 2024",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/button-shy-games/button-shy-reprint-campaign-summer-2024",
+      "project_id": 4120,
+      "phase": "Pledge manager - Closed"
+    },
+    {
+      "name": "Pax Porfiriana Ultimate Edition",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/ionsmg/pax-porfiriana-ultimate-edition",
+      "project_id": 4396,
+      "phase": "Pledge manager - Closed"
+    },
+    {
+      "name": "DC Super Heroes United",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/cmon/dc-heroes-united",
+      "project_id": 3890,
+      "phase": "Pledge manager - Closed"
+    },
+    {
+      "name": "Kemet: Rise of the Gods",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/matagot/kemet-rise-of-the-gods",
+      "project_id": 4026,
+      "phase": "Pledge manager - Limited"
+    },
+    {
+      "name": "Ascension Legends",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/stoneblade/ascension",
+      "project_id": 3692,
+      "phase": "Pledge manager - Closed"
+    },
+    {
+      "name": "Lands of Galzyr: Dreams and Mysteries",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/snowdale/lands-of-galzyr-dreams-and-mysteries",
+      "project_id": 4164,
+      "phase": "Pledge manager - Closed"
+    },
+    {
+      "name": "Terrorscape: Putrefied Enmity",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/ice-makes/terrorscape-putrefied-enmity",
+      "project_id": 3988,
+      "phase": "Pledge manager - Closed"
+    },
+    {
+      "name": "Valheim: The Board Game",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/mood-publishing/valheim-the-board-game",
+      "project_id": 4217,
+      "phase": "Pledge manager - Limited"
+    },
+    {
+      "name": "1980 Sixtina",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/looping_games/1980-Sixtina",
+      "project_id": 3711,
+      "phase": "Pledge manager - Closed"
+    },
+    {
+      "name": "Dungeon Twister 20th Anniversary Edition",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/ludically/dungeon-twister-20th-anniversary-edition",
+      "project_id": 4007,
+      "phase": "Pledge manager - Closed"
+    },
+    {
+      "name": "Mojito Trio | Sinister Institute + Lords of Worlds + Tropicalia",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/mojito-studios/sinister-institute",
+      "project_id": 3897,
+      "phase": "Pledge manager - Closed"
+    },
+    {
+      "name": "Lords of Worlds",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/mojito-studios/lords-of-wolrds",
+      "project_id": 3898,
+      "phase": "Upcoming"
+    },
+    {
+      "name": "Odalin - Dungeons of Doom",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/dragori-games/odalin-dungeons-of-doom",
+      "project_id": 3926,
+      "phase": "Pledge manager - Limited"
+    },
+    {
+      "name": "DinoGenics: New Arrivals",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/ninthhaven-games/dinogenics-new-arrivals",
+      "project_id": 4162,
+      "phase": "Pledge manager - Limited"
+    },
+    {
+      "name": "Incubo",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/mojito-studios/incubo",
+      "project_id": 3425,
+      "phase": "Pledge manager - Closed"
+    },
+    {
+      "name": "Leviathan Wilds Second Printing (Plus Deepvale Expansion!)",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/moon-crab-games/leviathan-wilds-second-printing",
+      "project_id": 3949,
+      "phase": "Crowdfunding - Funded"
+    },
+    {
+      "name": "Hannibal & Hamilcar + Metal Minis",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/phalanx/hannibal-and-hamilcar",
+      "project_id": 3905,
+      "phase": "Pledge manager - Open for all"
+    },
+    {
+      "name": "Dune: War for Arrakis - Desert War",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/cmon/dune-desert-war",
+      "project_id": 4082,
+      "phase": "Preorder"
+    },
+    {
+      "name": "EPOS: A Gentes Game",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/spielworxx/epos-a-gentes-game",
+      "project_id": 3678,
+      "phase": "Pledge manager - Closed"
+    },
+    {
+      "name": "HISPANIA. The Roman conquest",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/draco-ideas/hispania",
+      "project_id": 3612,
+      "phase": "Pledge manager - Closed"
+    },
+    {
+      "name": "Masters of the Universe: Battleground",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/archon-studio/masters-of-the-universe-battleground",
+      "project_id": 4000,
+      "phase": "Pledge manager - Limited"
+    },
+    {
+      "name": "Mindbug Battlefruits",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/marvin-hegen/mindbug-battlefruits",
+      "project_id": 3895,
+      "phase": "Pledge manager - Closed"
+    },
+    {
+      "name": "Renters + Parking Expansion (Print & Play)",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/titan-boardgames/renters",
+      "project_id": 3844,
+      "phase": "Pledge manager - Closed"
+    },
+    {
+      "name": "Stupor Mundi",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/quined-games/stupor-mundi",
+      "project_id": 3695,
+      "phase": "Pledge manager - Closed"
+    },
+    {
+      "name": "Avatar: Journey of Aang",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/companyofheroes/avatar-the-journey-of-aang-",
+      "project_id": 3824,
+      "phase": "Pledge manager - Limited"
+    },
+    {
+      "name": "Cyberpunk 2077 - The Board Game",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/Go-on-Board/cyberpunk-2077-the-board-game",
+      "project_id": 3809,
+      "phase": "Pledge manager - Limited"
+    },
+    {
+      "name": "God of War: The Board Game",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/cmon/god-of-war",
+      "project_id": 3818,
+      "phase": "Pledge manager - Closed"
+    },
+    {
+      "name": "Baseball Highlights: 2045 - Bases Loaded Edition PLUS New All-Star Expansion by Mike Fitzgerald",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/eagle-gryphon-games/baseball-highlights-2045-bases-loaded",
+      "project_id": 3830,
+      "phase": "Pledge manager - Closed"
+    },
+    {
+      "name": "Fox Experiment- Deluxe Wooden Edition",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/pandasaurus-games/fox-experiment-deluxe-wooden-edition",
+      "project_id": 3766,
+      "phase": "Pledge manager - Closed"
+    },
+    {
+      "name": "The Dead Keep",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/cmon/the-dead-keep",
+      "project_id": 3817,
+      "phase": "Preorder"
+    },
+    {
+      "name": "AR Vault: Heroes & Companions",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/awaken-realms/ar-vault-heroes-companions",
+      "project_id": 3846,
+      "phase": "Pledge manager - Closed"
+    },
+    {
+      "name": "Lands of Evershade",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/awaken-realms/lands-of-evershade",
+      "project_id": 3850,
+      "phase": "Pledge manager - Open for all"
+    },
+    {
+      "name": "Grimcoven",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/awaken-realms/grimcoven",
+      "project_id": 3848,
+      "phase": "Pledge manager - Closed"
+    },
+    {
+      "name": "Castles of Burgundy: Special Edition Reprint",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/awaken-realms/castles-of-burgundy-reprint",
+      "project_id": 3847,
+      "phase": "Pledge manager - Closed"
+    },
+    {
+      "name": "Puerto Rico Special Edition",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/awaken-realms/puerto-rico-special-edition",
+      "project_id": 3849,
+      "phase": "Pledge manager - Closed"
+    },
+    {
+      "name": "The Adventures of Conan",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/gf9/adventures-of-conan",
+      "project_id": 3475,
+      "phase": "Pledge manager - Limited"
+    },
+    {
+      "name": "Star Trek Ascendancy: The Final Frontier",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/gf9/star-trek-ascendancy",
+      "project_id": 3750,
+      "phase": "Pledge manager - Limited"
+    },
+    {
+      "name": "Dune: Kwisatz Haderach Edition",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/gf9/dune",
+      "project_id": 3812,
+      "phase": "Upcoming"
+    },
+    {
+      "name": "Spring 2024 - Button Shy Reprint Campaign",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/button-shy-games/button-shy-2024-reprint-campaign",
+      "project_id": 3726,
+      "phase": "Pledge manager - Closed"
+    },
+    {
+      "name": "Inferno Deluxe Edition",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/red-mojo-games/inferno-deluxe-edition",
+      "project_id": 3365,
+      "phase": "Pledge manager - Closed"
+    },
+    {
+      "name": "Operation Barclay",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/saltandpepper/operation-barclay",
+      "project_id": 3749,
+      "phase": "Pledge manager - Closed"
+    },
+    {
+      "name": "Cyclades Legendary Edition",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/open-sesame-games/cyclades-legendary-edition",
+      "project_id": 3494,
+      "phase": "Pledge manager - Closed"
+    },
+    {
+      "name": "Hands in the Sea",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/phalanx/-hands-in-the-sea",
+      "project_id": 3528,
+      "phase": "Pledge manager - Open for all"
+    },
+    {
+      "name": "A Song of Ice & Fire: Tactics - A Tabletop Miniatures Skirmish Game",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/cmon/a-song-of-ice-fire-tactics",
+      "project_id": 3731,
+      "phase": "Pledge manager - Closed"
+    },
+    {
+      "name": "Tainted Grail TTRPG: Song of a Dying World",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/studio-agate/tainted-grail-ttrpg",
+      "project_id": 1659,
+      "phase": "Pledge manager - Limited"
+    },
+    {
+      "name": "Conservas",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/saltandpepper/conservas",
+      "project_id": 3583,
+      "phase": "Pledge manager - Closed"
+    },
+    {
+      "name": "Algae Inc.",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/gamebrewer/algae-inc",
+      "project_id": 3457,
+      "phase": "Pledge manager - Closed"
+    },
+    {
+      "name": "Last Light 2nd Edition & New Alien Pack - 4X in under an hour!",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/grey-fox-games/last-light-second-edition",
+      "project_id": 3547,
+      "phase": "Pledge manager - Closed"
+    },
+    {
+      "name": "DCeased - A Zombicide Game",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/cmon/dceased",
+      "project_id": 3604,
+      "phase": "Pledge manager - Closed"
+    },
+    {
+      "name": "Masters of the Universe: The Board Game - Clash For Eternia",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/cmon/masters-of-the-universe",
+      "project_id": 3554,
+      "phase": "Pledge manager - Closed"
+    },
+    {
+      "name": "Fief England - Alliances, Treachery, and Power",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/academy-games/fief-england",
+      "project_id": 3278,
+      "phase": "Pledge manager - Closed"
+    },
+    {
+      "name": "The Witcher: Path of Destiny",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/Go-on-Board/the-witcher-path-of-destiny",
+      "project_id": 3180,
+      "phase": "Pledge manager - Limited"
+    },
+    {
+      "name": "Gold Nugget",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/2tomatoes/gold-nugget",
+      "project_id": 2646,
+      "phase": "Pledge manager - Closed"
+    },
+    {
+      "name": "Unreliable Wizard",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/saltandpepper/unreliable-wizard",
+      "project_id": 3129,
+      "phase": "Pledge manager - Closed"
+    },
+    {
+      "name": "Secrets of the Lost Tomb - Epic Remastered Edition - 10 Year Anniversary",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/cbatarlis/SecretsOfTheLostTomb",
+      "project_id": 3080,
+      "phase": "Late Pledge - Open for all"
+    },
+    {
+      "name": "SCOPE Panzer & Trilogy",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/draco-ideas/scope-panzer",
+      "project_id": 2235,
+      "phase": "Pledge manager - Closed"
+    },
+    {
+      "name": "Heroes of Land, Air & Sea - Deluxe Reprint",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/gamelyngames/HLAS",
+      "project_id": 3340,
+      "phase": "Pledge manager - Closed"
+    },
+    {
+      "name": "Food Chain Magnate: Special Edition",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/Lucky-Duck-Games/food-chain-magnate-special-edition",
+      "project_id": 3313,
+      "phase": "Pledge manager - Closed"
+    },
+    {
+      "name": "Dragon Eclipse",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/awaken-realms/dragon-eclipse",
+      "project_id": 2757,
+      "phase": "Pledge manager - Closed"
+    },
+    {
+      "name": "Bone Wars",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/gamebrewer/bone-wars",
+      "project_id": 3136,
+      "phase": "Pledge manager - Closed"
+    },
+    {
+      "name": "Mystery of the Abbey",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/mojito-studios/mystery-of-the-abbey",
+      "project_id": 3250,
+      "phase": "Pledge manager - Closed"
+    },
+    {
+      "name": "Inventions: Evolution of Ideas",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/eagle-gryphon-games/inventions-evolution-of-ideas",
+      "project_id": 3203,
+      "phase": "Pledge manager - Closed"
+    },
+    {
+      "name": "The Gods Will Have Blood",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/lock-horns-games/the-gods-will-have-blood",
+      "project_id": 3124,
+      "phase": "Pledge manager - Closed"
+    },
+    {
+      "name": "Planet Unknown Supermoon expansion and Deluxe Edition reprint",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/adams-apple-games/planet-unknown-supermoon-expansion-and-deluxe-edition-reprint",
+      "project_id": 3018,
+      "phase": "Pledge manager - Closed"
+    },
+    {
+      "name": "The Royal Limited - A Scott Almes Simply Solo Wallet Game",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/button-shy-games/the-royal-limited---a-scott-almes-simply-solo-wallet-game",
+      "project_id": 3069,
+      "phase": "Pledge manager - Closed"
+    },
+    {
+      "name": "Harrow County: The Game of Gothic Conflict",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/jay-cormier/harrow-county-the-game-of-gothic-conflict",
+      "project_id": 2625,
+      "phase": "Pledge manager - Closed"
+    },
+    {
+      "name": "Scarface 1920: Bloody Business",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/redzen/scarface-1920-bloody-business",
+      "project_id": 3006,
+      "phase": "Pledge manager - Closed"
+    },
+    {
+      "name": "Witchcraft!",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/saltandpepper/witchcraft-",
+      "project_id": 2879,
+      "phase": "Pledge manager - Closed"
+    },
+    {
+      "name": "Spring 2023 - Button Shy Reprint Campaign",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/button-shy-games/-button-shy-reprint-campaign---spring-2023-",
+      "project_id": 2875,
+      "phase": "Pledge manager - Closed"
+    },
+    {
+      "name": "Endeavor: Deep Sea",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/age-of-gaming/endeavor-deep-sea",
+      "project_id": 2181,
+      "phase": "Pledge manager - Closed"
+    },
+    {
+      "name": "Detective: Saints and Sinners",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/van-ryder-games/detective-saints-and-sinners",
+      "project_id": 2967,
+      "phase": "Pledge manager - Closed"
+    },
+    {
+      "name": "AR Vault: Story Dice",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/awaken-realms/ar-vault-storydice",
+      "project_id": 2756,
+      "phase": "Pledge manager - Closed"
+    },
+    {
+      "name": "Flatout Games - 2023 releases",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/flatout-games/2023-releases",
+      "project_id": 2710,
+      "phase": "Pledge manager - Closed"
+    },
+    {
+      "name": "El Burro: A La Granja Game",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/spielworxx/el-burro",
+      "project_id": 2687,
+      "phase": "Pledge manager - Closed"
+    },
+    {
+      "name": "River Wild & Ancient Realm",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/button-shy-games/river-wild--ancient-realm",
+      "project_id": 2844,
+      "phase": "Pledge manager - Closed"
+    },
+    {
+      "name": "Beast - Shattered Isles",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/studio-midhall/beast-shattered-isles",
+      "project_id": 2786,
+      "phase": "Pledge manager - Closed"
+    },
+    {
+      "name": "Coloma: New Prospects (Expansion and Reprint)",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/finalfrontiergames/coloma-new-prospects-expansion-and-reprint",
+      "project_id": 2893,
+      "phase": "Pledge manager - Closed"
+    },
+    {
+      "name": "Carson City Big Box",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/quined-games/carson-city-big-box",
+      "project_id": 1916,
+      "phase": "Pledge manager - Closed"
+    },
+    {
+      "name": "Firefly: The Game - 10th Anniversary Collector's Edition",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/gf9/firefly-the-game",
+      "project_id": 2904,
+      "phase": "Pledge manager - Limited"
+    },
+    {
+      "name": "David Thompson Games",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/dan-verssen-games/david-thompson-games",
+      "project_id": 2763,
+      "phase": "Pledge manager - Closed"
+    },
+    {
+      "name": "Naturopolis",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/button-shy-games/naturopolis",
+      "project_id": 2736,
+      "phase": "Pledge manager - Closed"
+    },
+    {
+      "name": "Huang",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/phalanx/reiner-knizias-secret-project",
+      "project_id": 2135,
+      "phase": "Pledge manager - Closed"
+    },
+    {
+      "name": "Nemesis: Retaliation",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/awaken-realms/nemesis-retaliation",
+      "project_id": 2750,
+      "phase": "Pledge manager - Limited"
+    },
+    {
+      "name": "The Hunt",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/saltandpepper/the-hunt",
+      "project_id": 2579,
+      "phase": "Pledge manager - Closed"
+    },
+    {
+      "name": "Batman: Escape from Arkham Asylum",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/knightgames/batman-escape-from-arkham-asylum",
+      "project_id": 2460,
+      "phase": "Pledge manager - Closed"
+    },
+    {
+      "name": "Statera",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/fatboardgames/statera",
+      "project_id": 2318,
+      "phase": "Crowdfunding - Canceled"
+    },
+    {
+      "name": "20 Strong",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/chip-theory-games/20-strong",
+      "project_id": 2387,
+      "phase": "Pledge manager - Closed"
+    },
+    {
+      "name": "Tír na nÓg: Between Worlds",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/grand-gamers-guild/tir-na-nog-between-worlds",
+      "project_id": 2408,
+      "phase": "Pledge manager - Closed"
+    },
+    {
+      "name": "Turczi Junior Promo Pack",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/david-turczi/turczi-junior-promo-pack",
+      "project_id": 2396,
+      "phase": "Pledge manager - Closed"
+    },
+    {
+      "name": "Tainted Grail: Kings of Ruin",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/awaken-realms/tainted-grail-kings-of-ruin",
+      "project_id": 1927,
+      "phase": "Pledge manager - Closed"
+    },
+    {
+      "name": "In Dreams",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/side-room-games/in-dreams",
+      "project_id": 2352,
+      "phase": "Pledge manager - Closed"
+    },
+    {
+      "name": "Pueblo",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/mojito-studios/pueblo",
+      "project_id": 2063,
+      "phase": "Pledge manager - Closed"
+    },
+    {
+      "name": "The Elder Scrolls: Betrayal of the Second Era",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/chip-theory-games/the-elder-scrolls",
+      "project_id": 2295,
+      "phase": "Pledge manager - Closed"
+    },
+    {
+      "name": "Escape from New York by Kevin Wilson",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/pendragon-game-studio-srl/escape-from-new-york",
+      "project_id": 2219,
+      "phase": "Pledge manager - Closed"
+    },
+    {
+      "name": "Biergarten Second Edition",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/blue-wing-games/biergarten",
+      "project_id": 2144,
+      "phase": "Crowdfunding - Unsuccessful"
+    },
+    {
+      "name": "DANTE: Inferno",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/wearecgs/dante",
+      "project_id": 2225,
+      "phase": "Pledge manager - Closed"
+    },
+    {
+      "name": "SHANGHAI The Nevernight City",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/pandemic-production/dark-corners-of-shanghai-the-nevernight-city",
+      "project_id": 1985,
+      "phase": "Upcoming"
+    },
+    {
+      "name": "KeyForge: Winds of Exchange",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/ghost-galaxy-games/keyforge-winds-of-exchange",
+      "project_id": 2072,
+      "phase": "Pledge manager - Closed"
+    },
+    {
+      "name": "Andromeda's Edge",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/cardboard-alchemy/andromedas-edge",
+      "project_id": 1771,
+      "phase": "Pledge manager - Closed"
+    },
+    {
+      "name": "Amun-Re - 20th Anniversary Edition",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/alley-cat-games/amun-re-20th-anniversary-edition",
+      "project_id": 2108,
+      "phase": "Pledge manager - Closed"
+    },
+    {
+      "name": "Tabriz",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/crafty-games/tabriz",
+      "project_id": 2032,
+      "phase": "Pledge manager - Closed"
+    },
+    {
+      "name": "June 2022 - Button Shy Reprint Campaign",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/button-shy-games/button-shy-reprint-campaign-june-2022",
+      "project_id": 1977,
+      "phase": "Pledge manager - Closed"
+    },
+    {
+      "name": "Unmatched: Storage and Accessories",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/restoration-games/unmatched-storage-and-accessories",
+      "project_id": 1777,
+      "phase": "Pledge manager - Closed"
+    },
+    {
+      "name": "The Lost Code - Reboot",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/mojito-studios/the-lost-code---reboot",
+      "project_id": 1818,
+      "phase": "Pledge manager - Closed"
+    },
+    {
+      "name": "Summit: Sanity + BIG BOX",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/inside-up-games/summit-sanity",
+      "project_id": 2029,
+      "phase": "Pledge manager - Closed"
+    },
+    {
+      "name": "Amygdala (cancelled)",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/gamebrewer/amygdala",
+      "project_id": 2010,
+      "phase": "Crowdfunding - Canceled"
+    },
+    {
+      "name": "Man vs Meeple Season 4",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/mvm/man-vs-meeple-season-4",
+      "project_id": 1684,
+      "phase": "Pledge manager - Closed"
+    },
+    {
+      "name": "Castles of Burgundy: Special Edition",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/awaken-realms/castles-of-burgundy-special-edition",
+      "project_id": 1926,
+      "phase": "Pledge manager - Closed"
+    },
+    {
+      "name": "Bretwalda",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/phalanx/bretwalda",
+      "project_id": 1804,
+      "phase": "Pledge manager - Closed"
+    },
+    {
+      "name": "Resist!",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/saltandpepper/resist",
+      "project_id": 1885,
+      "phase": "Pledge manager - Closed"
+    },
+    {
+      "name": "RA",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/25th-century-games/ra",
+      "project_id": 1720,
+      "phase": "Pledge manager - Closed"
+    },
+    {
+      "name": "Dice Tower - 2022",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/dicetower/support-the-dice-tower-2022",
+      "project_id": 1909,
+      "phase": "Pledge manager - Closed"
+    },
+    {
+      "name": "Sleeping Gods: Distant Skies",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/red-raven-games/sleeping-gods-distant-skies",
+      "project_id": 1779,
+      "phase": "Pledge manager - Closed"
+    },
+    {
+      "name": "Lawyer Up: Season 2",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/mike/lawyer-up-season-2",
+      "project_id": 1405,
+      "phase": "Pledge manager - Closed"
+    },
+    {
+      "name": "Oranienburger Kanal",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/spielworxx/oranienburger-kanal",
+      "project_id": 1721,
+      "phase": "Pledge manager - Closed"
+    },
+    {
+      "name": "Wreckland Run - A solo game from the creators of Warp's Edge",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/renegade-game-studios/wreckland-run---a-solo-game-from-the-creators-of-warps-edge",
+      "project_id": 1769,
+      "phase": "Pledge manager - Closed"
+    },
+    {
+      "name": "For Northwood!",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/side-room-games/for-northwood",
+      "project_id": 1799,
+      "phase": "Pledge manager - Closed"
+    },
+    {
+      "name": "Tamashii: Chronicle of Ascend",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/awaken-realms-lite/tamashii-chronicle-of-ascend",
+      "project_id": 889,
+      "phase": "Pledge manager - Closed"
+    },
+    {
+      "name": "Trick Shot (Second edition)",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/wolffdesigna/trickshot2",
+      "project_id": 1856,
+      "phase": "Pledge manager - Closed"
+    },
+    {
+      "name": "Nightmare Cathedral",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/board-and-dice/nightmare-cathedral",
+      "project_id": 1342,
+      "phase": "Pledge manager - Closed"
+    },
+    {
+      "name": "The Great Wall Reprint",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/awaken-realms/the-great-wall-reprint",
+      "project_id": 1851,
+      "phase": "Pledge manager - Closed"
+    },
+    {
+      "name": "Pilgrim",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/a-muse-ment/pilgrim",
+      "project_id": 1755,
+      "phase": "Pledge manager - Closed"
+    },
+    {
+      "name": "Thorgal: The Board Game",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/portalgames/thorgal-the-board-game",
+      "project_id": 1790,
+      "phase": "Pledge manager - Closed"
+    },
+    {
+      "name": "Drive Thru Games Pledge Manager",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/drive-thru-games/drive-thru-games-22",
+      "project_id": 1752,
+      "phase": "Pledge manager - Open for all"
+    },
+    {
+      "name": "Bloc by Bloc: Uprising",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/out-of-order-games/bloc-by-bloc",
+      "project_id": 1661,
+      "phase": "Pledge manager - Closed"
+    },
+    {
+      "name": "Total War: ROME: The Board Game",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/psc-games/total-war-ROME-the-board-game",
+      "project_id": 1346,
+      "phase": "Pledge manager - Limited"
+    },
+    {
+      "name": "Verdant",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/flatout-games/verdant",
+      "project_id": 1309,
+      "phase": "Pledge manager - Closed"
+    },
+    {
+      "name": "51st State: Ultimate Edition",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/portalgames/51st-state-ultimate-edition",
+      "project_id": 1643,
+      "phase": "Pledge manager - Closed"
+    },
+    {
+      "name": "Rise of the Necromancers",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/mythic-games/rise-of-the-necromancers",
+      "project_id": 1476,
+      "phase": "Crowdfunding - Funded"
+    },
+    {
+      "name": "Last Light",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/grey-fox-games/last-light",
+      "project_id": 1442,
+      "phase": "Pledge manager - Closed"
+    },
+    {
+      "name": "Kingdom Come: Deliverance - The Board Game",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/boardcubator/kcdboardgame",
+      "project_id": 1313,
+      "phase": "Crowdfunding - Canceled"
+    },
+    {
+      "name": "GROVE",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/side-room-games/grove",
+      "project_id": 1522,
+      "phase": "Pledge manager - Closed"
+    },
+    {
+      "name": "Purple Haze",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/phalanx/purple-haze",
+      "project_id": 1398,
+      "phase": "Pledge manager - Closed"
+    },
+    {
+      "name": "Spring and Autumn: Story of China",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/mr-b-games/spring-and-autumn-story-of-china",
+      "project_id": 1446,
+      "phase": "Crowdfunding - Canceled"
+    },
+    {
+      "name": "The Palaces of Carrara 2nd edition",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/gamebrewer/the-palaces-of-carrara",
+      "project_id": 1430,
+      "phase": "Pledge manager - Closed"
+    },
+    {
+      "name": "The Witcher: Old World",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/Go-on-Board/the-witcher-old-world",
+      "project_id": 1152,
+      "phase": "Pledge manager - Closed"
+    },
+    {
+      "name": "Lords of Ragnarok",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/awaken-realms/lords-of-ragnarok",
+      "project_id": 1114,
+      "phase": "Pledge manager - Closed"
+    },
+    {
+      "name": "Mechanical Beast",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/side-room-games/mechanical-beast",
+      "project_id": 1246,
+      "phase": "Pledge manager - Closed"
+    },
+    {
+      "name": "The Isle of Cats: Don't forget the kittens!",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/the-city-of-games/the-isle-of-cats-dont-forget-the-kittens",
+      "project_id": 1116,
+      "phase": "Pledge manager - Closed"
+    },
+    {
+      "name": "Lands of Galzyr",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/snowdale/lands-of-galzyr",
+      "project_id": 1060,
+      "phase": "Pledge manager - Closed"
+    },
+    {
+      "name": "Dice Tower - 2021",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/dicetower/2021",
+      "project_id": 807,
+      "phase": "Pledge manager - Closed"
+    },
+    {
+      "name": "Nemesis Lockdown",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/awaken-realms/nemesis-lockdown",
+      "project_id": 431,
+      "phase": "Pledge manager - Closed"
+    },
+    {
+      "name": "Paris L'Etoile",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/gamebrewer/paris-letoile",
+      "project_id": 1039,
+      "phase": "Pledge manager - Closed"
+    },
+    {
+      "name": "Divinus",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/Lucky-Duck-Games/divinus",
+      "project_id": 1078,
+      "phase": "Pledge manager - Closed"
+    },
+    {
+      "name": "Masters of the Universe: Fields of Eternia",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/archon-studio/motu",
+      "project_id": 242,
+      "phase": "Pledge manager - Closed"
+    },
+    {
+      "name": "Atlantis Rising: Monstrosities",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/elf-creek-games/atlantis-rising-monstrosities",
+      "project_id": 789,
+      "phase": "Pledge manager - Closed"
+    },
+    {
+      "name": "Robinson Crusoe - Collector's Edition",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/portalgames/robinson-crusoe-collectors-edition",
+      "project_id": 881,
+      "phase": "Pledge manager - Closed"
+    },
+    {
+      "name": "Maquis:  2nd Edition",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/side-room-games/maquis",
+      "project_id": 213,
+      "phase": "Pledge manager - Closed"
+    },
+    {
+      "name": "The Elder Scrolls V: Skyrim The Adventure Game",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/modiphius/the-elder-scrolls-v-skyrim-the-board-game",
+      "project_id": 887,
+      "phase": "Pledge manager - Closed"
+    },
+    {
+      "name": "Cascadia",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/flatout-games/cascadia",
+      "project_id": 422,
+      "phase": "Pledge manager - Closed"
+    },
+    {
+      "name": "ISS Vanguard",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/awaken-realms/iss-vanguard",
+      "project_id": 222,
+      "phase": "Pledge manager - Closed"
+    },
+    {
+      "name": "The Ratcatcher, Solo Adventure",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/platypus-industries-/the-ratcatcher-solo-adventure",
+      "project_id": 336,
+      "phase": "Pledge manager - Closed"
+    },
+    {
+      "name": "Chronicles of Crime - The Millennium Series",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/Lucky-Duck-Games/chronicles-of-crime-the-millennium-series",
+      "project_id": 305,
+      "phase": "Pledge manager - Closed"
+    },
+    {
+      "name": "Lawyer Up",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/mike/lawyer-up",
+      "project_id": 318,
+      "phase": "Pledge manager - Closed"
+    },
+    {
+      "name": "Fallen Angels",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/side-room-games/fallen-angels",
+      "project_id": 366,
+      "phase": "Pledge manager - Closed"
+    },
+    {
+      "name": "Etherfields Board Game",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/awaken-realms/etherfields-board-game",
+      "project_id": 156,
+      "phase": "Pledge manager - Closed"
+    },
+    {
+      "name": "Calico",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/flatout-games/calico",
+      "project_id": 176,
+      "phase": "Pledge manager - Closed"
+    },
+    {
+      "name": "Black Sonata: The Fair Youth",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/side-room-games/black-sonata-the-fair-youth",
+      "project_id": 238,
+      "phase": "Pledge manager - Closed"
+    },
+    {
+      "name": "Time of Legends: Joan of Arc 1.5",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/mythic-games/time-of-legends-joan-of-arc-15",
+      "project_id": 199,
+      "phase": "Pledge manager - Closed"
+    },
+    {
+      "name": "Essen special preorder sale",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/awaken-realms/essen-preorder",
+      "project_id": 155,
+      "phase": "Pledge manager - Closed"
+    },
+    {
+      "name": "Tainted Grail",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/awaken-realms/tainted-grail",
+      "project_id": 34,
+      "phase": "Pledge manager - Closed"
+    },
+    {
+      "name": "Nemesis",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/awaken-realms/Nemesis",
+      "project_id": 7,
+      "phase": "Pledge manager - Closed"
+    },
+    {
+      "name": "Lords Of Hellas",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/awaken-realms/Lords-Of-Hellas",
+      "project_id": 5,
+      "phase": "Pledge manager - Closed"
+    },
+    {
+      "name": "The Edge Dawnfall 1.6",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/awaken-realms/edge-reprint",
+      "project_id": 25,
+      "phase": "Pledge manager - Closed"
+    },
+    {
+      "name": "Destinies",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/Lucky-Duck-Games/time-of-legends-destinies",
+      "project_id": 170,
+      "phase": "Pledge manager - Closed"
+    },
+    {
+      "name": "Great Wall Board Game",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/awaken-realms/great-wall-board-game",
+      "project_id": 281,
+      "phase": "Pledge manager - Closed"
+    },
+    {
+      "name": "Oathsworn: Into the Deepwood 2nd Edition",
+      "site": "Gamefound",
+      "url": "https://gamefound.com/en/projects/shadowborne-games/oathsworn-into-the-deepwood-2nd-printing",
+      "project_id": 2380,
+      "phase": "Pledge manager - Closed"
+    }
+  ]
+}
