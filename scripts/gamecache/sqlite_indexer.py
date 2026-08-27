@@ -217,6 +217,9 @@ class SqliteIndexer:
             doc: Dict[str, str] = {'url': url}
             if name:
                 doc['name'] = name
+            site = str(item.get('site', '') or '').strip() if isinstance(item, dict) else ''
+            if site:
+                doc['site'] = site
             normalized.append(doc)
 
         return normalized
@@ -315,6 +318,7 @@ class SqliteIndexer:
         short_description = str(entry.get('short_description', '') or '').strip()
         rulebooks = self._normalize_document_list(entry.get('rulebooks', []))
         supplemental_files = self._normalize_document_list(entry.get('supplemental_files', []))
+        crowdfunding_links = self._normalize_document_list(entry.get('crowdfunding_links', []))
 
         if name:
             normalized['name'] = name
@@ -325,6 +329,8 @@ class SqliteIndexer:
             normalized['rulebooks'] = rulebooks
         if supplemental_files:
             normalized['supplemental_files'] = supplemental_files
+        if crowdfunding_links:
+            normalized['crowdfunding_links'] = crowdfunding_links
 
         for platform in ('android', 'ios', 'pc'):
             platform_data = self._normalize_digital_platform_list(entry.get(platform))

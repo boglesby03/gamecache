@@ -110,6 +110,51 @@ function getFaviconUrl(domain) {
   return `https://www.google.com/s2/favicons?domain=${encodeURIComponent(domain)}&sz=64`;
 }
 
+const CROWDFUNDING_SOURCES = [
+  { value: 'Gamefound', domain: 'gamefound.com' },
+  { value: 'Kickstarter', domain: 'kickstarter.com' },
+  { value: 'BackerKit', domain: 'backerkit.com' },
+  { value: 'GMT P500', domain: 'gmtgames.com' },
+  { value: 'Indiegogo', domain: 'indiegogo.com' },
+  { value: 'Game On Tabletop', domain: 'gameontabletop.com' },
+  { value: 'Verkami', domain: 'verkami.com' },
+  { value: 'Spieleschmiede', domain: 'spieleschmiede.com' },
+  { value: 'Wspieram', domain: 'wspieram.to' },
+  { value: 'Ulule', domain: 'ulule.com' },
+  { value: 'Giochistarter', domain: 'giochistarter.it' },
+  { value: 'Zeczec', domain: 'zeczec.com' },
+  { value: 'Modian', domain: 'modian.com' },
+  { value: 'Catarse', domain: 'catarse.me' },
+  { value: 'Tumblbug', domain: 'tumblbug.com' },
+];
+
+function getCrowdfundingSourceMeta(source, url) {
+  const sourceKey = normalizeStoreKey(source);
+  const matchedSource = CROWDFUNDING_SOURCES.find((item) => normalizeStoreKey(item.value) === sourceKey);
+  if (matchedSource) {
+    return {
+      title: matchedSource.value,
+      iconUrl: getFaviconUrl(matchedSource.domain),
+      label: matchedSource.value.slice(0, 4).toUpperCase()
+    };
+  }
+
+  try {
+    const hostname = new URL(normalizeDigitalUrl(url)).hostname;
+    if (hostname) {
+      return {
+        title: source || hostname,
+        iconUrl: getFaviconUrl(hostname),
+        label: String(source || hostname).slice(0, 4).toUpperCase()
+      };
+    }
+  } catch (_error) {
+    // Use the text fallback for malformed URLs.
+  }
+
+  return source ? { title: source, label: source.slice(0, 4).toUpperCase() } : null;
+}
+
 function detectStoreKeyFromUrl(url) {
   const normalizedUrl = normalizeDigitalUrl(url);
   if (!normalizedUrl) return '';
@@ -278,7 +323,8 @@ function readDigitalEntry(game) {
   const entry = {
     name: String(saved.name || fallbackName || '').trim(),
     short_description: String(saved.short_description || '').trim(),
-    platforms: {}
+    platforms: {},
+    crowdfunding_links: Array.isArray(saved.crowdfunding_links) ? saved.crowdfunding_links : []
   };
 
   DIGITAL_PLATFORMS.forEach((platform) => {
@@ -480,6 +526,78 @@ function renderDigitalVersionsSection(clone, game) {
 
     group.appendChild(platformList);
     list.appendChild(group);
+  });
+}
+
+function renderCrowdsourcedLinksSection(clone, game) {
+  const linksSection = clone.querySelector('.crowdsourced-links-section');
+  if (!linksSection) return;
+
+  const linksContainer = linksSection.querySelector('.crowdsourced-links-container');
+  if (!linksContainer) return;
+
+  const entry = readDigitalEntry(game);
+  const links = entry.crowdfunding_links || [];
+
+  if (!links || links.length === 0) {
+    linksSection.style.display = 'none';
+    return;
+  }
+
+  linksSection.style.display = 'block';
+  linksContainer.innerHTML = '';
+
+  links.forEach((link) => {
+    const linkObj = typeof link === 'string' ? { url: link } : link;
+    const url = String(linkObj.url || '').trim();
+    const source = String(linkObj.site || linkObj.source || linkObj.name || '').trim();
+    const label = String(linkObj.name || linkObj.display_name || linkObj.label || linkObj.title || url).trim();
+
+    if (!url) return;
+
+    const linkEl = createElement('a', {
+      href: url,
+      target: '_blank',
+      rel: 'noopener noreferrer',
+      className: 'digital-version-item crowdsourced-link has-label',
+      title: source || label,
+      'aria-label': `${source || label}: ${label}`
+    });
+
+    const sourceMeta = getCrowdfundingSourceMeta(source, url);
+    const iconWrapper = createElement('span', {
+      className: 'digital-store-icon',
+      title: sourceMeta ? sourceMeta.title : '',
+      'aria-label': sourceMeta ? sourceMeta.title : 'Crowdsourced link'
+    });
+    if (sourceMeta && sourceMeta.iconUrl) {
+      const icon = createElement('img', {
+        className: 'digital-store-logo',
+        src: sourceMeta.iconUrl,
+        alt: `${sourceMeta.title} icon`,
+        loading: 'lazy',
+        referrerpolicy: 'no-referrer'
+      });
+      icon.addEventListener('error', () => {
+        icon.remove();
+        if (!iconWrapper.textContent) {
+          iconWrapper.textContent = sourceMeta.label;
+          iconWrapper.classList.add('digital-store-badge');
+        }
+      });
+      iconWrapper.appendChild(icon);
+    } else if (sourceMeta) {
+      iconWrapper.textContent = sourceMeta.label;
+      iconWrapper.classList.add('digital-store-badge');
+    }
+    linkEl.appendChild(iconWrapper);
+
+    const labelSpan = createElement('span', {
+      className: 'digital-version-label'
+    }, label);
+    linkEl.appendChild(labelSpan);
+
+    linksContainer.appendChild(linkEl);
   });
 }
 
@@ -853,15 +971,36 @@ function setupFilters() {
   setupStatusFilter();
   setupWishlistFilter();
   setupDigitalFilter();
+  setupCrowdfundingSiteFilter();
   setupDigitalOnlyToggle();
   setupAgeRangeFilter();
   setupClearAllButton();
+  setupFiltersToggle();
 
   // Ensure player sub-options are hidden initially
   hideAllPlayerSubOptions();
 
   // Ensure "Any" is checked by default for players filter
   ensurePlayerAnyIsSelected();
+}
+
+function setupFiltersToggle() {
+  const toggle = document.getElementById('filters-toggle');
+  const controls = document.getElementById('filter-controls');
+  if (!toggle || !controls) return;
+
+  const setExpanded = (expanded) => {
+    toggle.setAttribute('aria-expanded', String(expanded));
+    controls.hidden = !expanded;
+    toggle.querySelector('.filters-toggle-chevron').textContent = expanded ? 'expand_less' : 'expand_more';
+    localStorage.setItem('filters-expanded', String(expanded));
+  };
+
+  const savedState = localStorage.getItem('filters-expanded');
+  setExpanded(savedState !== 'false');
+  toggle.addEventListener('click', () => {
+    setExpanded(toggle.getAttribute('aria-expanded') !== 'true');
+  });
 }
 
 function hideAllPlayerSubOptions() {
@@ -1504,6 +1643,43 @@ function setupDigitalFilter() {
   }
 }
 
+function getCrowdfundingSite(link) {
+  const linkObj = typeof link === 'string' ? { url: link } : (link || {});
+  const source = String(linkObj.site || linkObj.source || '').trim();
+  const meta = getCrowdfundingSourceMeta(source, linkObj.url);
+  if (meta && meta.title) return meta.title;
+  if (source) return source;
+
+  try {
+    return new URL(normalizeDigitalUrl(linkObj.url || '')).hostname;
+  } catch (_error) {
+    return '';
+  }
+}
+
+function setupCrowdfundingSiteFilter() {
+  const siteCounts = new Map();
+  allGames.forEach((game) => {
+    const links = readDigitalEntry(game).crowdfunding_links || [];
+    new Set(links.map(getCrowdfundingSite).filter(Boolean)).forEach((site) => {
+      siteCounts.set(site, (siteCounts.get(site) || 0) + 1);
+    });
+  });
+
+  const items = Array.from(siteCounts, ([label, count]) => ({
+    label,
+    value: label,
+    count
+  })).sort((a, b) => a.label.localeCompare(b.label));
+
+  if (items.length > 0) {
+    createRefinementFilter('facet-crowdfunding-site', 'Crowdfunding Site', items, 'crowdfunding_site', false, true);
+  } else {
+    const container = document.getElementById('facet-crowdfunding-site');
+    if (container) container.style.display = 'none';
+  }
+}
+
 function setupDigitalOnlyToggle() {
   const toggle = document.getElementById('hide-digital-only');
   if (!toggle) return;
@@ -1940,6 +2116,7 @@ function updateClearButtonVisibility(filters) {
     selectedStatus,
     selectedWishlist,
     selectedDigital,
+    selectedCrowdfundingSite,
     hideDigitalOnly,
     selectedAgeRange,
     selectedUseCommunityAge
@@ -1964,6 +2141,7 @@ function updateClearButtonVisibility(filters) {
     (selectedStatus && selectedStatus.length > 0) ||
     (selectedWishlist && selectedWishlist.length > 0) ||
     (selectedDigital && selectedDigital.length > 0) ||
+    (selectedCrowdfundingSite && selectedCrowdfundingSite.length > 0) ||
     hideDigitalOnly ||
     selectedUseCommunityAge ||
     (selectedAgeRange && selectedAgeRange.min > ageSlider.min_init) ||
@@ -2122,6 +2300,15 @@ function updateFilterActiveStates(filters) {
       }
     }
 
+    const crowdfundingSiteFilters = document.getElementById('facet-crowdfunding-site');
+    if (crowdfundingSiteFilters) {
+      if (filters.selectedCrowdfundingSite && filters.selectedCrowdfundingSite.length > 0) {
+        crowdfundingSiteFilters.classList.add('filter-active');
+      } else {
+        crowdfundingSiteFilters.classList.remove('filter-active');
+      }
+    }
+
     // Update age range priority filter
     const ageRangeFilters = document.getElementById('facet-age-range');
     const ageSlider = getSelectedSlider('facet-age-range');
@@ -2158,6 +2345,7 @@ function getFiltersFromURL() {
     selectedStatus: params.get('status')?.split(',').filter(Boolean) || [],
     selectedWishlist: params.get('wishlist')?.split(',').filter(Boolean) || [],
     selectedDigital: params.get('digital')?.split(',').filter(Boolean) || [],
+    selectedCrowdfundingSite: params.get('crowdfunding_site')?.split(',').filter(Boolean) || [],
     hideDigitalOnly: params.get('hide_digital') === '1',
     selectedAgeRange: ageRangeParam ? { min: Number(ageRangeParam.split('-')[0]), max: Number(ageRangeParam.split('-')[1]) } : null,
     selectedUseCommunityAge: params.get('age_source') === 'community',
@@ -2183,6 +2371,7 @@ function getFiltersFromUI() {
   const selectedStatus = getSelectedValues('status');
   const selectedWishlist = getSelectedValues('wishlist');
   const selectedDigital = getSelectedValues('digital');
+  const selectedCrowdfundingSite = getSelectedValues('crowdfunding_site');
   const hideDigitalOnly = Boolean(document.getElementById('hide-digital-only')?.checked);
   const selectedAgeRange = getSelectedSlider('facet-age-range');
   const selectedUseCommunityAge = Boolean(document.getElementById('age-community-toggle')?.checked);
@@ -2205,6 +2394,7 @@ function getFiltersFromUI() {
     selectedStatus,
     selectedWishlist,
     selectedDigital,
+    selectedCrowdfundingSite,
     hideDigitalOnly,
     selectedAgeRange,
     selectedUseCommunityAge,
@@ -2232,6 +2422,7 @@ function updateURLWithFilters(filters) {
   if (filters.selectedStatus?.length) params.set('status', filters.selectedStatus.join(','));
   if (filters.selectedWishlist?.length) params.set('wishlist', filters.selectedWishlist.join(','));
   if (filters.selectedDigital?.length) params.set('digital', filters.selectedDigital.join(','));
+  if (filters.selectedCrowdfundingSite?.length) params.set('crowdfunding_site', filters.selectedCrowdfundingSite.join(','));
   if (filters.hideDigitalOnly) params.set('hide_digital', '1');
   if (filters.selectedAgeRange) params.set('age', `${filters.selectedAgeRange.min}-${filters.selectedAgeRange.max}`);
   if (filters.selectedUseCommunityAge) params.set('age_source', 'community');
@@ -2267,6 +2458,7 @@ function updateUIFromState(state) {
     'years': state.selectedYears,
     'status': state.selectedStatus,
     'wishlist': state.selectedWishlist,
+    'crowdfunding_site': state.selectedCrowdfundingSite,
   };
 
   for (const name in checkboxFilters) {
@@ -2391,6 +2583,7 @@ function filterGames(gamesToFilter, filters) {
     selectedStatus,
     selectedWishlist,
     selectedDigital,
+    selectedCrowdfundingSite,
     hideDigitalOnly,
     selectedAgeRange,
     selectedUseCommunityAge
@@ -2586,6 +2779,15 @@ function filterGames(gamesToFilter, filters) {
       });
 
       if (!digitalMatches) {
+        return false;
+      }
+    }
+
+    if (selectedCrowdfundingSite.length > 0) {
+      const crowdfundingSites = new Set(
+        (readDigitalEntry(game).crowdfunding_links || []).map(getCrowdfundingSite).filter(Boolean)
+      );
+      if (!selectedCrowdfundingSite.some(site => crowdfundingSites.has(site))) {
         return false;
       }
     }
@@ -2900,6 +3102,22 @@ function updateAllFilterCounts(filters) {
     });
   });
   updateCountsInDOM('facet-digital', digitalCounts);
+
+  const crowdfundingSiteFilters = {
+    ...filters,
+    selectedCrowdfundingSite: []
+  };
+  const gamesForCrowdfundingSiteCount = filterGames(allGames, crowdfundingSiteFilters);
+  const crowdfundingSiteCounts = {};
+  gamesForCrowdfundingSiteCount.forEach(game => {
+    const sites = new Set(
+      (readDigitalEntry(game).crowdfunding_links || []).map(getCrowdfundingSite).filter(Boolean)
+    );
+    sites.forEach(site => {
+      crowdfundingSiteCounts[site] = (crowdfundingSiteCounts[site] || 0) + 1;
+    });
+  });
+  updateCountsInDOM('facet-crowdfunding-site', crowdfundingSiteCounts);
 
   const ageRangeFilters = {
     ...filters,
@@ -4016,6 +4234,7 @@ if (game.accessories.length > 0 || game.po_acc.length > 0 || game.wl_acc.length 
 }
 
   renderDigitalVersionsSection(clone, game);
+  renderCrowdsourcedLinksSection(clone, game);
 
   return clone;
 }

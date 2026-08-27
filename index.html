@@ -33,6 +33,12 @@
   </header>
   <article class="wrapper">
     <aside class="facets">
+      <button class="filters-toggle" id="filters-toggle" type="button" aria-expanded="true" aria-controls="filter-controls">
+        <span class="material-symbols-rounded icon-small" aria-hidden="true">tune</span>
+        <span class="filters-toggle-label">Filters</span>
+        <span class="material-symbols-rounded filters-toggle-chevron" aria-hidden="true">expand_less</span>
+      </button>
+      <div class="filter-controls" id="filter-controls">
       <div id="facet-players"></div>
       <div id="facet-playing-time"></div>
       <div id="facet-weight"></div>
@@ -49,7 +55,9 @@
       <div id="facet-status"></div>
       <div id="facet-wishlist"></div>
       <div id="facet-digital"></div>
+      <div id="facet-crowdfunding-site"></div>
       <div class="clear-all" id="clear-all"></div>
+      </div>
     </aside>
     <main class="results">
       <div class="hits" id="hits">
@@ -150,6 +158,11 @@
         <div class="tags-section" style="display: none;">
           <h2>Mechanics</h2>
           <div class="mechanic-chips-container"></div>
+        </div>
+
+        <div class="section crowdsourced-links-section" style="display: none;">
+          <h2>Crowdsourced Links</h2>
+          <div class="crowdsourced-links-container"></div>
         </div>
 
         <div class="expansions-section" style="display: none;">
