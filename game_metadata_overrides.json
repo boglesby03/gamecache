@@ -403,19 +403,6 @@
         },
         {
           "store": "Tabletop Simulator",
-          "pc": [],
-          "crowdfunding_links": [
-            {
-              "name": "Tigris & Euphrates",
-              "site": "Kickstarter",
-              "url": "https://www.kickstarter.com/projects/yourproject/tigris-euphrates"
-            }
-          ],
-          "note": "Euphrates & Tigris: COK",
-          "online": true
-        },
-        {
-          "store": "Tabletop Simulator",
           "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=2997038556",
           "note": "Euphrates & Tigris: COK",
           "online": true
@@ -2720,6 +2707,12 @@
           "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=582231256",
           "note": "Power Grid (USA Map)",
           "online": true
+        },
+        {
+          "store": "Web",
+          "url": "https://xbigtk13x.github.io/power-grid-automa/",
+          "note": "Frida - Power Grid Automa",
+          "support_app": true
         }
       ]
     },
@@ -2910,24 +2903,6 @@
           "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=3025224975",
           "note": "The A-Team Board Game",
           "online": true
-        },
-        {
-          "store": "Tabletop Simulator",
-          "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=2094273494",
-          "note": "Kill team board",
-          "online": true
-        },
-        {
-          "store": "Tabletop Simulator",
-          "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=2061494583",
-          "note": "Kill Team Open Board",
-          "online": true
-        },
-        {
-          "store": "Tabletop Simulator",
-          "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=2896415584",
-          "note": "Team Fortress 2 - Board Game",
-          "online": true
         }
       ]
     },
@@ -2936,7 +2911,13 @@
       "short_description": "Ship goods, construct buildings, and choose roles that benefit you more than others.",
       "rulebooks": [],
       "supplemental_files": [],
-      "crowdfunding_links": [],
+      "crowdfunding_links": [
+        {
+          "name": "Puerto Rico Special Edition",
+          "site": "Gamefound",
+          "url": "https://gamefound.com/en/projects/awaken-realms/puerto-rico-special-edition"
+        }
+      ],
       "pc": [
         {
           "store": "Tabletop Simulator",
@@ -7718,7 +7699,13 @@
       "short_description": "Draft cards to develop your ancient civilization and build its Wonder of the World.",
       "rulebooks": [],
       "supplemental_files": [],
-      "crowdfunding_links": [],
+      "crowdfunding_links": [
+        {
+          "name": "7 Wonders Deluxe",
+          "site": "Gamefound",
+          "url": "https://gamefound.com/en/projects/reposproduction/7-wonders-deluxe-series"
+        }
+      ],
       "android": [
         {
           "store": "Play Store",
@@ -9769,7 +9756,13 @@
       "short_description": "Play fantastical factions. Expand your influence by terraforming and joining cults.",
       "rulebooks": [],
       "supplemental_files": [],
-      "crowdfunding_links": [],
+      "crowdfunding_links": [
+        {
+          "name": "Terra Mystica Special Edition",
+          "site": "Gamefound",
+          "url": "https://gamefound.com/en/projects/steamforged-games/terra-mystica"
+        }
+      ],
       "android": [
         {
           "store": "Play Store",
@@ -12923,7 +12916,7 @@
           "store": "Web",
           "url": "https://boardgamehelpers.com/PowerGridDeluxe/",
           "note": "Setup Helper",
-          "owned": true
+          "support_app": true
         }
       ]
     },
@@ -22999,6 +22992,12 @@
       "crowdfunding_links": [],
       "pc": [
         {
+          "store": "Steam",
+          "url": "https://store.steampowered.com/app/3239710/The_Red_Cathedral/?mc_cid=c936391924",
+          "note": "Red Cathedral, The",
+          "wishlisted": true
+        },
+        {
           "store": "Tabletopia",
           "url": "https://tabletopia.com/games/the-red-cathedral",
           "note": "Red Cathedral, The",
@@ -23706,7 +23705,7 @@
           "store": "Steam",
           "url": "https://store.steampowered.com/app/1776490/Now_Boarding/",
           "note": "Now Boarding",
-          "owned": true
+          "wishlisted": true
         },
         {
           "store": "BGA",
@@ -40700,7 +40699,13 @@
       "short_description": "The Flash and Reverse-Flash try to outrace each other in a deck-building battle.",
       "rulebooks": [],
       "supplemental_files": [],
-      "crowdfunding_links": []
+      "crowdfunding_links": [
+        {
+          "name": "DC Deck-Building Game 10th Anniversary",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/cze/dc-deck-building-game-10th-anniversary"
+        }
+      ]
     },
     "361284": {
       "name": "Sleeping Gods: Distant Skies (Gamefound Edition)",
@@ -41726,7 +41731,7 @@
           "store": "Steam",
           "url": "https://store.steampowered.com/app/2419041/Spirit_Island__Jagged_Earth/",
           "note": "Horizons of Spirit Island",
-          "owned": true
+          "wishlisted": true
         }
       ]
     },
@@ -42819,7 +42824,7 @@
           "store": "Web",
           "url": "https://boardgamehelpers.com/Speakeasy/Default.aspx",
           "note": "Setup Helper",
-          "owned": true
+          "support_app": true
         }
       ]
     },
@@ -44726,7 +44731,13 @@
       "short_description": "Magical DC Super Heroes fight off supernatural threats.",
       "rulebooks": [],
       "supplemental_files": [],
-      "crowdfunding_links": [],
+      "crowdfunding_links": [
+        {
+          "name": "DC Deck-Building Game: Justice League Dark",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/cze/dc-deck-building-game-justice-league-dark"
+        }
+      ],
       "pc": [
         {
           "store": "Tabletop Simulator",
@@ -47386,7 +47397,13 @@
       "short_description": "Build a championship caliber baseball team",
       "rulebooks": [],
       "supplemental_files": [],
-      "crowdfunding_links": []
+      "crowdfunding_links": [
+        {
+          "name": "7th Inning Stretch [Solo Game of the Month]",
+          "site": "Gamefound",
+          "url": "https://gamefound.com/en/projects/gabe-barrett/7th-inning-stretch"
+        }
+      ]
     },
     "426580": {
       "name": "Legendary: Marvel (Second Edition)",
@@ -47711,7 +47728,7 @@
     },
     "430533": {
       "name": "Formaggio",
-      "short_description": "",
+      "short_description": "Craft artisanal cheeses in 1900s Italy.",
       "rulebooks": [],
       "supplemental_files": [],
       "crowdfunding_links": []
@@ -50116,14 +50133,14 @@
     },
     "471438": {
       "name": "Reel Rivals",
-      "short_description": "",
+      "short_description": "Command a team of fishermen competing for control of ponds.",
       "rulebooks": [],
       "supplemental_files": [],
       "crowdfunding_links": []
     },
     "471903": {
       "name": "Rebels Against Rebellion",
-      "short_description": "",
+      "short_description": "Defend your home of Scott County, TN during the American Civil War.",
       "rulebooks": [],
       "supplemental_files": [],
       "crowdfunding_links": [
@@ -50193,21 +50210,21 @@
     },
     "473937": {
       "name": "Worder",
-      "short_description": "",
+      "short_description": "Extend your letter card grid for maximum points.",
       "rulebooks": [],
       "supplemental_files": [],
       "crowdfunding_links": []
     },
     "473938": {
       "name": "Booked Bands",
-      "short_description": "",
+      "short_description": "Bands try to win over the crowd in a nightclub.",
       "rulebooks": [],
       "supplemental_files": [],
       "crowdfunding_links": []
     },
     "474762": {
       "name": "Out of Print",
-      "short_description": "",
+      "short_description": "Escape the book before the book traps you inside forever.",
       "rulebooks": [],
       "supplemental_files": [],
       "crowdfunding_links": [
@@ -50234,7 +50251,7 @@
     },
     "475323": {
       "name": "Infamous Traffic: Second Edition, An",
-      "short_description": "",
+      "short_description": "Create supply chains to conduct the opium trade in 19th century Qing China.",
       "rulebooks": [],
       "supplemental_files": [],
       "crowdfunding_links": [],
@@ -50255,10 +50272,23 @@
     },
     "475344": {
       "name": "Mercenaries Wanted",
-      "short_description": "",
+      "short_description": "Recruit & deploy a team of mercenaries to become the most powerful boss in Gloomhaven",
       "rulebooks": [],
       "supplemental_files": [],
       "crowdfunding_links": []
+    },
+    "477957": {
+      "name": "DC Deck-Building Game: Green Lantern Corps",
+      "short_description": "Take the oath and join the Green Lantern Corps!",
+      "rulebooks": [],
+      "supplemental_files": [],
+      "crowdfunding_links": [
+        {
+          "name": "DC Deck-Building Game: Green Lantern Corps",
+          "site": "Kickstarter",
+          "url": "www.kickstarter.com/projects/cze/dc-dbg-glc"
+        }
+      ]
     }
   }
 }

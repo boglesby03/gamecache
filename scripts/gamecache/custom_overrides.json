@@ -3,7 +3,7 @@
     {
       "id": 231231,
       "name": "7 Wonders: Leaders – Phryne Alternate Art Card",
-      "comment": "Not sure this will work for accessories"
+      "comment": "Accessory"
     },
     {
       "id": 375371,
@@ -24,6 +24,10 @@
     {
       "id": 372783,
       "name": "Iron Maiden Pack #3"
+    },
+    {
+      "id": 395699,
+      "name": "Istanbul: Pegasus Depot & Kebab Shop Mini Expansions"
     },
     {
       "id": 448443,
@@ -92,10 +96,6 @@
     {
       "id": 472325,
       "name": "Zombie Princess: Little Mermaid"
-    },
-    {
-      "id": 395699,
-      "name": "Istanbul: Pegasus Depot & Kebab Shop Mini Expansions"
     }
   ],
   "not_promos": [
@@ -108,7 +108,16 @@
       "name": "Marvel United: Kickstarter Promos Box"
     }
   ],
-  "custom_integrates": [],
+  "custom_integrates": [
+    {
+      "id": 464729,
+      "name": "Thunder Road: Ignition",
+      "baseId": 355997,
+      "baseName": "Thunder Road: Vendetta – Maximum Chrome",
+      "inbound": true,
+      "comment": "Have requested BGG add this one"
+    }
+  ],
   "custom_integrates_copy": [
     {
       "id": 268620,
@@ -340,6 +349,20 @@
       "name": "Viticulture Promo Cards",
       "baseId": 183394,
       "baseName": "Viticulture Essential Edition"
+    },
+    {
+      "id": 476484,
+      "name": "Sinkhole Swerve tile",
+      "baseId": 355997,
+      "baseName": "Thunder Road: Vendetta – Maximum Chrome",
+      "comment": "Have requested this added in BGG"
+    },
+    {
+      "id": 476485,
+      "name": "Fallen Tower Tile",
+      "baseId": 355997,
+      "baseName": "Thunder Road: Vendetta – Maximum Chrome",
+      "comment": "Have requested this added in BGG"
     }
   ],
   "unpublished_collection_ids": [
