@@ -166,6 +166,18 @@
     icon.alt = source ? `${source.value} icon` : "";
   }
 
+  function updateCrowdfundingSourceFromUrl(row) {
+    const urlInput = row.querySelector('[data-key="url"]');
+    const sourceSelect = row.querySelector('[data-key="name-select"]');
+    if (!urlInput || !sourceSelect) return;
+
+    const sourceName = getCrowdfundingSource(urlInput.value);
+    if (sourceName) {
+      sourceSelect.value = sourceName;
+      updateCrowdfundingSourceIcon(row);
+    }
+  }
+
   function isValidUrl(urlStr) {
     try {
       new URL(urlStr);
@@ -1985,6 +1997,7 @@ ${entries.join(",\n")}
       populateCrowdfundingSourceSelect(sourceSelect, sourceName);
       row.querySelector('[data-key="display-name"]').value = entry.name || "";
       sourceSelect.addEventListener("change", () => updateCrowdfundingSourceIcon(row));
+      row.querySelector('[data-key="url"]').addEventListener("input", () => updateCrowdfundingSourceFromUrl(row));
     } else {
       row.querySelector('[data-key="name"]').value = entry.name || "";
     }
