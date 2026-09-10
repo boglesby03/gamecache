@@ -928,7 +928,13 @@
       "short_description": "What's your bid? Bid on promising property bundles, then sell properties for checks.",
       "rulebooks": [],
       "supplemental_files": [],
-      "crowdfunding_links": [],
+      "crowdfunding_links": [
+        {
+          "name": "For Sale Autorama & For Sale: Advisors Expansion",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/eaglegryphon/for-sale-autorama-and-for-sale-advisors-expansion"
+        }
+      ],
       "pc": [
         {
           "store": "BGA",
@@ -6955,7 +6961,33 @@
       "short_description": "Race to develop and colonize the surface of planet Maxwell.",
       "rulebooks": [],
       "supplemental_files": [],
-      "crowdfunding_links": [],
+      "crowdfunding_links": [
+        {
+          "name": "Alien Frontiers Big Box - Reloaded!",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/gamesalute/alien-frontiers-big-box-reloaded"
+        },
+        {
+          "name": "Alien Frontiers: Factions Definitive Edition",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/tycoon/alien-frontiers-factions-definitive-edition-0"
+        },
+        {
+          "name": "Alien Frontiers 4th Edition",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/gamesalute/alien-frontiers-4th-edition"
+        },
+        {
+          "name": "Alien Frontiers: Relaunch",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/gamesalute/alien-frontiers-relaunch"
+        },
+        {
+          "name": "Alien Frontiers: Retro-Future Sci Fi Board Game",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/clevermojogames/alien-frontiers-retro-future-sci-fi-board-game"
+        }
+      ],
       "pc": [
         {
           "store": "Tabletopia",
@@ -9293,7 +9325,13 @@
       "short_description": "Plan your strategy to control central Europe, but don't forget to feed your armies!",
       "rulebooks": [],
       "supplemental_files": [],
-      "crowdfunding_links": []
+      "crowdfunding_links": [
+        {
+          "name": "Wallenstein - the 30 years' war",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/queengames/wallenstein-the-30-years-war"
+        }
+      ]
     },
     "110327": {
       "name": "Lords of Waterdeep",
@@ -9676,7 +9714,13 @@
       "short_description": "Join fellow abolitionists to emancipate slaves and lead them to freedom in Canada.",
       "rulebooks": [],
       "supplemental_files": [],
-      "crowdfunding_links": []
+      "crowdfunding_links": [
+        {
+          "name": "Freedom The Underground Railroad",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/academygames/freedom-the-underground-railroad-by-academy-games"
+        }
+      ]
     },
     "119591": {
       "name": "Rialto",
@@ -10020,7 +10064,13 @@
       "short_description": "Travel the famed Tokaido road, visit hot springs, try new food, and paint landscapes.",
       "rulebooks": [],
       "supplemental_files": [],
-      "crowdfunding_links": [],
+      "crowdfunding_links": [
+        {
+          "name": "Tokaido: Collector's Edition",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/funforge/tokaido-collectors-edition"
+        }
+      ],
       "android": [
         {
           "store": "Play Store",
@@ -10463,7 +10513,13 @@
         }
       ],
       "supplemental_files": [],
-      "crowdfunding_links": [],
+      "crowdfunding_links": [
+        {
+          "name": "1775 - Rebellion (Birth of America Series)",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/academygames/1775-rebellion-birth-of-america-series"
+        }
+      ],
       "android": [
         {
           "store": "Play Store",
@@ -11087,6 +11143,16 @@
           "name": "Hands in the Sea",
           "site": "Kickstarter",
           "url": "https://www.kickstarter.com/projects/knightworks/hands-in-the-sea-2nd-edition"
+        },
+        {
+          "name": "Hands in the Sea",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/knightworks/hands-in-the-sea-a-two-player-card-driven-wargame"
+        },
+        {
+          "name": "Hands in the Sea (Phalanx)",
+          "site": "Gamefound",
+          "url": "https://gamefound.com/en/projects/phalanx/-hands-in-the-sea"
         }
       ]
     },
@@ -11177,14 +11243,26 @@
       "short_description": "Buy and mix paints to restore the Renaissance fresco and earn the Bishop's favor.",
       "rulebooks": [],
       "supplemental_files": [],
-      "crowdfunding_links": []
+      "crowdfunding_links": [
+        {
+          "name": "Fresco Big Box",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/queengames/fresco-big-box"
+        }
+      ]
     },
     "140603": {
       "name": "Francis Drake",
       "short_description": "A card-drafting, engine-building civilization game.",
       "rulebooks": [],
       "supplemental_files": [],
-      "crowdfunding_links": []
+      "crowdfunding_links": [
+        {
+          "name": "Francis Drake: An adventurous sea voyage for fortune & fame!",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/eaglegryphon/francis-drake-an-adventurous-sea-voyage-for-fortun"
+        }
+      ]
     },
     "140620": {
       "name": "Lewis & Clark: The Expedition",
@@ -11239,7 +11317,13 @@
       "short_description": "Deck-building game where the cards are letters. Spell words to earn money and points!",
       "rulebooks": [],
       "supplemental_files": [],
-      "crowdfunding_links": [],
+      "crowdfunding_links": [
+        {
+          "name": "Paperback 10th Anniversary + Typewriter",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/fowers/paperback-10th-anniversary-typewriter"
+        }
+      ],
       "android": [
         {
           "store": "Play Store",
@@ -12485,6 +12569,11 @@
           "name": "Baseball Highlights: 2045",
           "site": "Gamefound",
           "url": "https://gamefound.com/en/projects/eagle-gryphon-games/baseball-highlights-2045-bases-loaded"
+        },
+        {
+          "name": "Baseball Highlights 2045: SPRING TRAINING!!!",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/eaglegryphon/baseball-highlights-2045-spring-training"
         }
       ]
     },
@@ -13416,7 +13505,13 @@
       "short_description": "15 minutes to get tea on the trolley!",
       "rulebooks": [],
       "supplemental_files": [],
-      "crowdfunding_links": []
+      "crowdfunding_links": [
+        {
+          "name": "SiXeS & Elevenses",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/eaglegryphon/sixes-and-elevenses-two-new-9-eggs-from-eagle-gryp"
+        }
+      ]
     },
     "158899": {
       "name": "Colt Express",
@@ -13525,9 +13620,34 @@
       "supplemental_files": [],
       "crowdfunding_links": [
         {
-          "name": "Conan",
+          "name": "Conan by Monolith: Tales of Tortage and Zamora",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/monolithboardgames/conan-by-monolith-tales-of-tortage-and-zamora"
+        },
+        {
+          "name": "Conan by Monolith: Red Nails Expansion and Versus Mode",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/monolithboardgames/conan-by-monolith-red-nails-expansion-and-versus-mode"
+        },
+        {
+          "name": "Conan: the Conqueror - Adventure Mode Expansion",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/monolithboardgames/conan-the-conqueror-adventure-mode-expansion"
+        },
+        {
+          "name": "Conan: The Book of Set",
           "site": "Kickstarter",
           "url": "https://www.kickstarter.com/projects/806316071/conan-the-book-of-set"
+        },
+        {
+          "name": "Conan: The Hyborian Age - The Roleplaying Game",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/monolithboardgames/conan-the-hyborian-age-the-roleplaying-game"
+        },
+        {
+          "name": "Conan",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/monolithboardgames/conan"
         }
       ],
       "android": [
@@ -13768,7 +13888,13 @@
         }
       ],
       "supplemental_files": [],
-      "crowdfunding_links": [],
+      "crowdfunding_links": [
+        {
+          "name": "Lisboa",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/eaglegryphon/lisboa-vital-lacerdas-new-game-of-rebuilding-and-i"
+        }
+      ],
       "pc": [
         {
           "store": "Tabletopia",
@@ -13799,9 +13925,19 @@
       "supplemental_files": [],
       "crowdfunding_links": [
         {
-          "name": "Stockpile",
+          "name": "Stockpile: Illicit Investments Expansion and Epic Edition",
           "site": "Kickstarter",
           "url": "https://www.kickstarter.com/projects/nauvoogames/stockpile-illicit-investments-expansion-and-epic-edition"
+        },
+        {
+          "name": "Stockpile: The Stockmarket Game of Insider Trading",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/nauvoogames/stockpile-the-stockmarket-game-of-insider-trading"
+        },
+        {
+          "name": "Stockpile: Continuing Corruption",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/nauvoogames/stockpile-continuing-corruption"
         }
       ],
       "android": [
@@ -14414,12 +14550,25 @@
       "short_description": "Craftsmen, scholars & monks can help you reign supreme—but who will turn up to help?",
       "rulebooks": [],
       "supplemental_files": [],
-      "crowdfunding_links": [],
+      "crowdfunding_links": [
+        {
+          "name": "Orléans Deluxe Edition",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/michaelmindes/deluxe-orleans-best-of-essen-2014"
+        }
+      ],
       "pc": [
         {
           "store": "Tabletopia",
           "url": "https://tabletopia.com/games/orleans",
           "note": "Orléans: Deluxified",
+          "monthly_subscription": true
+        },
+        {
+          "store": "BGA",
+          "url": "https://boardgamearena.com/gamepanel?game=orleans public",
+          "note": "Orléans: Deluxified",
+          "online": true,
           "monthly_subscription": true
         }
       ]
@@ -14962,7 +15111,13 @@
       "short_description": "Delve into the magical steampunk World of Smog and puzzle out its labyrinth.",
       "rulebooks": [],
       "supplemental_files": [],
-      "crowdfunding_links": []
+      "crowdfunding_links": [
+        {
+          "name": "The World of Smog: On Her Majesty's Service",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/cmon/the-world-of-smog-on-her-majestys-service"
+        }
+      ]
     },
     "168584": {
       "name": "Love Letter: Batman",
@@ -15319,7 +15474,23 @@
       "short_description": "Ragnarök has come! Secure your place in Valhalla in epic Viking battles.",
       "rulebooks": [],
       "supplemental_files": [],
-      "crowdfunding_links": [],
+      "crowdfunding_links": [
+        {
+          "name": "Blood Rage",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/cmon/blood-rage"
+        },
+        {
+          "name": "Blood Rage Digital",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/cmon/blood-rage-digital"
+        },
+        {
+          "name": "Blood Rage: The Roleplaying Game",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/tycoon/blood-rage-rpg"
+        }
+      ],
       "pc": [
         {
           "store": "Tabletop Simulator",
@@ -15703,13 +15874,25 @@
       "short_description": "Craftsmen, scholars & monks can help you reign supreme—but who will turn up to help?",
       "rulebooks": [],
       "supplemental_files": [],
-      "crowdfunding_links": [],
+      "crowdfunding_links": [
+        {
+          "name": "Orléans Deluxe Edition",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/michaelmindes/deluxe-orleans-best-of-essen-2014"
+        }
+      ],
       "pc": [
         {
           "store": "BGA",
           "url": "https://boardgamearena.com/gamepanel?game=orleans",
           "note": "BGA Premium",
           "online": true,
+          "monthly_subscription": true
+        },
+        {
+          "store": "Tabletopia",
+          "url": "https://tabletopia.com/games/orleans public",
+          "note": "Orléans: Deluxe Edition",
           "monthly_subscription": true
         }
       ]
@@ -15734,7 +15917,13 @@
       "short_description": "As part of a heist team, break in, get the loot, and get out without getting caught.",
       "rulebooks": [],
       "supplemental_files": [],
-      "crowdfunding_links": [],
+      "crowdfunding_links": [
+        {
+          "name": "Burgle Bros.",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/fowers/burgle-bros-a-cooperative-heist-boardgame"
+        }
+      ],
       "pc": [
         {
           "store": "Steam",
@@ -16094,7 +16283,18 @@
       "short_description": "Revisit the Age of Exploration and Discovery in the 16th century.",
       "rulebooks": [],
       "supplemental_files": [],
-      "crowdfunding_links": []
+      "crowdfunding_links": [
+        {
+          "name": "Empires: Age of Discovery & Struggle of Empires Deluxe",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/eaglegryphon/empires-age-of-discovery"
+        },
+        {
+          "name": "Age of Empires III is reborn as Empires: Age of Discovery",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/eaglegryphon/age-of-empires-iii-is-reborn-as-empires-age-of-dis"
+        }
+      ]
     },
     "174078": {
       "name": "Holmes: Sherlock & Mycroft",
@@ -16286,7 +16486,13 @@
       "short_description": "Race to develop and colonize the surface of planet Maxwell.",
       "rulebooks": [],
       "supplemental_files": [],
-      "crowdfunding_links": []
+      "crowdfunding_links": [
+        {
+          "name": "Alien Frontiers Big Box - Reloaded!",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/gamesalute/alien-frontiers-big-box-reloaded"
+        }
+      ]
     },
     "174660": {
       "name": "New York 1901",
@@ -16347,7 +16553,13 @@
       "short_description": "Lead your ancient empire to the dominion of the Mediterranean Sea.",
       "rulebooks": [],
       "supplemental_files": [],
-      "crowdfunding_links": []
+      "crowdfunding_links": [
+        {
+          "name": "Mare Nostrum - Empires",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/academygames/mare-nostrum-empires"
+        }
+      ]
     },
     "175155": {
       "name": "Forbidden Stars",
@@ -17385,7 +17597,13 @@
       "short_description": "Forge your own path through history as you draft a civilization for the ages.",
       "rulebooks": [],
       "supplemental_files": [],
-      "crowdfunding_links": [],
+      "crowdfunding_links": [
+        {
+          "name": "Through the Ages (1st Edition)",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/eaglegryphon/through-the-ages"
+        }
+      ],
       "android": [
         {
           "store": "Play Store",
@@ -17851,7 +18069,7 @@
           "url": "https://www.kickstarter.com/projects/eaglegryphon/on-mars-by-vital-lacerda-with-artwork-by-ian-otool"
         },
         {
-          "name": "On Mars",
+          "name": "On Mars: Alien Invasion",
           "site": "Kickstarter",
           "url": "https://www.kickstarter.com/projects/eaglegryphon/on-mars-alien-invasion"
         }
@@ -17951,12 +18169,12 @@
         {
           "name": "Mythic Battles: Pantheon",
           "site": "Kickstarter",
-          "url": "https://www.kickstarter.com/projects/806316071/mythic-battles-pantheon"
+          "url": "https://www.kickstarter.com/projects/monolithboardgames/mythic-battles-pantheon"
         },
         {
           "name": "Mythic Battles: Pantheon",
           "site": "Kickstarter",
-          "url": "https://www.kickstarter.com/projects/806316071/mythic-battles-pantheon-15"
+          "url": "https://www.kickstarter.com/projects/monolithboardgames/mythic-battles-pantheon-15"
         }
       ],
       "pc": [
@@ -19623,6 +19841,21 @@
           "name": "Everdell: Collector's Edition",
           "site": "Kickstarter",
           "url": "https://www.kickstarter.com/projects/starlinggames/everdell-spirecrest-and-bellfaire"
+        },
+        {
+          "name": "Everdell: Spirecrest & Bellfaire",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/tycoon/everdell-spirecrest-and-bellfaire"
+        },
+        {
+          "name": "Pearlbrook: The First Expansion for Everdell",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/tycoon/pearlbrook-the-first-expansion-for-everdell"
+        },
+        {
+          "name": "Everdell: Newleaf, Mistwood, and The Complete Collection",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/tycoon/everdell-mistleaf"
         }
       ],
       "android": [
@@ -22475,12 +22708,12 @@
       "supplemental_files": [],
       "crowdfunding_links": [
         {
-          "name": "Batman: Gotham City Chronicles",
+          "name": "Batman: Gotham City Chronicles - Season 3 and RPG",
           "site": "Kickstarter",
           "url": "https://www.kickstarter.com/projects/806316071/batmantm-gotham-city-chronicles-season-3-and-rpg"
         },
         {
-          "name": "Batman: Gotham City Chronicles",
+          "name": "Batman: Gotham City Chronicles - Season 2",
           "site": "Kickstarter",
           "url": "https://www.kickstarter.com/projects/806316071/batmantm-gotham-city-chronicles"
         },
@@ -23699,7 +23932,13 @@
       "short_description": "Manage fledgling airlines and fickle customers in real-time.",
       "rulebooks": [],
       "supplemental_files": [],
-      "crowdfunding_links": [],
+      "crowdfunding_links": [
+        {
+          "name": "Now Boarding",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/fowers/now-boarding"
+        }
+      ],
       "pc": [
         {
           "store": "Steam",
@@ -24084,6 +24323,21 @@
           "name": "D-Day Dice (Second Edition)",
           "site": "Kickstarter",
           "url": "https://www.kickstarter.com/projects/wordforgegames/d-day-dice-2nd-edition"
+        },
+        {
+          "name": "D-Day Dice Board Game",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/1325766284/d-day-dice-board-game"
+        },
+        {
+          "name": "D-Day Dice: Pacific",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/wordforgegames/d-day-dice-pacific"
+        },
+        {
+          "name": "D-Day Dice: To Do or DIE",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/wordforgegames/d-day-dice-to-do-or-die"
         }
       ],
       "pc": [
@@ -24636,11 +24890,6 @@
       "rulebooks": [],
       "supplemental_files": [],
       "crowdfunding_links": [
-        {
-          "name": "Weather Machine",
-          "site": "Kickstarter",
-          "url": "https://www.kickstarter.com/projects/eaglegryphon/weather-machine-by-vital-lacerda-and-ian-otoole/description"
-        },
         {
           "name": "Weather Machine",
           "site": "Kickstarter",
@@ -25708,7 +25957,13 @@
       "short_description": "Deploy your fleet of fishing boats while developing your bustling harbor.",
       "rulebooks": [],
       "supplemental_files": [],
-      "crowdfunding_links": [],
+      "crowdfunding_links": [
+        {
+          "name": "Fleet: The Dice Game",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/eaglegryphon/fleet-the-dice-game"
+        }
+      ],
       "android": [
         {
           "store": "Play Store",
@@ -26656,7 +26911,23 @@
       "short_description": "Manipulate empires from the shadows as you outwit and outmaneuver the competition!",
       "rulebooks": [],
       "supplemental_files": [],
-      "crowdfunding_links": [],
+      "crowdfunding_links": [
+        {
+          "name": "A War of Whispers",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/gamesalute/a-war-of-whispers"
+        },
+        {
+          "name": "A War of Whispers: Dark Alliances & Collector's Edition",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/tycoon/a-war-of-whispers-dark-alliances-and-collectors-edition?"
+        },
+        {
+          "name": "A War of Whispers: Expansion of Influence",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/tycoon/a-war-of-whispers-expansion-of-influence"
+        }
+      ],
       "pc": [
         {
           "store": "Tabletopia",
@@ -27069,7 +27340,13 @@
       "short_description": "Collect stones, postcards and camp in the national parks of the USA.",
       "rulebooks": [],
       "supplemental_files": [],
-      "crowdfunding_links": []
+      "crowdfunding_links": [
+        {
+          "name": "Trekking the National Parks - The Board Game",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/charliebink/trekking-the-national-parks-the-board-game"
+        }
+      ]
     },
     "255805": {
       "name": "Honga",
@@ -27478,7 +27755,12 @@
         {
           "name": "Claustrophobia 1643",
           "site": "Kickstarter",
-          "url": "https://www.kickstarter.com/projects/806316071/claustrophobia-1643"
+          "url": "https://www.kickstarter.com/projects/monolithboardgames/claustrophobia-1643"
+        },
+        {
+          "name": "Claustrophobia 1643 Soundscape",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/monolithboardgames/claustrophobia-1643-soundscape"
         }
       ]
     },
@@ -30815,11 +31097,6 @@
           "name": "Kanban EV",
           "site": "Kickstarter",
           "url": "https://www.kickstarter.com/projects/eaglegryphon/kanban-ev"
-        },
-        {
-          "name": "Kanban EV",
-          "site": "Kickstarter",
-          "url": "https://www.kickstarter.com/projects/806316071/664132760"
         }
       ],
       "pc": [
@@ -31594,11 +31871,6 @@
       "rulebooks": [],
       "supplemental_files": [],
       "crowdfunding_links": [
-        {
-          "name": "Burgle Bros 2: The Casino Capers",
-          "site": "Kickstarter",
-          "url": "https://www.kickstarter.com/projects/fowers/burgle-bros-2-the-casino-capers/posts/3073766"
-        },
         {
           "name": "Burgle Bros 2: The Casino Capers",
           "site": "Kickstarter",
@@ -36302,7 +36574,13 @@
       "short_description": "In a Kanban way, gather projects and parts to build bots to accomplish contracts.",
       "rulebooks": [],
       "supplemental_files": [],
-      "crowdfunding_links": [],
+      "crowdfunding_links": [
+        {
+          "name": "Bot Factory",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/eaglegryphon/bot-factory-by-joao-quintela-martins-and-vital-lacerda"
+        }
+      ],
       "pc": [
         {
           "store": "Tabletopia",
@@ -36974,7 +37252,7 @@
         {
           "name": "Mythic Battles: Ragnarök",
           "site": "Kickstarter",
-          "url": "https://www.kickstarter.com/projects/806316071/mythic-battles-ragnarok"
+          "url": "https://www.kickstarter.com/projects/monolithboardgames/mythic-battles-ragnarok"
         }
       ],
       "pc": [
@@ -41584,6 +41862,11 @@
           "name": "Dune: War for Arrakis",
           "site": "Kickstarter",
           "url": "https://www.kickstarter.com/projects/cmon/dune-war-for-arrakis"
+        },
+        {
+          "name": "Dune: War for Arrakis - Dessert War",
+          "site": "Gamefound",
+          "url": "https://gamefound.com/en/projects/cmon/dune-desert-war"
         }
       ],
       "pc": [
@@ -42325,7 +42608,13 @@
       "short_description": "The second edition of the hit deduction game!",
       "rulebooks": [],
       "supplemental_files": [],
-      "crowdfunding_links": [],
+      "crowdfunding_links": [
+        {
+          "name": "Fugitive 2nd Edition & RUN",
+          "site": "BackerKit",
+          "url": "https://www.backerkit.com/c/projects/tim-fowers/fugitive-reprint-and-run"
+        }
+      ],
       "pc": [
         {
           "store": "BGA",
@@ -44064,7 +44353,13 @@
       "short_description": "Tableau building word game made of typewriter keys.",
       "rulebooks": [],
       "supplemental_files": [],
-      "crowdfunding_links": [],
+      "crowdfunding_links": [
+        {
+          "name": "Paperback 10th Anniversary + Typewriter",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/fowers/paperback-10th-anniversary-typewriter"
+        }
+      ],
       "pc": [
         {
           "store": "Tabletop Simulator",
@@ -46318,7 +46613,7 @@
         {
           "name": "Mythic Battles: Isfet",
           "site": "Kickstarter",
-          "url": "https://www.kickstarter.com/projects/806316071/mythic-battles-isfet"
+          "url": "https://www.kickstarter.com/projects/monolithboardgames/mythic-battles-isfet"
         },
         {
           "name": "Mythic Battles: Isfet",
@@ -47339,7 +47634,13 @@
       "short_description": "Use resources to play cards and create your own woodland city.",
       "rulebooks": [],
       "supplemental_files": [],
-      "crowdfunding_links": [],
+      "crowdfunding_links": [
+        {
+          "name": "Everdell Duo",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/tycoon/everdell-duo"
+        }
+      ],
       "pc": [
         {
           "store": "Tabletopia",
@@ -47417,7 +47718,13 @@
       "short_description": "Build a championship baseball team filled with Naturals, Cyborgs, and Robots.",
       "rulebooks": [],
       "supplemental_files": [],
-      "crowdfunding_links": []
+      "crowdfunding_links": [
+        {
+          "name": "Baseball Highlights: 2045 - Bases Loaded",
+          "site": "Gamefound",
+          "url": "https://gamefound.com/en/projects/eagle-gryphon-games/baseball-highlights-2045-bases-loaded"
+        }
+      ]
     },
     "426994": {
       "name": "Urbion (Second Edition)",
@@ -47895,7 +48202,13 @@
       "short_description": "All the Knowledge in the World in one Place.",
       "rulebooks": [],
       "supplemental_files": [],
-      "crowdfunding_links": [],
+      "crowdfunding_links": [
+        {
+          "name": "The Great Library",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/eaglegryphon/vital-lacerda-the-great-library"
+        }
+      ],
       "pc": [
         {
           "store": "Tabletopia",
@@ -48223,7 +48536,13 @@
       "short_description": "Beyond the snow-capped mountains and south of Everdell Valley lies Silverfrost!",
       "rulebooks": [],
       "supplemental_files": [],
-      "crowdfunding_links": [],
+      "crowdfunding_links": [
+        {
+          "name": "Everdell Silverfrost",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/tycoon/everdell-silverfrost"
+        }
+      ],
       "pc": [
         {
           "store": "Tabletop Simulator",
@@ -49433,7 +49752,13 @@
       "short_description": "Journey west of Everdell Valley and build a thriving jungle city in Emerland!",
       "rulebooks": [],
       "supplemental_files": [],
-      "crowdfunding_links": [],
+      "crowdfunding_links": [
+        {
+          "name": "Everdell Emerland",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/tycoon/everdell-emerland"
+        }
+      ],
       "pc": [
         {
           "store": "Tabletop Simulator",
@@ -50094,7 +50419,13 @@
       "short_description": "Set out for adventure across the vibrant world of Everdell!",
       "rulebooks": [],
       "supplemental_files": [],
-      "crowdfunding_links": []
+      "crowdfunding_links": [
+        {
+          "name": "Everdell Journeys",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/tycoon/everdell-journeys"
+        }
+      ]
     },
     "468582": {
       "name": "Medici Traders",
@@ -50254,7 +50585,13 @@
       "short_description": "Create supply chains to conduct the opium trade in 19th century Qing China.",
       "rulebooks": [],
       "supplemental_files": [],
-      "crowdfunding_links": [],
+      "crowdfunding_links": [
+        {
+          "name": "An Infamous Traffic: Second Edition",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/colewehrle/an-infamous-traffic-second-edition"
+        }
+      ],
       "pc": [
         {
           "store": "Tabletop Simulator",
