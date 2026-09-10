@@ -3019,7 +3019,13 @@
       "short_description": "William Wallace clashes with England to determine the fate of 13th-century Scotland.",
       "rulebooks": [],
       "supplemental_files": [],
-      "crowdfunding_links": [],
+      "crowdfunding_links": [
+        {
+          "name": "Hammer of the Scots",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/columbiagames/hammer-of-the-scots"
+        }
+      ],
       "pc": [
         {
           "store": "Steam",
@@ -4594,7 +4600,13 @@
       "short_description": "Build, expand, and take over casinos to get big profits and big points.",
       "rulebooks": [],
       "supplemental_files": [],
-      "crowdfunding_links": [],
+      "crowdfunding_links": [
+        {
+          "name": "Lords of Vegas",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/loneshark/lords-of-vegas"
+        }
+      ],
       "pc": [
         {
           "store": "Tabletop Simulator",
@@ -5146,7 +5158,13 @@
       "short_description": "As a Roman Impresario you must stage the greatest spectacles the Colosseum has seen!",
       "rulebooks": [],
       "supplemental_files": [],
-      "crowdfunding_links": []
+      "crowdfunding_links": [
+        {
+          "name": "Colosseum: Emperor's Edition",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/michaelmindes/colosseum-emperors-edition"
+        }
+      ]
     },
     "27833": {
       "name": "Steam",
@@ -5405,7 +5423,13 @@
       "short_description": "Fight for political power in New York during the era of Boss Tweed.",
       "rulebooks": [],
       "supplemental_files": [],
-      "crowdfunding_links": [],
+      "crowdfunding_links": [
+        {
+          "name": "Tammany Hall",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/pandasaurus/tammany-hall"
+        }
+      ],
       "pc": [
         {
           "store": "Tabletop Simulator",
@@ -6314,7 +6338,13 @@
       "short_description": "Timber! A small hit with the axe makes for a big hit game!",
       "rulebooks": [],
       "supplemental_files": [],
-      "crowdfunding_links": []
+      "crowdfunding_links": [
+        {
+          "name": "Click Clack Lumberjack 2.0",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/maydaygames/click-clack-lumberjack-20-dexterity-game-2-7-playe"
+        }
+      ]
     },
     "39463": {
       "name": "Cosmic Encounter",
@@ -6911,7 +6941,13 @@
       "short_description": "Build your own Alhambra and enjoy five of its expansions.",
       "rulebooks": [],
       "supplemental_files": [],
-      "crowdfunding_links": [],
+      "crowdfunding_links": [
+        {
+          "name": "Everything Alhambra! - Big Box + Special Edition & More",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/queengames/everything-alhambra-big-box-special-edition-and-mo"
+        }
+      ],
       "pc": [
         {
           "store": "VASSAL",
@@ -7484,7 +7520,13 @@
       "short_description": "Guide your civilization with inventions from the stone age through to the modern era.",
       "rulebooks": [],
       "supplemental_files": [],
-      "crowdfunding_links": [],
+      "crowdfunding_links": [
+        {
+          "name": "Innovation Deluxe",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/asmadigames/innovation-deluxe"
+        }
+      ],
       "pc": [
         {
           "store": "BGA",
@@ -7941,7 +7983,13 @@
       "short_description": "Impress the Moon Priestess by sending novices to Holy Isles surrounding the Temple.",
       "rulebooks": [],
       "supplemental_files": [],
-      "crowdfunding_links": [],
+      "crowdfunding_links": [
+        {
+          "name": "Luna: Deluxified",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/michaelmindes/luna-brand-new-deluxifiedtm-edition"
+        }
+      ],
       "pc": [
         {
           "store": "Yucata",
@@ -8162,7 +8210,13 @@
       "short_description": "Extend tracks and buy stock as players stretch railroads across France.",
       "rulebooks": [],
       "supplemental_files": [],
-      "crowdfunding_links": [],
+      "crowdfunding_links": [
+        {
+          "name": "Paris Connection",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/queengames/paris-connection"
+        }
+      ],
       "pc": [
         {
           "store": "BGA",
@@ -8296,6 +8350,11 @@
           "name": "Xia: Legends of a Drift System",
           "site": "Kickstarter",
           "url": "https://www.kickstarter.com/projects/1438045410/xia-embers-of-a-forsaken-star-and-xia-missions-and"
+        },
+        {
+          "name": "Xia: Embers of a Forsaken Star",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/faroffgames/xia-embers-of-a-forsaken-star"
         }
       ],
       "pc": [
@@ -9442,7 +9501,13 @@
       "short_description": "Run as fast as you can to return the cursed gems before the temple traps you forever.",
       "rulebooks": [],
       "supplemental_files": [],
-      "crowdfunding_links": [],
+      "crowdfunding_links": [
+        {
+          "name": "Escape Zombie City Big Box & Escape Big Box (2nd Ed)",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/queengames/escape-zombie-city-big-box-and-escape-big-box-2nd"
+        }
+      ],
       "android": [
         {
           "store": "BGG",
@@ -9938,9 +10003,29 @@
       "supplemental_files": [],
       "crowdfunding_links": [
         {
-          "name": "Keyflower",
+          "name": "Keyflower is Awesome!",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/gamesalute/keyflower-is-awesome"
+        },
+        {
+          "name": "Keymelequin and Keyflower!",
           "site": "Kickstarter",
           "url": "https://www.kickstarter.com/projects/rnd/keymelequin-and-keyflower"
+        },
+        {
+          "name": "Keyflower: The Merchants",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/gamesalute/keyflower-the-merchants"
+        },
+        {
+          "name": "Keyflower: The Farmers",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/gamesalute/keyflower-the-farmers"
+        },
+        {
+          "name": "Keyflower: Key Celeste Mini Expansion",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/gamesalute/keyflower-key-celeste-mini-expansion"
         }
       ],
       "pc": [
@@ -10334,7 +10419,13 @@
       "short_description": "Your team investigates horrors in Arkham, then gets quizzed on the results.",
       "rulebooks": [],
       "supplemental_files": [],
-      "crowdfunding_links": [],
+      "crowdfunding_links": [
+        {
+          "name": "Mythos Tales",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/8thsummit/mythos-tales"
+        }
+      ],
       "pc": [
         {
           "store": "Tabletopia",
@@ -10994,7 +11085,18 @@
       "short_description": "Build electrical routes, use new technologies, and play the stock market!",
       "rulebooks": [],
       "supplemental_files": [],
-      "crowdfunding_links": []
+      "crowdfunding_links": [
+        {
+          "name": "Tesla vs. Edison",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/artana/tesla-vs-edison"
+        },
+        {
+          "name": "Tesla vs. Edison: Powering Up!",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/artana/tesla-vs-edison-powering-up"
+        }
+      ]
     },
     "133473": {
       "name": "Sushi Go!",
@@ -11176,7 +11278,13 @@
       "short_description": "Discover islands, build settlements, and uncover goods and treasure.",
       "rulebooks": [],
       "supplemental_files": [],
-      "crowdfunding_links": []
+      "crowdfunding_links": [
+        {
+          "name": "Amerigo",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/queengames/amerigo-a-game-of-exploration-and-discovery-by-ste"
+        }
+      ]
     },
     "138161": {
       "name": "Firefly: The Game",
@@ -11216,7 +11324,13 @@
       "short_description": "Craft beers in the hopes of being the best brewery in the city.",
       "rulebooks": [],
       "supplemental_files": [],
-      "crowdfunding_links": [],
+      "crowdfunding_links": [
+        {
+          "name": "Brew Crafters",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/dicehateme/brew-crafters-a-board-game-about-making-beer"
+        }
+      ],
       "pc": [
         {
           "store": "Tabletop Simulator",
@@ -11421,7 +11535,13 @@
       "short_description": "Get the panicking passengers into lifeboats before the ship sinks!",
       "rulebooks": [],
       "supplemental_files": [],
-      "crowdfunding_links": []
+      "crowdfunding_links": [
+        {
+          "name": "SOS Titanic",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/gamesalute/sos-titanic"
+        }
+      ]
     },
     "143404": {
       "name": "Castellion",
@@ -11763,7 +11883,18 @@
       "short_description": "Plant, cross-breed, harvest, and sell or cook your peppers to win the Chili Festival!",
       "rulebooks": [],
       "supplemental_files": [],
-      "crowdfunding_links": [],
+      "crowdfunding_links": [
+        {
+          "name": "Scoville",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/michaelmindes/scoville-the-hottest-farming-euro-game-ever"
+        },
+        {
+          "name": "Scoville: Labs Expansion",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/michaelmindes/scoville-labs-expansion"
+        }
+      ],
       "pc": [
         {
           "store": "Tabletop Simulator",
@@ -13014,7 +13145,13 @@
       "short_description": "Outwit and outsell your competitors in a quick shifting fantasy market.",
       "rulebooks": [],
       "supplemental_files": [],
-      "crowdfunding_links": []
+      "crowdfunding_links": [
+        {
+          "name": "Harbour: Master markets in a fantasy port",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/michaelmindes/harbour-master-markets-in-a-fantasy-port"
+        }
+      ]
     },
     "155987": {
       "name": "Abyss",
@@ -13256,7 +13393,13 @@
       "short_description": "Strategic yet approachable game of whaling and town-building in mid-1800s New England",
       "rulebooks": [],
       "supplemental_files": [],
-      "crowdfunding_links": []
+      "crowdfunding_links": [
+        {
+          "name": "New Bedford: The Game of Historic Whaling & Town Building",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/dicehateme/new-bedford-the-game-of-historic-whaling-and-town"
+        }
+      ]
     },
     "157526": {
       "name": "Viceroy",
@@ -13326,7 +13469,18 @@
       "short_description": "Experience the frantic dice-rolling temple run with seven expansions included.",
       "rulebooks": [],
       "supplemental_files": [],
-      "crowdfunding_links": []
+      "crowdfunding_links": [
+        {
+          "name": "Escape Big Box",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/queengames/escape-big-box"
+        },
+        {
+          "name": "Escape New Quests & Traps",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/queengames/escape-new-quests-and-traps"
+        }
+      ]
     },
     "157969": {
       "name": "Sheriff of Nottingham",
@@ -13925,11 +14079,6 @@
       "supplemental_files": [],
       "crowdfunding_links": [
         {
-          "name": "Stockpile: Illicit Investments Expansion and Epic Edition",
-          "site": "Kickstarter",
-          "url": "https://www.kickstarter.com/projects/nauvoogames/stockpile-illicit-investments-expansion-and-epic-edition"
-        },
-        {
           "name": "Stockpile: The Stockmarket Game of Insider Trading",
           "site": "Kickstarter",
           "url": "https://www.kickstarter.com/projects/nauvoogames/stockpile-the-stockmarket-game-of-insider-trading"
@@ -13938,6 +14087,11 @@
           "name": "Stockpile: Continuing Corruption",
           "site": "Kickstarter",
           "url": "https://www.kickstarter.com/projects/nauvoogames/stockpile-continuing-corruption"
+        },
+        {
+          "name": "Stockpile: Illicit Investments Expansion and Epic Edition",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/nauvoogames/stockpile-illicit-investments-expansion-and-epic-edition"
         }
       ],
       "android": [
@@ -14119,7 +14273,18 @@
       "short_description": "Island Spirits join forces using elemental powers to defend their home from invaders.",
       "rulebooks": [],
       "supplemental_files": [],
-      "crowdfunding_links": [],
+      "crowdfunding_links": [
+        {
+          "name": "Spirit Island",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/gtgames/spirit-island"
+        },
+        {
+          "name": "Spirit Island: Jagged Earth",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/gtgames/spirit-island-jagged-earth"
+        }
+      ],
       "android": [
         {
           "store": "Play Store",
@@ -14643,7 +14808,18 @@
       "short_description": "Play the best part of a baseball game, the Bottom of the 9th.",
       "rulebooks": [],
       "supplemental_files": [],
-      "crowdfunding_links": [],
+      "crowdfunding_links": [
+        {
+          "name": "Bottom of the 9th: A Dice & Card Game of Classic Baseball",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/dicehateme/bottom-of-the-9th-a-dice-and-card-game-of-classic"
+        },
+        {
+          "name": "Bottom of the 9th: Clubhouse Expansion",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/dicehateme/bottom-of-the-9th-clubhouse-expansion"
+        }
+      ],
       "android": [
         {
           "store": "Play Store",
@@ -15172,12 +15348,17 @@
         {
           "name": "Roll Player",
           "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/thunderworks/roll-player-the-dice-game-that-builds-character"
+        },
+        {
+          "name": "Roll Player: Monsters & Minions",
+          "site": "Kickstarter",
           "url": "https://www.kickstarter.com/projects/1152516291/roll-player-monsters-and-minions-expansion-reprint"
         },
         {
-          "name": "Roll Player",
-          "site": "BackerKit",
-          "url": "https://www.backerkit.com/backer_accounts/profile/login_account"
+          "name": "Roll Player: Fiends & Familiars",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/thunderworks/roll-player-fiends-and-familiars-expansion"
         }
       ],
       "android": [
@@ -16642,7 +16823,13 @@
       "short_description": "The strategic craft of fine winemaking.",
       "rulebooks": [],
       "supplemental_files": [],
-      "crowdfunding_links": [],
+      "crowdfunding_links": [
+        {
+          "name": "Vinhos Deluxe Edition",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/gaeg/vinhos-deluxe-edition-like-fine-wine-age-has-impro"
+        }
+      ],
       "pc": [
         {
           "store": "Web",
@@ -16696,7 +16883,18 @@
       "short_description": "Gain control of medieval Japan by amassing troops and sending them out to battles.",
       "rulebooks": [],
       "supplemental_files": [],
-      "crowdfunding_links": [],
+      "crowdfunding_links": [
+        {
+          "name": "Shogun Big Box",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/queengames/shogun-big-box"
+        },
+        {
+          "name": "Shogun - Revised Edition",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/queengames/shogun"
+        }
+      ],
       "pc": [
         {
           "store": "BGA",
@@ -17004,7 +17202,13 @@
       "short_description": "Expand your way to victory in this \"Risk-like\" game of global conquest.",
       "rulebooks": [],
       "supplemental_files": [],
-      "crowdfunding_links": []
+      "crowdfunding_links": [
+        {
+          "name": "Spheres of Influence: Struggle For Global Supremacy",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/littenukegames/spheres-of-influence-struggle-for-global-supremacy"
+        }
+      ]
     },
     "178900": {
       "name": "Codenames",
@@ -17179,7 +17383,13 @@
       "short_description": "Train rescue dogs to jump hurdles, weave poles, clear tunnels, and win the race!",
       "rulebooks": [],
       "supplemental_files": [],
-      "crowdfunding_links": [],
+      "crowdfunding_links": [
+        {
+          "name": "Agility: Adopt a dog, own a strategy (2 Players)",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/brentpovis/agility-2-players-1-trophy"
+        }
+      ],
       "pc": [
         {
           "store": "Tabletop Simulator",
@@ -17363,7 +17573,13 @@
       "short_description": "Vampires join your village and add additional chaos and danger. Bring your stakes.",
       "rulebooks": [],
       "supplemental_files": [],
-      "crowdfunding_links": [],
+      "crowdfunding_links": [
+        {
+          "name": "One Night Ultimate Vampire",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/tedalspach/one-night-ultimate-vampire"
+        }
+      ],
       "android": [
         {
           "store": "Play Store",
@@ -17671,7 +17887,13 @@
       "short_description": "Adapt your species in an ecosystem of scarce food, predators, and a dynamic climate!",
       "rulebooks": [],
       "supplemental_files": [],
-      "crowdfunding_links": [],
+      "crowdfunding_links": [
+        {
+          "name": "Evolution: CLIMATE",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/northstargames/evolution-climate-a-stand-alone-boardgame"
+        }
+      ],
       "pc": [
         {
           "store": "Tabletop Simulator",
@@ -18316,7 +18538,13 @@
       "short_description": "Welcome to the biggest sport of the future!",
       "rulebooks": [],
       "supplemental_files": [],
-      "crowdfunding_links": [],
+      "crowdfunding_links": [
+        {
+          "name": "GKR: Heavy Hitters",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/wetaworkshop/gkr-heavy-hitters"
+        }
+      ],
       "pc": [
         {
           "store": "Tabletop Simulator",
@@ -18411,7 +18639,13 @@
       "short_description": "Place your apocalypse team to secure items, events, & resources then build a base.",
       "rulebooks": [],
       "supplemental_files": [],
-      "crowdfunding_links": [],
+      "crowdfunding_links": [
+        {
+          "name": "Outlive",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/laboitedejeu/outlive"
+        }
+      ],
       "pc": [
         {
           "store": "Tabletop Simulator",
@@ -18677,6 +18911,11 @@
           "name": "Mr. Cabbagehead's Garden",
           "site": "BackerKit",
           "url": "https://www.backerkit.com/backer_accounts/profile/login_account"
+        },
+        {
+          "name": "Mr. Cabbagehead's Garden",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/ludicreations/mr-cabbageheads-garden"
         }
       ],
       "pc": [
@@ -18719,7 +18958,13 @@
       "short_description": "A revolutionary movement challenges the Soviet leadership in Hungary.",
       "rulebooks": [],
       "supplemental_files": [],
-      "crowdfunding_links": [],
+      "crowdfunding_links": [
+        {
+          "name": "Days of Ire: Budapest 1956",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/214167672/days-of-ire-budapest-1956"
+        }
+      ],
       "pc": [
         {
           "store": "Tabletopia",
@@ -18839,7 +19084,13 @@
       "short_description": "Four unique heroes work together to stop a powerful necromancer's terrible plans.",
       "rulebooks": [],
       "supplemental_files": [],
-      "crowdfunding_links": [],
+      "crowdfunding_links": [
+        {
+          "name": "Darkest Night: Second Edition",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/vpg/darkest-night-second-edition-0"
+        }
+      ],
       "pc": [
         {
           "store": "Tabletop Simulator",
@@ -18900,7 +19151,13 @@
       "short_description": "Choose your team of unique heroes. Fight for domination and glory in the arena.",
       "rulebooks": [],
       "supplemental_files": [],
-      "crowdfunding_links": [],
+      "crowdfunding_links": [
+        {
+          "name": "Super Fantasy Brawl",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/1162110258/super-fantasy-brawl"
+        }
+      ],
       "pc": [
         {
           "store": "BGA",
@@ -19006,7 +19263,13 @@
       "short_description": "Use different divine powers to build and climb the towers!",
       "rulebooks": [],
       "supplemental_files": [],
-      "crowdfunding_links": [],
+      "crowdfunding_links": [
+        {
+          "name": "Santorini",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/roxley/santorini-learn-it-in-30-seconds-play-it-for-life"
+        }
+      ],
       "pc": [
         {
           "store": "BGA",
@@ -19060,7 +19323,13 @@
       "short_description": "Welcome to the More Fun League, where you'll design your own plays and formations!",
       "rulebooks": [],
       "supplemental_files": [],
-      "crowdfunding_links": []
+      "crowdfunding_links": [
+        {
+          "name": "TECHNO BOWL: Arcade Football Unplugged",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/1544172954/techno-bowl-arcade-football-unplugged-0"
+        }
+      ]
     },
     "195043": {
       "name": "Welcome Back to the Dungeon",
@@ -19216,7 +19485,13 @@
       "short_description": "Claim your fame as the dominant merchant in Yokohama during the Meiji period.",
       "rulebooks": [],
       "supplemental_files": [],
-      "crowdfunding_links": [],
+      "crowdfunding_links": [
+        {
+          "name": "YOKOHAMA Deluxe!",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/michaelmindes/yokohama-deluxe-by-hisashi-hayashi-and-tmg"
+        }
+      ],
       "pc": [
         {
           "store": "BGA",
@@ -19269,7 +19544,13 @@
       "short_description": "Join the adventures of the Lightbringers in a dungeon inhabited by monsters and foes.",
       "rulebooks": [],
       "supplemental_files": [],
-      "crowdfunding_links": [],
+      "crowdfunding_links": [
+        {
+          "name": "Massive Darkness",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/cmon/massive-darkness"
+        }
+      ],
       "android": [
         {
           "store": "Play Store",
@@ -19733,7 +20014,13 @@
       "short_description": "",
       "rulebooks": [],
       "supplemental_files": [],
-      "crowdfunding_links": [],
+      "crowdfunding_links": [
+        {
+          "name": "Commands & Colors: Tricorne - The American Revolution",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/compassgames/commands-and-colors-tricorne-the-american-revoluti"
+        }
+      ],
       "pc": [
         {
           "store": "Tabletop Simulator",
@@ -19837,6 +20124,11 @@
       "rulebooks": [],
       "supplemental_files": [],
       "crowdfunding_links": [
+        {
+          "name": "Everdell: A Beautiful Board Game of Cards and Critters",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/gamesalute/everdell-a-beautiful-board-game-of-cards-and-critt"
+        },
         {
           "name": "Everdell: Collector's Edition",
           "site": "Kickstarter",
@@ -20219,7 +20511,13 @@
       "short_description": "Rival merchant families seek profitable markets in 15th century Florence.",
       "rulebooks": [],
       "supplemental_files": [],
-      "crowdfunding_links": []
+      "crowdfunding_links": [
+        {
+          "name": "Medici: The Card Game",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/grailgames/medici-the-card-game"
+        }
+      ]
     },
     "202408": {
       "name": "Adrenaline",
@@ -20450,7 +20748,13 @@
       "short_description": "We are not alone. They don't come in peace.",
       "rulebooks": [],
       "supplemental_files": [],
-      "crowdfunding_links": [],
+      "crowdfunding_links": [
+        {
+          "name": "One Night Ultimate Alien",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/tedalspach/one-night-ultimate-alien"
+        }
+      ],
       "android": [
         {
           "store": "Play Store",
@@ -20683,11 +20987,6 @@
           "name": "Einstein: His Amazing Life and Incomparable Science",
           "site": "Kickstarter",
           "url": "https://www.kickstarter.com/projects/artana/einstein"
-        },
-        {
-          "name": "Einstein: His Amazing Life and Incomparable Science",
-          "site": "BackerKit",
-          "url": "https://www.backerkit.com/backer_accounts/profile/login_account"
         }
       ]
     },
@@ -21889,7 +22188,13 @@
       "short_description": "Win favor with the king by competing for influence across his provinces.",
       "rulebooks": [],
       "supplemental_files": [],
-      "crowdfunding_links": [],
+      "crowdfunding_links": [
+        {
+          "name": "King's Road",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/grailgames/kings-road"
+        }
+      ],
       "pc": [
         {
           "store": "Tabletop Simulator",
@@ -21952,7 +22257,13 @@
       "short_description": "Area-control game with deckbuilding from factions that depends on board play.",
       "rulebooks": [],
       "supplemental_files": [],
-      "crowdfunding_links": [],
+      "crowdfunding_links": [
+        {
+          "name": "Path of Light and Shadow",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/ibcgames/path-of-light-and-shadow"
+        }
+      ],
       "pc": [
         {
           "store": "Tabletop Simulator",
@@ -21985,7 +22296,13 @@
       "short_description": "Lead your city-state to become the preeminent symbol of Greece in this 3.5x game!",
       "rulebooks": [],
       "supplemental_files": [],
-      "crowdfunding_links": [],
+      "crowdfunding_links": [
+        {
+          "name": "Hellenica: Story of Greece",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/mrbgames/hellenica-story-of-greece"
+        }
+      ],
       "pc": [
         {
           "store": "Tabletop Simulator",
@@ -22088,7 +22405,13 @@
       "short_description": "Use diplomacy, invasion, or both to interact with story-filled alien planets.",
       "rulebooks": [],
       "supplemental_files": [],
-      "crowdfunding_links": [],
+      "crowdfunding_links": [
+        {
+          "name": "Empires of the Void II",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/953146955/empires-of-the-void-ii"
+        }
+      ],
       "pc": [
         {
           "store": "Steam",
@@ -22241,7 +22564,13 @@
       "short_description": "Influence ambassadors and stop habitat destruction to save an endangered species.",
       "rulebooks": [],
       "supplemental_files": [],
-      "crowdfunding_links": [],
+      "crowdfunding_links": [
+        {
+          "name": "Endangered",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/grandgamersguild/endangered-0"
+        }
+      ],
       "pc": [
         {
           "store": "Tabletopia",
@@ -22985,7 +23314,13 @@
       "short_description": "Build networks, grow industries, and navigate the world of the Industrial Revolution.",
       "rulebooks": [],
       "supplemental_files": [],
-      "crowdfunding_links": [],
+      "crowdfunding_links": [
+        {
+          "name": "Brass ~ An Industrial Revolution",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/roxley/brass-an-industrial-revolution"
+        }
+      ],
       "pc": [
         {
           "store": "VASSAL",
@@ -23042,7 +23377,13 @@
       "short_description": "Paint beautiful landscapes on your journey through forests, meadows, and mountains.",
       "rulebooks": [],
       "supplemental_files": [],
-      "crowdfunding_links": [],
+      "crowdfunding_links": [
+        {
+          "name": "Sunset Over Water",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/ebaraf/sunset-over-water"
+        }
+      ],
       "pc": [
         {
           "store": "Tabletop Simulator",
@@ -23458,7 +23799,13 @@
       "short_description": "Fight to keep your party alive as darkness brings death and destruction.",
       "rulebooks": [],
       "supplemental_files": [],
-      "crowdfunding_links": [],
+      "crowdfunding_links": [
+        {
+          "name": "Set a Watch",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/mikegnade/set-a-watch"
+        }
+      ],
       "android": [
         {
           "store": "Play Store",
@@ -23791,7 +24138,18 @@
       "short_description": "Travel round the table, time your powers right, and transcend the roll-and-go facade!",
       "rulebooks": [],
       "supplemental_files": [],
-      "crowdfunding_links": [],
+      "crowdfunding_links": [
+        {
+          "name": "Merlin & Pioneers",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/queengames/merlin-and-pioneers"
+        },
+        {
+          "name": "Merlin: Knights Of The Round Table",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/queengames/merlin-knights-of-the-round-table"
+        }
+      ],
       "pc": [
         {
           "store": "Tabletop Simulator",
@@ -23852,7 +24210,13 @@
       "short_description": "Borrow from a dragon, pay punishing interest, and build the best kingdom before someone defaults.",
       "rulebooks": [],
       "supplemental_files": [],
-      "crowdfunding_links": []
+      "crowdfunding_links": [
+        {
+          "name": "Dragon's Interest",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/michaelmindes/dragons-interest"
+        }
+      ]
     },
     "231218": {
       "name": "Black Sonata",
@@ -24261,7 +24625,13 @@
       "short_description": "Manipulate the scales of galactic power in this card drafting game.",
       "rulebooks": [],
       "supplemental_files": [],
-      "crowdfunding_links": [],
+      "crowdfunding_links": [
+        {
+          "name": "Imperius",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/kolossalgames/imperius"
+        }
+      ],
       "pc": [
         {
           "store": "Tabletop Simulator",
@@ -24707,7 +25077,13 @@
       "short_description": "Collect crystals and break curses.",
       "rulebooks": [],
       "supplemental_files": [],
-      "crowdfunding_links": [],
+      "crowdfunding_links": [
+        {
+          "name": "Mystery of the Temples",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/deepwatergames/mystery-of-the-temples"
+        }
+      ],
       "pc": [
         {
           "store": "Tabletop Simulator",
@@ -24750,8 +25126,8 @@
         },
         {
           "name": "Spirits of the Forest",
-          "site": "BackerKit",
-          "url": "https://www.backerkit.com/backer_accounts/profile/login_account"
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/thundergryph/spirits-of-the-forest"
         }
       ],
       "pc": [
@@ -24829,7 +25205,13 @@
       "short_description": "Will you be a virtuous or nefarious servant of the king? Build your way to glory.",
       "rulebooks": [],
       "supplemental_files": [],
-      "crowdfunding_links": [],
+      "crowdfunding_links": [
+        {
+          "name": "Architects of the West Kingdom",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/shem/architects-of-the-west-kingdom"
+        }
+      ],
       "android": [
         {
           "store": "Play Store",
@@ -25255,7 +25637,13 @@
       "short_description": "Lay out the case, interrogate suspects, and investigate crime scenes with your phone.",
       "rulebooks": [],
       "supplemental_files": [],
-      "crowdfunding_links": [],
+      "crowdfunding_links": [
+        {
+          "name": "Chronicles of Crime",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/lucky-duck-games/chronicles-of-crime"
+        }
+      ],
       "android": [
         {
           "store": "Play Store",
@@ -25330,12 +25718,12 @@
         {
           "name": "Lockup: A Roll Player Tale",
           "site": "Kickstarter",
-          "url": "https://www.kickstarter.com/projects/cartographersheroes/lockup-breakout-expansion"
+          "url": "https://www.kickstarter.com/projects/1152516291/lockup-a-roll-player-tale-a-board-game-for-1-5-pla"
         },
         {
-          "name": "Lockup: A Roll Player Tale",
+          "name": "Lockup: Breakout Expansion",
           "site": "Kickstarter",
-          "url": "https://www.kickstarter.com/projects/1152516291/lockup-a-roll-player-tale-a-board-game-for-1-5-pla"
+          "url": "https://www.kickstarter.com/projects/cartographersheroes/lockup-breakout-expansion"
         }
       ],
       "pc": [
@@ -25416,7 +25804,13 @@
       "short_description": "The White and the Red struggle for control of Petrograd - and the future of Russia.",
       "rulebooks": [],
       "supplemental_files": [],
-      "crowdfunding_links": [],
+      "crowdfunding_links": [
+        {
+          "name": "Dual Powers: Revolution 1917",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/thunderworks/dual-powers-revolution-1917-a-board-game-for-1-2-p"
+        }
+      ],
       "pc": [
         {
           "store": "Tabletopia",
@@ -25882,7 +26276,13 @@
       "short_description": "20 questions with a twist: a time limit, and a sneaky werewolf who knows the answer.",
       "rulebooks": [],
       "supplemental_files": [],
-      "crowdfunding_links": [],
+      "crowdfunding_links": [
+        {
+          "name": "Werewords Deluxe Edition",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/tedalspach/werewords-deluxe-edition"
+        }
+      ],
       "android": [
         {
           "store": "Play Store",
@@ -26077,7 +26477,13 @@
       "short_description": "Deduce the right evidence to cooperatively convict the suspects from 1920s Australia.",
       "rulebooks": [],
       "supplemental_files": [],
-      "crowdfunding_links": []
+      "crowdfunding_links": [
+        {
+          "name": "Fallen Angels",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/sideroomgames/fallen-angels-1"
+        }
+      ]
     },
     "246535": {
       "name": "DC Deck-Building Game: Rebirth",
@@ -26486,7 +26892,13 @@
       "short_description": "Buy, bribe and murder your way to control of Victorian London's neighborhoods.",
       "rulebooks": [],
       "supplemental_files": [],
-      "crowdfunding_links": [],
+      "crowdfunding_links": [
+        {
+          "name": "Nanty Narking",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/phalanxgames/nanty-narking"
+        }
+      ],
       "pc": [
         {
           "store": "Tabletopia",
@@ -26537,7 +26949,13 @@
       "short_description": "Players try to earn more money operating railroad companies. Gateway to 18xx series.",
       "rulebooks": [],
       "supplemental_files": [],
-      "crowdfunding_links": [],
+      "crowdfunding_links": [
+        {
+          "name": "18Lilliput",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/1840vienna/18lilliput"
+        }
+      ],
       "pc": [
         {
           "store": "Tabletop Simulator",
@@ -26579,7 +26997,13 @@
       "short_description": "Nations vie for hydroelectric dominance in a dystopia where water is power.",
       "rulebooks": [],
       "supplemental_files": [],
-      "crowdfunding_links": [],
+      "crowdfunding_links": [
+        {
+          "name": "Barrage",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/craniocreations/barrage"
+        }
+      ],
       "pc": [
         {
           "store": "Steam",
@@ -26690,7 +27114,13 @@
       "short_description": "Learn new techniques, trade goods, and manage your stock to build the master stall!",
       "rulebooks": [],
       "supplemental_files": [],
-      "crowdfunding_links": [],
+      "crowdfunding_links": [
+        {
+          "name": "Dale of Merchants Collection",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/snowdale/dale-of-merchants-collection"
+        }
+      ],
       "pc": [
         {
           "store": "Tabletop Simulator",
@@ -26750,7 +27180,13 @@
       "short_description": "",
       "rulebooks": [],
       "supplemental_files": [],
-      "crowdfunding_links": [],
+      "crowdfunding_links": [
+        {
+          "name": "Tang Garden",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/thundergryph/tang-garden"
+        }
+      ],
       "pc": [
         {
           "store": "Tabletop Simulator",
@@ -26837,6 +27273,11 @@
           "name": "Cthulhu: Death May Die",
           "site": "Kickstarter",
           "url": "https://www.kickstarter.com/projects/cmon/cthulhu-death-may-die"
+        },
+        {
+          "name": "CMON Comics - Vol. 1",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/cmon/cmon-comics-volume-1"
         }
       ],
       "android": [
@@ -27011,7 +27452,13 @@
       "short_description": "Ease yourself into 18XX by way of the Chesapeake Bay.",
       "rulebooks": [],
       "supplemental_files": [],
-      "crowdfunding_links": [],
+      "crowdfunding_links": [
+        {
+          "name": "18Chesapeake",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/all-aboardgames/18chesapeake"
+        }
+      ],
       "pc": [
         {
           "store": "Tabletop Simulator",
@@ -27208,7 +27655,7 @@
         {
           "name": "Roll Player Adventures",
           "site": "Kickstarter",
-          "url": "https://www.kickstarter.com/projects/1152516291/roll-player-adventures"
+          "url": "https://www.kickstarter.com/projects/thunderworks/roll-player-adventures"
         }
       ],
       "pc": [
@@ -27378,6 +27825,11 @@
           "name": "Snowdonia: Deluxe Master Set",
           "site": "BackerKit",
           "url": "https://www.backerkit.com/backer_accounts/profile/login_account"
+        },
+        {
+          "name": "Snowdonia Deluxe Master Set",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/boardanddice/snowdonia-deluxe-master-set"
         }
       ]
     },
@@ -27386,7 +27838,13 @@
       "short_description": "Lead your research institute to explore ocean depths and publish your findings!",
       "rulebooks": [],
       "supplemental_files": [],
-      "crowdfunding_links": [],
+      "crowdfunding_links": [
+        {
+          "name": "Sleeping Gods",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/953146955/sleeping-gods"
+        }
+      ],
       "pc": [
         {
           "store": "Tabletop Simulator",
@@ -27627,6 +28085,11 @@
           "name": "Pax Pamir: Second Edition",
           "site": "Kickstarter",
           "url": "https://www.kickstarter.com/projects/1243243962/pax-pamir-reprint"
+        },
+        {
+          "name": "Pax Pamir: Second Edition",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/colewehrle/pax-pamir-second-edition"
         }
       ],
       "pc": [
@@ -27648,6 +28111,11 @@
           "name": "Project: ELITE",
           "site": "Kickstarter",
           "url": "https://www.kickstarter.com/projects/cmon/project-elite-0"
+        },
+        {
+          "name": "Project: ELITE",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/artipiagames/project-elite"
         }
       ],
       "android": [
@@ -27692,7 +28160,13 @@
       "short_description": "Make programs using basic math under time pressure to impress patrons!",
       "rulebooks": [],
       "supplemental_files": [],
-      "crowdfunding_links": []
+      "crowdfunding_links": [
+        {
+          "name": "Lovelace & Babbage",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/artana/lovelace-and-babbage"
+        }
+      ]
     },
     "257284": {
       "name": "Timeline: Classic",
@@ -28149,7 +28623,13 @@
       "short_description": "Two-player hidden-movement hunt: Blackbeard raids and evades while the Royal Navy tracks him down for a final showdown.",
       "rulebooks": [],
       "supplemental_files": [],
-      "crowdfunding_links": []
+      "crowdfunding_links": [
+        {
+          "name": "Hunt for Blackbeard",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/fortcircle/hunt-for-blackbeard"
+        }
+      ]
     },
     "263895": {
       "name": "City of the Great Machine",
@@ -28434,7 +28914,13 @@
       "short_description": "Strike it rich in the frontiers of California - will you boom or bust?",
       "rulebooks": [],
       "supplemental_files": [],
-      "crowdfunding_links": [],
+      "crowdfunding_links": [
+        {
+          "name": "Coloma",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/512772051/coloma"
+        }
+      ],
       "pc": [
         {
           "store": "Tabletop Simulator",
@@ -28456,7 +28942,13 @@
       "short_description": "Expand your Scottish clan by trading livestock, making whisky and gaining landmarks.",
       "rulebooks": [],
       "supplemental_files": [],
-      "crowdfunding_links": [],
+      "crowdfunding_links": [
+        {
+          "name": "Glen More II: Chronicles",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/funtails/glen-more-ii-chronicles"
+        }
+      ],
       "pc": [
         {
           "store": "Tabletopia",
@@ -28471,7 +28963,13 @@
       "short_description": "A journey through the history of the Weimar Republic.",
       "rulebooks": [],
       "supplemental_files": [],
-      "crowdfunding_links": [],
+      "crowdfunding_links": [
+        {
+          "name": "Weimar - The Fight for Democracy",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/skellig-games/weimar-the-fight-for-democracy"
+        }
+      ],
       "pc": [
         {
           "store": "Tabletop Simulator",
@@ -28847,7 +29345,13 @@
       "short_description": "Invaders are coming from everywhere. Keep the faith and defend your homeland.",
       "rulebooks": [],
       "supplemental_files": [],
-      "crowdfunding_links": [],
+      "crowdfunding_links": [
+        {
+          "name": "Paladins of the West Kingdom",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/shem/paladins-of-the-west-kingdom"
+        }
+      ],
       "android": [
         {
           "store": "Play Store",
@@ -28999,7 +29503,13 @@
       "short_description": "Seek out and awaken the sleepwalking residents of Arzium.",
       "rulebooks": [],
       "supplemental_files": [],
-      "crowdfunding_links": [],
+      "crowdfunding_links": [
+        {
+          "name": "Roam",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/953146955/roam-0"
+        }
+      ],
       "pc": [
         {
           "store": "Tabletop Simulator",
@@ -29380,7 +29890,13 @@
       "short_description": "Battle for control of a new fantasy realm in this worker placement game.",
       "rulebooks": [],
       "supplemental_files": [],
-      "crowdfunding_links": [],
+      "crowdfunding_links": [
+        {
+          "name": "Dwellings of Eldervale",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/admagic/dwellings-of-eldervale"
+        }
+      ],
       "pc": [
         {
           "store": "Tabletopia",
@@ -29647,7 +30163,13 @@
       "short_description": "A modern card-driven, modular dungeon crawl that pays tribute to the classics.",
       "rulebooks": [],
       "supplemental_files": [],
-      "crowdfunding_links": [],
+      "crowdfunding_links": [
+        {
+          "name": "Altar Quest",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/blacklistgames/altar-quest"
+        }
+      ],
       "pc": [
         {
           "store": "Tabletop Simulator",
@@ -29684,7 +30206,13 @@
       "short_description": "A streamlined 4X board game based on Norse Mythology.",
       "rulebooks": [],
       "supplemental_files": [],
-      "crowdfunding_links": [],
+      "crowdfunding_links": [
+        {
+          "name": "Northgard: Uncharted Lands 🛡️",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/opensesamegames/northgard-uncharted-lands"
+        }
+      ],
       "pc": [
         {
           "store": "Tabletop Simulator",
@@ -30100,7 +30628,13 @@
       "short_description": "Operate your own specialty goods shop with a unique set of components and mechanisms.",
       "rulebooks": [],
       "supplemental_files": [],
-      "crowdfunding_links": [],
+      "crowdfunding_links": [
+        {
+          "name": "Merchants Cove",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/512772051/merchants-cove"
+        }
+      ],
       "pc": [
         {
           "store": "Tabletop Simulator",
@@ -30300,7 +30834,13 @@
       "short_description": "Prove your worth as a successor to Nētā-Tanka - leader of the Frostrivers tribe.",
       "rulebooks": [],
       "supplemental_files": [],
-      "crowdfunding_links": [],
+      "crowdfunding_links": [
+        {
+          "name": "Neta-Tanka",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/laboitedejeu/neta-tanka"
+        }
+      ],
       "pc": [
         {
           "store": "Tabletop Simulator",
@@ -30337,7 +30877,13 @@
       "short_description": "Develop the subway and attract passenger traffic in London and Berlin.",
       "rulebooks": [],
       "supplemental_files": [],
-      "crowdfunding_links": [],
+      "crowdfunding_links": [
+        {
+          "name": "On the Underground: London / Berlin",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/ludicreations/on-the-underground-london-berlin"
+        }
+      ],
       "pc": [
         {
           "store": "Yucata",
@@ -30477,6 +31023,11 @@
           "name": "Yedo: Deluxe Master Set",
           "site": "Kickstarter",
           "url": "https://www.kickstarter.com/projects/nskngames/yedo-deluxe-master-set"
+        },
+        {
+          "name": "Yedo Deluxe Master Set",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/boardanddice/yedo-deluxe-master-set"
         }
       ],
       "pc": [
@@ -32081,7 +32632,13 @@
       "short_description": "",
       "rulebooks": [],
       "supplemental_files": [],
-      "crowdfunding_links": [],
+      "crowdfunding_links": [
+        {
+          "name": "Canvas",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/roadtoinfamy/canvas-2"
+        }
+      ],
       "pc": [
         {
           "store": "Tabletop Simulator",
@@ -32193,6 +32750,11 @@
           "name": "Tiny Epic Dinosaurs",
           "site": "Kickstarter",
           "url": "https://www.kickstarter.com/projects/coe/tiny-epic-dinosaurs"
+        },
+        {
+          "name": "Tiny Epic Dinosaurs",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/tinyepic/tiny-epic-dinosaurs"
         }
       ],
       "pc": [
@@ -32305,7 +32867,13 @@
       "short_description": "Alien races trade artifacts of old Earth and attempt to curate the best collection.",
       "rulebooks": [],
       "supplemental_files": [],
-      "crowdfunding_links": [],
+      "crowdfunding_links": [
+        {
+          "name": "Excavation Earth",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/mightyboards/excavation-earth"
+        }
+      ],
       "pc": [
         {
           "store": "Tabletop Simulator",
@@ -32594,7 +33162,13 @@
       "short_description": "Bet, buy horses, and influence jockeys for cash in an exciting 1930's era horse race.",
       "rulebooks": [],
       "supplemental_files": [],
-      "crowdfunding_links": [],
+      "crowdfunding_links": [
+        {
+          "name": "Long Shot: The Dice Game",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/perplext/long-shot-the-dice-game"
+        }
+      ],
       "pc": [
         {
           "store": "Tabletop Simulator",
@@ -33023,7 +33597,13 @@
       "short_description": "Purchase goods, upgrade your distillery, and craft the world's finest spirits.",
       "rulebooks": [],
       "supplemental_files": [],
-      "crowdfunding_links": [],
+      "crowdfunding_links": [
+        {
+          "name": "Distilled",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/paversongames/distilled"
+        }
+      ],
       "pc": [
         {
           "store": "BGA",
@@ -33854,7 +34434,13 @@
       "short_description": "Lower prices or increase Quality to gain Market shares? You Decide!",
       "rulebooks": [],
       "supplemental_files": [],
-      "crowdfunding_links": [],
+      "crowdfunding_links": [
+        {
+          "name": "Arkwright the Card Game",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/gamebrewer/arkwright-the-card-game"
+        }
+      ],
       "pc": [
         {
           "store": "Tabletopia",
@@ -34237,7 +34823,13 @@
       "short_description": "Stack skulls in the Sedlec Ossuary to help the deceased finally rest peacefully.",
       "rulebooks": [],
       "supplemental_files": [],
-      "crowdfunding_links": []
+      "crowdfunding_links": [
+        {
+          "name": "Skulls of Sedlec",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/239309591/skulls-of-sedlec"
+        }
+      ]
     },
     "303954": {
       "name": "Pax Viking",
@@ -34309,7 +34901,13 @@
       "short_description": "Settle new lands, grow your population, and build megaliths - in an endless winter.",
       "rulebooks": [],
       "supplemental_files": [],
-      "crowdfunding_links": [],
+      "crowdfunding_links": [
+        {
+          "name": "ENDLESS WINTER - Paleoamericans",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/fantasiagames/endless-winter-paleoamericans"
+        }
+      ],
       "pc": [
         {
           "store": "Tabletop Simulator",
@@ -34403,7 +35001,13 @@
       "short_description": "Work together as brave adventurers to defeat the corrupted monarchy.",
       "rulebooks": [],
       "supplemental_files": [],
-      "crowdfunding_links": [],
+      "crowdfunding_links": [
+        {
+          "name": "Regicide",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/badgersfrommars/regicide"
+        }
+      ],
       "android": [
         {
           "store": "Play Store",
@@ -34486,6 +35090,11 @@
           "name": "Trailblazer: The John Muir Trail",
           "site": "BackerKit",
           "url": "https://trailblazerjohnmuir.backerkit.com/backer/welcome"
+        },
+        {
+          "name": "Trailblazer: the John Muir Trail",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/mariposagames/trailblazer-the-john-muir-trail"
         }
       ]
     },
@@ -34583,7 +35192,13 @@
       "short_description": "Influence the wildlife and arrange their meals, so there is only one animal left.",
       "rulebooks": [],
       "supplemental_files": [],
-      "crowdfunding_links": []
+      "crowdfunding_links": [
+        {
+          "name": "Food Chain Island",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/239309591/food-chain-island"
+        }
+      ]
     },
     "309113": {
       "name": "Ticket to Ride: Amsterdam",
@@ -34874,7 +35489,13 @@
       "short_description": "A card-driven game on the ratification of the Nineteenth Amendment.",
       "rulebooks": [],
       "supplemental_files": [],
-      "crowdfunding_links": [],
+      "crowdfunding_links": [
+        {
+          "name": "Votes for Women",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/fortcircle/votes-for-women-0"
+        }
+      ],
       "pc": [
         {
           "store": "Tabletop Simulator",
@@ -35075,7 +35696,13 @@
       "short_description": "Experience over 200 years of U.S. Supreme Court history in an afternoon!",
       "rulebooks": [],
       "supplemental_files": [],
-      "crowdfunding_links": []
+      "crowdfunding_links": [
+        {
+          "name": "First Monday in October",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/fortcircle/first-monday-in-october"
+        }
+      ]
     },
     "314088": {
       "name": "Agropolis",
@@ -35204,7 +35831,13 @@
       "short_description": "To stop the Darkness, you'll have to descend to a place light has never touched.",
       "rulebooks": [],
       "supplemental_files": [],
-      "crowdfunding_links": [],
+      "crowdfunding_links": [
+        {
+          "name": "Massive Darkness 2: Hellscape",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/cmon/massive-darkness-2-hellscape"
+        }
+      ],
       "pc": [
         {
           "store": "Web",
@@ -35632,7 +36265,13 @@
       "short_description": "A cooperative and customizable dungeon crawl adventure for the entire family.",
       "rulebooks": [],
       "supplemental_files": [],
-      "crowdfunding_links": [],
+      "crowdfunding_links": [
+        {
+          "name": "CoraQuest",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/cabbagedan/coraquest"
+        }
+      ],
       "pc": [
         {
           "store": "Tabletopia",
@@ -35897,7 +36536,13 @@
       "short_description": "Develop the subway and attract passenger traffic in Paris and New York.",
       "rulebooks": [],
       "supplemental_files": [],
-      "crowdfunding_links": [],
+      "crowdfunding_links": [
+        {
+          "name": "On the Underground: Paris / New York",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/ludicreations/on-the-underground-paris-new-york"
+        }
+      ],
       "pc": [
         {
           "store": "Yucata",
@@ -35929,6 +36574,11 @@
           "name": "Darwin's Journey",
           "site": "Kickstarter",
           "url": "https://www.kickstarter.com/projects/gonab/darwins-journey"
+        },
+        {
+          "name": "Darwin's Journey",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/thundergryph/darwins-journey"
         }
       ],
       "pc": [
@@ -36468,7 +37118,13 @@
       "short_description": "Build your own Alhambra and explore 26 modules from all 6 expansions.",
       "rulebooks": [],
       "supplemental_files": [],
-      "crowdfunding_links": [],
+      "crowdfunding_links": [
+        {
+          "name": "Alhambra Big Box 2nd Edition",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/queengames/alhambra-big-box-2nd-edition"
+        }
+      ],
       "pc": [
         {
           "store": "BGA",
@@ -36753,7 +37409,13 @@
       "short_description": "Post-apocalyptic bands of punks fight to destroy the rival tribe's camps.",
       "rulebooks": [],
       "supplemental_files": [],
-      "crowdfunding_links": [],
+      "crowdfunding_links": [
+        {
+          "name": "Radlands ☢️",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/roxley/radlands"
+        }
+      ],
       "pc": [
         {
           "store": "Tabletop Simulator",
@@ -36843,7 +37505,13 @@
       "short_description": "As one of Freud's followers, delve into clients’ unconscious minds to bring healing.",
       "rulebooks": [],
       "supplemental_files": [],
-      "crowdfunding_links": [],
+      "crowdfunding_links": [
+        {
+          "name": "UNCONSCIOUS MIND",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/fantasiagames/unconscious-mind"
+        }
+      ],
       "pc": [
         {
           "store": "Tabletopia",
@@ -37158,6 +37826,11 @@
           "name": "Age of Galaxy",
           "site": "Kickstarter",
           "url": "https://www.kickstarter.com/projects/36768726/age-of-galaxy"
+        },
+        {
+          "name": "Age of Galaxy",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/icemakes/age-of-galaxy"
         }
       ],
       "pc": [
@@ -37297,7 +37970,13 @@
       "short_description": "Promise and cajole your way to the top whilst running the East India Company.",
       "rulebooks": [],
       "supplemental_files": [],
-      "crowdfunding_links": [],
+      "crowdfunding_links": [
+        {
+          "name": "John Company: Second Edition",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/colewehrle/john-company-second-edition"
+        }
+      ],
       "pc": [
         {
           "store": "Tabletop Simulator",
@@ -37679,7 +38358,18 @@
       "short_description": "Modular boss battler: superheroes play cards and combos to defeat supervillain.",
       "rulebooks": [],
       "supplemental_files": [],
-      "crowdfunding_links": [],
+      "crowdfunding_links": [
+        {
+          "name": "Sentinels of the Multiverse: Definitive Edition",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/gtgames/sentinels-of-the-multiverse-definitive-edition"
+        },
+        {
+          "name": "Sentinels of the Multiverse — Rook City Renegades Expansion",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/gtgames/sentinels-of-the-multiverse-rook-city-renegades-expansion"
+        }
+      ],
       "android": [
         {
           "store": "Play Store",
@@ -37788,7 +38478,13 @@
       "short_description": "Film wild animals to produce your own inspiring wildlife documentary.",
       "rulebooks": [],
       "supplemental_files": [],
-      "crowdfunding_links": [],
+      "crowdfunding_links": [
+        {
+          "name": "WILD: Serengeti",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/badcomet/wild-serengeti"
+        }
+      ],
       "pc": [
         {
           "store": "Tabletop Simulator",
@@ -37918,6 +38614,11 @@
           "name": "Flamecraft",
           "site": "BackerKit",
           "url": "https://flamecraft.backerkit.com/backer/review"
+        },
+        {
+          "name": "Flamecraft",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/cardboardalchemy/flamecraft"
         }
       ],
       "pc": [
@@ -38075,7 +38776,13 @@
       "short_description": "Protect your territory and survive by being the best bird clan.",
       "rulebooks": [],
       "supplemental_files": [],
-      "crowdfunding_links": [],
+      "crowdfunding_links": [
+        {
+          "name": "Clash of Galliformes",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/herebedragons/clash-of-galliformes"
+        }
+      ],
       "pc": [
         {
           "store": "Tabletop Simulator",
@@ -38511,7 +39218,13 @@
       "short_description": "Unlikely heroes lead a group of survivors in a post-apocalyptic city of Moscow.",
       "rulebooks": [],
       "supplemental_files": [],
-      "crowdfunding_links": [],
+      "crowdfunding_links": [
+        {
+          "name": "Resurgence",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/halfakingdomgames/resurgence"
+        }
+      ],
       "pc": [
         {
           "store": "Tabletop Simulator",
@@ -39251,7 +39964,13 @@
       "short_description": "Serve the Mindbug, summon hybrids, and mind-control your opponent's best cards.",
       "rulebooks": [],
       "supplemental_files": [],
-      "crowdfunding_links": [],
+      "crowdfunding_links": [
+        {
+          "name": "Mindbug 👁️ First Contact",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/nerdlab-games/mindbug-first-contact"
+        }
+      ],
       "pc": [
         {
           "store": "Tabletopia",
@@ -39677,7 +40396,13 @@
       "short_description": "A fast-paced cooperative word game where spelling is only half the battle.",
       "rulebooks": [],
       "supplemental_files": [],
-      "crowdfunding_links": [],
+      "crowdfunding_links": [
+        {
+          "name": "ILLITERATI",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/gapclosergames/illiterati"
+        }
+      ],
       "pc": [
         {
           "store": "Tabletop Simulator",
@@ -39739,7 +40464,13 @@
       "short_description": "Explore the waterways, map the land, and chart the stars in medieval Baghdad.",
       "rulebooks": [],
       "supplemental_files": [],
-      "crowdfunding_links": [],
+      "crowdfunding_links": [
+        {
+          "name": "Wayfarers of the South Tigris",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/shem/wayfarers-of-the-south-tigris"
+        }
+      ],
       "pc": [
         {
           "store": "BGA",
@@ -39766,7 +40497,13 @@
       "short_description": "Go sailing for adventure on a single sheet of paper.",
       "rulebooks": [],
       "supplemental_files": [],
-      "crowdfunding_links": [],
+      "crowdfunding_links": [
+        {
+          "name": "VOYAGES",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/postmarkgames/voyages"
+        }
+      ],
       "pc": [
         {
           "store": "Tabletop Simulator",
@@ -40147,7 +40884,13 @@
       "short_description": "Time travel to some of the greatest moments in human history.",
       "rulebooks": [],
       "supplemental_files": [],
-      "crowdfunding_links": [],
+      "crowdfunding_links": [
+        {
+          "name": "Trekking Through History",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/underdoggames/trekking-through-history"
+        }
+      ],
       "pc": [
         {
           "store": "Tabletop Simulator",
@@ -40283,7 +41026,13 @@
       "short_description": "Build the canals, repel the barbarians, and rise to fame as Yu the Great!",
       "rulebooks": [],
       "supplemental_files": [],
-      "crowdfunding_links": [],
+      "crowdfunding_links": [
+        {
+          "name": "Legacy of Yu",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/shem/legacy-of-yu"
+        }
+      ],
       "pc": [
         {
           "store": "Tabletopia",
@@ -40888,7 +41637,13 @@
       "short_description": "Build your witch coven, enthrall the townsfolk, and rise to power as the new Septima.",
       "rulebooks": [],
       "supplemental_files": [],
-      "crowdfunding_links": [],
+      "crowdfunding_links": [
+        {
+          "name": "Septima",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/mindclash/septima"
+        }
+      ],
       "pc": [
         {
           "store": "Tabletop Simulator",
@@ -40957,7 +41712,13 @@
       "short_description": "Viking clans seek glory and the favor of the gods!",
       "rulebooks": [],
       "supplemental_files": [],
-      "crowdfunding_links": []
+      "crowdfunding_links": [
+        {
+          "name": "Tiny Epic Vikings",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/tinyepic/tiny-epic-vikings"
+        }
+      ]
     },
     "360931": {
       "name": "DC Deck-Building Game: Injustice",
@@ -41797,7 +42558,13 @@
       "short_description": "Compete against rival inventors to assemble the best team of robots.",
       "rulebooks": [],
       "supplemental_files": [],
-      "crowdfunding_links": [],
+      "crowdfunding_links": [
+        {
+          "name": "Raising Robots",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/nauvoogames/raising-robots"
+        }
+      ],
       "pc": [
         {
           "store": "Tabletop Simulator",
@@ -41818,7 +42585,13 @@
       "short_description": "",
       "rulebooks": [],
       "supplemental_files": [],
-      "crowdfunding_links": [],
+      "crowdfunding_links": [
+        {
+          "name": "Scholars of the South Tigris",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/shem/scholars-of-the-south-tigris"
+        }
+      ],
       "pc": [
         {
           "store": "Tabletop Simulator",
@@ -42199,7 +42972,13 @@
       "short_description": "Set out on a steampunk adventure in the Kamargo Delta.",
       "rulebooks": [],
       "supplemental_files": [],
-      "crowdfunding_links": [],
+      "crowdfunding_links": [
+        {
+          "name": "Delta",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/gamebrewer/delta-0"
+        }
+      ],
       "pc": [
         {
           "store": "Tabletop Simulator",
@@ -42232,7 +43011,13 @@
       "short_description": "Build your very own thriving jungle by discovering various wild animals.",
       "rulebooks": [],
       "supplemental_files": [],
-      "crowdfunding_links": [],
+      "crowdfunding_links": [
+        {
+          "name": "Life of the Amazonia",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/badcomet/life-of-the-amazonia"
+        }
+      ],
       "pc": [
         {
           "store": "Tabletopia",
@@ -42499,7 +43284,13 @@
       "short_description": "A legacy game of dice drafting and window coloring!",
       "rulebooks": [],
       "supplemental_files": [],
-      "crowdfunding_links": []
+      "crowdfunding_links": [
+        {
+          "name": "Sagrada: Artisans",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/floodgategames/sagrada-artisans"
+        }
+      ]
     },
     "369869": {
       "name": "Two Heirs, The",
@@ -42629,7 +43420,13 @@
       "short_description": "Roman nobles help the emperor establish the eastern capital of Constantinople.",
       "rulebooks": [],
       "supplemental_files": [],
-      "crowdfunding_links": [],
+      "crowdfunding_links": [
+        {
+          "name": "Nova Roma",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/halfakingdomgames/nova-roma"
+        }
+      ],
       "pc": [
         {
           "store": "Tabletop Simulator",
@@ -42719,7 +43516,13 @@
       "short_description": "Craft musical instruments for patrons through worker placement and hidden bidding.",
       "rulebooks": [],
       "supplemental_files": [],
-      "crowdfunding_links": [],
+      "crowdfunding_links": [
+        {
+          "name": "Luthier",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/paversongames/luthier"
+        }
+      ],
       "pc": [
         {
           "store": "BGA",
@@ -43080,7 +43883,13 @@
       "short_description": "Om nom nom… Numbsters are hungry!",
       "rulebooks": [],
       "supplemental_files": [],
-      "crowdfunding_links": []
+      "crowdfunding_links": [
+        {
+          "name": "Numbsters",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/239309591/numbsters"
+        }
+      ]
     },
     "374909": {
       "name": "Dieson Crusoe",
@@ -43122,7 +43931,13 @@
       "short_description": "Grow and develop our nation to become the largest military power in the world!",
       "rulebooks": [],
       "supplemental_files": [],
-      "crowdfunding_links": [],
+      "crowdfunding_links": [
+        {
+          "name": "Manhattan Project: War Machine",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/grailgames/manhattan-project-war-machine"
+        }
+      ],
       "pc": [
         {
           "store": "Tabletop Simulator",
@@ -43137,7 +43952,13 @@
       "short_description": "Build and expand casinos in Las Vegas.",
       "rulebooks": [],
       "supplemental_files": [],
-      "crowdfunding_links": [],
+      "crowdfunding_links": [
+        {
+          "name": "Lords of Vegas",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/loneshark/lords-of-vegas"
+        }
+      ],
       "pc": [
         {
           "store": "Tabletop Simulator",
@@ -43454,7 +44275,13 @@
       "short_description": "Try to solve a murder while covering up your own.",
       "rulebooks": [],
       "supplemental_files": [],
-      "crowdfunding_links": []
+      "crowdfunding_links": [
+        {
+          "name": "Awkward Guests 2: The Berwick Cases",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/megacorpingames/awkward-guests-2-the-berwick-cases"
+        }
+      ]
     },
     "378758": {
       "name": "Imperial Miners",
@@ -43985,7 +44812,13 @@
       "short_description": "Fight bosses, avoid the dragon, and collect loot with or against fellow employees!",
       "rulebooks": [],
       "supplemental_files": [],
-      "crowdfunding_links": [],
+      "crowdfunding_links": [
+        {
+          "name": "CLANK! Legacy 2: Acquisitions Incorporated — Darkest Magic",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/direwolf/clank-legacy-2-acquisitions-incorporated-darkest-magic"
+        }
+      ],
       "android": [
         {
           "store": "Play Store",
@@ -44547,7 +45380,13 @@
       "short_description": "Rebuild the walls and temple for the returning exiles of ancient Jerusalem.",
       "rulebooks": [],
       "supplemental_files": [],
-      "crowdfunding_links": [],
+      "crowdfunding_links": [
+        {
+          "name": "Ezra and Nehemiah",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/shem/ezra-and-nehemiah"
+        }
+      ],
       "pc": [
         {
           "store": "Tabletop Simulator",
@@ -44583,7 +45422,18 @@
       "short_description": "Build your own perilous dungeon and become a master architect.",
       "rulebooks": [],
       "supplemental_files": [],
-      "crowdfunding_links": [],
+      "crowdfunding_links": [
+        {
+          "name": "Stonespine Architects",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/thunderworks/stonespine-architects"
+        },
+        {
+          "name": "Stonespine Architects Invasion Expansion",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/thunderworks/stonespine-architects-invasion-expansion"
+        }
+      ],
       "pc": [
         {
           "store": "BGA",
@@ -44766,7 +45616,13 @@
       "short_description": "Build and launch ships to send guests on luxurious space vacations.",
       "rulebooks": [],
       "supplemental_files": [],
-      "crowdfunding_links": [],
+      "crowdfunding_links": [
+        {
+          "name": "Galactic Cruise",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/kinsonkeygames/galactic-cruise"
+        }
+      ],
       "pc": [
         {
           "store": "Web",
@@ -44896,7 +45752,13 @@
       "short_description": "Fox mystics cast spells to outwit one another and collect magical forest items.",
       "rulebooks": [],
       "supplemental_files": [],
-      "crowdfunding_links": [],
+      "crowdfunding_links": [
+        {
+          "name": "Nocturne",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/flatoutgames/nocturne-board-game"
+        }
+      ],
       "pc": [
         {
           "store": "Tabletop Simulator",
@@ -44966,7 +45828,13 @@
       "short_description": "Gather ingredients to satisfy food challenges and impress a celebrity critic.",
       "rulebooks": [],
       "supplemental_files": [],
-      "crowdfunding_links": [],
+      "crowdfunding_links": [
+        {
+          "name": "Critter Kitchen",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/cardboardalchemy/critter-kitchen"
+        }
+      ],
       "pc": [
         {
           "store": "Tabletop Simulator",
@@ -45602,7 +46470,13 @@
       "short_description": "Mythical high school factions vie to avoid the Groundskeeper in the school hedgemaze.",
       "rulebooks": [],
       "supplemental_files": [],
-      "crowdfunding_links": []
+      "crowdfunding_links": [
+        {
+          "name": "Mythic Mischief Vol. II",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/ivstudios/mythic-mischief-vol-ii"
+        }
+      ]
     },
     "400817": {
       "name": "Epochs: Course of Cultures",
@@ -45742,7 +46616,13 @@
       "short_description": "An Arthurian area control game where factions explore the misty isle of Avalon.",
       "rulebooks": [],
       "supplemental_files": [],
-      "crowdfunding_links": []
+      "crowdfunding_links": [
+        {
+          "name": "Avalon: The Riven Veil",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/shadowborne-games/avalon-the-riven-veil"
+        }
+      ]
     },
     "402283": {
       "name": "Courtisans",
@@ -46080,7 +46960,13 @@
       "short_description": "Compete to collect pieces of glass and place them strategically in your shop.",
       "rulebooks": [],
       "supplemental_files": [],
-      "crowdfunding_links": [],
+      "crowdfunding_links": [
+        {
+          "name": "River Valley Glassworks",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/boardgametables/river-valley-glassworks"
+        }
+      ],
       "pc": [
         {
           "store": "BGA",
@@ -46507,7 +47393,13 @@
       "short_description": "Defeat corrupted enemies and unlock rewards over 12 challenging missions.",
       "rulebooks": [],
       "supplemental_files": [],
-      "crowdfunding_links": []
+      "crowdfunding_links": [
+        {
+          "name": "Regicide Legacy",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/badgersfrommars/regicide-legacy"
+        }
+      ]
     },
     "413246": {
       "name": "Bomb Busters",
@@ -46559,7 +47451,13 @@
       "short_description": "Collect dice from the workshop rondel to manipulate on your personal engine board.",
       "rulebooks": [],
       "supplemental_files": [],
-      "crowdfunding_links": [],
+      "crowdfunding_links": [
+        {
+          "name": "Ada's Dream",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/alleycatgames/adas-dream"
+        }
+      ],
       "pc": [
         {
           "store": "Tabletop Simulator",
@@ -46640,7 +47538,13 @@
       "short_description": "Recruit the strongest and most brilliant animal citizens to your city.",
       "rulebooks": [],
       "supplemental_files": [],
-      "crowdfunding_links": [],
+      "crowdfunding_links": [
+        {
+          "name": "Citizens of the Spark",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/thunderworks/citizens-of-the-spark"
+        }
+      ],
       "pc": [
         {
           "store": "Tabletop Simulator",
@@ -47304,7 +48208,13 @@
       "short_description": "Quick wits, fast hands, and a skull full of gambler's dice!",
       "rulebooks": [],
       "supplemental_files": [],
-      "crowdfunding_links": [],
+      "crowdfunding_links": [
+        {
+          "name": "Emerald Skulls 💀",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/thunderworks/emerald-skulls"
+        }
+      ],
       "pc": [
         {
           "store": "Tabletop Simulator",
@@ -48038,7 +48948,13 @@
       "short_description": "Craft artisanal cheeses in 1900s Italy.",
       "rulebooks": [],
       "supplemental_files": [],
-      "crowdfunding_links": []
+      "crowdfunding_links": [
+        {
+          "name": "Formaggio",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/roadtoinfamy/formaggio"
+        }
+      ]
     },
     "430611": {
       "name": "Hyperstar Run",
@@ -48680,7 +49596,13 @@
       "short_description": "Get ready for Adventure...",
       "rulebooks": [],
       "supplemental_files": [],
-      "crowdfunding_links": []
+      "crowdfunding_links": [
+        {
+          "name": "Trailblazer: The Colorado Trail",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/tycoon/trailblazer-the-colorado-trail"
+        }
+      ]
     },
     "439305": {
       "name": "Flamecraft Duals",
@@ -48818,7 +49740,13 @@
       "short_description": "Conquer the Greek islands by building towering monuments to the Gods.",
       "rulebooks": [],
       "supplemental_files": [],
-      "crowdfunding_links": []
+      "crowdfunding_links": [
+        {
+          "name": "For the Gods!",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/mightyboards/for-the-gods"
+        }
+      ]
     },
     "444291": {
       "name": "Corps of Discovery: Ultimate Edition",
@@ -48941,7 +49869,13 @@
       "short_description": "Fight fires and rescue victims in sunny California.",
       "rulebooks": [],
       "supplemental_files": [],
-      "crowdfunding_links": []
+      "crowdfunding_links": [
+        {
+          "name": "Flash Point: Golden State Heroes",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/ibcgames/flash-point-golden-state"
+        }
+      ]
     },
     "446669": {
       "name": "Flockers",
@@ -49235,7 +50169,13 @@
       "short_description": "Players of two factions complete missions, resolve plots and collect points.",
       "rulebooks": [],
       "supplemental_files": [],
-      "crowdfunding_links": []
+      "crowdfunding_links": [
+        {
+          "name": "RISK G.I. JOE: Special Missions",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/renegadegamestudios/risk-gi-joe"
+        }
+      ]
     },
     "449472": {
       "name": "Blood Rage: Valhalla",
@@ -49725,7 +50665,13 @@
       "short_description": "Secret societies auction off the various nations of the world.",
       "rulebooks": [],
       "supplemental_files": [],
-      "crowdfunding_links": [],
+      "crowdfunding_links": [
+        {
+          "name": "Secret Societies",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/shem/garphill-games-secret-project"
+        }
+      ],
       "pc": [
         {
           "store": "Tabletop Simulator",
@@ -49857,7 +50803,13 @@
       "short_description": "Explore, gather, combo, and craft gifts as you forage in the Pacific Northwest!",
       "rulebooks": [],
       "supplemental_files": [],
-      "crowdfunding_links": [],
+      "crowdfunding_links": [
+        {
+          "name": "FORAGE",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/sideroomgames/forage"
+        }
+      ],
       "pc": [
         {
           "store": "Tabletopia",
@@ -50624,6 +51576,11 @@
           "name": "DC Deck-Building Game: Green Lantern Corps",
           "site": "Kickstarter",
           "url": "www.kickstarter.com/projects/cze/dc-dbg-glc"
+        },
+        {
+          "name": "DC Deck-Building Game: Green Lantern Corps",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/cze/dc-dbg-glc"
         }
       ]
     }
