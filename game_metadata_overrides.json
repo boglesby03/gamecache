@@ -4600,13 +4600,7 @@
       "short_description": "Build, expand, and take over casinos to get big profits and big points.",
       "rulebooks": [],
       "supplemental_files": [],
-      "crowdfunding_links": [
-        {
-          "name": "Lords of Vegas",
-          "site": "Kickstarter",
-          "url": "https://www.kickstarter.com/projects/loneshark/lords-of-vegas"
-        }
-      ],
+      "crowdfunding_links": [],
       "pc": [
         {
           "store": "Tabletop Simulator",
@@ -9966,6 +9960,12 @@
           "store": "Web",
           "url": "https://randomboardgame.com/game/robinson-crusoe",
           "note": "Randomizer",
+          "support_app": true
+        },
+        {
+          "store": "Web",
+          "url": "https://www.youtube.com/watch?v=QnyAkGiLDf8&t=150s",
+          "note": "Robinson Crusoe Ambience",
           "support_app": true
         }
       ]
@@ -25126,6 +25126,11 @@
         },
         {
           "name": "Spirits of the Forest",
+          "site": "BackerKit",
+          "url": "https://www.backerkit.com/backer_accounts/profile/login_account"
+        },
+        {
+          "name": "Spirits of the Forest",
           "site": "Kickstarter",
           "url": "https://www.kickstarter.com/projects/thundergryph/spirits-of-the-forest"
         }
@@ -27652,6 +27657,11 @@
       "rulebooks": [],
       "supplemental_files": [],
       "crowdfunding_links": [
+        {
+          "name": "Roll Player Adventures",
+          "site": "Kickstarter",
+          "url": "https://www.kickstarter.com/projects/1152516291/roll-player-adventures"
+        },
         {
           "name": "Roll Player Adventures",
           "site": "Kickstarter",
@@ -31960,6 +31970,12 @@
       "pc": [
         {
           "store": "Web",
+          "url": "https://play.marvelsimulator.com/",
+          "note": "Marvel Champions Simulator",
+          "online": true
+        },
+        {
+          "store": "Web",
           "url": "https://randomboardgame.com/game/marvel-champions",
           "note": "Randomizer",
           "support_app": true
@@ -32226,7 +32242,6 @@
           "store": "Tabletop Simulator",
           "url": "https://steamcommunity.com/sharedfiles/filedetails/?id=2449000589",
           "note": "Nick Fury",
-          "online": true,
           "wishlisted": true
         },
         {
@@ -43952,13 +43967,7 @@
       "short_description": "Build and expand casinos in Las Vegas.",
       "rulebooks": [],
       "supplemental_files": [],
-      "crowdfunding_links": [
-        {
-          "name": "Lords of Vegas",
-          "site": "Kickstarter",
-          "url": "https://www.kickstarter.com/projects/loneshark/lords-of-vegas"
-        }
-      ],
+      "crowdfunding_links": [],
       "pc": [
         {
           "store": "Tabletop Simulator",
